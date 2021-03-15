@@ -3,11 +3,11 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.dekses</groupId>
-    <artifactId>jersey-docker-demo</artifactId>
+    <groupId>com.futtosarisu</groupId>
+    <artifactId>deustock</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>jersey-docker-demo</name>
+    <name>DeuStock</name>
 
     <dependencyManagement>
         <dependencies>
@@ -78,6 +78,27 @@
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-grizzly2-http</artifactId>
 			<version>${jersey.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.jreddit</groupId>
+            <artifactId>jreddit</artifactId>
+            <version>1.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.twitter4j</groupId>
+            <artifactId>twitter4j-core</artifactId>
+            <version>4.0.7</version>
+        </dependency>
+        <dependency>
+            <groupId>edu.stanford.nlp</groupId>
+            <artifactId>stanford-corenlp</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>edu.stanford.nlp</groupId>
+            <artifactId>stanford-corenlp</artifactId>
+            <version>4.0.0</version>
+            <classifier>models</classifier>
         </dependency>
     </dependencies>
 
