@@ -9,15 +9,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TwitterGatewayTest {
 
     @Test
     @DisplayName("Twitter API get Tweets")
     public void testGetMessageList() {
-        TwitterGateway tgw = TwitterGateway.getInstance();
-        List<SocialNetworkMessage> msgs = tgw.getMessageList("\"BTC\"");
-        assertEquals("Regular multiplication should work", msgs.size(),20);
+        assertTrue("Cannot get messages from Twitter API", TwitterGateway.getInstance().getMessageList("\"BTC\"").size()>0);
     }
 
 }

@@ -13,7 +13,8 @@ public class SocialTextCleaner {
     }
 
     public static String removeURLS(String txt) {
-        return txt.replaceAll("http.*?[\\S]+", "");
+        String urlRegex = "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)";
+        return txt.replaceAll(urlRegex, "");
     }
 
     public static String removeHashtags(String txt) {
@@ -21,13 +22,13 @@ public class SocialTextCleaner {
     }
 
     /**
-     * Deletes usernames based on the format "@[^\\s]+".
+     * Changes usernames based on the format "@[^\\s]+" to generic "Tom".
      *
      * @param txt
      * @return
      */
     public static String removeUsernames(String txt) {
-        return txt.replaceAll("@[\\S]+", "");
+        return txt.replaceAll("@[\\S]+", "Tom");
     }
 
     public static String removeExtraSpaces(String txt) {
