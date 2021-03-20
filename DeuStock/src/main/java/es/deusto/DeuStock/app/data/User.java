@@ -1,10 +1,18 @@
 package es.deusto.DeuStock.app.data;
 
 import java.util.Calendar;
+import java.io.Serializable;
 import java.util.Date;
+import javax.jdo.annotations.*;
 
-public class User {
+@PersistenceCapable(detachable = "true")
+public class User implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Unique
 	String username;
 	String password;
 	String fullName;
@@ -63,6 +71,9 @@ public class User {
 	public void setLastActivity(Date lastActivity) {
 		this.lastActivity = lastActivity;
 	}
+	public void setLastActivity() {
+		this.lastActivity = Calendar.getInstance().getTime();
+	}
 	
 	
 	public User(String username, String password, String fullName, Date birthDate, String country, String description) {
@@ -86,6 +97,16 @@ public class User {
 		this.registerDate = Calendar.getInstance().getTime();
 		this.lastActivity = this.registerDate;
 	}
+
+	
+	public String toString() {
+		return "User [username=" + username + ", password=" + password + ", fullName=" + fullName + ", birthDate="
+				+ birthDate + ", country=" + country + ", description=" + description + ", registerDate=" + registerDate
+				+ ", lastActivity=" + lastActivity + "]";
+	}
+	
+
+	
 	
 	
 	

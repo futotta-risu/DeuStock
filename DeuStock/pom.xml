@@ -100,6 +100,12 @@
             <version>4.0.0</version>
             <classifier>models</classifier>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.jdo/jdo2-enhancer -->
+		<dependency>
+		    <groupId>org.apache.jdo</groupId>
+		    <artifactId>jdo2-enhancer</artifactId>
+		    <version>2.0</version>
+		</dependency>
     </dependencies>
 
     <build>
@@ -114,6 +120,7 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -129,6 +136,25 @@
                     <mainClass>com.dekses.jersey.docker.demo.Main</mainClass>
                 </configuration>
             </plugin>
+            
+            <plugin>
+	            <groupId>org.datanucleus</groupId>
+	            <artifactId>datanucleus-maven-plugin</artifactId>
+	            <version>5.2.1</version>
+	            <configuration>
+	                <log4jConfiguration>${basedir}/log4j.properties</log4jConfiguration>
+	                <verbose>true</verbose>
+	            </configuration>
+	            <executions>
+	                <execution>
+	                    <phase>process-classes</phase>
+	                    <goals>
+	                        <goal>enhance</goal>
+	                    </goals>
+	                </execution>
+	            </executions>
+	        </plugin>
+	        
         </plugins>
     </build>
 
