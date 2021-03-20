@@ -1,8 +1,8 @@
-package com.futtosarisu.deustock.gateway.socialnetworks;
+package com.deusto.deustock.gateway.socialnetworks;
 
-import com.futtosarisu.deustock.data.SocialNetworkMessage;
-import com.futtosarisu.deustock.dataminer.cleaner.SocialTextCleaner;
-import com.futtosarisu.deustock.gateway.SocialNetworkAPIGateway;
+import com.deusto.deustock.data.SocialNetworkMessage;
+import com.deusto.deustock.dataminer.cleaner.SocialTextCleaner;
+import com.deusto.deustock.gateway.SocialNetworkAPIGateway;
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 
@@ -27,6 +27,8 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
      */
     private int nMessageDefault = 20;
 
+    private String dateDefault = "2018-08-10";
+
     private TwitterGateway(){
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
@@ -50,38 +52,26 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
 
     @Override
     public List<SocialNetworkMessage> getMessageList(String txt) {
-
-        SocialNetworkMessage dummyMessage1 = new SocialNetworkMessage("dummy text 1");
-        SocialNetworkMessage dummyMessage2 = new SocialNetworkMessage("dummy text 2");
-        LinkedList<SocialNetworkMessage> messages = new  LinkedList<SocialNetworkMessage>();
-
-        messages.add(dummyMessage1);
-        messages.add(dummyMessage2);
-        return getMessageList("\"BTC\"", 20, new Date());
+        return getMessageList(txt, nMessageDefault, dateDefault);
     }
 
     @Override
     public List<SocialNetworkMessage> getMessageList(String txt, int nMessage) {
-        return null;
+        return getMessageList(txt, nMessage, dateDefault);
     }
 
     @Override
-    public List<SocialNetworkMessage> getMessageList(String txt, int nMessage, Date from) {
+    public List<SocialNetworkMessage> getMessageList(String txt, int nMessage, String from) {
         Twitter twitter = this.twitterF.getInstance();
 
         Query query = new Query(txt + " lang:en");
         query.setCount(nMessage);
-        //query.until("2018-08-10"); // TODO Date to String method
-        //query.setResultType(Query.POPULAR);
+        query.until(from);
 
         QueryResult result = null;
         List<SocialNetworkMessage> messages = new LinkedList<SocialNetworkMessage>();
         try {
-            result = twitter.search(query);
-            System.out.println("Hemos recibido " + result.getTweets().size());
-            for (Status status : result.getTweets()) {
-                System.out.println("@" + status.getUser().getScreenName() +  ":" + status.getCreatedAt()+"\n" + SocialTextCleaner.clean(status.getText()) +    "\n \n");
-
+            for (Status status : twitter.search(query).getTweets()) {
                 messages.add(
                         new SocialNetworkMessage(status.getUser().getScreenName(), status.getText())
                 );

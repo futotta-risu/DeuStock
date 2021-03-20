@@ -1,4 +1,4 @@
-package com.futossarisu.deustock;
+package com.deusto.deustock;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -10,7 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.futtosarisu.deustock.Main;
+import com.deusto.deustock.Main;
 
 import static org.junit.Assert.assertEquals;
 

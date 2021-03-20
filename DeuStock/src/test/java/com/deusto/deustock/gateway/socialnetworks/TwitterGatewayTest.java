@@ -1,7 +1,7 @@
-package com.futossarisu.deustock.gateway.socialnetworks;
+package com.deusto.deustock.gateway.socialnetworks;
 
-import com.futtosarisu.deustock.data.SocialNetworkMessage;
-import com.futtosarisu.deustock.gateway.socialnetworks.TwitterGateway;
+import com.deusto.deustock.data.SocialNetworkMessage;
+import com.deusto.deustock.gateway.socialnetworks.TwitterGateway;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
@@ -13,10 +13,10 @@ import static org.junit.Assert.assertEquals;
 public class TwitterGatewayTest {
 
     @Test
-    @DisplayName("Simple multiplication should work")
+    @DisplayName("Twitter API get Tweets")
     public void testGetMessageList() {
         TwitterGateway tgw = TwitterGateway.getInstance();
-        List<SocialNetworkMessage> msgs = tgw.getMessageList("BTC");
+        List<SocialNetworkMessage> msgs = tgw.getMessageList("\"BTC\"");
         assertEquals("Regular multiplication should work", msgs.size(),20);
     }
 

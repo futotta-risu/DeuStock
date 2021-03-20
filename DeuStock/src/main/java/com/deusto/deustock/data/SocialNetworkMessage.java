@@ -1,4 +1,4 @@
-package com.futtosarisu.deustock.data;
+package com.deusto.deustock.data;
 
 
 public class SocialNetworkMessage {
@@ -7,7 +7,7 @@ public class SocialNetworkMessage {
 
 	private String message = null;
 
-	private float sentiment = 0;
+	private int sentiment = 0;
 
 	public SocialNetworkMessage() {}
 
@@ -20,13 +20,22 @@ public class SocialNetworkMessage {
 		this.message = message;
 	}
 
-	public SocialNetworkMessage setText(String message){
+	public SocialNetworkMessage setMessage(String message){
 		this.message = message;
 		return this;
 	}
+
+	public String getMessage(){
+		return this.message;
+	}
+
 	public SocialNetworkMessage setAuthor(String author){
 		this.author = author;
 		return this;
+	}
+
+	public void setSentiment(int sentiment){
+		this.sentiment = sentiment;
 	}
 	
 }
