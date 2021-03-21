@@ -102,10 +102,26 @@
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.jdo/jdo2-enhancer -->
 		<dependency>
-		    <groupId>org.apache.jdo</groupId>
-		    <artifactId>jdo2-enhancer</artifactId>
-		    <version>2.0</version>
-		</dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>javax.jdo</artifactId>
+            <version>3.2.0-m6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-core</artifactId>
+            <version>[5.0.0-release, )</version>
+        </dependency>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-api-jdo</artifactId>
+            <version>[5.0.0-release, )</version>
+        </dependency>
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-accessplatform-jdo-rdbms</artifactId>
+            <version>5.0.0-release</version>
+            <type>pom</type>
+        </dependency>
     </dependencies>
 
     <build>
@@ -142,7 +158,7 @@
 	            <artifactId>datanucleus-maven-plugin</artifactId>
 	            <version>5.2.1</version>
 	            <configuration>
-	                <log4jConfiguration>${basedir}/log4j.properties</log4jConfiguration>
+	                <log4jConfiguration>${basedir}/resources/log4j.properties</log4jConfiguration>
 	                <verbose>true</verbose>
 	            </configuration>
 	            <executions>
