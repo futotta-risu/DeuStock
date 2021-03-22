@@ -208,7 +208,7 @@
 				<version>1.2.1</version>
 
 				<configuration>
-					<mainClass>org.datanucleus.samples.jdo.tutorial.Main</mainClass>
+					<mainClass>com.dekses.jersey.docker.demo.Main</mainClass>
 					<systemProperties>
 						<systemProperty>
 							<key>log4j.configuration</key>
