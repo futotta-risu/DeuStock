@@ -9,6 +9,13 @@
     <version>1.0-SNAPSHOT</version>
     <name>DeuStock</name>
 
+	<properties>
+		<config.files.dir>${basedir}/resources</config.files.dir>
+        <jersey.version>2.27</jersey.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+    </properties>
+    
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -102,30 +109,69 @@
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.jdo/jdo2-enhancer -->
 		<dependency>
-            <groupId>org.datanucleus</groupId>
-            <artifactId>javax.jdo</artifactId>
-            <version>3.2.0-m6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-core</artifactId>
-            <version>[5.0.0-release, )</version>
-        </dependency>
-        <dependency>
-            <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-api-jdo</artifactId>
-            <version>[5.0.0-release, )</version>
-        </dependency>
-        <dependency>
-            <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-accessplatform-jdo-rdbms</artifactId>
-            <version>5.0.0-release</version>
-            <type>pom</type>
-        </dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>datanucleus-core</artifactId>
+			<version>[5.1.6, 5.9)</version>
+		</dependency>
+		<dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>datanucleus-api-jdo</artifactId>
+			<version>[5.1.4, 5.9)</version>
+		</dependency>
+		<dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>datanucleus-rdbms</artifactId>
+			<version>[5.1.6, 5.9)</version>
+		</dependency>
+		<dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>javax.jdo</artifactId>
+			<version>[3.2.0-m8, )</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.23</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>[1.2.17, )</version>
+		</dependency>
     </dependencies>
 
     <build>
+    	<sourceDirectory>src/main/java</sourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
+
+		<resources>
+			<resource>
+				<directory>${config.files.dir}</directory>
+				<includes>
+					<include>**/*.jdo</include>
+					<include>**/*.orm</include>
+					<include>**/*.properties</include>
+				</includes>
+			</resource>
+		</resources>
         <plugins>
+        
+        	<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>${basedir}</directory>
+							<includes>
+								<include>*.log</include>
+								<include>*.ods</include>
+							</includes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+			
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -138,44 +184,64 @@
             </plugin>
             
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.6.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <mainClass>com.dekses.jersey.docker.demo.Main</mainClass>
-                </configuration>
-            </plugin>
-            
-            <plugin>
-	            <groupId>org.datanucleus</groupId>
-	            <artifactId>datanucleus-maven-plugin</artifactId>
-	            <version>5.2.1</version>
-	            <configuration>
-	                <log4jConfiguration>${basedir}/resources/log4j.properties</log4jConfiguration>
-	                <verbose>true</verbose>
-	            </configuration>
-	            <executions>
-	                <execution>
-	                    <phase>process-classes</phase>
-	                    <goals>
-	                        <goal>enhance</goal>
-	                    </goals>
-	                </execution>
-	            </executions>
-	        </plugin>
-	        
+				<groupId>org.datanucleus</groupId>
+				<artifactId>datanucleus-maven-plugin</artifactId>
+				<version>5.0.2</version>
+				<configuration>
+					<log4jConfiguration>${config.files.dir}/log4j.properties</log4jConfiguration>
+					<verbose>true</verbose>
+					<props>${config.files.dir}/datanucleus.properties</props>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>enhance</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+
+				<configuration>
+					<mainClass>org.datanucleus.samples.jdo.tutorial.Main</mainClass>
+					<systemProperties>
+						<systemProperty>
+							<key>log4j.configuration</key>
+							<value>file:${config.files.dir}/log4j.properties</value>
+						</systemProperty>
+					</systemProperties>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>${basedir}/assembly.xml</descriptor>
+					</descriptors>
+				</configuration>
+			</plugin>       
         </plugins>
     </build>
 
-    <properties>
-        <jersey.version>2.27</jersey.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    
+    
+  
+	<repositories>
+		<repository>
+			<id>DN_M2_Repo</id>
+			<name>DataNucleus Repository</name>
+			<url>http://www.datanucleus.org/downloads/maven2</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>DataNucleus_2</id>
+			<url>http://www.datanucleus.org/downloads/maven2/</url>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
