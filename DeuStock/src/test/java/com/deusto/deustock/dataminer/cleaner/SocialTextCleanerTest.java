@@ -1,7 +1,10 @@
 package com.deusto.deustock.dataminer.cleaner;
 
-import org.junit.Assert;
+import com.deusto.deustock.data.SocialNetworkMessage;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.deusto.deustock.dataminer.cleaner.SocialTextCleaner.*;
 import static org.junit.Assert.assertEquals;
@@ -71,5 +74,34 @@ public class SocialTextCleanerTest {
 
         assertEquals("Cannot totally clean string",
                 expectedString, clean(testString));
+    }
+
+    @Test
+    public void testCleanList() {
+        List<String> messages = new ArrayList<>();
+        messages.add(" I  am currently holding  #BTC with @mike!! ☭☭  Buy more in http://www.binance.com! ");
+        messages.add(" I  am currently holding  #BTC with @mike!! ☭☭  Buy more in http://www.binance.com! ");
+
+        String expectedString = "I am currently holding BTC with Tom Buy more in !";
+
+        clean(messages);
+
+        assertEquals("Cannot totally clean string", expectedString, messages.get(0));
+        assertEquals("Cannot totally clean string", expectedString, messages.get(1));
+    }
+
+    @Test
+    public void testCleanCollectionSocialNetworkMessages() {
+        String messageText = " I  am currently holding  #BTC with @mike!! ☭☭  Buy more in http://www.binance.com! ";
+        String expectedString = "I am currently holding BTC with Tom Buy more in !";
+
+        List<SocialNetworkMessage> messages = new ArrayList<>();
+        messages.add(new SocialNetworkMessage(messageText));
+        messages.add(new SocialNetworkMessage(messageText));
+
+        clean(messages);
+
+        assertEquals("Cannot totally clean string", expectedString, messages.get(0).getMessage());
+        assertEquals("Cannot totally clean string", expectedString, messages.get(1).getMessage());
     }
 }

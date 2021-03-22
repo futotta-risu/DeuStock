@@ -27,7 +27,7 @@ public class SentimentAnalyzer {
      * @param message
      * @return Integer from 0 to 4. (Very Negative, Negative, Neutral, Positive, Very Positive)
      */
-    public static int analyse(String message) {
+    public static int analyze(String message) {
         Properties props = new Properties();
         props.setProperty("annotators", "tokenize, ssplit, pos, parse, sentiment");
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
@@ -39,8 +39,8 @@ public class SentimentAnalyzer {
         return 0;
     }
 
-    public static List<Integer> analyse(Collection<String> messages){
-        return messages.stream().map(SentimentAnalyzer::analyse).collect(Collectors.toList());
+    public static List<Integer> analyze(List<String> messages){
+        return messages.stream().map(SentimentAnalyzer::analyze).collect(Collectors.toList());
     }
 
     /**
@@ -49,10 +49,14 @@ public class SentimentAnalyzer {
      * No need of return since is passed by reference.
      *
      */
-    public static void analyseSocialMessage(Collection<SocialNetworkMessage> messages){
+    public static void analyze(Collection<SocialNetworkMessage> messages){
         for(SocialNetworkMessage snm : messages) {
-            snm.setSentiment(analyse(snm.getMessage()));
+            snm.setSentiment(analyze(snm.getMessage()));
         }
+    }
+
+    public static double getSentimentTendency(Collection<SocialNetworkMessage> messages){
+        return messages.stream().mapToInt(SocialNetworkMessage::getSentiment).average().getAsDouble();
     }
 
 }

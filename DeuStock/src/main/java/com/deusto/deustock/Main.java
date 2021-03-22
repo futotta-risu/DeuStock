@@ -1,11 +1,16 @@
 package com.deusto.deustock;
 
+import com.deusto.deustock.dataminer.Extractor;
+import com.deusto.deustock.dataminer.gateway.socialnetworks.exceptions.NoGatewayTypeException;
+
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import java.io.IOException;
 import java.net.URI;
+
+import static com.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum.*;
 
 /**
  * Main class.
@@ -35,11 +40,22 @@ public class Main {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-        final HttpServer server = startServer();
+        /*final HttpServer server = startServer();
         System.out.println(String.format("Jersey app started with WADL available at "
                 + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
         System.in.read();
-        server.stop();
+        server.stop();*/
+
+        Extractor extractor = new Extractor();
+        try {
+            extractor.setGateway(Twitter);
+            extractor.setSearchQuery("\"law\"");
+            System.out.println("Average sentiment: " + extractor.getSentimentTendency());
+        } catch (NoGatewayTypeException e) {
+            e.printStackTrace();
+        }
+
+
     }
 }
 

@@ -1,12 +1,11 @@
-package com.deusto.deustock.gateway.socialnetworks;
+package com.deusto.deustock.dataminer.gateway.socialnetworks.gateways;
 
 import com.deusto.deustock.data.SocialNetworkMessage;
-import com.deusto.deustock.dataminer.cleaner.SocialTextCleaner;
-import com.deusto.deustock.gateway.SocialNetworkAPIGateway;
+import com.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkAPIGateway;
+import com.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkQueryData;
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,15 +18,15 @@ import java.util.List;
  */
 public class TwitterGateway implements SocialNetworkAPIGateway {
 
-    private TwitterFactory twitterF;
+    private final TwitterFactory twitterF;
     private static TwitterGateway instance = null;
 
     /**
      * Default number of messages
      */
-    private int nMessageDefault = 20;
+    private final int nMessageDefault = 20;
 
-    private String dateDefault = "2018-08-10";
+    private final String dateDefault = "2018-08-10";
 
     private TwitterGateway(){
         ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -45,31 +44,17 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
         return instance;
     }
 
-    public Twitter getTwitter(){
-        return this.twitterF.getInstance();
-    }
-
-
     @Override
-    public List<SocialNetworkMessage> getMessageList(String txt) {
-        return getMessageList(txt, nMessageDefault, dateDefault);
-    }
-
-    @Override
-    public List<SocialNetworkMessage> getMessageList(String txt, int nMessage) {
-        return getMessageList(txt, nMessage, dateDefault);
-    }
-
-    @Override
-    public List<SocialNetworkMessage> getMessageList(String txt, int nMessage, String from) {
+    public List<SocialNetworkMessage> getMessageList(SocialNetworkQueryData queryData) {
         Twitter twitter = this.twitterF.getInstance();
 
-        Query query = new Query(txt + " lang:en");
-        query.setCount(nMessage);
-        query.until(from);
+        Query query = new Query(queryData.getSearchQuery() + " lang:en");
+        query.setCount(queryData.getNMessages());
+        //query.until(queryData.getFrom());
+        query.setLang("en");
 
-        QueryResult result = null;
-        List<SocialNetworkMessage> messages = new LinkedList<SocialNetworkMessage>();
+        List<SocialNetworkMessage> messages = new LinkedList<>();
+
         try {
             for (Status status : twitter.search(query).getTweets()) {
                 messages.add(

@@ -1,5 +1,8 @@
 package com.deusto.deustock.dataminer.cleaner;
 
+import com.deusto.deustock.data.SocialNetworkMessage;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,8 +53,17 @@ public class SocialTextCleaner {
         return result;
     }
 
-    public static List<String> clean(Collection<String> txt) {
-        return txt.stream().map(SocialTextCleaner::clean).collect(Collectors.toList());
+    public static void clean(List<String> messages) {
+        for(int i = 0; i < messages.size(); i++)
+            messages.set(i,clean(messages.get(i)));
+
     }
+
+    public static void clean(Collection<SocialNetworkMessage> messages) {
+        for(SocialNetworkMessage snm : messages)
+            snm.setMessage(clean(snm.getMessage()));
+
+    }
+
 
 }

@@ -37,5 +37,11 @@ public class SocialNetworkMessage {
 	public void setSentiment(int sentiment){
 		this.sentiment = sentiment;
 	}
-	
+	public int getSentiment(){return this.sentiment;}
+
+
+	@Override
+	public String toString() {
+		return author + ":\n" + message + '\n' +"Sentiment=" + sentiment + "\n";
+	}
 }
