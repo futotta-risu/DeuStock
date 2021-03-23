@@ -17,6 +17,7 @@ import static com.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetwork
  *
  */
 public class Main {
+
     // Base URI the Grizzly HTTP server will listen on
     public static final String BASE_URI = "http://0.0.0.0:8080/myapp/";
 
@@ -45,11 +46,11 @@ public class Main {
                 + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
         System.in.read();
         server.stop();*/
-
+        System.out.println(System.getProperty("java.version"));
         Extractor extractor = new Extractor();
         try {
             extractor.setGateway(Twitter);
-            extractor.setSearchQuery("\"law\"");
+            extractor.setSearchQuery("\"islam\"");
             System.out.println("Average sentiment: " + extractor.getSentimentTendency());
         } catch (NoGatewayTypeException e) {
             e.printStackTrace();

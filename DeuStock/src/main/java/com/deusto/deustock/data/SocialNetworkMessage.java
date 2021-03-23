@@ -1,15 +1,15 @@
 package com.deusto.deustock.data;
 
-
+/**
+ *
+ */
 public class SocialNetworkMessage {
 
 	private String author = null;
-
 	private String message = null;
-
 	private int sentiment = 0;
 
-	public SocialNetworkMessage() {}
+	public SocialNetworkMessage(){}
 
 	public SocialNetworkMessage(String author, String message) {
 		this.message = message;
@@ -34,9 +34,7 @@ public class SocialNetworkMessage {
 		return this;
 	}
 
-	public void setSentiment(int sentiment){
-		this.sentiment = sentiment;
-	}
+	public void setSentiment(int sentiment){this.sentiment = sentiment;}
 	public int getSentiment(){return this.sentiment;}
 
 

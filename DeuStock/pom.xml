@@ -22,6 +22,7 @@
     </dependencyManagement>
 
     <dependencies>
+
         <dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
@@ -89,6 +90,13 @@
             <artifactId>twitter4j-core</artifactId>
             <version>4.0.7</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.twitter4j/twitter4j-stream -->
+        <dependency>
+            <groupId>org.twitter4j</groupId>
+            <artifactId>twitter4j-stream</artifactId>
+            <version>4.0.7</version>
+        </dependency>
+
         <dependency>
             <groupId>edu.stanford.nlp</groupId>
             <artifactId>stanford-corenlp</artifactId>
@@ -106,22 +114,28 @@
             <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.13.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.13.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.13.3</version>
+        </dependency>
 
 
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
-                <inherited>true</inherited>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -134,13 +148,21 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>com.dekses.jersey.docker.demo.Main</mainClass>
+                    <mainClass>com.deusto.deustock.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
+    <repositories>
+        <repository>
+            <id>twitter4j-stream</id>
+            <url>https://mvnrepository.com/artifact/org.twitter4j/twitter4j-stream/4.0.7</url>
+        </repository>
+    </repositories>
     <properties>
+        <maven.compiler.source>14</maven.compiler.source>
+        <maven.compiler.target>14</maven.compiler.target>
+
         <jersey.version>2.27</jersey.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
