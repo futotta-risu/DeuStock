@@ -99,6 +99,16 @@ public class User implements Serializable{
 	}
 
 	
+	public void updateInfo(User u) {
+		this.password = u.password;
+		this.fullName = u.fullName;
+		this.birthDate = u.birthDate;
+		this.country = u.country;
+		this.description = u.description;
+		this.registerDate = u.registerDate;
+		this.lastActivity = u.lastActivity;
+	}
+	
 	public String toString() {
 		return "User [username=" + username + ", password=" + password + ", fullName=" + fullName + ", birthDate="
 				+ birthDate + ", country=" + country + ", description=" + description + ", registerDate=" + registerDate
