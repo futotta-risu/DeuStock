@@ -1,5 +1,7 @@
 package es.deusto.DeuStock.app.jdo;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +36,11 @@ public class JDOTest {
 		List<User> users = UserDAO.getUsers();
 		System.out.println(user);
 		System.out.println(users);
+	}
+	
+	@Test
+	public void testUserPassword() {
+		assertTrue(UserDAO.checkPassword("username", "password"));
 	}
 
 	

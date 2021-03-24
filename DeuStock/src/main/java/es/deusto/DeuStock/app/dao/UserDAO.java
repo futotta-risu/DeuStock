@@ -106,6 +106,11 @@ public class UserDAO extends GenericDAO{
 		return user;
 	}
 	
+	public static boolean checkPassword(String username, String password) {
+		return(password.equals(UserDAO.getUser(username).getPassword()));
+	}
+	
+	
 //	public static void updateUser(User userInfo) {
 //		PersistenceManager pm = getPMF().getPersistenceManager();
 //		Transaction tx = pm.currentTransaction();
