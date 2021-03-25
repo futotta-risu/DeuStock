@@ -1,5 +1,7 @@
 package es.deusto.deustock;
 
+import es.deusto.deustock.resources.HelloWorld;
+import es.deusto.deustock.resources.socialnetwork.TwitterSentiment;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -24,7 +26,8 @@ public class Main {
         // create a resource config that scans for JAX-RS resources and providers
         // in com.dekses.jersey.docker.demo package
         final ResourceConfig rc = new ResourceConfig().packages("");
-        rc.register(MyResource.class);
+        rc.register(TwitterSentiment.class);
+        rc.register(HelloWorld.class);
         // create and start a new instance of grizzly http server
         // exposing the Jersey application at BASE_URI
         return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);

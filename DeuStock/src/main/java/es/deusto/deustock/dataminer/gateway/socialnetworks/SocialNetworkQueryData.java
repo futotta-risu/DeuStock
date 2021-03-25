@@ -11,6 +11,10 @@ public class SocialNetworkQueryData {
 
     public SocialNetworkQueryData() {}
 
+    public SocialNetworkQueryData(String searchQuery) {
+        this.searchQuery = searchQuery;
+    }
+
     public SocialNetworkQueryData(String searchQuery, Date dateFrom, int nMessages) {
         this.searchQuery = searchQuery;
         this.dateFrom = dateFrom;

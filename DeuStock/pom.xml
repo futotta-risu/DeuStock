@@ -67,7 +67,7 @@
 			<groupId>org.glassfish.jersey.inject</groupId>
 			<artifactId>jersey-hk2</artifactId>
 			<version>${jersey.version}</version>
-			</dependency>
+        </dependency>
 			<!-- uncomment this to get JSON support
 			-->
 		<dependency>
@@ -165,7 +165,7 @@
         <maven.compiler.source>14</maven.compiler.source>
         <maven.compiler.target>14</maven.compiler.target>
 
-        <jersey.version>2.27</jersey.version>
+        <jersey.version>2.30</jersey.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 </project>

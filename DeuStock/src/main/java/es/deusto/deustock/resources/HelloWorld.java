@@ -1,4 +1,4 @@
-package es.deusto.deustock;
+package es.deusto.deustock.resources;
 
 import es.deusto.deustock.dataminer.Extractor;
 import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum;
@@ -13,8 +13,8 @@ import javax.ws.rs.core.MediaType;
 /**
  * Root resource (exposed at "myresource" path)
  */
-@Path("myresource")
-public class MyResource {
+@Path("helloworld")
+public class HelloWorld {
 
     /**
      * Method handling HTTP GET requests. The returned object will be sent
@@ -25,20 +25,6 @@ public class MyResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getIt() {
-
-        Extractor ext = new Extractor();
-        String result= "error";
-        try{
-            ext.setGateway(SocialNetworkGatewayEnum.Twitter);
-            SocialNetworkQueryData snq = new SocialNetworkQueryData();
-            snq.setSearchQuery("happy");
-            result = String.valueOf(ext.getSentimentTendency(snq));
-
-        } catch (NoGatewayTypeException e) {
-            result= "error2";
-            e.printStackTrace();
-        }
-
-        return result;
+        return "Hello World";
     }
 }
