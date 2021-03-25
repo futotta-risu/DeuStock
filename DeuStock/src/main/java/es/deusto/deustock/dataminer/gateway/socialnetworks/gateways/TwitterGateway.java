@@ -48,7 +48,15 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
     }
 
     private JSONObject getConfiguration() throws IOException, ParseException {
-        return DSJSONUtils.readFile(path);
+        if(System.getenv("twitter_access_token")!=null){
+            JSONObject configuration = new JSONObject();
+            configuration.put("AccessToken",System.getenv("twitter_access_token"));
+            configuration.put("AccessTokenSecret",System.getenv("twitter_access_token_secret"));
+            configuration.put("ConsumerKey",System.getenv("twitter_consumer_key"));
+            configuration.put("ConsumerSecret",System.getenv("twitter_consumer_key_secret"));
+            return configuration;
+        }else return DSJSONUtils.readFile(path);
+
     }
 
     private ConfigurationBuilder getConfigurationBuilder(JSONObject configuration){

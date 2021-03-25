@@ -21,4 +21,9 @@ jobs:
       with:
         java-version: 14
     - name: Build with Maven
+      env:
+        twitter_access_token : ${{secrets.TWITTERACCESSTOKEN}}
+        twitter_access_token_secret : ${{secrets.TWITTERACCESSTOKENSECRET}}
+        twitter_consumer_key : ${{secrets.TWITTERCONSUMERKEY}}
+        twitter_consumer_key_secret : ${{secrets.TWITTERCONSUMERSECRET}}
       run: mvn --file DeuStock/pom.xml --batch-mode --update-snapshots verify
