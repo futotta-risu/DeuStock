@@ -48,7 +48,6 @@ public class Extractor {
         if(gateway == null) {
             throw new NoGatewayTypeException("There is no Gateway set");
         }
-
         List<SocialNetworkMessage> messages = gateway.getMessageList(queryData);
         System.out.println("Hemos obtenido " + messages.size() + " tweets");
 

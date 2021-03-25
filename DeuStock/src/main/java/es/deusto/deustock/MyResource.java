@@ -1,5 +1,10 @@
 package es.deusto.deustock;
 
+import es.deusto.deustock.dataminer.Extractor;
+import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum;
+import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkQueryData;
+import es.deusto.deustock.dataminer.gateway.socialnetworks.exceptions.NoGatewayTypeException;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -20,6 +25,20 @@ public class MyResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getIt() {
-        return "Got it!";
+
+        Extractor ext = new Extractor();
+        String result= "error";
+        try{
+            ext.setGateway(SocialNetworkGatewayEnum.Twitter);
+            SocialNetworkQueryData snq = new SocialNetworkQueryData();
+            snq.setSearchQuery("happy");
+            result = String.valueOf(ext.getSentimentTendency(snq));
+
+        } catch (NoGatewayTypeException e) {
+            result= "error2";
+            e.printStackTrace();
+        }
+
+        return result;
     }
 }

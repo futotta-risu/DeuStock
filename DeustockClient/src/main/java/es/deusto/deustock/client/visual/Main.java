@@ -13,6 +13,12 @@ public class Main extends Application{
     private VBox rootLayout;
 
     public static void main(String[] args){
+        /*
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target("http://localhost:8080");
+        Response response = target.path("myapp").path("myresource").request(MediaType.TEXT_PLAIN_TYPE).get();
+        System.out.println("Response: " + response.getStatus() + " - " + response.readEntity(String.class));
+         */
         Application.launch(args);
         System.out.println("Erik");
     }
