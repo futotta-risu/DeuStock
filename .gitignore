@@ -26,4 +26,6 @@ DeuStock/data/secret_keys/secret*
 
 .idea/
 bin/
-settings/
+.settings/
+.classpath
+*.iml
