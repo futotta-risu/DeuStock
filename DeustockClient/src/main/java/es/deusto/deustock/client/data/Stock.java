@@ -1,8 +1,5 @@
 package es.deusto.deustock.client.data;
 
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-
 public class Stock {
 
     private String name;

@@ -42,7 +42,7 @@
 
 <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.StockListViewController">
   <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="336.0" prefWidth="616.0" style="-fx-background-color: white;" VBox.vgrow="ALWAYS">
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="336.0" prefWidth="616.0" style="-fx-background-color: white;" stylesheets="@StockListView.css" VBox.vgrow="ALWAYS">
       <children>
             <Button id="twitterSearchButton" fx:id="twitterSearchButton" layoutX="8.0" layoutY="46.0" mnemonicParsing="false" onAction="#sentimentSearch" text="Buscar Twitter" />
             <TextField id="searchTextField" fx:id="twitterSearchField" layoutX="120.0" layoutY="46.0" prefHeight="25.0" prefWidth="341.0" />
