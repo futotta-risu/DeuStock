@@ -39,10 +39,9 @@ public class MainController {
      */
     public Scene loadScene(String path) {
         FXMLLoader loader = new FXMLLoader();
-
         loader.setLocation(getClass().getResource(path));
-        VBox node = null;
 
+        VBox node = null;
         try {
             node = loader.load();
         } catch (IOException e) {

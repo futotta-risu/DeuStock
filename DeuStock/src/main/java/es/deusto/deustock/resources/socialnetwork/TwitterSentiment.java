@@ -1,9 +1,7 @@
 package es.deusto.deustock.resources.socialnetwork;
 
 import es.deusto.deustock.dataminer.Extractor;
-import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum;
 import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkQueryData;
-import es.deusto.deustock.dataminer.gateway.socialnetworks.exceptions.NoGatewayTypeException;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -11,8 +9,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import static es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum.Twitter;
+
 /**
- * Root resource (exposed at "myresource" path)
+ * Twitter sentiment resource for sentiment analysis.
+ *
+ * @author Erik B. Terres
  */
 @Path("twitter/sentiment/{query}")
 public class TwitterSentiment {
@@ -26,18 +28,9 @@ public class TwitterSentiment {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getSentiment(@PathParam("query") String query) {
+        Extractor ext = new Extractor(Twitter);
 
-        Extractor ext = new Extractor();
-        String result= "error";
-        try{
-            ext.setGateway(SocialNetworkGatewayEnum.Twitter);
-            result = String.valueOf(ext.getSentimentTendency(new SocialNetworkQueryData(query)));
+        return String.valueOf(ext.getSentimentTendency(new SocialNetworkQueryData(query)));
 
-        } catch (NoGatewayTypeException e) {
-            result= "error2";
-            e.printStackTrace();
-        }
-
-        return result;
     }
 }

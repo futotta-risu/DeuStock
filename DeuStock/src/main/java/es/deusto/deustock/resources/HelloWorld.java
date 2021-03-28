@@ -1,17 +1,14 @@
 package es.deusto.deustock.resources;
 
-import es.deusto.deustock.dataminer.Extractor;
-import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum;
-import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkQueryData;
-import es.deusto.deustock.dataminer.gateway.socialnetworks.exceptions.NoGatewayTypeException;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
- * Root resource (exposed at "myresource" path)
+ * HelloWorld resource for testing purposes
+ *
+ * @author Erik B. Terres
  */
 @Path("helloworld")
 public class HelloWorld {

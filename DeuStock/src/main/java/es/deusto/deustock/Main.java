@@ -1,5 +1,9 @@
 package es.deusto.deustock;
 
+import es.deusto.deustock.dataminer.Extractor;
+import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum;
+import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayFactory;
+import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkQueryData;
 import es.deusto.deustock.resources.HelloWorld;
 import es.deusto.deustock.resources.socialnetwork.TwitterSentiment;
 import org.glassfish.grizzly.http.server.HttpServer;
@@ -39,13 +43,16 @@ public class Main {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-        final HttpServer server = startServer();
+        /*final HttpServer server = startServer();
         System.out.println(String.format("Jersey app started with WADL available at "
                 + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
         System.in.read();
         server.stop();
+        */
 
-
+        Extractor ext = new Extractor(SocialNetworkGatewayEnum.Twitter);
+        double sentiment = ext.getSentimentTendency(new SocialNetworkQueryData("gorgeous :)"));
+        System.out.println(sentiment);
     }
 }
 

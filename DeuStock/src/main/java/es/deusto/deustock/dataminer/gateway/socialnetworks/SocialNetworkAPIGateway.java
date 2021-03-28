@@ -7,6 +7,8 @@ import java.util.List;
 
 /**
  * Social Network gateway interface for basic functionality.
+ *
+ * @author Erik B. Terres
  */
 public interface SocialNetworkAPIGateway {
 	List<SocialNetworkMessage> getMessageList(SocialNetworkQueryData queryData);
