@@ -12,7 +12,12 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -67,6 +72,28 @@ public class DeustockGateway {
             questionList.add( new FAQQuestion((JSONObject) question) );
 
         return questionList;
+    }
+    
+    public boolean register(String username, String password, String fullName, Date birthDate, String aboutMe, String country) throws UnsupportedEncodingException, NoSuchAlgorithmException {	
+		Response response = (Response) getHostWebTarget().path("users").path("register")
+				.path(username).path(getEncrypt(password)).path(fullName)
+				.path(birthDate.toString()).path(aboutMe).path(country).request(MediaType.TEXT_PLAIN).get();
+		
+		return Boolean.parseBoolean(response.readEntity(String.class));
+    }
+    
+//    public User login(String username, String password) {
+//    	Response response = getHostWebTarget().path(username).path(getEncrypt(password)).request(MediaType.APPLICATION_JSON).get();
+//        JSONObject obj = new JSONObject(response.readEntity(String.class));
+//
+//    	return(new User(obj.get("username"), obj.get("password"), obj.get("fullName"), obj.get("birthDate"), obj.get("aboutMe"), obj.get("country")));
+//    }
+    
+    private String getEncrypt(String pass) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+		MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+		byte[] data = pass.getBytes("UTF-8");
+		byte[] encrypted = messageDigest.digest(data);
+		return encrypted.toString();
     }
 
 
