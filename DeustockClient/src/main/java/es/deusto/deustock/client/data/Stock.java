@@ -1,5 +1,9 @@
 package es.deusto.deustock.client.data;
 
+/**
+ *
+ * @author Erik B. Terres
+ */
 public class Stock {
 
     private String name;

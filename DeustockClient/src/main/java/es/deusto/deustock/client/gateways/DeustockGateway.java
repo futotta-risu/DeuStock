@@ -1,16 +1,30 @@
 package es.deusto.deustock.client.gateways;
 
 import es.deusto.deustock.client.data.Stock;
+import es.deusto.deustock.client.data.help.FAQQuestion;
 import es.deusto.deustock.client.net.RESTVars;
+import es.deusto.deustock.client.visual.help.FAQLine;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+/**
+ *
+ * @author Erik B. Terres
+ */
 public class DeustockGateway {
+
+    private WebTarget getHostWebTarget(){
+        return ClientBuilder.newClient().target(RESTVars.restUrl);
+    }
 
 
     public List<Stock> getStockList(){
@@ -41,8 +55,19 @@ public class DeustockGateway {
         return Double.parseDouble(response.readEntity(String.class));
     }
 
-    private WebTarget getHostWebTarget(){
-        return ClientBuilder.newClient().target(RESTVars.restUrl);
+    public List<FAQQuestion>  getFAQList(){
+        Response data = getHostWebTarget()
+                .path("help").path("faq").path("list")
+                .request(MediaType.APPLICATION_JSON).get();
+
+        JSONObject obj = new JSONObject(data.readEntity(String.class));
+
+        List<FAQQuestion> questionList = new LinkedList<>();
+        for(Object question : obj.getJSONArray("questions"))
+            questionList.add( new FAQQuestion((JSONObject) question) );
+
+        return questionList;
     }
+
 
 }

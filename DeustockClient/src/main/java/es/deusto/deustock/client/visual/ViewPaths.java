@@ -9,4 +9,6 @@ public class ViewPaths {
     public static final String StockListViewPath = "/views/StockListView.fxml";
     public static final String StockDetailViewPath = "/views/StockDetailView.fxml";
 
+    public static final String HelpViewPath = "/views/HelpView.fxml";
+
 }

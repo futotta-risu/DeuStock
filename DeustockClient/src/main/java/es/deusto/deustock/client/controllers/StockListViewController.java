@@ -2,8 +2,10 @@ package es.deusto.deustock.client.controllers;
 
 import es.deusto.deustock.client.data.Stock;
 import es.deusto.deustock.client.gateways.DeustockGateway;
+import es.deusto.deustock.client.visual.ViewPaths;
 import es.deusto.deustock.client.visual.stocks.list.StockInfoLine;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
@@ -36,6 +38,13 @@ public class StockListViewController {
             stockList.getChildren().add(new StockInfoLine(stock));
             stockList.getChildren().add(new Separator());
         }
+        Button helpView = new Button("Goto Help");
+        helpView.setOnMouseClicked(
+                mouseEvent -> MainController.getInstance().loadAndChangeScene(
+                        ViewPaths.HelpViewPath
+                )
+        );
+        stockList.getChildren().add(helpView);
     }
 
     @FXML

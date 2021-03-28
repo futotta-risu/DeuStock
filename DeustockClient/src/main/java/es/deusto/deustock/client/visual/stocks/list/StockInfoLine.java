@@ -6,6 +6,10 @@ import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 
+/**
+ *
+ * @author Erik B. Terres
+ */
 public class StockInfoLine extends BorderPane {
 
     Stock stock;
