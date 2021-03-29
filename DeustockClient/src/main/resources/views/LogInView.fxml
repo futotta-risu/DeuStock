@@ -39,7 +39,7 @@
                   <Font size="11.0" />
                </font>
             </Button>
-            <Button layoutX="393.0" layoutY="242.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="112.0" text="Register" />
+            <Button fx:id="registerBtn" layoutX="393.0" layoutY="242.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="112.0" text="Register" />
          </children>
       </AnchorPane>
    </children>

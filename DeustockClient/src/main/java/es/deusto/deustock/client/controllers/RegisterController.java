@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -33,6 +34,12 @@ public class RegisterController {
 	@FXML
     private ComboBox<String> countryCombo;
 	
+	@FXML
+	private Button registerBtn;
+	
+	@FXML
+	private Button cancelBtn;
+	
 	public RegisterController(){};
 	 
 	@FXML
@@ -41,6 +48,24 @@ public class RegisterController {
 		for (CountryEnum country : CountryEnum.values()) {
 			countryCombo.getItems().add(country.toString());
 		}
+		
+		registerBtn.setOnMouseClicked(		
+				mouseEvent -> {
+					try {
+						register();
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+					} catch (NoSuchAlgorithmException e) {
+						e.printStackTrace();
+					}
+				}
+		);
+		
+		cancelBtn.setOnMouseClicked(			
+				mouseEvent -> {
+					cancel();
+				}
+		);
 	}
 	
 	@FXML

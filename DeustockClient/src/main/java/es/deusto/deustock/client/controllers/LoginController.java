@@ -19,6 +19,9 @@ public class LoginController {
 
 	@FXML
 	private Button loginButton;
+	
+	@FXML
+	private Button registerBtn;
 
 	public LoginController(){};
 	 
@@ -34,6 +37,13 @@ public class LoginController {
 					MainController.getInstance().loadAndChangeScene(
 							ViewPaths.UserDetailViewPath
 					);
+				}
+		);
+		
+		registerBtn.setOnMouseClicked(
+		
+				mouseEvent -> {
+					openRegisterWindow();
 				}
 		);
 	}
