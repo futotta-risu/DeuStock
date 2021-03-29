@@ -5,10 +5,13 @@ import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.data.help.FAQQuestion;
 import es.deusto.deustock.client.net.RESTVars;
 import es.deusto.deustock.client.visual.help.FAQLine;
+
+import org.glassfish.jersey.client.ClientResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
@@ -76,19 +79,20 @@ public class DeustockGateway {
     }
     
     public boolean register(String username, String password, String fullName, Date birthDate, String aboutMe, String country) throws UnsupportedEncodingException, NoSuchAlgorithmException {	
-		Response response = (Response) getHostWebTarget().path("users").path("register")
-				.path(username).path(getEncrypt(password)).path(fullName)
-				.path(birthDate.toString()).path(aboutMe).path(country).request(MediaType.TEXT_PLAIN).get();
+		User newUser = new User(username, password, fullName, birthDate, aboutMe, country);
+    	Response response = (Response) getHostWebTarget().path("register")
+    			.request("application/json").post(Entity.entity(newUser, MediaType.APPLICATION_JSON));
 		
 		return Boolean.parseBoolean(response.readEntity(String.class));
     }
     
-//    public User login(String username, String password) {
-//    	Response response = getHostWebTarget().path(username).path(getEncrypt(password)).request(MediaType.APPLICATION_JSON).get();
-//        JSONObject obj = new JSONObject(response.readEntity(String.class));
-//
-//    	return(new User(obj.get("username"), obj.get("password"), obj.get("fullName"), obj.get("birthDate"), obj.get("aboutMe"), obj.get("country")));
-//    }
+    public User login(String username, String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    	Response response = getHostWebTarget().path(username).path(getEncrypt(password)).request(MediaType.APPLICATION_JSON).get();
+        JSONObject obj = new JSONObject(response.readEntity(String.class));
+
+    	return(new User(obj.getString("username"), obj.getString("password"), obj.getString("fullName"), (Date)obj.get("birthDate"), 
+    			obj.getString("aboutMe"), obj.getString("country")));
+    }
     
     private String getEncrypt(String pass) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 		MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
@@ -103,11 +107,8 @@ public class DeustockGateway {
                 .request(MediaType.APPLICATION_JSON).get();
 
         JSONObject obj = new JSONObject(data.readEntity(String.class));
-        User user = new User(obj.getString("username"));
-        return user.setName(obj.getString("name"))
-                .setDescription(obj.getString("description"))
-                .setBirthday(obj.getString("birthday"))
-                .setSex(obj.getBoolean("sex"));
+        User user = new User(obj.getString("username"), obj.getString("fullName"), obj.getString("description"), (Date) obj.get("birthDate"), obj.getString("aboutMe"), obj.getString("country"));
+        return user;
     }
 
 

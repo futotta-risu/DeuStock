@@ -60,8 +60,8 @@ public class UserDetailController implements DSGenericController{
         if(this.user==null) return;
 
         this.usernameLabel.setText(user.getUsername());
-        this.sexLabel.setText(String.valueOf(user.isSex()));
+        //this.sexLabel.setText(String.valueOf(user.isSex()));
         this.descriptionLabel.setText(user.getDescription());
-        this.birthdayLabel.setText(user.getBirthday());
+        this.birthdayLabel.setText(user.getBirthDate().toString());
     }
 }
