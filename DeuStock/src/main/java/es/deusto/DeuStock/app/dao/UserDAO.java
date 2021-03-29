@@ -90,7 +90,6 @@ public class UserDAO extends GenericDAO{
 			Query<?> query = pm.newQuery("SELECT FROM " + User.class.getName() + " WHERE username == '" + username +"'");
 			query.setUnique(true);
 			user = (User) pm.detachCopy((User) query.execute());
-			System.out.println("   * Querying a User: " + user);
 			tx.commit();
 
 		} catch (Exception ex) {
