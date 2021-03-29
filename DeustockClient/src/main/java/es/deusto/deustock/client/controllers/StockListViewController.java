@@ -11,6 +11,8 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 
+import java.util.HashMap;
+
 /**
  * StockListView controller
  *
@@ -45,6 +47,16 @@ public class StockListViewController {
                 )
         );
         stockList.getChildren().add(helpView);
+
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("username","test");
+        Button userView = new Button("User");
+        userView.setOnMouseClicked(
+                mouseEvent -> MainController.getInstance().loadAndChangeSceneWithParams(
+                        ViewPaths.UserDetailViewPath, params
+                )
+        );
+        stockList.getChildren().add(userView);
     }
 
     @FXML

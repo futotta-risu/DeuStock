@@ -7,6 +7,7 @@ import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkQueryDat
 import es.deusto.deustock.resources.HelloWorld;
 import es.deusto.deustock.resources.help.FAQList;
 import es.deusto.deustock.resources.socialnetwork.TwitterSentiment;
+import es.deusto.deustock.resources.user.UserDetail;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -34,6 +35,7 @@ public class Main {
         rc.register(TwitterSentiment.class);
         rc.register(HelloWorld.class);
         rc.register(FAQList.class);
+        rc.register(UserDetail.class);
         // create and start a new instance of grizzly http server
         // exposing the Jersey application at BASE_URI
         return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);

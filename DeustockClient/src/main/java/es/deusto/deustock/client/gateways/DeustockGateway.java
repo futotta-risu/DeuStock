@@ -1,6 +1,7 @@
 package es.deusto.deustock.client.gateways;
 
 import es.deusto.deustock.client.data.Stock;
+import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.data.help.FAQQuestion;
 import es.deusto.deustock.client.net.RESTVars;
 import es.deusto.deustock.client.visual.help.FAQLine;
@@ -67,6 +68,19 @@ public class DeustockGateway {
             questionList.add( new FAQQuestion((JSONObject) question) );
 
         return questionList;
+    }
+
+    public User getUser(String username){
+        Response data = getHostWebTarget()
+                .path("user").path(username)
+                .request(MediaType.APPLICATION_JSON).get();
+
+        JSONObject obj = new JSONObject(data.readEntity(String.class));
+        User user = new User(obj.getString("username"));
+        return user.setName(obj.getString("name"))
+                .setDescription(obj.getString("description"))
+                .setBirthday(obj.getString("birthday"))
+                .setSex(obj.getBoolean("sex"));
     }
 
 

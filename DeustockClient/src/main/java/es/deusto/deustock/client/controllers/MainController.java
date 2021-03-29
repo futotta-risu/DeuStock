@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Main controller of the application. This controller will handle the stage and scene changes.
@@ -37,13 +38,19 @@ public class MainController {
      * @return Returns the FXML scene
      *
      */
-    public Scene loadScene(String path) {
+    public Scene loadScene(String path, HashMap<String, Object> params) {
+
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(path));
 
         VBox node = null;
         try {
             node = loader.load();
+            if(params != null){
+                DSGenericController controller = loader.getController();
+                controller.setParams(params);
+            }
+
         } catch (IOException e) {
             DeuLogger.logger.error("Could not load " + path + " fxml file.");
             DeuLogger.logger.info("Closing system due to error.");
@@ -68,11 +75,15 @@ public class MainController {
      *
      * @param path FXML file path
      *
-     * @see  #loadScene(String)
+     * @see  #loadScene(String, HashMap)
      * @see  #changeScene(Scene)
      */
     public void loadAndChangeScene(String path) {
-        changeScene(loadScene(path));
+        changeScene(loadScene(path,null));
+    }
+
+    public void loadAndChangeSceneWithParams(String path, HashMap<String,Object> params) {
+        changeScene(loadScene(path,params));
     }
 
     public void setStage(Stage stage) {
