@@ -15,12 +15,12 @@
       <ImageView fitHeight="221.0" fitWidth="418.0" layoutX="12.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="344.0" fitWidth="611.0" layoutX="-7.0">
          <image>
-            <Image url="/img/back.png" />
+            <Image url="@img/back.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="261.0" fitWidth="378.0" layoutX="181.0" layoutY="44.0" opacity="0.7">
          <image>
-            <Image url="/img/blanco.jpeg" />
+            <Image url="@img/blanco.jpeg" />
          </image>
       </ImageView>
       <Label layoutX="224.0" layoutY="66.0" text="Log In into our DeuStok account">

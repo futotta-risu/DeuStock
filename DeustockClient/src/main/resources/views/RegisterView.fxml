@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="RegisterController">
    <children>
       <ImageView fitHeight="400.0" fitWidth="600.0">
          <image>
@@ -32,16 +31,16 @@
       <Label layoutX="184.0" layoutY="101.0" text="Username" />
       <Label layoutX="386.0" layoutY="102.0" text="Password" />
       <Label layoutX="385.0" layoutY="165.0" text="Fecha nacimiento" />
-      <ComboBox layoutX="186.0" layoutY="318.0" prefHeight="27.0" prefWidth="158.0" promptText="Selecciona un pais" />
+      <ComboBox fx:id="countryCombo" layoutX="186.0" layoutY="318.0" prefHeight="27.0" prefWidth="158.0" promptText="Selecciona un pais" />
       <Label layoutX="187.0" layoutY="298.0" text="Pais" />
       <Label layoutX="184.0" layoutY="223.0" text="Sobre ti" />
       <Label layoutX="186.0" layoutY="164.0" text="Nombre completo" />
-      <TextField layoutX="183.0" layoutY="123.0" />
-      <TextField layoutX="383.0" layoutY="122.0" />
-      <TextField layoutX="184.0" layoutY="185.0" />
-      <TextField layoutX="384.0" layoutY="184.0" />
-      <TextArea layoutX="185.0" layoutY="240.0" prefHeight="49.0" prefWidth="360.0" />
-      <Button cancelButton="true" layoutX="467.0" layoutY="315.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" text="Cancelar" />
-      <Button layoutX="374.0" layoutY="315.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" text="Registrar" />
+      <TextField fx:id="usernameTxt" layoutX="183.0" layoutY="123.0" />
+      <TextField fx:id="passwordTxt" layoutX="383.0" layoutY="122.0" />
+      <TextField fx:id="fullNameTxt" layoutX="184.0" layoutY="185.0" />
+      <TextField fx:id="birthDateTxt" layoutX="384.0" layoutY="184.0" />
+      <TextArea fx:id="aboutMeTxt" layoutX="185.0" layoutY="240.0" prefHeight="49.0" prefWidth="360.0" />
+      <Button fx:id="cancelBtn" cancelButton="true" layoutX="467.0" layoutY="315.0" mnemonicParsing="false" onAction="#cancelRegister" prefHeight="33.0" prefWidth="77.0" text="Cancelar" />
+      <Button fx:id="registerBtn" layoutX="374.0" layoutY="315.0" mnemonicParsing="false" onAction="#register" prefHeight="33.0" prefWidth="77.0" text="Registrar" />
    </children>
 </AnchorPane>

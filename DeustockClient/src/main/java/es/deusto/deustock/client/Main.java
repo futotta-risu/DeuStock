@@ -25,7 +25,7 @@ public class Main extends Application{
 
     public void initRootLayout() {
         MainController.getInstance().loadAndChangeScene(
-                ViewPaths.StockListViewPath
+                ViewPaths.LoginViewPath
         );
     }
 }
