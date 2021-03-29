@@ -86,18 +86,31 @@ public class DeustockGateway {
 		return Boolean.parseBoolean(response.readEntity(String.class));
     }
     
-    public User login(String username, String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-    	Response response = getHostWebTarget().path(username).path(getEncrypt(password)).request(MediaType.APPLICATION_JSON).get();
-        JSONObject obj = new JSONObject(response.readEntity(String.class));
+    public User login(String username, String password){
+    	//Response response = getHostWebTarget().path(username).path(getEncrypt(password)).request(MediaType.APPLICATION_JSON).get();
+        //JSONObject obj = new JSONObject(response.readEntity(String.class));
 
-    	return(new User(obj.getString("username"), obj.getString("password"), obj.getString("fullName"), (Date)obj.get("birthDate"), 
-    			obj.getString("aboutMe"), obj.getString("country")));
+    	//return(new User(obj.getString("username"), obj.getString("password"), obj.getString("fullName"), (Date)obj.get("birthDate"),
+    	//		obj.getString("aboutMe"), obj.getString("country")));
+        User user = new User();
+        user.setUsername("erik");
+        return user;
     }
     
-    private String getEncrypt(String pass) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-		MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-		byte[] data = pass.getBytes("UTF-8");
-		byte[] encrypted = messageDigest.digest(data);
+    private String getEncrypt(String pass) {
+        MessageDigest messageDigest = null;
+        try {
+            messageDigest = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        byte[] data = new byte[0];
+        try {
+            data = pass.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        byte[] encrypted = messageDigest.digest(data);
 		return encrypted.toString();
     }
 
