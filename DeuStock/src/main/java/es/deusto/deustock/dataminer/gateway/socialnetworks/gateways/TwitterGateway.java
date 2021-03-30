@@ -6,7 +6,6 @@ import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkQueryDat
 import es.deusto.deustock.log.DeuLogger;
 import es.deusto.deustock.util.file.DSJSONUtils;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import twitter4j.*;

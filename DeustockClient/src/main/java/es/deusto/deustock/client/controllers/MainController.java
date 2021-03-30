@@ -1,9 +1,13 @@
 package es.deusto.deustock.client.controllers;
 
+import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.log.DeuLogger;
+import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -22,6 +26,10 @@ public class MainController {
     private static MainController instance = null;
 
     private Stage stage;
+    private Scene scene;
+    private BorderPane genericPane;
+
+    private User user;
 
     private MainController(){}
 
@@ -31,19 +39,18 @@ public class MainController {
     }
 
     /**
-     * Loads the scene from a fxml file and returns it.
+     * Loads the pane from a fxml file and returns it.
      * If the file is not loaded correctly, the JavaFX framework will be shutdown.
      *
      * @param path FXML file path
      * @return Returns the FXML scene
      *
      */
-    public Scene loadScene(String path, HashMap<String, Object> params) {
-
+    public Pane loadPane(String path, HashMap<String, Object> params) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(path));
 
-        VBox node = null;
+        Pane node = null;
         try {
             node = loader.load();
             if(params != null){
@@ -53,41 +60,73 @@ public class MainController {
 
         } catch (IOException e) {
             DeuLogger.logger.error("Could not load " + path + " fxml file.");
+            e.printStackTrace();
             DeuLogger.logger.info("Closing system due to error.");
         }
-
         // In case of not loaded VBox, exit application
-        if(node != null) return new Scene(node);
+        if(node != null) return node;
         else Platform.exit();
-
         // Empty return statement in case of Platform.exit to avoid further error
         // with instances like return null
-        return new Scene(new VBox());
+        return new VBox();
+    }
+
+    public void changePane(Pane pane){
+        this.genericPane.setCenter(pane);
+        this.stage.show();
     }
 
     public void changeScene(Scene scene){
-        stage.setScene(scene);
-        stage.show();
+        this.scene = scene;
+        this.stage.setScene(scene);
+        this.stage.show();
     }
 
     /**
-     * Loads the Scene from a FXML file and then changes the current Scene to the new laoded Scene.
+     * Loads the Pane from a FXML file and then changes the current center Pane to the new loaded Pane.
      *
      * @param path FXML file path
      *
-     * @see  #loadScene(String, HashMap)
-     * @see  #changeScene(Scene)
+     * @see  #loadPane(String, HashMap)
+     * @see  #changePane(Pane)
      */
+    public void loadAndChangePane(String path) {
+        changePane(loadPane(path,null));
+    }
     public void loadAndChangeScene(String path) {
-        changeScene(loadScene(path,null));
+        changeScene(new Scene(loadPane(path,null)));
     }
 
+    public void loadAndChangePaneWithParams(String path, HashMap<String,Object> params) {
+        changePane(loadPane(path,params));
+    }
     public void loadAndChangeSceneWithParams(String path, HashMap<String,Object> params) {
-        changeScene(loadScene(path,params));
+        changeScene(new Scene(loadPane(path,params)));
     }
 
     public void setStage(Stage stage) {
         this.stage = stage;
-        stage.show();
+        this.stage.show();
     }
+
+    public void initGenericStage(String username){
+        this.genericPane = new BorderPane();
+
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("username", username);
+
+        this.genericPane.setBottom(loadPane(ViewPaths.ControlButtonViewPath, params));
+        this.genericPane.setCenter(new Pane());
+        this.scene = new Scene(this.genericPane);
+        this.stage.setScene(this.scene);
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }

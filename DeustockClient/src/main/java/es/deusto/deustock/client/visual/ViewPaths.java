@@ -14,6 +14,9 @@ public class ViewPaths {
     public static final String RegisterViewPath = "/views/RegisterView.fxml";
     public static final String LoginViewPath = "/views/LoginView.fxml";
 
+    public static final String HomeViewPath = "/views/HomeView.fxml";
+
+    public static final String ControlButtonViewPath = "/views/ControlButtonView.fxml";
 
     public static final String UserDetailViewPath = "/views/UserDetailView.fxml";
 }

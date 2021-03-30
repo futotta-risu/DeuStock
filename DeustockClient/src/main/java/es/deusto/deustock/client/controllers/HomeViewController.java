@@ -1,5 +1,4 @@
 package es.deusto.deustock.client.controllers;
-import java.util.HashMap;
 
 import es.deusto.deustock.client.data.Stock;
 import es.deusto.deustock.client.gateways.DeustockGateway;
@@ -8,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.*;
 
-import java.util.HashMap;
 
 public class HomeViewController {
 
@@ -25,22 +23,5 @@ public class HomeViewController {
             stockList.getChildren().add(new StockInfoLine(stock));
             stockList.getChildren().add(new Separator());
         }
-        Button helpView = new Button("Goto Help");
-        helpView.setOnMouseClicked(
-                mouseEvent -> MainController.getInstance().loadAndChangeScene(
-                        ViewPaths.HelpViewPath
-                )
-        );
-        stockList.getChildren().add(helpView);
-
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("username","test");
-        Button userView = new Button("User");
-        userView.setOnMouseClicked(
-                mouseEvent -> MainController.getInstance().loadAndChangeSceneWithParams(
-                        ViewPaths.UserDetailViewPath, params
-                )
-        );
-        stockList.getChildren().add(userView);
     }
 }

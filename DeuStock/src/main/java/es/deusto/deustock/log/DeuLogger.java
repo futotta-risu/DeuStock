@@ -9,5 +9,5 @@ import org.slf4j.LoggerFactory;
  * @author Erik B. Terres
  */
 public class DeuLogger {
-    public static Logger logger = LoggerFactory.getLogger(DeuLogger.class);
+    public static final Logger logger = LoggerFactory.getLogger(DeuLogger.class);
 }

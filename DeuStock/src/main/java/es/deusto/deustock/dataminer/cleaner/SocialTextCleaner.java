@@ -4,7 +4,6 @@ import es.deusto.deustock.data.SocialNetworkMessage;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Social text cleaner class with all the functionality for data cleaning.

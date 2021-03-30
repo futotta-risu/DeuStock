@@ -1,9 +1,5 @@
 package es.deusto.deustock;
 
-import es.deusto.deustock.dataminer.Extractor;
-import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum;
-import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayFactory;
-import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkQueryData;
 import es.deusto.deustock.resources.HelloWorld;
 import es.deusto.deustock.resources.help.FAQList;
 import es.deusto.deustock.resources.socialnetwork.TwitterSentiment;
@@ -43,8 +39,6 @@ public class Main {
 
     /**
      * Main method.
-     * @param args
-     * @throws IOException
      */
     public static void main(String[] args) throws IOException {
         final HttpServer server = startServer();

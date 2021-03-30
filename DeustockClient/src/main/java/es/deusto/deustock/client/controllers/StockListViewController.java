@@ -42,7 +42,7 @@ public class StockListViewController {
         }
         Button helpView = new Button("Goto Help");
         helpView.setOnMouseClicked(
-                mouseEvent -> MainController.getInstance().loadAndChangeScene(
+                mouseEvent -> MainController.getInstance().loadAndChangePane(
                         ViewPaths.HelpViewPath
                 )
         );
@@ -52,7 +52,7 @@ public class StockListViewController {
         params.put("username","test");
         Button userView = new Button("User");
         userView.setOnMouseClicked(
-                mouseEvent -> MainController.getInstance().loadAndChangeSceneWithParams(
+                mouseEvent -> MainController.getInstance().loadAndChangePaneWithParams(
                         ViewPaths.UserDetailViewPath, params
                 )
         );

@@ -31,7 +31,7 @@ public class StockInfoLine extends BorderPane {
         setRight(stockPriceLabel);
 
         this.stockNameLabel.setOnMouseClicked(
-                mouseEvent -> MainController.getInstance().loadAndChangeScene(
+                mouseEvent -> MainController.getInstance().loadAndChangePane(
                         ViewPaths.StockDetailViewPath
                 )
         );

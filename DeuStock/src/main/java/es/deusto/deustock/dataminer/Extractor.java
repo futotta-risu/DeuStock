@@ -12,7 +12,7 @@ import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkQueryDat
 import java.util.List;
 
 /**
- * Extractor class, used to encapsulate the sentiment extraction proccess.
+ * Extractor class, used to encapsulate the sentiment extraction process.
  */
 public class Extractor {
 

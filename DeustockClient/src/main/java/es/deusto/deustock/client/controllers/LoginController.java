@@ -34,39 +34,33 @@ public class LoginController {
 
 					if(login==null) return;
 
-					MainController.getInstance().loadAndChangeScene(
-							ViewPaths.UserDetailViewPath
+					MainController.getInstance().initGenericStage(login.getUsername());
+					MainController.getInstance().loadAndChangePane(
+							ViewPaths.HomeViewPath
 					);
 				}
 		);
 		
 		registerBtn.setOnMouseClicked(
-		
-				mouseEvent -> {
-					openRegisterWindow();
-				}
-		);
+				mouseEvent -> MainController.getInstance().loadAndChangeScene(
+							ViewPaths.RegisterViewPath
+					)
+			);
 	}
-	
-	
-	@FXML
-	private void openRegisterWindow(){
-		MainController.getInstance().loadAndChangeScene(ViewPaths.RegisterViewPath);
-	}
+
 	
 	@FXML
 	private User login(){
-		User result = null;
 		String username = usernameTxt.getText();
 		String password = passwordTxt.getText();
 
 		DeustockGateway dg = new DeustockGateway();
-		if(!username.equals("") && !password.equals(""))
-			result = dg.login(username, password);
-		else
-			JOptionPane.showInternalConfirmDialog(null, "CAMPOS VACIOS", "ERROR", 0);
+		if(username.isEmpty() || password.isEmpty())
+			JOptionPane.showInternalConfirmDialog(
+					null, "CAMPOS VACIOS", "ERROR", JOptionPane.YES_NO_OPTION
+			);
 
-		return result;
+		return dg.login(username, password);
 	}
 
 
