@@ -5,7 +5,11 @@ import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
+
+import static java.util.Map.entry;
 
 /**
  * @author Erik B. Terres
@@ -32,10 +36,11 @@ public class ControlButtonController implements DSGenericController{
                 )
         );
         profileButton.setOnMouseClicked(
-                mouseevent -> MainController.getInstance().loadAndChangePane(
-                        ViewPaths.UserDetailViewPath
+                mouseevent -> MainController.getInstance().loadAndChangePaneWithParams(
+                        ViewPaths.UserDetailViewPath, new HashMap<>() {{ put("username", username); }}
                 )
         );
+
         // TODO When About us created, implement
         /*
         aboutButton.setOnMouseClicked(

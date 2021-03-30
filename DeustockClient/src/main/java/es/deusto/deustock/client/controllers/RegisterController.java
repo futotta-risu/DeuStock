@@ -65,7 +65,7 @@ public class RegisterController {
 				mouseEvent -> MainController.getInstance().loadAndChangeScene(ViewPaths.LoginViewPath)
 		);
 	}
-	
+
 	private void register() throws UnsupportedEncodingException, NoSuchAlgorithmException {
 		String username = usernameTxt.getText();
 		String password = passwordTxt.getText();

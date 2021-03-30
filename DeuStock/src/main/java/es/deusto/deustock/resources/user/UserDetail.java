@@ -22,11 +22,12 @@ public class UserDetail {
 
         JSONObject user = new JSONObject();
         user.put("username","testuser");
-        user.put("birthday","21/02/1999");
-        user.put("sex",false);
+        user.put("fullName","Erik T");
+        user.put("birthDate","21/02/1999");
+        user.put("aboutMe","soy yo");
         user.put("name","testname");
         user.put("description","description test");
-
+        user.put("country","Spain");
         return user;
     }
 }
