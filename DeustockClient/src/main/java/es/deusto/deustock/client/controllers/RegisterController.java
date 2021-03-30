@@ -62,13 +62,10 @@ public class RegisterController {
 		);
 		
 		cancelBtn.setOnMouseClicked(			
-				mouseEvent -> {
-					cancel();
-				}
+				mouseEvent -> MainController.getInstance().loadAndChangeScene(ViewPaths.LoginViewPath)
 		);
 	}
 	
-	@FXML
 	private void register() throws UnsupportedEncodingException, NoSuchAlgorithmException {
 		String username = usernameTxt.getText();
 		String password = passwordTxt.getText();
@@ -89,11 +86,7 @@ public class RegisterController {
 			JOptionPane.showInternalConfirmDialog(null, "CAMPOS VACIOS", "ERROR", 0);
 		}
 	}
-	
-	@FXML
-	private void cancel() {
-		MainController.getInstance().loadAndChangeScene(ViewPaths.LoginViewPath);
-	}
+
 
 	
 
