@@ -4,6 +4,9 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
+import es.deusto.DeuStock.app.dao.StockDAO;
+import es.deusto.DeuStock.app.data.Stock;
+
 import java.io.IOException;
 import java.net.URI;
 
@@ -36,6 +39,16 @@ public class Main {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
+    	
+      	Stock stock1 = new Stock("MSFT", "Microsoft");
+    	
+		StockDAO.getInstance().storeStock(stock1);
+		
+		System.out.println(StockDAO.getInstance().getStock("MSFT"));
+		
+		stock1.setDescription("DescriptionChanged");
+		
+      	StockDAO.getInstance().deleteStock(stock1);
 
         final HttpServer server = startServer();
         System.out.println(String.format("Jersey app started with WADL available at "

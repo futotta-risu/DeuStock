@@ -16,12 +16,23 @@ import es.deusto.DeuStock.app.data.User;
  * <strong>Pattern</strong>
  * <ul>
  *      <li>DAO</li>
+ *      <li>Singleton</li>
  * </ul>
  */
 public class UserDAO extends GenericDAO{
-	public UserDAO() {
-		super();
-	}
+	
+    private static UserDAO INSTANCE;
+    
+    public static UserDAO getInstance() 
+	{
+        if(INSTANCE == null) 
+        {
+            INSTANCE = new UserDAO();
+        }
+  
+        return INSTANCE;
+    }
+
 	
 	public static void storeUser(User user) {
 		PersistenceManager pm = getPMF().getPersistenceManager();

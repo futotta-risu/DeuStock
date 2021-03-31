@@ -1,10 +1,12 @@
-package es.deusto.DeuStock.app.data;
+package es.deusto.DeuStock.data;
 
 import static org.junit.Assert.*;
 
 import java.util.Date;
 
 import org.junit.Test;
+
+import es.deusto.DeuStock.app.data.User;
 
 public class UserTest {
 	
