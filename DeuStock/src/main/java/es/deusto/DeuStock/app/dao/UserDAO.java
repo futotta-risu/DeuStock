@@ -8,7 +8,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-
+import es.deusto.DeuStock.app.data.Stock;
 import es.deusto.DeuStock.app.data.User;
 
 
@@ -141,14 +141,29 @@ public class UserDAO extends GenericDAO{
 //		}
 //	}
 //	
-//	public static void deleteUser(User user) {
-//		PersistenceManager pm = getPMF().getPersistenceManager();
-//        try{
-//        	pm.deletePersistent(user);
-//        } catch(Exception ex) {
-//        	System.out.println("    $ Error deleting the user: " + ex.getMessage());
-//        } finally{
-//            pm.close();
-//        }
-//	}
+	public static void deleteUser(User user) {
+		PersistenceManager pm = getPMF().getPersistenceManager();
+		pm.getFetchPlan().setMaxFetchDepth(3);
+		Transaction tx = pm.currentTransaction();
+		pm.setDetachAllOnCommit(true);
+		try {
+			System.out.println("   * Querying a User: " + user.getUsername());
+	
+			tx.begin();
+			Query<?> query = pm.newQuery("SELECT FROM " + User.class.getName() + " WHERE username == '" + user.getUsername() +"'");
+			query.setUnique(true);
+			query.deletePersistentAll();
+			tx.commit();
+	
+		} catch (Exception ex) {
+			System.out.println("   $ Error Getting User: " + ex.getMessage());
+		} finally {
+	
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+	
+			pm.close();
+		}
+	}
 }

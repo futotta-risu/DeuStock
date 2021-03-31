@@ -56,15 +56,15 @@ public class UserDAOTest {
 //	}
 //
 //	
-//	/**
-//	 * Tests user deletion
-//	*/
-//	@Test
-//    public void testUserDeletion() {
-//        User user1 = UserDAO.getUser("username");
-//        UserDAO.deleteUser(user1);
-//        System.out.println("Deleted User from DB:" + user1.getUsername());
-//    }
+	/**
+	 * Tests user deletion
+	*/
+	@Test
+    public void testUserDeletion() {
+        User user1 = UserDAO.getUser("username");
+        UserDAO.deleteUser(user1);
+        System.out.println("Deleted User from DB:" + user1.getUsername());
+    }
 
 
 }
