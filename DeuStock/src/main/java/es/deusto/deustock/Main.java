@@ -11,6 +11,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import java.io.IOException;
 import java.net.URI;
 
+
 /**
  * Main class.
  *
@@ -41,6 +42,7 @@ public class Main {
      * Main method.
      */
     public static void main(String[] args) throws IOException {
+
         final HttpServer server = startServer();
         System.out.println(String.format("Jersey app started with WADL available at "
                 + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
