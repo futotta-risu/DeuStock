@@ -1,4 +1,4 @@
-package es.deusto.deustock;
+package es.deusto.deustock.resources;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -6,10 +6,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
- * Root resource (exposed at "myresource" path)
+ * HelloWorld resource for testing purposes
+ *
+ * @author Erik B. Terres
  */
-@Path("myresource")
-public class MyResource {
+@Path("helloworld")
+public class HelloWorld {
 
     /**
      * Method handling HTTP GET requests. The returned object will be sent
@@ -20,6 +22,6 @@ public class MyResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getIt() {
-        return "Got it!";
+        return "Hello World";
     }
 }

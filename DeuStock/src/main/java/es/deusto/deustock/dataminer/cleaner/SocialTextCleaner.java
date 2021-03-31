@@ -5,32 +5,40 @@ import es.deusto.deustock.data.SocialNetworkMessage;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Social text cleaner class with all the functionality for data cleaning.
+ *
+ * @author Erik B. Terres
+ */
 public class SocialTextCleaner {
 
-    public final static String charFilter = "[^\\p{L}\\p{M}\\p{N}\\p{P}\\p{Z}\\p{Cf}\\p{Cs}\\s]";
+    private final static String charFilter      = "[^\\p{L}\\p{M}\\p{N}\\p{P}\\p{Z}\\p{Cf}\\p{Cs}\\s]";
+    private final static String urlFilter       = "(https?://)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)";
+    private final static String usernameFilter  = "@[\\S]+";
+    private final static String hashtagFilter   = "#";
+    private final static String spaceFilter     = "[\\s]+";
 
     public static String removeInvalidChars(String txt) {
         return txt.replaceAll(charFilter, "");
     }
 
     public static String removeURLS(String txt) {
-        String urlRegex = "(https?://)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)";
-        return txt.replaceAll(urlRegex, "");
+        return txt.replaceAll(urlFilter, "");
     }
 
     public static String removeHashtags(String txt) {
-        return txt.replaceAll("#", "");
+        return txt.replaceAll(hashtagFilter, "");
     }
 
     /**
      * Changes usernames based on the format "@[^\\s]+" to generic "Tom"
      */
     public static String removeUsernames(String txt) {
-        return txt.replaceAll("@[\\S]+", "Tom");
+        return txt.replaceAll(usernameFilter, "Tom");
     }
 
     public static String removeExtraSpaces(String txt) {
-        return txt.trim().replaceAll("[\\s]+", " ");
+        return txt.trim().replaceAll(spaceFilter, " ");
     }
 
     /**
@@ -46,13 +54,11 @@ public class SocialTextCleaner {
     }
 
     public static void clean(List<String> messages) {
-        for (int i = 0; i < messages.size(); i++)
-            messages.set(i, clean(messages.get(i)));
+        messages.replaceAll(SocialTextCleaner::clean);
     }
 
     public static void clean(Collection<SocialNetworkMessage> messages) {
-        for (SocialNetworkMessage snm : messages)
-            snm.setMessage(clean(snm.getMessage()));
+        messages.forEach(c -> c.setMessage(clean(c.getMessage())));
     }
 
 

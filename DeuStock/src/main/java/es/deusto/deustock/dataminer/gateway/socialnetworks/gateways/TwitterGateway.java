@@ -3,9 +3,9 @@ package es.deusto.deustock.dataminer.gateway.socialnetworks.gateways;
 import es.deusto.deustock.data.SocialNetworkMessage;
 import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkAPIGateway;
 import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkQueryData;
+import es.deusto.deustock.log.DeuLogger;
 import es.deusto.deustock.util.file.DSJSONUtils;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import twitter4j.*;
@@ -18,9 +18,7 @@ import java.util.List;
 /**
  * Twitter gateway.
  *
- * Singleton
- *
- * Accessed by getInstance()
+ * @author Erik B. Terres
  */
 public class TwitterGateway implements SocialNetworkAPIGateway {
 
@@ -32,19 +30,17 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
     private static TwitterGateway instance = null;
 
     private TwitterGateway(){
-        JSONObject configuration = null;
+        JSONObject config = null;
         try {
-            configuration = getConfiguration();
+            config = getConfiguration();
         } catch (IOException | ParseException e) {
-            // TODO Log errors
+            DeuLogger.logger.error("Could not load twitter configuration.");
             this.twitterF = null;
             this.twitterStreamF = null;
             return;
         }
-
-        this.twitterF = new TwitterFactory(getConfigurationBuilder(configuration).build());
-        this.twitterStreamF = new TwitterStreamFactory(getConfigurationBuilder(configuration).build());
-
+        this.twitterF = new TwitterFactory(getConfigurationBuilder(config).build());
+        this.twitterStreamF = new TwitterStreamFactory(getConfigurationBuilder(config).build());
     }
 
     private JSONObject getConfiguration() throws IOException, ParseException {
@@ -93,7 +89,7 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
                 );
             }
         } catch (TwitterException e) {
-            e.printStackTrace();
+            DeuLogger.logger.error("Error on getting tweets.");
         }
 
         return messages;

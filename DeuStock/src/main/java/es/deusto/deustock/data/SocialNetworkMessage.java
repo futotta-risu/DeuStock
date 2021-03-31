@@ -1,13 +1,16 @@
 package es.deusto.deustock.data;
 
 /**
+ * Social Network generic message class.
+ * Represent posts of different types of social networks s.a. Twitter, Reddit, etc.
  *
+ * @author Erik B. Terres
  */
 public class SocialNetworkMessage {
 
 	private String author = null;
 	private String message = null;
-	private int sentiment = 0;
+	private double sentiment = 0;
 
 	public SocialNetworkMessage(){}
 
@@ -34,8 +37,8 @@ public class SocialNetworkMessage {
 		return this;
 	}
 
-	public void setSentiment(int sentiment){this.sentiment = sentiment;}
-	public int getSentiment(){return this.sentiment;}
+	public void setSentiment(double sentiment){this.sentiment = sentiment;}
+	public double getSentiment(){return this.sentiment;}
 
 
 	@Override

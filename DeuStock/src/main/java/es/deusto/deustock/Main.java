@@ -1,5 +1,9 @@
 package es.deusto.deustock;
 
+import es.deusto.deustock.resources.HelloWorld;
+import es.deusto.deustock.resources.help.FAQList;
+import es.deusto.deustock.resources.socialnetwork.TwitterSentiment;
+import es.deusto.deustock.resources.user.UserDetail;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -23,8 +27,11 @@ public class Main {
     public static HttpServer startServer() {
         // create a resource config that scans for JAX-RS resources and providers
         // in com.dekses.jersey.docker.demo package
-        final ResourceConfig rc = new ResourceConfig().packages("com.dekses.jersey.docker.demo");
-
+        final ResourceConfig rc = new ResourceConfig().packages("");
+        rc.register(TwitterSentiment.class);
+        rc.register(HelloWorld.class);
+        rc.register(FAQList.class);
+        rc.register(UserDetail.class);
         // create and start a new instance of grizzly http server
         // exposing the Jersey application at BASE_URI
         return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);
@@ -32,17 +39,13 @@ public class Main {
 
     /**
      * Main method.
-     * @param args
-     * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-        /*final HttpServer server = startServer();
+        final HttpServer server = startServer();
         System.out.println(String.format("Jersey app started with WADL available at "
                 + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
         System.in.read();
-        server.stop();*/
-
-
+        server.stop();
     }
 }
 

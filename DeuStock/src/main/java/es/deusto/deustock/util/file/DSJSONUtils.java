@@ -4,12 +4,15 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+
+/**
+ * DeuStock JSON util class
+ *
+ * @author Erik B. Terres
+ */
 public class DSJSONUtils {
 
     public static JSONObject readFile(String path) throws IOException, ParseException {

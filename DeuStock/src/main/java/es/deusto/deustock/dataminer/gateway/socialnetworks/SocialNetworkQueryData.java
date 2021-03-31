@@ -2,7 +2,10 @@ package es.deusto.deustock.dataminer.gateway.socialnetworks;
 
 import java.util.Date;
 
-
+/**
+ *
+ * @author Erik B. Terres
+ */
 public class SocialNetworkQueryData {
 
     private String searchQuery;
@@ -10,6 +13,10 @@ public class SocialNetworkQueryData {
     private int nMessages  = 20;
 
     public SocialNetworkQueryData() {}
+
+    public SocialNetworkQueryData(String searchQuery) {
+        this.searchQuery = searchQuery;
+    }
 
     public SocialNetworkQueryData(String searchQuery, Date dateFrom, int nMessages) {
         this.searchQuery = searchQuery;

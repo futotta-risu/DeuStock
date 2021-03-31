@@ -11,58 +11,59 @@ import edu.stanford.nlp.trees.Tree;
 import edu.stanford.nlp.util.CoreMap;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Properties;
-import java.util.stream.Collectors;
 
 /**
  * Sentiment analyzer class that encapsulates all the NLP Sentiment analysis functions
+ *
+ * @author Erik B. Terres
  */
 public class SentimentAnalyzer {
-
 
     /**
      *
      * Returns the category of a String based on the predicted sentiment.
      *
-     * https://aboullaite.me/stanford-corenlp-java/
      *
      * @param message String message
-     * @return Integer from 0 to 4. (Very Negative, Negative, Neutral, Positive, Very Positive)
+     * @return Double from 0 to 4. (0-Very Negative, 4-Very Positive)
      */
-    public static int analyze(String message) {
+    public static double analyze(String message) {
+        if(message==null || message.length()==0) return 2;
+
         Properties props = new Properties();
-        props.setProperty("annotators", "tokenize, ssplit, pos, parse, sentiment");
+        props.setProperty("annotators", "tokenize, ssplit, parse, sentiment");
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
         Annotation annotation = pipeline.process(message);
+
+        int i = 0;
+        double sentiment = 0;
         for (CoreMap sentence : annotation.get(CoreAnnotations.SentencesAnnotation.class)) {
             Tree tree = sentence.get(SentimentCoreAnnotations.SentimentAnnotatedTree.class);
-            return RNNCoreAnnotations.getPredictedClass(tree);
-        }
-        return 0;
-    }
+            sentiment += RNNCoreAnnotations.getPredictedClass(tree);
 
-    public static List<Integer> analyze(List<String> messages){
-        return messages.stream().map(SentimentAnalyzer::analyze).collect(Collectors.toList());
+            i++;
+        }
+        return sentiment/i;
     }
 
     /**
-     * Analyzer of SocialNetworkMessages.
+     * Analyzes the sentiment of a collection of {@link SocialNetworkMessage} and saves them to the
+     * sentiment variable inside the {@link SocialNetworkMessage}
      *
-     * No need of return since is passed by reference.
-     *
+     * @param messages Collection of {@link SocialNetworkMessage}
+     *                 
+     * @see #analyze(String)
      */
     public static void analyze(Collection<SocialNetworkMessage> messages){
-        for(SocialNetworkMessage snm : messages) {
-            snm.setSentiment(analyze(snm.getMessage()));
-        }
+        messages.forEach(c -> c.setSentiment(analyze(c.getMessage())));
     }
 
     /**
      * Returns the average sentiment of a list of messages
      */
     public static double getSentimentTendency(Collection<SocialNetworkMessage> messages){
-        return messages.stream().mapToInt(SocialNetworkMessage::getSentiment).average().getAsDouble();
+        return messages.stream().mapToDouble(SocialNetworkMessage::getSentiment).average().orElse(Double.NaN);
     }
 
 }

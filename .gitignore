@@ -29,3 +29,5 @@ bin/
 .settings/
 .classpath
 *.iml
+.DS_Store
+target/
