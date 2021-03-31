@@ -119,16 +119,7 @@ public class DeustockGateway {
                 .path("user").path(username)
                 .request(MediaType.APPLICATION_JSON).get();
 
-        JSONObject obj = new JSONObject(data.readEntity(String.class));
-        User user = new User(
-                obj.getString("username"),
-                obj.getString("fullName"),
-                obj.getString("description"),
-                new Date(),
-                obj.getString("aboutMe"),
-                obj.getString("country")
-        );
-        return user;
+        return data.readEntity(User.class);
     }
 
 
