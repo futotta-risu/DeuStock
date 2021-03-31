@@ -1,4 +1,4 @@
-package com.dekses.jersey.docker.demo;
+package es.deusto.deustock.resources;
 
 
 
@@ -12,8 +12,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 
-import es.deusto.DeuStock.app.dao.UserDAO;
-import es.deusto.DeuStock.app.data.User;
+import es.deusto.deustock.app.dao.UserDAO;
+import es.deusto.deustock.app.data.User;
 
 @Path("/users")
 public class UserResource {

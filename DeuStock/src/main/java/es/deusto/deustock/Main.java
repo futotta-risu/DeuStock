@@ -1,6 +1,7 @@
 package es.deusto.deustock;
 
 import es.deusto.deustock.resources.HelloWorld;
+import es.deusto.deustock.resources.UserResource;
 import es.deusto.deustock.resources.help.FAQList;
 import es.deusto.deustock.resources.socialnetwork.TwitterSentiment;
 import es.deusto.deustock.resources.user.UserDetail;
@@ -33,6 +34,7 @@ public class Main {
         rc.register(HelloWorld.class);
         rc.register(FAQList.class);
         rc.register(UserDetail.class);
+        rc.register(UserResource.class);
         // create and start a new instance of grizzly http server
         // exposing the Jersey application at BASE_URI
         return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);

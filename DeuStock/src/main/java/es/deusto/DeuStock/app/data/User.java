@@ -1,4 +1,4 @@
-package es.deusto.DeuStock.app.data;
+package es.deusto.deustock.app.data;
 
 import java.util.Calendar;
 import java.io.Serializable;
@@ -8,10 +8,6 @@ import javax.jdo.annotations.*;
 @PersistenceCapable
 public class User implements Serializable{
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	@Unique
 	String username;
 	String password;

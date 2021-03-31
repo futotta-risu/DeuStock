@@ -9,7 +9,7 @@ import java.io.IOException;
 
 
 /**
- * DeuStock JSON util class
+ * deustock JSON util class
  *
  * @author Erik B. Terres
  */

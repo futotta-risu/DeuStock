@@ -1,4 +1,4 @@
-package es.deusto.DeuStock.app.dao;
+package es.deusto.deustock.app.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 
-import es.deusto.DeuStock.app.data.User;
+import es.deusto.deustock.app.data.User;
 
 
 /**
@@ -18,7 +18,7 @@ import es.deusto.DeuStock.app.data.User;
  *      <li>DAO</li>
  * </ul>
  */
-public class UserDAO extends GenericDAO{
+public class UserDAO extends GenericDAO {
 	public UserDAO() {
 		super();
 	}
@@ -87,7 +87,7 @@ public class UserDAO extends GenericDAO{
 			System.out.println("   * Querying a User: " + username);
 
 			tx.begin();
-			Query<?> query = pm.newQuery("SELECT FROM " + User.class.getName() + " WHERE username == '" + username +"'");
+			Query query = pm.newQuery("SELECT FROM " + User.class.getName() + " WHERE username == '" + username +"'");
 			query.setUnique(true);
 			user = (User) pm.detachCopy((User) query.execute());
 			tx.commit();

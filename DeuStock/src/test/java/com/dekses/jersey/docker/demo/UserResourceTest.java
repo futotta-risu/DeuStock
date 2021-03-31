@@ -9,12 +9,13 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
+import es.deusto.deustock.Main;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.deusto.DeuStock.app.data.User;
+import es.deusto.deustock.app.data.User;
 
 
 public class UserResourceTest {

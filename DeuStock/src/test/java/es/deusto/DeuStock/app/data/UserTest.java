@@ -1,4 +1,4 @@
-package es.deusto.DeuStock.app.data;
+package es.deusto.deustock.app.data;
 
 import static org.junit.Assert.*;
 

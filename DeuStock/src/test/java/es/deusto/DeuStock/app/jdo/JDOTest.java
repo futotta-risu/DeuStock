@@ -1,4 +1,4 @@
-package es.deusto.DeuStock.app.jdo;
+package es.deusto.deustock.app.jdo;
 
 import static org.junit.Assert.assertTrue;
 
@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import es.deusto.DeuStock.app.dao.UserDAO;
-import es.deusto.DeuStock.app.data.User;
+import es.deusto.deustock.app.dao.UserDAO;
+import es.deusto.deustock.app.data.User;
 
 public class JDOTest {
 
