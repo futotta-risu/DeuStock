@@ -15,7 +15,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.deusto.deustock.app.data.User;
+import es.deusto.deustock.data.User;
 
 
 public class UserResourceTest {

@@ -1,4 +1,4 @@
-package es.deusto.deustock.app.dao;
+package es.deusto.deustock.dao;
 
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManagerFactory;

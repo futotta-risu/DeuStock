@@ -1,4 +1,4 @@
-package es.deusto.deustock.app.data;
+package es.deusto.deustock.data;
 
 import java.util.Calendar;
 import java.io.Serializable;

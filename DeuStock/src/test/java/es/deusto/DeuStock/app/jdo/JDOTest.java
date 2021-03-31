@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import es.deusto.deustock.app.dao.UserDAO;
-import es.deusto.deustock.app.data.User;
+import es.deusto.deustock.dao.UserDAO;
+import es.deusto.deustock.data.User;
 
 public class JDOTest {
 

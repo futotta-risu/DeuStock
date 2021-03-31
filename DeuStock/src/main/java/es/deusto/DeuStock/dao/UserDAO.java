@@ -1,4 +1,4 @@
-package es.deusto.deustock.app.dao;
+package es.deusto.deustock.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 
-import es.deusto.deustock.app.data.User;
+import es.deusto.deustock.data.User;
 
 /**
  * <strong>Pattern</strong>
