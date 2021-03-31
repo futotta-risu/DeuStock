@@ -8,19 +8,30 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-
+import es.deusto.DeuStock.app.dao.GenericDAO;
+import es.deusto.DeuStock.app.dao.UserDAO;
 import es.deusto.deustock.data.User;
 
 /**
  * <strong>Pattern</strong>
  * <ul>
  *      <li>DAO</li>
+ *      <li>Singleton</li>
  * </ul>
  */
-public class UserDAO extends GenericDAO {
-	public UserDAO() {
-		super();
-	}
+public class UserDAO extends GenericDAO{
+	
+    private static UserDAO INSTANCE;
+    
+    public static UserDAO getInstance() 
+	{
+        if(INSTANCE == null) 
+        {
+            INSTANCE = new UserDAO();
+        }
+  
+        return INSTANCE;
+    }
 	
 	public static void storeUser(User user) {
 		PersistenceManager pm = getPMF().getPersistenceManager();
