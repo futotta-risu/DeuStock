@@ -1,4 +1,4 @@
-package es.deusto.deustock.app.jdo;
+package es.deusto.deustock.jdo;
 
 import static org.junit.Assert.assertTrue;
 
