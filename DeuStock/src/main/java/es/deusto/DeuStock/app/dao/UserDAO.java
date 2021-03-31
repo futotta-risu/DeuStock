@@ -11,7 +11,6 @@ import javax.jdo.Transaction;
 
 import es.deusto.deustock.app.data.User;
 
-
 /**
  * <strong>Pattern</strong>
  * <ul>

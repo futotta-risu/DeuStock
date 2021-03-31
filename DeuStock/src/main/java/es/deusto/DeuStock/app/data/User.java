@@ -7,15 +7,18 @@ import javax.jdo.annotations.*;
 
 @PersistenceCapable
 public class User implements Serializable{
-	
+	private static final long serialVersionUID = 1L;
 	@Unique
 	String username;
 	String password;
 	String fullName;
+	@NotPersistent
 	Date birthDate;
 	String country;
 	String description;
+	@NotPersistent
 	Date registerDate;
+	@NotPersistent
 	Date lastActivity;
 	
 	
