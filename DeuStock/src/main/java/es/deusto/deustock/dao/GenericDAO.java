@@ -3,30 +3,30 @@ package es.deusto.deustock.dao;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManagerFactory;
 
-
 /**
- * <strong>Pattern</strong>
+ * Clase generia de los objetos DAO. Permite obtener la instancia de Persistence
+ * Manager Factory. <br>
+ * <strong>Patterns</strong>
  * <ul>
- *      <li>DAO</li>
+ *     <li>DAO</li>
+ *     <li>Singleton</li>
  * </ul>
+ * 
+ * @author landersanmillan
  */
 public class GenericDAO {
-	
+
 	private static PersistenceManagerFactory pmf = null;
-	
+
 	public static PersistenceManagerFactory getPMF() {
-		if(pmf == null)
+		if (pmf == null)
 			pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
 		return pmf;
 	}
 
 	public GenericDAO() {
-		if(pmf == null)
+		if (pmf == null)
 			pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
 	}
-	
-	
-	
-	
-	
+
 }

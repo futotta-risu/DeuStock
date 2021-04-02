@@ -21,7 +21,11 @@ import es.deusto.deustock.data.User;
 
 import java.util.Date;
 
-
+/**
+ * Testea los metodos REST relacionados con el usuario
+ * 
+ * @author landersanmillan
+ */
 public class UserResourceTest {
 
 	
@@ -32,13 +36,6 @@ public class UserResourceTest {
     public void setUp()  {
         server = Main.startServer();
         Client c = ClientBuilder.newClient();
-
-        // uncomment the following line if you want to enable
-        // support for JSON in the client (you also have to uncomment
-        // dependency on jersey-media-json module in pom.xml and Main.startServer())
-        // --
-        //c.getConfiguration().enable(new org.glassfish.jersey.media.json.JsonJaxbFeature());
-
         target = c.target(Main.BASE_URI);
     }
     
@@ -48,7 +45,9 @@ public class UserResourceTest {
         server.stop();
 	}
 
-	
+	/**
+	 *  Tests user register
+	 */
 	@Test
 	public void testRegister() {
 	
@@ -61,7 +60,9 @@ public class UserResourceTest {
 		assertEquals(Response.status(401).build().getStatus(), responseCopy.getStatus());
 	}
 	
-	
+	/**
+	 *  Tests user login
+	 */
 	@Test
 	public void testLogin() {
 		User user2 = new User("username3", "password3", "fullName3", new Date(1234567890), "country2", "description2");
@@ -75,6 +76,16 @@ public class UserResourceTest {
         assertEquals("fullName3", user.getFullName());
 	}
 	
-	
+	/**
+	 *  Tests user delete
+	 */
+	@Test
+	public void testDelete() {
+		Response response = target.path("users").path("delete").path("TestUser").path("TestPass").request().put(Entity.entity("{}", MediaType.APPLICATION_JSON));
+		assertEquals(Response.status(200).build().getStatus(), response.getStatus());
+		
+		Response responseDelete = target.path("users").path("delete").path("TestUser").path("TestPass").request().put(Entity.entity("{}", MediaType.APPLICATION_JSON));
+		assertEquals(Response.status(401).build().getStatus(), responseDelete.getStatus());
+	}
 
 }
