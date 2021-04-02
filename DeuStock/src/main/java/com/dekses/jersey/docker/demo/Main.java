@@ -48,7 +48,7 @@ public class Main {
 		
 		stock1.setDescription("DescriptionChanged");
 		
-      	StockDAO.getInstance().deleteStock(stock1);
+      	StockDAO.getInstance().deleteStock("MSFT");
 
         final HttpServer server = startServer();
         System.out.println(String.format("Jersey app started with WADL available at "

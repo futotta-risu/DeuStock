@@ -1,8 +1,6 @@
 package es.deusto.DeuStock.dao;
 
-import static org.junit.Assert.*;
 
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -32,7 +30,7 @@ public class StockDAOTest {
 	@Test
     public void testStockQuery() {
 		Stock stock = StockDAO.getInstance().getStock("MSFT");
-		List<Stock> stocks = StockDAO.getStocks();
+		List<Stock> stocks = StockDAO.getInstance().getStocks();
 		System.out.println(stock);
 		System.out.println(stocks);
 	}
@@ -56,9 +54,8 @@ public class StockDAOTest {
 	*/
 	@Test
     public void testUserDeletion() {
-        Stock stock1 = StockDAO.getStock("MSFT");
-        StockDAO.deleteStock(stock1);
-        System.out.println("Deleted User from DB:" + stock1.getAcronym());
+        StockDAO.getInstance().deleteStock("MSFT");
+        System.out.println("Deleted User from DB: MSFT");
     }
 
 }

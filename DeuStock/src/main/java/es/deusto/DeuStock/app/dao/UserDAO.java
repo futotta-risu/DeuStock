@@ -8,33 +8,40 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import es.deusto.DeuStock.app.data.Stock;
 import es.deusto.DeuStock.app.data.User;
 
 
 /**
- * <strong>Pattern</strong>
+ * Clase de acceso a datos de Usuarios en la BD.<br>
+ * <strong>Patterns:</strong>
  * <ul>
- *      <li>DAO</li>
- *      <li>Singleton</li>
+ * <li>DAO</li>
+ * <li>Singleton</li>
  * </ul>
+ * 
+ * @see GenericDAO
+ * @author landersanmillan
  */
 public class UserDAO extends GenericDAO{
 	
     private static UserDAO INSTANCE;
     
-    public static UserDAO getInstance() 
-	{
-        if(INSTANCE == null) 
-        {
-            INSTANCE = new UserDAO();
-        }
-  
+	/**
+	 * Se obtiene la unica instancia de la clase UserDAO
+	 * 
+	 * @return <strong>UserDAO</strong> -> Instancia de la clase User
+	 */
+    public static UserDAO getInstance() {
+        if(INSTANCE == null) INSTANCE = new UserDAO();
         return INSTANCE;
     }
-
-	
-	public static void storeUser(User user) {
+    
+	/**
+	 * Permite almacenar un usuario en la BD
+	 * 
+	 * @param user -> Objeto usuario que se quiere almacenar en la BD
+	 */
+	public void storeUser(User user) {
 		PersistenceManager pm = getPMF().getPersistenceManager();
 	    Transaction tx=pm.currentTransaction();
 
@@ -53,13 +60,15 @@ public class UserDAO extends GenericDAO{
 	    }
 	}
 	
-	public static List<User> getUsers() {
+	/**
+	 * Permite obtener una lista con todos los usuarios que se encuentran en la BD
+	 * 
+	 * @return <strong> List[User]</strong> -> Lista que contiene todos los usuarios
+	 *         almacenados en la BD
+	 */
+	public List<User> getUsers() {
 			PersistenceManager pm = getPMF().getPersistenceManager();
-			/*
-			 * By default only 1 level is retrieved from the db so if we wish to fetch more
-			 * than one level, we must indicate it
-			 */
-			pm.getFetchPlan().setMaxFetchDepth(3);
+			pm.getFetchPlan().setMaxFetchDepth(-1);
 
 			Transaction tx = pm.currentTransaction();
 			List<User> users = new ArrayList<>();
@@ -88,9 +97,15 @@ public class UserDAO extends GenericDAO{
 		
 	}
 	
-	public static User getUser(String username) {
+	/**
+	 * Permite obtener un usuario de la BD a partir de su username
+	 * 
+	 * @param acronym -> Nombre del usuario
+	 * @return <strong> User </strong> Objeto usuario solicitado
+	 */
+	public User getUser(String username) {
 		PersistenceManager pm = getPMF().getPersistenceManager();
-		pm.getFetchPlan().setMaxFetchDepth(3);
+		pm.getFetchPlan().setMaxFetchDepth(-1);
 		Transaction tx = pm.currentTransaction();
 		User user = null;
 		pm.setDetachAllOnCommit(true);
@@ -116,8 +131,15 @@ public class UserDAO extends GenericDAO{
 		return user;
 	}
 	
-	public static boolean checkPassword(String username, String password) {
-		return(password.equals(UserDAO.getUser(username).getPassword()));
+	/**
+	 * Comprueba si la contraseña insertada por el usuario corresponde con la contraseña almacenada para ese usuario en la BD
+	 * 
+	 * @param username -> Nombre de usuario de la cuenta
+	 * @param password -> Contraseña relacionada a la cuenta
+	 * @return <strong> boolean </strong> -> Devuelve True si la contraseña es correcta
+	 */
+	public boolean checkPassword(String username, String password) {
+		return(password.equals(UserDAO.getInstance().getUser(username).getPassword()));
 	}
 	
 	
@@ -140,17 +162,22 @@ public class UserDAO extends GenericDAO{
 //			pm.close();
 //		}
 //	}
-//	
-	public static void deleteUser(User user) {
+
+	/**
+	 * Permite eliminar un stock de la BD a partir de su acronimo
+	 * 
+	 * @param acronym -> Acronimo del Stock que se quiere eliminar
+	 */
+	public void deleteUser(String username) {
 		PersistenceManager pm = getPMF().getPersistenceManager();
-		pm.getFetchPlan().setMaxFetchDepth(3);
+		pm.getFetchPlan().setMaxFetchDepth(-1);
 		Transaction tx = pm.currentTransaction();
 		pm.setDetachAllOnCommit(true);
 		try {
-			System.out.println("   * Querying a User: " + user.getUsername());
+			System.out.println("   * Querying a User: " + username);
 	
 			tx.begin();
-			Query<?> query = pm.newQuery("SELECT FROM " + User.class.getName() + " WHERE username == '" + user.getUsername() +"'");
+			Query<?> query = pm.newQuery("SELECT FROM " + User.class.getName() + " WHERE username == '" + username +"'");
 			query.setUnique(true);
 			query.deletePersistentAll();
 			tx.commit();
