@@ -63,5 +63,6 @@ public class ControlButtonController implements DSGenericController{
     public void setParams(HashMap<String, Object> params) {
         if(params.containsKey("username"))
             this.username = String.valueOf(params.get("username"));
+        profileButton.setText(username);
     }
 }
