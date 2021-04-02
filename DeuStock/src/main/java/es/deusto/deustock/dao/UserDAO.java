@@ -1,16 +1,13 @@
 package es.deusto.deustock.dao;
 
-import java.util.ArrayList;
-import java.util.List;
+import es.deusto.deustock.data.User;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
-
-import es.deusto.DeuStock.app.dao.GenericDAO;
-import es.deusto.DeuStock.app.dao.UserDAO;
-import es.deusto.deustock.data.User;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <strong>Pattern</strong>
