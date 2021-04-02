@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="406.0" prefWidth="600.0">
+         <children>
+            <Text layoutX="26.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Deustock">
+               <font>
+                  <Font name="Agency FB" size="31.0" />
+               </font>
+            </Text>
+            <Label layoutX="230.0" layoutY="19.0" prefHeight="26.0" prefWidth="141.0" text="Sobre Nosotros">
+               <font>
+                  <Font name="Calibri Bold" size="22.0" />
+               </font>
+            </Label>
+            <Text layoutX="160.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Somos un grupo de estudiantes de ingenieria informatica, los cuales hemos desarrollado una aplicación para poder invertir en stocks de una forma muy comoda. Estas son las funcionalidades principales:" textAlignment="JUSTIFY" wrappingWidth="280.31640625">
+               <font>
+                  <Font name="Calibri" size="14.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="102.0" fitWidth="130.0" layoutX="58.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/crypto-icon.png" />
+               </image>
+            </ImageView>
+            <Text layoutX="64.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Soporte a un gran numero de Criptomonedas" wrappingWidth="89.306640625">
+               <font>
+                  <Font name="Calibri Bold" size="13.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="102.0" fitWidth="102.0" layoutX="249.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/twitter-icon.png" />
+               </image>
+            </ImageView>
+            <Text layoutX="255.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Analizador de sentimiento de Twitter" wrappingWidth="89.306640625">
+               <font>
+                  <Font name="Calibri Bold" size="13.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="102.0" fitWidth="102.0" layoutX="433.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/grafico-icon.png" />
+               </image>
+            </ImageView>
+            <Text layoutX="436.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acceso a graficos personalizados" wrappingWidth="95.306640625">
+               <font>
+                  <Font name="Calibri Bold" size="13.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

@@ -1,13 +1,15 @@
 package es.deusto.deustock.client.controllers;
 
-import javax.swing.JOptionPane;
 
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ButtonBar.ButtonData;
 
 /**
  * Controller para LoginView 
@@ -36,12 +38,20 @@ public class LoginController {
 	 
 	@FXML
 	private void initialize(){
+		Dialog<String> dialog = new Dialog<String>();
+	    dialog.setTitle("ERROR");
+	    ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
+	    dialog.getDialogPane().getButtonTypes().add(type);
 
 		loginButton.setOnMouseClicked(
 				mouseEvent -> {
 					User login = login();
 
-					if(login==null) return;
+					if(login==null) {
+						dialog.setContentText("DATOS ERRONEOS");
+				        dialog.showAndWait();
+						return;
+					}
 
 					MainController.getInstance().initGenericStage(login.getUsername());
 					MainController.getInstance().loadAndChangePane(
@@ -60,15 +70,20 @@ public class LoginController {
 	
 	@FXML
 	private User login(){
+		Dialog<String> dialog = new Dialog<String>();
+	    dialog.setTitle("ERROR");
+	    ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
+	    dialog.getDialogPane().getButtonTypes().add(type);
+	    
 		String username = usernameTxt.getText();
 		String password = passwordTxt.getText();
 
 		DeustockGateway dg = new DeustockGateway();
-		if(username.isEmpty() || password.isEmpty())
-			JOptionPane.showInternalConfirmDialog(
-					null, "CAMPOS VACIOS", "ERROR", JOptionPane.YES_NO_OPTION
-			);
-
+		if(username.isEmpty() || password.isEmpty()) {
+			dialog.setContentText("CAMPOS NULOS");
+	        dialog.showAndWait();
+		}
+			
 		return dg.login(username, password);
 	}
 
