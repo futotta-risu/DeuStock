@@ -5,12 +5,14 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.jdo.annotations.*;
 
+/**
+ * Clase usuario persistente, el nombre de usuario sera unico y se generara
+ *  un ID por cada instancia que se almacene en la BD
+ * @author landersanmillan
+ */
 @PersistenceCapable
 public class User implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	@Unique
 	String username;

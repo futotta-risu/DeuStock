@@ -10,7 +10,6 @@ import javax.jdo.Transaction;
 
 import es.deusto.DeuStock.app.data.User;
 
-
 /**
  * Clase de acceso a datos de Usuarios en la BD.<br>
  * <strong>Patterns:</strong>
@@ -22,20 +21,21 @@ import es.deusto.DeuStock.app.data.User;
  * @see GenericDAO
  * @author landersanmillan
  */
-public class UserDAO extends GenericDAO{
-	
-    private static UserDAO INSTANCE;
-    
+public class UserDAO extends GenericDAO {
+
+	private static UserDAO INSTANCE;
+
 	/**
 	 * Se obtiene la unica instancia de la clase UserDAO
 	 * 
 	 * @return <strong>UserDAO</strong> -> Instancia de la clase User
 	 */
-    public static UserDAO getInstance() {
-        if(INSTANCE == null) INSTANCE = new UserDAO();
-        return INSTANCE;
-    }
-    
+	public static UserDAO getInstance() {
+		if (INSTANCE == null)
+			INSTANCE = new UserDAO();
+		return INSTANCE;
+	}
+
 	/**
 	 * Permite almacenar un usuario en la BD
 	 * 
@@ -43,23 +43,22 @@ public class UserDAO extends GenericDAO{
 	 */
 	public void storeUser(User user) {
 		PersistenceManager pm = getPMF().getPersistenceManager();
-	    Transaction tx=pm.currentTransaction();
+		Transaction tx = pm.currentTransaction();
 
-		try{
-	        tx.begin();
-	        pm.makePersistent(user);
-	        tx.commit();
-	    }catch(Exception e) {
-	    	e.printStackTrace();
-	    }
-	    finally{
-	        if (tx.isActive()){
-	            tx.rollback();
-	        }
-	        pm.close();
-	    }
+		try {
+			tx.begin();
+			pm.makePersistent(user);
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
 	}
-	
+
 	/**
 	 * Permite obtener una lista con todos los usuarios que se encuentran en la BD
 	 * 
@@ -67,36 +66,36 @@ public class UserDAO extends GenericDAO{
 	 *         almacenados en la BD
 	 */
 	public List<User> getUsers() {
-			PersistenceManager pm = getPMF().getPersistenceManager();
-			pm.getFetchPlan().setMaxFetchDepth(-1);
+		PersistenceManager pm = getPMF().getPersistenceManager();
+		pm.getFetchPlan().setMaxFetchDepth(-1);
 
-			Transaction tx = pm.currentTransaction();
-			List<User> users = new ArrayList<>();
+		Transaction tx = pm.currentTransaction();
+		List<User> users = new ArrayList<>();
 
-			try {
-				System.out.println("   * Retrieving an Extent for User.");
+		try {
+			System.out.println("   * Retrieving an Extent for User.");
 
-				tx.begin();
-				Extent<User> extent = pm.getExtent(User.class, true);
+			tx.begin();
+			Extent<User> extent = pm.getExtent(User.class, true);
 
-				for (User u : extent) {
-					users.add((User) pm.detachCopy(u));
-				}
-
-				tx.commit();
-			} catch (Exception ex) {
-				System.out.println("   $ Error Getting users: " + ex.getMessage());
-			} finally {
-				if (tx != null && tx.isActive()) {
-					tx.rollback();
-				}
-
-				pm.close();
+			for (User u : extent) {
+				users.add((User) pm.detachCopy(u));
 			}
-			return users;
-		
+
+			tx.commit();
+		} catch (Exception ex) {
+			System.out.println("   $ Error Getting users: " + ex.getMessage());
+		} finally {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+
+			pm.close();
+		}
+		return users;
+
 	}
-	
+
 	/**
 	 * Permite obtener un usuario de la BD a partir de su username
 	 * 
@@ -113,7 +112,8 @@ public class UserDAO extends GenericDAO{
 			System.out.println("   * Querying a User: " + username);
 
 			tx.begin();
-			Query<?> query = pm.newQuery("SELECT FROM " + User.class.getName() + " WHERE username == '" + username +"'");
+			Query<?> query = pm
+					.newQuery("SELECT FROM " + User.class.getName() + " WHERE username == '" + username + "'");
 			query.setUnique(true);
 			user = (User) pm.detachCopy((User) query.execute());
 			tx.commit();
@@ -130,19 +130,20 @@ public class UserDAO extends GenericDAO{
 		}
 		return user;
 	}
-	
+
 	/**
-	 * Comprueba si la contraseña insertada por el usuario corresponde con la contraseña almacenada para ese usuario en la BD
+	 * Comprueba si la contraseña insertada por el usuario corresponde con la
+	 * contraseña almacenada para ese usuario en la BD
 	 * 
 	 * @param username -> Nombre de usuario de la cuenta
 	 * @param password -> Contraseña relacionada a la cuenta
-	 * @return <strong> boolean </strong> -> Devuelve True si la contraseña es correcta
+	 * @return <strong> boolean </strong> -> Devuelve True si la contraseña es
+	 *         correcta
 	 */
 	public boolean checkPassword(String username, String password) {
-		return(password.equals(UserDAO.getInstance().getUser(username).getPassword()));
+		return (password.equals(UserDAO.getInstance().getUser(username).getPassword()));
 	}
-	
-	
+
 //	public static void updateUser(User userInfo) {
 //		PersistenceManager pm = getPMF().getPersistenceManager();
 //		Transaction tx = pm.currentTransaction();
@@ -166,7 +167,7 @@ public class UserDAO extends GenericDAO{
 	/**
 	 * Permite eliminar un stock de la BD a partir de su acronimo
 	 * 
-	 * @param acronym -> Acronimo del Stock que se quiere eliminar
+	 * @param username -> Nombre del usuario que se quiere eliminar
 	 */
 	public void deleteUser(String username) {
 		PersistenceManager pm = getPMF().getPersistenceManager();
@@ -175,21 +176,21 @@ public class UserDAO extends GenericDAO{
 		pm.setDetachAllOnCommit(true);
 		try {
 			System.out.println("   * Querying a User: " + username);
-	
+
 			tx.begin();
-			Query<?> query = pm.newQuery("SELECT FROM " + User.class.getName() + " WHERE username == '" + username +"'");
+			Query<?> query = pm.newQuery("SELECT FROM " + User.class.getName() + " WHERE username == '" + username + "'");
 			query.setUnique(true);
 			query.deletePersistentAll();
 			tx.commit();
-	
+
 		} catch (Exception ex) {
 			System.out.println("   $ Error Getting User: " + ex.getMessage());
 		} finally {
-	
+
 			if (tx != null && tx.isActive()) {
 				tx.rollback();
 			}
-	
+
 			pm.close();
 		}
 	}
