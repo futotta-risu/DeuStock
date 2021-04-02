@@ -2,6 +2,7 @@ package es.deusto.deustock.client.controllers;
 
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.gateways.DeustockGateway;
+import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -54,6 +55,16 @@ public class UserDetailController implements DSGenericController{
         this.user = gateway.getUser(this.username);
     }
 
+    private void deleteUser(){
+        DeustockGateway gateway = new DeustockGateway();
+        if(gateway.deleteUser(this.username, user.getPassword())){
+            MainController.getInstance().setUser(null);
+            MainController.getInstance().loadAndChangeScene(
+                    ViewPaths.LoginViewPath
+            );
+        }
+    }
+
     private void initRoot(){
         if(this.username==null) return;
 
@@ -69,7 +80,7 @@ public class UserDetailController implements DSGenericController{
         this.birthdayLabel.setText(user.getBirthDate().toString());
 
         this.accountDeleteButton.setOnMouseClicked(
-                mouseEvent ->
+                mouseEvent -> deleteUser()
         );
     }
 }

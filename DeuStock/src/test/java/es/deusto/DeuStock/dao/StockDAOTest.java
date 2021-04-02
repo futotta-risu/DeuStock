@@ -1,12 +1,11 @@
-package es.deusto.DeuStock.dao;
+package es.deusto.deustock.dao;
 
 
-import java.util.List;
-
+import es.deusto.deustock.data.DeuStock;
+import es.deusto.deustock.dataminer.gateway.stocks.StockDataQueryData;
 import org.junit.Test;
 
-import es.deusto.DeuStock.app.dao.StockDAO;
-import es.deusto.DeuStock.app.data.Stock;
+import java.util.List;
 
 
 /**
@@ -20,9 +19,10 @@ public class StockDAOTest {
 	 * Tests Stock creation
 	*/
 	@Test
-    public void testStockCreation() {	
-      	Stock stock1 = new Stock("MSFT", "Microsoft");
-      	Stock stock2 = new Stock("YAHOY", "Yahoo");
+    public void testStockCreation() {
+		;
+      	DeuStock stock1 = new DeuStock(new StockDataQueryData("MSFT"));
+		DeuStock stock2 = new DeuStock(new StockDataQueryData("GOOG"));
         StockDAO.getInstance().storeStock(stock1);
         StockDAO.getInstance().storeStock(stock2);
 	}
@@ -34,8 +34,8 @@ public class StockDAOTest {
 	@SuppressWarnings("unchecked")
 	@Test
     public void testStockQuery() {
-		Stock stock = StockDAO.getInstance().getStock("MSFT");
-		List<Stock> stocks = StockDAO.getInstance().getStocks();
+		DeuStock stock = StockDAO.getInstance().getStock("MSFT");
+		List<DeuStock> stocks = StockDAO.getInstance().getStocks();
 		System.out.println(stock);
 		System.out.println(stocks);
 	}

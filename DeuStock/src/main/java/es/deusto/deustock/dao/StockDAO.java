@@ -1,4 +1,4 @@
-package es.deusto.DeuStock.app.dao;
+package es.deusto.deustock.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
-import es.deusto.DeuStock.app.data.Stock;
+import es.deusto.deustock.data.DeuStock;
 
 /**
  * Clase de acceso a datos de Stocks en la BD.<br>
@@ -44,7 +44,7 @@ public class StockDAO extends GenericDAO {
 	 * 
 	 * @param stock -> Objeto stock que se quiere almacenar en la BD
 	 */
-	public void storeStock(Stock stock) {
+	public void storeStock(DeuStock stock) {
 		PersistenceManager pm = getPMF().getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 
@@ -68,21 +68,21 @@ public class StockDAO extends GenericDAO {
 	 * @return <strong> List[Stock]</strong> -> Lista que contiene todos los Stocks
 	 *         almacenados en la BD
 	 */
-	public List<Stock> getStocks() {
+	public List<DeuStock> getStocks() {
 		PersistenceManager pm = getPMF().getPersistenceManager();
 		pm.getFetchPlan().setMaxFetchDepth(-1);
 
 		Transaction tx = pm.currentTransaction();
-		List<Stock> stocks = new ArrayList<>();
+		List<DeuStock> stocks = new ArrayList<>();
 
 		try {
 			System.out.println("   * Retrieving an Extent for Stock.");
 
 			tx.begin();
-			Extent<Stock> extent = pm.getExtent(Stock.class, true);
+			Extent<DeuStock> extent = pm.getExtent(DeuStock.class, true);
 
-			for (Stock s : extent) {
-				stocks.add((Stock) pm.detachCopy(s));
+			for (DeuStock s : extent) {
+				stocks.add((DeuStock) pm.detachCopy(s));
 			}
 			tx.commit();
 		} catch (Exception ex) {
@@ -102,20 +102,20 @@ public class StockDAO extends GenericDAO {
 	 * @param acronym -> Acronimo del stock
 	 * @return <strong> Stock </strong> Objeto Stock solicitado
 	 */
-	public Stock getStock(String acronym) {
+	public DeuStock getStock(String acronym) {
 		PersistenceManager pm = getPMF().getPersistenceManager();
 		pm.getFetchPlan().setMaxFetchDepth(-1);
 		Transaction tx = pm.currentTransaction();
-		Stock stock = null;
+		DeuStock stock = null;
 		pm.setDetachAllOnCommit(true);
 		try {
 			System.out.println("   * Querying a Stock: " + acronym);
 
 			tx.begin();
-			Query<?> query = pm
-					.newQuery("SELECT FROM " + Stock.class.getName() + " WHERE acronym == '" + acronym + "'");
+			Query query = pm
+					.newQuery("SELECT FROM " + DeuStock.class.getName() + " WHERE acronym == '" + acronym + "'");
 			query.setUnique(true);
-			stock = (Stock) pm.detachCopy((Stock) query.execute());
+			stock = (DeuStock) pm.detachCopy((DeuStock) query.execute());
 			tx.commit();
 
 		} catch (Exception ex) {
@@ -166,8 +166,8 @@ public class StockDAO extends GenericDAO {
 			System.out.println("   * Querying a Stock: " + acronym);
 
 			tx.begin();
-			Query<?> query = pm
-					.newQuery("SELECT FROM " + Stock.class.getName() + " WHERE acronym == '" + acronym + "'");
+			Query query = pm
+					.newQuery("SELECT FROM " + DeuStock.class.getName() + " WHERE acronym == '" + acronym + "'");
 			query.setUnique(true);
 			query.deletePersistentAll();
 			tx.commit();

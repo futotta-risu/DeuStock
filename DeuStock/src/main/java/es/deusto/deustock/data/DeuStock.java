@@ -11,14 +11,22 @@ import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
 
+import javax.jdo.annotations.NotPersistent;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Unique;
+
+@PersistenceCapable
 public class DeuStock {
 
+    @NotPersistent
     BigDecimal price;
     String fullName;
+    @Unique
     String acronym;
     String description;
 
     //Price per hours last 24h
+    @NotPersistent
     List<HistoricalQuote> history = new ArrayList<>();
 
     public DeuStock(StockDataQueryData data){

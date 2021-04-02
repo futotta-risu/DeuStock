@@ -1,8 +1,4 @@
-<<<<<<< HEAD:DeuStock/src/test/java/es/deusto/deustock/jdo/JDOTest.java
-package es.deusto.deustock.jdo;
-=======
-package es.deusto.DeuStock.dao;
->>>>>>> origin/Crear-Usuarios:DeuStock/src/test/java/es/deusto/DeuStock/dao/UserDAOTest.java
+package es.deusto.deustock.dao;
 
 import static org.junit.Assert.assertTrue;
 
@@ -37,7 +33,6 @@ public class UserDAOTest {
 	/**
 	 * Tests User queries
 	*/
-	@SuppressWarnings("unchecked")
 	@Test
     public void testUserQuery() {
 		User user = UserDAO.getInstance().getUser("username2");
@@ -45,43 +40,6 @@ public class UserDAOTest {
 		System.out.println(user);
 		System.out.println(users);
 	}
-	
-<<<<<<< HEAD:DeuStock/src/test/java/es/deusto/deustock/jdo/JDOTest.java
-
-=======
-	/**
-	 * Tests if User password is correct
-	 */
-	@Test
-	public void testUserPassword() {
-		assertTrue(UserDAO.getInstance().checkPassword("username", "password"));
-	}
->>>>>>> origin/Crear-Usuarios:DeuStock/src/test/java/es/deusto/DeuStock/dao/UserDAOTest.java
-
-	
-//	/**
-//	 * Tests User update
-//	 */
-//	@Test
-//	public void testUserUpdate() {
-//        User userUpdate = UserDAO.getInstance().getUser("username2");
-//        userUpdate.setFullName("FULLNAME_UPDATED");
-//        UserDAO.getInstance().updateUser(userUpdate);
-//        System.out.println(UserDAO.getInstance().getUser("username2"));
-//	}
-<<<<<<< HEAD:DeuStock/src/test/java/es/deusto/deustock/jdo/JDOTest.java
-//
-//	
-//	/**
-//	 * Tests user deletion
-//	*/
-//	@Test
-//    public void testUserDeletion() {
-//        User user1 = UserDAO.getInstance().getUser("username");
-//        UserDAO.getInstance().deleteUser(user1);
-//        System.out.println("Deleted User from DB:" + user1.getUsername());
-//    }
-=======
 	
 	/**
 	 * Tests user deletion
@@ -91,7 +49,6 @@ public class UserDAOTest {
         UserDAO.getInstance().deleteUser("username");
         System.out.println("Deleted User from DB: username");
     }
->>>>>>> origin/Crear-Usuarios:DeuStock/src/test/java/es/deusto/DeuStock/dao/UserDAOTest.java
 
 
 }

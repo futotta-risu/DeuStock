@@ -19,6 +19,6 @@ public class UserDetail {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public User getUsername(@PathParam("username") String username) {
-        return UserDAO.getUser(username);
+        return UserDAO.getInstance().getUser(username);
     }
 }

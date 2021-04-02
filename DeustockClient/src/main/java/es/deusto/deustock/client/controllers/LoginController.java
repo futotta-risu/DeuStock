@@ -1,6 +1,7 @@
 package es.deusto.deustock.client.controllers;
 
 
+import es.deusto.deustock.client.Main;
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.visual.ViewPaths;
@@ -53,7 +54,7 @@ public class LoginController {
 						return;
 					}
 
-					MainController.getInstance().initGenericStage(login.getUsername());
+					MainController.getInstance().initGenericStage(login);
 					MainController.getInstance().loadAndChangePane(
 							ViewPaths.HomeViewPath
 					);

@@ -18,6 +18,10 @@ public class StockDataQueryData {
 
     public StockDataQueryData() {}
 
+    public StockDataQueryData(String acronym) {
+        this.acronym = acronym;
+    }
+
     public StockDataQueryData(String acronym, Interval interval) {
         this.acronym = acronym;
         this.interval = interval;

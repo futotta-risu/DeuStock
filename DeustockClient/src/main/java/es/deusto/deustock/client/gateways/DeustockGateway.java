@@ -105,5 +105,13 @@ public class DeustockGateway {
         return data.readEntity(User.class);
     }
 
+    public boolean deleteUser(String username, String password){
+        Response response = getHostWebTarget()
+                .path("users").path("delete").path(username).path(password)
+                .request(MediaType.APPLICATION_JSON).get();
+
+        return response.getStatus() == 200;
+    }
+
 
 }

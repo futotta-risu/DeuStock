@@ -112,11 +112,12 @@ public class MainController {
         this.stage.show();
     }
 
-    public void initGenericStage(String username){
+    public void initGenericStage(User user){
+        setUser(user);
         this.genericPane = new BorderPane();
 
         HashMap<String, Object> params = new HashMap<>();
-        params.put("username", username);
+        params.put("username", user.getUsername());
 
         this.genericPane.setBottom(loadPane(ViewPaths.ControlButtonViewPath, params));
         this.genericPane.setCenter(new Pane());

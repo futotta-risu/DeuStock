@@ -9,7 +9,6 @@ import javax.jdo.Transaction;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.deusto.DeuStock.app.data.User;
 
 /**
  * Clase de acceso a datos de Usuarios en la BD.<br>
@@ -100,7 +99,7 @@ public class UserDAO extends GenericDAO {
 	/**
 	 * Permite obtener un usuario de la BD a partir de su username
 	 * 
-	 * @param acronym -> Nombre del usuario
+	 * @param username -> Nombre del usuario
 	 * @return <strong> User </strong> Objeto usuario solicitado
 	 */
 	public User getUser(String username) {
@@ -113,7 +112,7 @@ public class UserDAO extends GenericDAO {
 			System.out.println("   * Querying a User: " + username);
 
 			tx.begin();
-			Query<?> query = pm
+			Query query = pm
 					.newQuery("SELECT FROM " + User.class.getName() + " WHERE username == '" + username + "'");
 			query.setUnique(true);
 			user = (User) pm.detachCopy((User) query.execute());
@@ -132,18 +131,7 @@ public class UserDAO extends GenericDAO {
 		return user;
 	}
 
-	/**
-	 * Comprueba si la contraseña insertada por el usuario corresponde con la
-	 * contraseña almacenada para ese usuario en la BD
-	 * 
-	 * @param username -> Nombre de usuario de la cuenta
-	 * @param password -> Contraseña relacionada a la cuenta
-	 * @return <strong> boolean </strong> -> Devuelve True si la contraseña es
-	 *         correcta
-	 */
-	public boolean checkPassword(String username, String password) {
-		return (password.equals(UserDAO.getInstance().getUser(username).getPassword()));
-	}
+
 
 //	public static void updateUser(User userInfo) {
 //		PersistenceManager pm = getPMF().getPersistenceManager();
@@ -179,7 +167,7 @@ public class UserDAO extends GenericDAO {
 			System.out.println("   * Querying a User: " + username);
 
 			tx.begin();
-			Query<?> query = pm.newQuery("SELECT FROM " + User.class.getName() + " WHERE username == '" + username + "'");
+			Query query = pm.newQuery("SELECT FROM " + User.class.getName() + " WHERE username == '" + username + "'");
 			query.setUnique(true);
 			query.deletePersistentAll();
 			tx.commit();

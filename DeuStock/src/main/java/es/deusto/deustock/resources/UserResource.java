@@ -10,8 +10,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import es.deusto.DeuStock.app.dao.UserDAO;
-import es.deusto.DeuStock.app.data.User;
+import es.deusto.deustock.dao.UserDAO;
+import es.deusto.deustock.data.User;
 
 /**
  * Clase que contiene los metodos REST asociados a la clase Usuario
@@ -35,9 +35,10 @@ public class UserResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/login/{username}/{password}")
 	public User login(@PathParam("username") String username, @PathParam("password") String password) {
-		if (UserDAO.getInstance().getUser(username) != null) {
-			if (UserDAO.getInstance().checkPassword(username, password)) {
-				return (UserDAO.getInstance().getUser(username));
+		User user = UserDAO.getInstance().getUser(username);
+		if (user != null) {
+			if (user.checkPassword(password)) {
+				return user;
 			}
 		}
 		return null;
@@ -80,19 +81,17 @@ public class UserResource {
 	 *         <li>401 - Forbidden</li>
 	 *         </ul>
 	 */
-	@PUT
+
+	@GET
 	@Path("/delete/{username}/{password}")
 	public Response delete(@PathParam("username") String username, @PathParam("password") String password) {
-		if (UserDAO.getInstance().getUser(username) != null) {
-			if (UserDAO.getInstance().checkPassword(username, password)) {
+		User user = UserDAO.getInstance().getUser(username);
+		if (user != null) {
+			if (user.checkPassword(password)) {
 				UserDAO.getInstance().deleteUser(username);
 				return Response.status(200).build();
-			} else {
-				return Response.status(401).build();
-			}
-		} else {
-			return Response.status(401).build();
-		}
+			} else return Response.status(401).build();
+		} else return Response.status(401).build();
 	}
 
 }
