@@ -79,22 +79,22 @@ public class DeustockGateway {
     }
     
     public boolean register(String username, String password, String fullName, Date birthDate, String aboutMe, String country) throws UnsupportedEncodingException, NoSuchAlgorithmException {	
-		User newUser = new User(username, password, fullName, birthDate, aboutMe, country);
-    	Response response = (Response) getHostWebTarget().path("register")
+		User newUser = new User(username, getEncrypt(password), fullName, birthDate, aboutMe, country);
+    	Response response = (Response) getHostWebTarget().path("users").path("register")
     			.request("application/json").post(Entity.entity(newUser, MediaType.APPLICATION_JSON));
 		
 		return Boolean.parseBoolean(response.readEntity(String.class));
     }
     
     public User login(String username, String password){
-    	//Response response = getHostWebTarget().path(username).path(getEncrypt(password)).request(MediaType.APPLICATION_JSON).get();
-        //JSONObject obj = new JSONObject(response.readEntity(String.class));
+    	Response response = getHostWebTarget().path(username).path(getEncrypt(password)).request(MediaType.APPLICATION_JSON).get();
+        JSONObject obj = new JSONObject(response.readEntity(String.class));
 
-    	//return(new User(obj.getString("username"), obj.getString("password"), obj.getString("fullName"), (Date)obj.get("birthDate"),
-    	//		obj.getString("aboutMe"), obj.getString("country")));
-        User user = new User();
-        user.setUsername("erik");
-        return user;
+    	return(new User(obj.getString("username"), obj.getString("password"), obj.getString("fullName"), (Date)obj.get("birthDate"),
+    			obj.getString("aboutMe"), obj.getString("country")));
+//        User user = new User();
+//        user.setUsername("erik");
+//        return user;
     }
     
     private String getEncrypt(String pass) {

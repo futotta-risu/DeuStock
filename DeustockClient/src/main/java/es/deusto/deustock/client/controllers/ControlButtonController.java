@@ -37,7 +37,7 @@ public class ControlButtonController implements DSGenericController{
         );
         profileButton.setOnMouseClicked(
                 mouseevent -> MainController.getInstance().loadAndChangePaneWithParams(
-                        ViewPaths.UserDetailViewPath, new HashMap<>() {{ put("username", username); }}
+                        ViewPaths.UserDetailViewPath, new HashMap<String, Object>() {{ put("username", username); }}
                 )
         );
 
