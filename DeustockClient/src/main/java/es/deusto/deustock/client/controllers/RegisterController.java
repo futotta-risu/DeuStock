@@ -14,6 +14,15 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller para RegisterView
+ * <br><strong>Pattern</strong>
+ * <ul>
+ *      <li>Controller</li>
+ * </ul>
+ * 
+ * @author landersanmillan
+ */
 public class RegisterController {
 	
 	@FXML
@@ -65,7 +74,8 @@ public class RegisterController {
 				mouseEvent -> MainController.getInstance().loadAndChangeScene(ViewPaths.LoginViewPath)
 		);
 	}
-
+	
+	@SuppressWarnings("deprecation")
 	private void register() throws UnsupportedEncodingException, NoSuchAlgorithmException {
 		String username = usernameTxt.getText();
 		String password = passwordTxt.getText();

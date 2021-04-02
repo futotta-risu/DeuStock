@@ -9,6 +9,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller para LoginView 
+ * <br><strong>Pattern</strong>
+ * <ul>
+ *      <li>Controller</li>
+ * </ul>
+ * 
+ * @author landersanmillan
+ */
 public class LoginController {
 	
 	@FXML
