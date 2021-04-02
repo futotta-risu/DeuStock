@@ -19,7 +19,7 @@ public class HomeViewController {
     private void initialize(){
         DeustockGateway gateway = new DeustockGateway();
 
-        for(Stock stock : gateway.getStockList()){
+        for(Stock stock : gateway.getStockList("small")){
             stockList.getChildren().add(new StockInfoLine(stock));
             stockList.getChildren().add(new Separator());
         }

@@ -1,11 +1,14 @@
 package es.deusto.deustock.dataminer.gateway.stocks.gateways;
 
+import com.google.protobuf.TextFormat;
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataQueryData;
+
+import org.json.simple.parser.ParseException;
+import twitter4j.JSONObject;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
-import yahoofinance.histquotes.Interval;
 
 import java.io.IOException;
 import java.util.*;
@@ -27,16 +30,12 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
     }
 
     @Override
-    public DeuStock getStockData(StockDataQueryData queryData, boolean withHistoric) {
+    public DeuStock getStockData(StockDataQueryData queryData, boolean withHistoric){
         DeuStock deustock = new DeuStock(queryData);
         try {
-            Stock stock = YahooFinance.get(
-                    queryData.getAcronym(),
-                    queryData.getFrom(),
-                    queryData.getTo(),
-                    Interval.DAILY
-            );
-            deustock.setPrice(stock.getQuote(false).getPrice());
+            Stock stock = YahooFinance.get(queryData.getAcronym());
+
+            deustock.setPrice(stock.getQuote(true).getPrice());
             if(withHistoric) deustock.setHistory(stock.getHistory());
         } catch (IOException e) {
             e.printStackTrace();

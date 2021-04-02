@@ -44,7 +44,7 @@
             <TextField fx:id="birthDateTxt" layoutX="384.0" layoutY="184.0" />
             <TextArea fx:id="aboutMeTxt" layoutX="185.0" layoutY="240.0" prefHeight="49.0" prefWidth="360.0" />
             <Button fx:id="cancelBtn" cancelButton="true" layoutX="467.0" layoutY="315.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" text="Cancelar" />
-            <Button fx:id="registerBtn" layoutX="374.0" layoutY="315.0" mnemonicParsing="false" onAction="#register" prefHeight="33.0" prefWidth="77.0" text="Registrar" />
+            <Button fx:id="registerBtn" layoutX="374.0" layoutY="315.0" mnemonicParsing="false"  prefHeight="33.0" prefWidth="77.0" text="Registrar" />
          </children>
       </AnchorPane>
    </children>

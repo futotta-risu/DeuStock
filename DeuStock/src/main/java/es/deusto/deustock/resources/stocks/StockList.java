@@ -6,7 +6,8 @@ import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataQueryData;
-import org.json.simple.JSONObject;
+
+import org.json.JSONObject;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -28,11 +29,12 @@ import static es.deusto.deustock.dataminer.gateway.stocks.StockDataQueryData.Int
 @Path("stock/list/{size}")
 public class StockList {
 
-    private List<String> smallList = Arrays.asList("AMZ","TSLA","BTC") ;
-    private List<String> bigList = Arrays.asList("AMZ","TSLA","BTC","ETH","BB") ;
+    private final List<String> smallList = Arrays.asList("INTC","TSLA") ;
+    private final List<String> bigList = Arrays.asList("INTC","TSLA","ETH","BB") ;
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getStock( @PathParam("size") String listSize)  {
+    public List<DeuStock> getStock( @PathParam("size") String listSize) {
+
         List<String> stockList;
         switch(listSize){
             case "small" -> stockList = smallList;
@@ -51,8 +53,6 @@ public class StockList {
             }
 
         }
-
-        String stockString = new Gson().toJson(stocks);
-        return new JSONObject(stockString);
+        return stocks;
     }
 }

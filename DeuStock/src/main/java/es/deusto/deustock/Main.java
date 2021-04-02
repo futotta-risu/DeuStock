@@ -4,6 +4,8 @@ import es.deusto.deustock.resources.HelloWorld;
 import es.deusto.deustock.resources.UserResource;
 import es.deusto.deustock.resources.help.FAQList;
 import es.deusto.deustock.resources.socialnetwork.TwitterSentiment;
+import es.deusto.deustock.resources.stocks.StockDetail;
+import es.deusto.deustock.resources.stocks.StockList;
 import es.deusto.deustock.resources.user.UserDetail;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
@@ -32,6 +34,8 @@ public class Main {
         final ResourceConfig rc = new ResourceConfig().packages("");
         rc.register(TwitterSentiment.class);
         rc.register(HelloWorld.class);
+        rc.register(StockList.class);
+        rc.register(StockDetail.class);
         rc.register(FAQList.class);
         rc.register(UserDetail.class);
         rc.register(UserResource.class);

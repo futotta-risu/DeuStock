@@ -67,17 +67,28 @@ public class RegisterController {
 	}
 
 	private void register() throws UnsupportedEncodingException, NoSuchAlgorithmException {
+		System.out.println("T1");
 		String username = usernameTxt.getText();
 		String password = passwordTxt.getText();
 		String fullName = fullNameTxt.getText();
 		String[] dateText = birthDateTxt.getText().split("/");
 		Date birthDate = new Date(Integer.parseInt(dateText[0]),Integer.parseInt(dateText[1]),Integer.parseInt(dateText[2]));
 		String aboutMe = aboutMeTxt.getText();
-		String country = countryCombo.getValue();
-		
+
+		System.out.println("T1");
 		DeustockGateway dg = new DeustockGateway();
-		if(!username.equals("") && !password.equals("") && !fullName.equals("") && !birthDate.equals(null) && !aboutMe.equals("") && !country.equals("Seleciona un pais")) {
-			if(dg.register(username, password, fullName, birthDate, aboutMe, country)) {
+		System.out.println("T13");
+
+		System.out.println(username);
+		System.out.println(password);
+		System.out.println(fullName);
+		System.out.println(birthDate);
+		System.out.println(aboutMe);
+
+		if(!username.equals("") && !password.equals("") && !fullName.equals("") && birthDate != null && !aboutMe.equals("") ) {
+			System.out.println("T15");
+			if(dg.register(username, password, fullName, birthDate, aboutMe, "Spain")) {
+				System.out.println("T16");
 				MainController.getInstance().loadAndChangeScene(ViewPaths.LoginViewPath);
 			}else {
 				JOptionPane.showInternalConfirmDialog(null, "REGISTRO INVALIDO", "ERROR", 0);
@@ -85,6 +96,7 @@ public class RegisterController {
 		}else {
 			JOptionPane.showInternalConfirmDialog(null, "CAMPOS VACIOS", "ERROR", 0);
 		}
+		System.out.println("T18");
 	}
 
 

@@ -7,6 +7,8 @@ import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataQueryData;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 
 import javax.ws.rs.GET;
@@ -30,8 +32,7 @@ public class StockDetail {
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getStock(
             @PathParam("query") String stockName,
-            @PathParam("interval") String interval)
-    {
+            @PathParam("interval") String interval) throws ParseException {
         StockDataGatewayFactory factory = StockDataGatewayFactory.getInstance();
         StockDataAPIGateway gateway = factory.create(StockDataGatewayEnum.YahooFinance);
         StockDataQueryData queryData;
@@ -54,6 +55,7 @@ public class StockDetail {
             return new JSONObject();
         }
         String stockString = new Gson().toJson(stock);
-        return new JSONObject(stockString);
+        JSONParser parser = new JSONParser();
+        return (JSONObject) parser.parse(stockString);
     }
 }

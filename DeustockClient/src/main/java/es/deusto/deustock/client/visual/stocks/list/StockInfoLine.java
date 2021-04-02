@@ -21,7 +21,7 @@ public class StockInfoLine extends BorderPane {
     }
 
     private void initPane() {
-        this.stockNameLabel = new Label(stock.getName());
+        this.stockNameLabel = new Label(stock.getAcronym());
         this.stockNameLabel.getStyleClass().add("stock-line-name");
 
         this.stockPriceLabel = new Label(String.valueOf(stock.getPrice()));
@@ -35,7 +35,11 @@ public class StockInfoLine extends BorderPane {
                         ViewPaths.StockDetailViewPath
                 )
         );
+    }
 
+    public void refreshStock(Stock stock){
+        this.stock = stock;
+        this.stockPriceLabel.setText(String.valueOf(this.stock.getPrice()));
     }
 
 }

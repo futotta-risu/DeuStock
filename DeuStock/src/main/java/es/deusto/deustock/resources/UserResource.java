@@ -15,12 +15,12 @@ import javax.ws.rs.core.Response;
 import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.data.User;
 
-@Path("/users")
+@Path("users")
 public class UserResource {
 	
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/login/{username}/{password}")
+    @Path("login/{username}/{password}")
     public User login(@PathParam("username") String username,@PathParam("password") String password) {
     	if(UserDAO.getUser(username) != null) {
     		if(UserDAO.checkPassword(username, password)) {
@@ -33,7 +33,7 @@ public class UserResource {
    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/register")
+    @Path("register")
     public Response register(User user) {
     	if(UserDAO.getUser(user.getUsername()) == null) {
     		UserDAO.storeUser(user);

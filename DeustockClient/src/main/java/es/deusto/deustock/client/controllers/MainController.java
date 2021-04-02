@@ -31,6 +31,9 @@ public class MainController {
 
     private User user;
 
+    private final int DEFAULT_HEIGHT = 600;
+    private final int DEFAULT_WIDTH  = 800;
+
     private MainController(){}
 
     public static MainController getInstance(){
@@ -94,7 +97,7 @@ public class MainController {
         changePane(loadPane(path,null));
     }
     public void loadAndChangeScene(String path) {
-        changeScene(new Scene(loadPane(path,null)));
+        changeScene(new Scene(loadPane(path,null),DEFAULT_WIDTH, DEFAULT_HEIGHT));
     }
 
     public void loadAndChangePaneWithParams(String path, HashMap<String,Object> params) {
@@ -117,7 +120,7 @@ public class MainController {
 
         this.genericPane.setBottom(loadPane(ViewPaths.ControlButtonViewPath, params));
         this.genericPane.setCenter(new Pane());
-        this.scene = new Scene(this.genericPane);
+        this.scene = new Scene(this.genericPane,DEFAULT_WIDTH, DEFAULT_HEIGHT);
         this.stage.setScene(this.scene);
     }
 
