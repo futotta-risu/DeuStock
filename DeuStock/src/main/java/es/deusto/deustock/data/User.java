@@ -115,7 +115,9 @@ public class User implements Serializable{
 	}
 	
 
-	
+	public boolean checkPassword(String password){
+		return this.password.equals(password);
+	}
 	
 	
 	

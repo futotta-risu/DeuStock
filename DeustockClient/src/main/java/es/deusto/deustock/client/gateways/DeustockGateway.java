@@ -44,7 +44,7 @@ public class DeustockGateway {
         Response  response = getHostWebTarget().path("stock")
                 .path("list").path(listType).request(MediaType.APPLICATION_JSON).get();
 
-        return response.readEntity(new GenericType<List<Stock>>() {});
+        return response.readEntity(new GenericType<>(){});
     }
 
     public double getTwitterSentiment(String searchQuery){

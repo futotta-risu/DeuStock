@@ -7,6 +7,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import es.deusto.deustock.Main;
@@ -25,10 +26,8 @@ public class UserResourceTest {
     private WebTarget target;
 
     @Before
-    public void setUp() throws Exception {
-        // start the server
+    public void setUp()  {
         server = Main.startServer();
-        // create the client
         Client c = ClientBuilder.newClient();
 
         // uncomment the following line if you want to enable
@@ -63,7 +62,9 @@ public class UserResourceTest {
 	@Test
 	public void testLogin() {
         
-		User response = target.path("users").path("login").path("TestUser").path("TestPass").request().get(User.class);
+		User response = target
+				.path("users").path("login")
+				.path("TestUser").path("TestPass").request(MediaType.APPLICATION_JSON).get(User.class);
 		
         assertEquals("TestFullName", response.getFullName());
 		assertEquals("TestAboutMe", response.getDescription());

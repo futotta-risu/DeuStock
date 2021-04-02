@@ -38,10 +38,7 @@ public class JDOTest {
 		System.out.println(users);
 	}
 	
-	@Test
-	public void testUserPassword() {
-		assertTrue(UserDAO.getInstance().checkPassword("username", "password"));
-	}
+
 
 	
 //	/**

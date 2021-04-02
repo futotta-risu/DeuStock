@@ -22,9 +22,10 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("login/{username}/{password}")
     public User login(@PathParam("username") String username,@PathParam("password") String password) {
-    	if(UserDAO.getUser(username) != null) {
-    		if(UserDAO.checkPassword(username, password)) {
-    			return(UserDAO.getUser(username));
+    	User user = UserDAO.getUser(username);
+    	if(user != null) {
+    		if(user.checkPassword(password)) {
+    			return user;
     		}
     	}
     	return null; 
