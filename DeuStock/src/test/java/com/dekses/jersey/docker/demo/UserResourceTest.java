@@ -7,6 +7,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.glassfish.grizzly.http.server.HttpServer;
@@ -63,6 +64,13 @@ public class UserResourceTest {
 		assertEquals("TestAboutMe", response.getDescription());
 	}
 	
-	
+	@Test
+	public void testDelete() {
+		Response response = target.path("users").path("delete").path("TestUser").path("TestPass").request().put(Entity.entity("{}", MediaType.APPLICATION_JSON));
+		assertEquals(Response.status(200).build().getStatus(), response.getStatus());
+		
+		Response responseDelete = target.path("users").path("delete").path("TestUser").path("TestPass").request().put(Entity.entity("{}", MediaType.APPLICATION_JSON));
+		assertEquals(Response.status(401).build().getStatus(), responseDelete.getStatus());
+	}
 
 }
