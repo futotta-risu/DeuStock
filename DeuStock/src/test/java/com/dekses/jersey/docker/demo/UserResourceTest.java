@@ -41,7 +41,9 @@ public class UserResourceTest {
         server.stop();
 	}
 
-	
+	/**
+	 *  Tests user register
+	 */
 	@Test
 	public void testRegister() {
 	
@@ -54,7 +56,9 @@ public class UserResourceTest {
 		assertEquals(Response.status(401).build().getStatus(), responseCopy.getStatus());
 	}
 	
-	
+	/**
+	 *  Tests user login
+	 */
 	@Test
 	public void testLogin() {
         
@@ -64,6 +68,9 @@ public class UserResourceTest {
 		assertEquals("TestAboutMe", response.getDescription());
 	}
 	
+	/**
+	 *  Tests user delete
+	 */
 	@Test
 	public void testDelete() {
 		Response response = target.path("users").path("delete").path("TestUser").path("TestPass").request().put(Entity.entity("{}", MediaType.APPLICATION_JSON));

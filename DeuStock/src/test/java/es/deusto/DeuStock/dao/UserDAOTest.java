@@ -10,6 +10,11 @@ import org.junit.Test;
 import es.deusto.DeuStock.app.dao.UserDAO;
 import es.deusto.DeuStock.app.data.User;
 
+/**
+ * Testea los metodos de acceso a datos de usuario en la BD
+ * 
+ * @author landersanmillan
+ */
 public class UserDAOTest {
 
 
@@ -17,8 +22,7 @@ public class UserDAOTest {
 	 * Tests User creation
 	*/
 	@Test
-    public void testUserCreation() {
-		
+    public void testUserCreation() {	
         User user1 = new User("username", "password", "fullName", new Date(1234567890), "country", "description");
         User user2 = new User("username2", "password2", "fullName2", new Date(1234567890), "country2", "description2");
         UserDAO.getInstance().storeUser(user1);
@@ -38,6 +42,9 @@ public class UserDAOTest {
 		System.out.println(users);
 	}
 	
+	/**
+	 * Tests if User password is correct
+	 */
 	@Test
 	public void testUserPassword() {
 		assertTrue(UserDAO.getInstance().checkPassword("username", "password"));
@@ -45,7 +52,7 @@ public class UserDAOTest {
 
 	
 //	/**
-//	 * Test User update
+//	 * Tests User update
 //	 */
 //	@Test
 //	public void testUserUpdate() {
@@ -54,8 +61,7 @@ public class UserDAOTest {
 //        UserDAO.updateUser(userUpdate);
 //        System.out.println(UserDAO.getUser("username2"));
 //	}
-//
-//	
+	
 	/**
 	 * Tests user deletion
 	*/

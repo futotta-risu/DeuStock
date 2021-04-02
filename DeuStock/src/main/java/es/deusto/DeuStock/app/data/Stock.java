@@ -15,61 +15,72 @@ import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.histquotes.Interval;
 
+/**
+ * Clase stock persistente, el acronimo del stock sera unico y se generara un ID
+ * por cada instancia que se almacene en la BD. Los atributos variables como el
+ * precio y el ppdLastWeek no son persistentes
+ * 
+ * @author landersanmillan
+ */
 @PersistenceCapable
-public class Stock implements Serializable{
-	
-	/**
-	 * 
-	 */
+public class Stock implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@NotPersistent
 	BigDecimal price;
-	
 	String fullName;
 	@Unique
 	String acronym;
 	String description;
-	
-	//Price per hours last 24h
+
+	/**
+	 * Contiene una lista con el precio por dia del stock durante la ultima semana
+	 * @see HistoricalQuote
+	 */
 	@NotPersistent
 	List<HistoricalQuote> ppdLastWeek = new ArrayList<HistoricalQuote>();
-	
-	
 
 	public BigDecimal getPrice() {
 		return price;
 	}
+
 	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
+
 	public String getFullName() {
 		return fullName;
 	}
+
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
 	}
+
 	public String getAcronym() {
 		return acronym;
 	}
+
 	public void setAcronym(String acronym) {
 		this.acronym = acronym;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public List<HistoricalQuote> getppdLastWeek() {
 		return ppdLastWeek;
 	}
+
 	public void setPphLast24h(List<HistoricalQuote> ppdLastWeek) {
 		this.ppdLastWeek = ppdLastWeek;
 	}
-	
-	
-	
+
 	public Stock(String acronym, String description) {
 		this.acronym = acronym;
 		this.description = description;
@@ -88,7 +99,7 @@ public class Stock implements Serializable{
 		}
 
 	}
-	
+
 	public Stock() {
 		this.price = BigDecimal.ZERO;
 		this.fullName = "NULL";
@@ -96,13 +107,19 @@ public class Stock implements Serializable{
 		this.description = "NULL";
 		this.ppdLastWeek = null;
 	}
+
 	@Override
 	public String toString() {
 		return "Stock [price=" + price + ", fullName=" + fullName + ", acronym=" + acronym + ", description="
 				+ description + ", ppdLastWeek=" + ppdLastWeek + "]";
 	}
-	
-	public void refreshPrices() throws IOException{	
+
+	/**
+	 * Actualiza los precios relacionados al stock
+	 * 
+	 * @throws IOException
+	 */
+	public void refreshPrices() throws IOException {
 		Calendar from = Calendar.getInstance();
 		Calendar to = Calendar.getInstance();
 		from.add(Calendar.WEEK_OF_YEAR, -1); // from 1 WEEK ago
@@ -110,5 +127,5 @@ public class Stock implements Serializable{
 		this.price = stock.getQuote().getPrice();
 		this.ppdLastWeek = stock.getHistory();
 	}
-	
+
 }

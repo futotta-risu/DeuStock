@@ -9,6 +9,11 @@ import es.deusto.DeuStock.app.dao.StockDAO;
 import es.deusto.DeuStock.app.data.Stock;
 
 
+/**
+ * Testea los metodos de acceso a datos de stock en la BD
+ * 
+ * @author landersanmillan
+ */
 public class StockDAOTest {
 
 	/**
