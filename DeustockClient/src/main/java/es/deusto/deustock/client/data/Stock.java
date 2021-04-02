@@ -1,47 +1,53 @@
 package es.deusto.deustock.client.data;
 
+import yahoofinance.histquotes.HistoricalQuote;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Erik B. Terres
  */
 public class Stock {
 
-    private String name;
-    private Integer change;
-    private Integer price;
+    BigDecimal price;
+    String fullName;
+    String acronym;
+    String description;
 
+    //Price per hours last 24h
+    List<HistoricalQuote> history = new ArrayList<>();
 
-    public Stock(String name, int change, int price){
-        setChange(change);
-        setName(name);
-        setPrice(price);
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-
-    public int getChange() {
-        return change;
-    }
-
-
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
-
-
-    public void setName(String name) {
-        this.name =name;
+    public Stock setPrice(BigDecimal price) {
+        this.price = price;return this;
     }
-
-    public void setChange(int change) {
-        this.change = change;
+    public String getFullName() {
+        return fullName;
     }
-
-    public void setPrice(int price) {
-        this.price = price;
+    public Stock setFullName(String fullName) {
+        this.fullName = fullName;return this;
+    }
+    public String getAcronym() {
+        return acronym;
+    }
+    public Stock setAcronym(String acronym) {
+        this.acronym = acronym;return this;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public Stock setDescription(String description) {
+        this.description = description;return this;
+    }
+    public List<HistoricalQuote> getHistory() {
+        return history;
+    }
+    public Stock setHistory(List<HistoricalQuote> history) {
+        this.history = history;return this;
     }
 }

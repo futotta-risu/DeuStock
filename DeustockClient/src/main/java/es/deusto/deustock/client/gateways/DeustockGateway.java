@@ -13,11 +13,14 @@ import org.json.JSONObject;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -36,25 +39,12 @@ public class DeustockGateway {
     }
 
 
-    public List<Stock> getStockList(){
-        List<Stock> stocks = new ArrayList<>();
 
-        // Mock Data
-        stocks.add(new Stock("AMZ",2,2));
-        stocks.add(new Stock("Prob",20,24));
-        stocks.add(new Stock("TST",200,25));
+    public List<Stock> getStockList(String listType){
+        Response  response = getHostWebTarget().path("stock")
+                .path("list").path(listType).request(MediaType.APPLICATION_JSON).get();
 
-        return stocks;
-    }
-
-    public List<Stock> getStockList(String searchQuery){
-        List<Stock> stocks = new ArrayList<>();
-
-        //Response response = getHostWebTarget().path(RESTVars.appName).path("stocks")
-        //        .path("list").path(searchQuery).request(MediaType.TEXT_PLAIN).get();
-
-
-        return stocks;
+        return response.readEntity(new GenericType<List<Stock>>() {});
     }
 
     public double getTwitterSentiment(String searchQuery){
@@ -79,22 +69,22 @@ public class DeustockGateway {
     }
     
     public boolean register(String username, String password, String fullName, Date birthDate, String aboutMe, String country) throws UnsupportedEncodingException, NoSuchAlgorithmException {	
-		User newUser = new User(username, password, fullName, birthDate, aboutMe, country);
-    	Response response = (Response) getHostWebTarget().path("register")
-    			.request("application/json").post(Entity.entity(newUser, MediaType.APPLICATION_JSON));
-		
-		return Boolean.parseBoolean(response.readEntity(String.class));
+    	Response response = getHostWebTarget().path("users").path("register")
+    			.request("application/json")
+                .post(Entity.entity(
+                        new User(username, password, fullName, birthDate, aboutMe, country)
+                        , MediaType.APPLICATION_JSON)
+                );
+
+        return response.getStatus() == 200;
     }
     
     public User login(String username, String password){
-    	//Response response = getHostWebTarget().path(username).path(getEncrypt(password)).request(MediaType.APPLICATION_JSON).get();
-        //JSONObject obj = new JSONObject(response.readEntity(String.class));
+    	Response response = getHostWebTarget().path("users").path("login")
+                .path(username).path(password)
+                .request(MediaType.APPLICATION_JSON).get();
 
-    	//return(new User(obj.getString("username"), obj.getString("password"), obj.getString("fullName"), (Date)obj.get("birthDate"),
-    	//		obj.getString("aboutMe"), obj.getString("country")));
-        User user = new User();
-        user.setUsername("erik");
-        return user;
+        return response.readEntity(User.class);
     }
     
     private String getEncrypt(String pass) {
@@ -105,11 +95,7 @@ public class DeustockGateway {
             e.printStackTrace();
         }
         byte[] data = new byte[0];
-        try {
-            data = pass.getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        data = pass.getBytes(StandardCharsets.UTF_8);
         byte[] encrypted = messageDigest.digest(data);
 		return encrypted.toString();
     }
