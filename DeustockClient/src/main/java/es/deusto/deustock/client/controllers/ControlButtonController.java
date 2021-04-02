@@ -40,14 +40,12 @@ public class ControlButtonController implements DSGenericController{
                         ViewPaths.UserDetailViewPath, new HashMap<String, Object>() {{ put("username", username); }}
                 )
         );
-
-        // TODO When About us created, implement
-        /*
+      
         aboutButton.setOnMouseClicked(
                 mouseevent -> MainController.getInstance().loadAndChangePane(
-                        ViewPaths.
+                        ViewPaths.AboutUsViewPath
                 )
-        );*/
+        );
     }
 
     public String getUsername() {

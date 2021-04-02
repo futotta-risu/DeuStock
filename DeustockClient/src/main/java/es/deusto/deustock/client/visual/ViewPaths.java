@@ -19,4 +19,6 @@ public class ViewPaths {
     public static final String ControlButtonViewPath = "/views/ControlButtonView.fxml";
 
     public static final String UserDetailViewPath = "/views/UserDetailView.fxml";
+    
+    public static final String AboutUsViewPath = "/views/SobreNosotrosView.fxml";
 }
