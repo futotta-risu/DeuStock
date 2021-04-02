@@ -4,26 +4,29 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-
-<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="98.0" prefWidth="637.0"
-          xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.ControlButtonController">
+<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="98.0" prefWidth="785.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.ControlButtonController">
    <children>
-      <Button id="aboutButton" mnemonicParsing="false" prefHeight="99.0" prefWidth="160.0" text="SOBRE NOSOTROS" textAlignment="CENTER" wrapText="true" fx:id="aboutButton">
+      <Button fx:id="homeButton" mnemonicParsing="false" prefHeight="101.0" prefWidth="141.0" text="Home">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Button>
+      <Button id="aboutButton" fx:id="aboutButton" mnemonicParsing="false" prefHeight="99.0" prefWidth="160.0" text="SOBRE NOSOTROS" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Ebrima" size="22.0" />
          </font>
       </Button>
-      <Button id="helpButton" mnemonicParsing="false" prefHeight="99.0" prefWidth="160.0" text="AYUDA" fx:id="helpButton">
+      <Button id="helpButton" fx:id="helpButton" mnemonicParsing="false" prefHeight="99.0" prefWidth="160.0" text="AYUDA">
          <font>
             <Font name="Ebrima" size="22.0" />
          </font>
       </Button>
-      <Button id="stockButton" mnemonicParsing="false" prefHeight="99.0" prefWidth="160.0" text="STOCK" fx:id="stockListButton">
+      <Button id="stockButton" fx:id="stockListButton" mnemonicParsing="false" prefHeight="99.0" prefWidth="160.0" text="STOCK">
          <font>
             <Font name="Ebrima" size="22.0" />
          </font>
       </Button>
-      <Button id="profileButton" mnemonicParsing="false" prefHeight="99.0" prefWidth="157.0" text="PERFIL" fx:id="profileButton">
+      <Button id="profileButton" fx:id="profileButton" mnemonicParsing="false" prefHeight="99.0" prefWidth="157.0" text="PERFIL">
          <font>
             <Font name="Ebrima" size="22.0" />
          </font>

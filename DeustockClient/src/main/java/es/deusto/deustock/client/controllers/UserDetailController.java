@@ -3,6 +3,7 @@ package es.deusto.deustock.client.controllers;
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 
@@ -28,6 +29,9 @@ public class UserDetailController implements DSGenericController{
 
     @FXML
     Text descriptionLabel;
+
+    @FXML
+    Button accountDeleteButton;
 
     public  UserDetailController(){}
 
@@ -63,5 +67,9 @@ public class UserDetailController implements DSGenericController{
         //this.sexLabel.setText(String.valueOf(user.isSex()));
         this.descriptionLabel.setText(user.getDescription());
         this.birthdayLabel.setText(user.getBirthDate().toString());
+
+        this.accountDeleteButton.setOnMouseClicked(
+                mouseEvent ->
+        );
     }
 }

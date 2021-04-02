@@ -1,4 +1,4 @@
-package com.dekses.jersey.docker.demo;
+package es.deusto.deustock.resources;
 
 import static org.junit.Assert.*;
 
@@ -11,12 +11,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import es.deusto.deustock.Main;
+import es.deusto.deustock.dao.UserDAO;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import es.deusto.deustock.data.User;
+
+import java.util.Date;
 
 
 public class UserResourceTest {
@@ -51,23 +54,25 @@ public class UserResourceTest {
 	
 		String jsonUser = "{\"birthDate\": \"1970-01-15T06:56:08Z[UTC]\",\"country\": \"SPAIN\",\"description\": \"TestAboutMe\",\"fullName\": \"TestFullName\",\"password\": \"TestPass\",\"username\": \"TestUser\"}";
 		
-		Response response = target.path("users").path("register").request().post(Entity.json(jsonUser));
+		Response response = target.path("users").path("register").request("application/json").post(Entity.json(jsonUser));
 		assertEquals(Response.status(200).build().getStatus(), response.getStatus());
-		
-		Response responseCopy = target.path("users").path("register").request().post(Entity.json(jsonUser));
+
+		Response responseCopy = target.path("users").path("register").request("application/json").post(Entity.json(jsonUser));
 		assertEquals(Response.status(401).build().getStatus(), responseCopy.getStatus());
 	}
 	
 	
 	@Test
 	public void testLogin() {
-        
-		User response = target
+		User user2 = new User("username3", "password3", "fullName3", new Date(1234567890), "country2", "description2");
+		UserDAO.getInstance().storeUser(user2);
+
+		Response response = target
 				.path("users").path("login")
-				.path("TestUser").path("TestPass").request(MediaType.APPLICATION_JSON).get(User.class);
-		
-        assertEquals("TestFullName", response.getFullName());
-		assertEquals("TestAboutMe", response.getDescription());
+				.path("username3").path("password3").request(MediaType.APPLICATION_JSON).get();
+		User user = response.readEntity(User.class);
+
+        assertEquals("fullName3", user.getFullName());
 	}
 	
 	

@@ -23,10 +23,7 @@ import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  *
@@ -44,7 +41,7 @@ public class DeustockGateway {
         Response  response = getHostWebTarget().path("stock")
                 .path("list").path(listType).request(MediaType.APPLICATION_JSON).get();
 
-        return response.readEntity(new GenericType<>(){});
+        return response.readEntity(new GenericType<List<Stock>>(){});
     }
 
     public double getTwitterSentiment(String searchQuery){
@@ -72,7 +69,7 @@ public class DeustockGateway {
     	Response response = getHostWebTarget().path("users").path("register")
     			.request("application/json")
                 .post(Entity.entity(
-                        new User(username, password, fullName, birthDate, aboutMe, country)
+                        new User(username, getEncrypt(password), fullName, birthDate, aboutMe, country)
                         , MediaType.APPLICATION_JSON)
                 );
 
@@ -81,7 +78,7 @@ public class DeustockGateway {
     
     public User login(String username, String password){
     	Response response = getHostWebTarget().path("users").path("login")
-                .path(username).path(password)
+                .path(username).path(getEncrypt(password))
                 .request(MediaType.APPLICATION_JSON).get();
 
         return response.readEntity(User.class);
@@ -97,7 +94,7 @@ public class DeustockGateway {
         byte[] data = new byte[0];
         data = pass.getBytes(StandardCharsets.UTF_8);
         byte[] encrypted = messageDigest.digest(data);
-		return encrypted.toString();
+		return Arrays.toString(encrypted);
     }
 
     public User getUser(String username){

@@ -18,7 +18,7 @@ public class ControlButtonController implements DSGenericController{
 
 
     @FXML
-    private Button stockListButton, helpButton, profileButton, aboutButton;
+    private Button stockListButton, helpButton, profileButton, aboutButton, homeButton;
 
     private String username;
 
@@ -35,6 +35,7 @@ public class ControlButtonController implements DSGenericController{
                         ViewPaths.HelpViewPath
                 )
         );
+        profileButton.setText(username);
         profileButton.setOnMouseClicked(
                 mouseevent -> MainController.getInstance().loadAndChangePaneWithParams(
                         ViewPaths.UserDetailViewPath, new HashMap<String, Object>() {{ put("username", username); }}
@@ -45,6 +46,10 @@ public class ControlButtonController implements DSGenericController{
                 mouseevent -> MainController.getInstance().loadAndChangePane(
                         ViewPaths.AboutUsViewPath
                 )
+        );
+        homeButton.setOnMouseClicked(
+                mouseEvent -> MainController.getInstance().loadAndChangePane(
+                        ViewPaths.HomeViewPath)
         );
     }
 
