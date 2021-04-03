@@ -13,6 +13,17 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    services:
+        mysql:
+            image: mysql:8.0
+            env:
+                MYSQL_USER: deustock_user1
+                MYSQL_PASSWORD: 12345
+                MYSQL_ROOT_PASSWORD: 12345
+                MYSQL_DATABASE: deustockdb
+            ports:
+                - '3306:3306'
+            options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
     - uses: actions/checkout@v2
@@ -20,10 +31,24 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 14
-    - name: Build with Maven
+
+    - name: Create database schema
+      run: |
+        cd DeuStock
+        mvn compile datanucleus:enhance
+          
+    - name: Build with Maven (Server)
       env:
         twitter_access_token : ${{secrets.TWITTERACCESSTOKEN}}
         twitter_access_token_secret : ${{secrets.TWITTERACCESSTOKENSECRET}}
         twitter_consumer_key : ${{secrets.TWITTERCONSUMERKEY}}
         twitter_consumer_key_secret : ${{secrets.TWITTERCONSUMERSECRET}}
       run: mvn --file DeuStock/pom.xml --batch-mode --update-snapshots verify
+
+    - name: Build with Maven (Client)
+      run: mvn --file DeustockClient/pom.xml --batch-mode --update-snapshots verify
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}

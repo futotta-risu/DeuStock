@@ -23,8 +23,8 @@ public class UserDAOTest {
 	*/
 	@Test
     public void testUserCreation() {	
-        User user1 = new User("username", "password", "fullName", new Date(1234567890), "country", "description");
-        User user2 = new User("username2", "password2", "fullName2", new Date(1234567890), "country2", "description2");
+        User user1 = new User("UserDAOTest1", "password", "fullName", new Date(1234567890), "country", "description");
+        User user2 = new User("UserDAOTest2", "password2", "fullName2", new Date(1234567890), "country2", "description2");
         UserDAO.getInstance().storeUser(user1);
         UserDAO.getInstance().storeUser(user2);
 	}

@@ -65,12 +65,12 @@ public class UserResourceTest {
 	 */
 	@Test
 	public void testLogin() {
-		User user2 = new User("username3", "password3", "fullName3", new Date(1234567890), "country2", "description2");
+		User user2 = new User("UserResourceTest1", "UserResourceTest1", "fullName3", new Date(1234567890), "country2", "description2");
 		UserDAO.getInstance().storeUser(user2);
 
 		Response response = target
 				.path("users").path("login")
-				.path("username3").path("password3").request(MediaType.APPLICATION_JSON).get();
+				.path("UserResourceTest1").path("UserResourceTest1").request(MediaType.APPLICATION_JSON).get();
 		User user = response.readEntity(User.class);
 
         assertEquals("fullName3", user.getFullName());
@@ -81,10 +81,16 @@ public class UserResourceTest {
 	 */
 	@Test
 	public void testDelete() {
-		Response response = target.path("users").path("delete").path("TestUser").path("TestPass").request().put(Entity.entity("{}", MediaType.APPLICATION_JSON));
+		Response response = target
+				.path("users").path("delete")
+				.path("TestUser").path("TestPass")
+				.request().get();
 		assertEquals(Response.status(200).build().getStatus(), response.getStatus());
 		
-		Response responseDelete = target.path("users").path("delete").path("TestUser").path("TestPass").request().put(Entity.entity("{}", MediaType.APPLICATION_JSON));
+		Response responseDelete = target
+				.path("users").path("delete")
+				.path("TestUser").path("TestPass")
+				.request().get();
 		assertEquals(Response.status(401).build().getStatus(), responseDelete.getStatus());
 	}
 

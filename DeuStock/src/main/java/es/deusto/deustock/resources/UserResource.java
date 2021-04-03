@@ -86,12 +86,17 @@ public class UserResource {
 	@Path("/delete/{username}/{password}")
 	public Response delete(@PathParam("username") String username, @PathParam("password") String password) {
 		User user = UserDAO.getInstance().getUser(username);
+		System.out.println("T1-1");
 		if (user != null) {
+			System.out.println("T1-2");
 			if (user.checkPassword(password)) {
+				System.out.println("T1-3");
 				UserDAO.getInstance().deleteUser(username);
+				System.out.println("T1-4");
 				return Response.status(200).build();
 			} else return Response.status(401).build();
 		} else return Response.status(401).build();
 	}
+
 
 }

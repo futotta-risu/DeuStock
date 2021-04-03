@@ -19,8 +19,8 @@ public class JDOTest {
 	@Test
     public void testUserCreation() {
 		
-        User user1 = new User("username", "password", "fullName", new Date(1234567890), "country", "description");
-        User user2 = new User("username2", "password2", "fullName2", new Date(1234567890), "country2", "description2");
+        User user1 = new User("JDOTest1", "password", "fullName", new Date(1234567890), "country", "description");
+        User user2 = new User("JDOTest2", "password2", "fullName2", new Date(1234567890), "country2", "description2");
         UserDAO.getInstance().storeUser(user1);
         UserDAO.getInstance().storeUser(user2);
 	}
@@ -29,10 +29,9 @@ public class JDOTest {
 	/**
 	 * Tests User queries
 	*/
-	@SuppressWarnings("unchecked")
 	@Test
     public void testUserQuery() {
-		User user = UserDAO.getInstance().getUser("username2");
+		User user = UserDAO.getInstance().getUser("JDOTest2");
 		List<User> users = UserDAO.getInstance().getUsers();
 		System.out.println(user);
 		System.out.println(users);
