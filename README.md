@@ -1,6 +1,7 @@
 # DeuStock 
 
 ![example workflow](https://github.com/futotta-risu/DeuStock/actions/workflows/maven.yml/badge.svg)
+[![codecov](https://codecov.io/gh/futotta-risu/DeuStock/branch/main/graph/badge.svg?token=1PB4Q43DD5)](https://codecov.io/gh/futotta-risu/DeuStock)
 
 Simulador de broker.
 
@@ -22,5 +23,5 @@ Simulador de broker.
   * JDO for database access.
   * Jacoco, JUnit 4  for testing.
   * Jreddit, twitter4j, twitter4j-stream, YahooFinanceAPI for data scraping.
-  * Stanford-corenlp for data analysis. 
+  * Stanford CoreNLP for data analysis. 
   
