@@ -17,10 +17,10 @@ Simulador de broker.
 
 
 ## Technologies used
-  · Eclipse Jersey as REST framework
-  · JavaFX for the client GUI.
-  · JDO for database access.
-  · Jacoco, JUnit 4  for testing.
-  · Jreddit, twitter4j, twitter4j-stream, YahooFinanceAPI for data scraping.
-  · Stanford-corenlp for data analysis. 
+  * Eclipse Jersey as REST framework
+  * JavaFX for the client GUI.
+  * JDO for database access.
+  * Jacoco, JUnit 4  for testing.
+  * Jreddit, twitter4j, twitter4j-stream, YahooFinanceAPI for data scraping.
+  * Stanford-corenlp for data analysis. 
   
