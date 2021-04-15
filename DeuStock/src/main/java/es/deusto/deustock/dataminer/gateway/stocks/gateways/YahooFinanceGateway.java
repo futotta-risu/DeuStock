@@ -1,12 +1,11 @@
 package es.deusto.deustock.dataminer.gateway.stocks.gateways;
 
-import com.google.protobuf.TextFormat;
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataQueryData;
+import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 
-import org.json.simple.parser.ParseException;
-import twitter4j.JSONObject;
+import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
+import es.deusto.deustock.log.DeuLogger;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 
@@ -30,10 +29,14 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
     }
 
     @Override
-    public DeuStock getStockData(StockDataQueryData queryData, boolean withHistoric){
+    public DeuStock getStockData(StockQueryData queryData, boolean withHistoric) throws StockNotFoundException{
         DeuStock deustock = new DeuStock(queryData);
         try {
             Stock stock = YahooFinance.get(queryData.getAcronym());
+
+            if(stock == null){
+                throw new StockNotFoundException(queryData);
+            }
 
             deustock.setPrice(stock.getQuote(true).getPrice());
             if(withHistoric) deustock.setHistory(stock.getHistory());
@@ -43,12 +46,25 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
         return deustock;
     }
 
+
+    /**
+     * Gets the Stocks price of a List.
+     */
     @Override
-    public HashMap<String, DeuStock> getStocksGeneralData(List<StockDataQueryData> queryData) {
+    public HashMap<String, DeuStock> getStocksGeneralData(List<StockQueryData> queryData) {
         HashMap<String, DeuStock> stocks = new HashMap<>();
-        for(StockDataQueryData stockData : queryData){
-            stocks.put(stockData.getAcronym(), getStockData(stockData, false));
+
+        for(StockQueryData stockData : queryData){
+            try {
+                DeuStock stock = getStockData(stockData, false);
+                stocks.put(stockData.getAcronym(), stock);
+
+            } catch (StockNotFoundException e) {
+                DeuLogger.logger.error(e.getMessage());
+                DeuLogger.logger.info("Skipping unknown stock " + stockData.getAcronym() + "." );
+            }
         }
+
         return stocks;
     }
 }

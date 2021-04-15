@@ -8,23 +8,23 @@ class StockDataQueryDataTest {
 
     @Test
     void testConstructor(){
-        StockDataQueryData q = new StockDataQueryData("AMZ", StockDataQueryData.Interval.DAILY);
+        StockQueryData q = new StockQueryData("AMZ", StockQueryData.Interval.DAILY);
         assertEquals(q.getAcronym(),"AMZ");
-        assertEquals(q.getInterval(), StockDataQueryData.Interval.DAILY);
+        assertEquals(q.getInterval(), StockQueryData.Interval.DAILY);
     }
 
     @Test
     void setAcronym() {
-        StockDataQueryData q = new StockDataQueryData("AMZ", StockDataQueryData.Interval.DAILY);
+        StockQueryData q = new StockQueryData("AMZ", StockQueryData.Interval.DAILY);
         q.setAcronym("GOG");
         assertEquals(q.getAcronym(),"GOG");
     }
 
     @Test
     void setInterval() {
-        StockDataQueryData q = new StockDataQueryData("AMZ", StockDataQueryData.Interval.DAILY);
-        q.setInterval(StockDataQueryData.Interval.WEEKLY);
-        assertEquals(q.getInterval(), StockDataQueryData.Interval.WEEKLY);
+        StockQueryData q = new StockQueryData("AMZ", StockQueryData.Interval.DAILY);
+        q.setInterval(StockQueryData.Interval.WEEKLY);
+        assertEquals(q.getInterval(), StockQueryData.Interval.WEEKLY);
     }
 
 }
