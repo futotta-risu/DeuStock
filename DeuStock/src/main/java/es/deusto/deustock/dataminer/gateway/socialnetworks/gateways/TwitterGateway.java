@@ -94,30 +94,4 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
 
         return messages;
     }
-
-    // Only for future purpose
-    @Deprecated
-    public void getStreamMessageList(SocialNetworkQueryData queryData){
-
-        StatusListener listener = new StatusListener() {
-            @Override
-            public void onStatus(Status status) {
-                System.out.println("@" + status.getUser().getScreenName() + " - " + status.getText());
-            }
-            @Override
-            public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {}
-            @Override
-            public void onTrackLimitationNotice(int numberOfLimitedStatuses) {}
-            @Override
-            public void onScrubGeo(long userId, long upToStatusId) {}
-            @Override
-            public void onStallWarning(StallWarning warning) {}
-            @Override
-            public void onException(Exception ex) {}
-        };
-        TwitterStream twitterStream = this.twitterStreamF.getInstance();
-        twitterStream.addListener(listener);
-        twitterStream.sample();
-        twitterStream.filter(new FilterQuery(queryData.getSearchQuery()+" -filter:retweets").language("en"));
-    }
 }
