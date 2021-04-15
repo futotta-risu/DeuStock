@@ -1,13 +1,10 @@
 package es.deusto.deustock.resources.stocks;
 
-import com.google.gson.Gson;
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataQueryData;
-
-import org.json.JSONObject;
+import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -18,8 +15,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static es.deusto.deustock.dataminer.gateway.stocks.StockDataQueryData.Interval.*;
+import static es.deusto.deustock.dataminer.gateway.stocks.StockQueryData.Interval.*;
 
 
 /**
@@ -36,23 +34,24 @@ public class StockList {
     public List<DeuStock> getStock( @PathParam("size") String listSize) {
 
         List<String> stockList;
+        // TODO Change to new system for Stock Listing
         switch(listSize){
             case "small" -> stockList = smallList;
             case "big" -> stockList = bigList;
             default -> stockList = smallList;
         }
+
         StockDataGatewayFactory factory = StockDataGatewayFactory.getInstance();
         StockDataAPIGateway gateway = factory.create(StockDataGatewayEnum.YahooFinance);
-        List<DeuStock> stocks = new ArrayList<>();
-        for(String stockName : stockList){
-            StockDataQueryData queryData = new StockDataQueryData(stockName, DAILY);
-            try {
-                stocks.add(gateway.getStockData(queryData, false));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
-        }
-        return stocks;
+
+        List<StockQueryData> stockDataList =
+                stockList.stream()
+                        .map( c -> new StockQueryData(c, DAILY) )
+                        .collect(Collectors.toList());
+
+        return new ArrayList<>(
+                gateway.getStocksGeneralData(stockDataList).values()
+        );
     }
 }

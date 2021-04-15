@@ -2,24 +2,25 @@ package es.deusto.deustock.dataminer.gateway.stocks;
 
 
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  *
  * @author Erik B. Terres
  */
-public class StockDataQueryData {
+public class StockQueryData {
 
-    public enum Interval {DAILY, WEEKLY, YEARLY};
+    public enum Interval {
+        DAILY, WEEKLY, YEARLY
+    };
 
     private String acronym;
     private Calendar from, to;
     private Interval interval  = Interval.DAILY;
 
-    private StockDataQueryData() {}
+    private StockQueryData() {}
 
 
-    public StockDataQueryData(String acronym, Interval interval) {
+    public StockQueryData(String acronym, Interval interval) {
         this.acronym = acronym;
         this.interval = interval;
         setDateRangeByInterval();
@@ -29,7 +30,7 @@ public class StockDataQueryData {
         return acronym;
     }
 
-    public StockDataQueryData setAcronym(String acronym) {
+    public StockQueryData setAcronym(String acronym) {
         this.acronym = acronym;
         return this;
     }
@@ -48,7 +49,7 @@ public class StockDataQueryData {
         return interval;
     }
 
-    public StockDataQueryData setInterval(Interval interval) {
+    public StockQueryData setInterval(Interval interval) {
         this.interval = interval;
         setDateRangeByInterval();
         return this;
