@@ -14,6 +14,7 @@ import java.io.IOException;
  * @author Erik B. Terres
  */
 public class DSJSONUtils {
+    private DSJSONUtils(){}
 
     public static JSONObject readFile(String path) throws IOException, ParseException {
         return (JSONObject) (new JSONParser()).parse(new FileReader(path));

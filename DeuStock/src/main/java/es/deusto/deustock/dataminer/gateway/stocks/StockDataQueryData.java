@@ -16,11 +16,8 @@ public class StockDataQueryData {
     private Calendar from, to;
     private Interval interval  = Interval.DAILY;
 
-    public StockDataQueryData() {}
+    private StockDataQueryData() {}
 
-    public StockDataQueryData(String acronym) {
-        this.acronym = acronym;
-    }
 
     public StockDataQueryData(String acronym, Interval interval) {
         this.acronym = acronym;
@@ -57,7 +54,7 @@ public class StockDataQueryData {
         return this;
     }
 
-    public void setDateRangeByInterval() {
+    private void setDateRangeByInterval() {
         this.from = Calendar.getInstance();
         this.to = Calendar.getInstance();
         switch (this.interval) {

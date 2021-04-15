@@ -20,9 +20,8 @@ public class StockDAOTest {
 	*/
 	@Test
     public void testStockCreation() {
-		;
-      	DeuStock stock1 = new DeuStock(new StockDataQueryData("MSFT"));
-		DeuStock stock2 = new DeuStock(new StockDataQueryData("GOOG"));
+      	DeuStock stock1 = new DeuStock(new StockDataQueryData("MSFT", StockDataQueryData.Interval.DAILY));
+		DeuStock stock2 = new DeuStock(new StockDataQueryData("GOOG", StockDataQueryData.Interval.DAILY));
         StockDAO.getInstance().storeStock(stock1);
         StockDAO.getInstance().storeStock(stock2);
 	}
