@@ -25,7 +25,6 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
     private final String path ="data/secret_keys/secret_twitter_keys.json";
 
     private final TwitterFactory twitterF;
-    private final TwitterStreamFactory twitterStreamF;
 
     private static TwitterGateway instance = null;
 
@@ -36,11 +35,9 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
         } catch (IOException | ParseException e) {
             DeuLogger.logger.error("Could not load twitter configuration.");
             this.twitterF = null;
-            this.twitterStreamF = null;
             return;
         }
         this.twitterF = new TwitterFactory(getConfigurationBuilder(config).build());
-        this.twitterStreamF = new TwitterStreamFactory(getConfigurationBuilder(config).build());
     }
 
     private JSONObject getConfiguration() throws IOException, ParseException {
