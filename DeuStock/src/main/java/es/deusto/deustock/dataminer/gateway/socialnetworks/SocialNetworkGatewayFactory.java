@@ -9,7 +9,7 @@ import es.deusto.deustock.dataminer.gateway.socialnetworks.gateways.TwitterGatew
  */
 public class SocialNetworkGatewayFactory {
 
-    private static SocialNetworkGatewayFactory instance = null;
+    private static SocialNetworkGatewayFactory instance;
 
     private SocialNetworkGatewayFactory(){}
 

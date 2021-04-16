@@ -18,6 +18,8 @@ public class SocialTextCleaner {
     private final static String hashtagFilter   = "#";
     private final static String spaceFilter     = "[\\s]+";
 
+    private SocialTextCleaner(){}
+
     public static String removeInvalidChars(String txt) {
         return txt.replaceAll(charFilter, "");
     }

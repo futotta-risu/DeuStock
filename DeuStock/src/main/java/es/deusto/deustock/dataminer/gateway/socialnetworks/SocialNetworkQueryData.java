@@ -44,7 +44,17 @@ public class SocialNetworkQueryData {
         return nMessages;
     }
 
+    /**
+     * Sets the number of messages the Search will return
+     * @param nMessages Integer between 1 to 100. If a value outside is passed,
+     *                 it will be approximated to the closest value in the range
+     */
     public void setNMessages(int nMessages) {
-        this.nMessages = Math.min(100,nMessages);
+        if(nMessages>100){
+            this.nMessages = 100;
+        }else {
+            this.nMessages = Math.max(nMessages, 1);
+        }
     }
+
 }

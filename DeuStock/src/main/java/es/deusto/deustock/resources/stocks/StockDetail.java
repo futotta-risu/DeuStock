@@ -5,9 +5,9 @@ import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataQueryData;
+import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
+import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
 import es.deusto.deustock.log.DeuLogger;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -21,7 +21,7 @@ import javax.ws.rs.core.MediaType;
 
 import java.io.IOException;
 
-import static es.deusto.deustock.dataminer.gateway.stocks.StockDataQueryData.Interval.*;
+import static es.deusto.deustock.dataminer.gateway.stocks.StockQueryData.Interval.*;
 
 /**
  * @author Erik B. Terres
@@ -29,38 +29,40 @@ import static es.deusto.deustock.dataminer.gateway.stocks.StockDataQueryData.Int
 @Path("stock/detail/{query}/{interval}")
 public class StockDetail {
 
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public JSONObject getStock(
             @PathParam("query") String stockName,
             @PathParam("interval") String interval) throws ParseException {
+
+        if(stockName.isBlank() || interval.isBlank()){
+            throw new IllegalArgumentException("Invalid arguments");
+        }
+
         StockDataGatewayFactory factory = StockDataGatewayFactory.getInstance();
         StockDataAPIGateway gateway = factory.create(StockDataGatewayEnum.YahooFinance);
-        StockDataQueryData queryData;
 
-        // TODO REST Error
-        switch(interval){
-            case "DAY" -> queryData = new StockDataQueryData(stockName, DAILY);
-            case "WEEK" -> queryData = new StockDataQueryData(stockName, WEEKLY);
-            case "YEAR" -> queryData = new StockDataQueryData(stockName, YEARLY);
-            default -> {
-                return new JSONObject();
-            }
+
+        StockQueryData.Interval tempInterval = null;
+        try{
+            tempInterval = StockQueryData.Interval.valueOf(interval);
+        }catch(IllegalArgumentException  | NullPointerException e){
+            DeuLogger.logger.error("Invalid Interval argument with " + interval + ".");
+            throw new IllegalArgumentException("Invalid Interval argument");
         }
+
 
         DeuStock stock = null;
         try {
-            stock = gateway.getStockData(queryData, true);
-        } catch (IOException e) {
-            e.printStackTrace();
-           /*TODO no se consigue obtener el stock data o la conexion con  el gateway?
-            */
-            DeuLogger.logger.error("Could not get Stock Data.");
-            return new JSONObject();
+            stock = gateway.getStockData(
+                    new StockQueryData(stockName,tempInterval),
+                    true
+            );
+        } catch (StockNotFoundException e) {
+            DeuLogger.logger.error(e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
-        String stockString = new Gson().toJson(stock);
-        JSONParser parser = new JSONParser();
-        return (JSONObject) parser.parse(stockString);
+
+        return (JSONObject) new JSONParser().parse(new Gson().toJson(stock));
     }
 }

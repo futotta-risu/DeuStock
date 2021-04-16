@@ -25,7 +25,6 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
     private final String path ="data/secret_keys/secret_twitter_keys.json";
 
     private final TwitterFactory twitterF;
-    private final TwitterStreamFactory twitterStreamF;
 
     private static TwitterGateway instance = null;
 
@@ -36,11 +35,9 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
         } catch (IOException | ParseException e) {
             DeuLogger.logger.error("Could not load twitter configuration.");
             this.twitterF = null;
-            this.twitterStreamF = null;
             return;
         }
         this.twitterF = new TwitterFactory(getConfigurationBuilder(config).build());
-        this.twitterStreamF = new TwitterStreamFactory(getConfigurationBuilder(config).build());
     }
 
     private JSONObject getConfiguration() throws IOException, ParseException {
@@ -93,31 +90,5 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
         }
 
         return messages;
-    }
-
-    // Only for future purpose
-    @Deprecated
-    public void getStreamMessageList(SocialNetworkQueryData queryData){
-
-        StatusListener listener = new StatusListener() {
-            @Override
-            public void onStatus(Status status) {
-                System.out.println("@" + status.getUser().getScreenName() + " - " + status.getText());
-            }
-            @Override
-            public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {}
-            @Override
-            public void onTrackLimitationNotice(int numberOfLimitedStatuses) {}
-            @Override
-            public void onScrubGeo(long userId, long upToStatusId) {}
-            @Override
-            public void onStallWarning(StallWarning warning) {}
-            @Override
-            public void onException(Exception ex) {}
-        };
-        TwitterStream twitterStream = this.twitterStreamF.getInstance();
-        twitterStream.addListener(listener);
-        twitterStream.sample();
-        twitterStream.filter(new FilterQuery(queryData.getSearchQuery()+" -filter:retweets").language("en"));
     }
 }

@@ -1,15 +1,11 @@
 package es.deusto.deustock.data;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataQueryData;
-import yahoofinance.YahooFinance;
+import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import yahoofinance.histquotes.HistoricalQuote;
-import yahoofinance.histquotes.Interval;
 
 import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
@@ -29,7 +25,7 @@ public class DeuStock {
     @NotPersistent
     List<HistoricalQuote> history = new ArrayList<>();
 
-    public DeuStock(StockDataQueryData data){
+    public DeuStock(StockQueryData data){
         setAcronym(data.getAcronym());
     }
 
@@ -65,4 +61,11 @@ public class DeuStock {
         this.history = history;
     }
 
+    @Override
+    public String toString() {
+        return "DeuStock{" +
+                "price=" + price +
+                ", acronym='" + acronym + '\'' +
+                '}';
+    }
 }

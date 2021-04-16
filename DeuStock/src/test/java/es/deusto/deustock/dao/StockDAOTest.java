@@ -2,7 +2,7 @@ package es.deusto.deustock.dao;
 
 
 import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataQueryData;
+import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import org.junit.Test;
 
 import java.util.List;
@@ -20,9 +20,8 @@ public class StockDAOTest {
 	*/
 	@Test
     public void testStockCreation() {
-		;
-      	DeuStock stock1 = new DeuStock(new StockDataQueryData("MSFT"));
-		DeuStock stock2 = new DeuStock(new StockDataQueryData("GOOG"));
+      	DeuStock stock1 = new DeuStock(new StockQueryData("MSFT", StockQueryData.Interval.DAILY));
+		DeuStock stock2 = new DeuStock(new StockQueryData("GOOG", StockQueryData.Interval.DAILY));
         StockDAO.getInstance().storeStock(stock1);
         StockDAO.getInstance().storeStock(stock2);
 	}

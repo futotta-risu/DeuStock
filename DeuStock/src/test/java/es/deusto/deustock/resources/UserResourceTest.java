@@ -26,6 +26,7 @@ import java.util.Date;
  * 
  * @author landersanmillan
  */
+/*
 public class UserResourceTest {
 
 	
@@ -47,8 +48,7 @@ public class UserResourceTest {
 
 	/**
 	 *  Tests user register
-	 */
-	@Test
+
 	public void testRegister() {
 	
 		String jsonUser = "{\"birthDate\": \"1970-01-15T06:56:08Z[UTC]\",\"country\": \"SPAIN\",\"description\": \"TestAboutMe\",\"fullName\": \"TestFullName\",\"password\": \"TestPass\",\"username\": \"TestUser\"}";
@@ -62,8 +62,7 @@ public class UserResourceTest {
 	
 	/**
 	 *  Tests user login
-	 */
-	@Test
+
 	public void testLogin() {
 		User user2 = new User("UserResourceTest1", "UserResourceTest1", "fullName3", new Date(1234567890), "country2", "description2");
 		UserDAO.getInstance().storeUser(user2);
@@ -78,8 +77,7 @@ public class UserResourceTest {
 	
 	/**
 	 *  Tests user delete
-	 */
-	@Test
+
 	public void testDelete() {
 		Response response = target
 				.path("users").path("delete")
@@ -95,3 +93,4 @@ public class UserResourceTest {
 	}
 
 }
+*/

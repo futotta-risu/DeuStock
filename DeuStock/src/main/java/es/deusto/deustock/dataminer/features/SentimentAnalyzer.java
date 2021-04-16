@@ -20,6 +20,8 @@ import java.util.Properties;
  */
 public class SentimentAnalyzer {
 
+    private SentimentAnalyzer(){}
+
     /**
      *
      * Returns the category of a String based on the predicted sentiment.
@@ -29,7 +31,7 @@ public class SentimentAnalyzer {
      * @return Double from 0 to 4. (0-Very Negative, 4-Very Positive)
      */
     public static double analyze(String message) {
-        if(message==null || message.length()==0) return 2;
+        if(message==null || message.isBlank()) return 2;
 
         Properties props = new Properties();
         props.setProperty("annotators", "tokenize, ssplit, parse, sentiment");
