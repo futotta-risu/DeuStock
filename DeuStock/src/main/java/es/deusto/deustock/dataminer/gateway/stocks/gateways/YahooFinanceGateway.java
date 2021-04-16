@@ -2,7 +2,7 @@ package es.deusto.deustock.dataminer.gateway.stocks.gateways;
 
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataQueryData;
+import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import es.deusto.deustock.log.DeuLogger;
 
 import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
