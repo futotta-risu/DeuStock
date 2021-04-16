@@ -10,12 +10,12 @@ import java.util.Calendar;
 public class StockQueryData {
 
     public enum Interval {
-        DAILY, WEEKLY, YEARLY
+        DAILY, WEEKLY, MONTHLY
     };
 
     private String acronym;
     private Calendar from, to;
-    private Interval interval  = Interval.DAILY;
+    private Interval interval;
 
     private StockQueryData() {}
 
@@ -59,9 +59,9 @@ public class StockQueryData {
         this.from = Calendar.getInstance();
         this.to = Calendar.getInstance();
         switch (this.interval) {
-            case DAILY -> from.add(Calendar.DAY_OF_YEAR, -25);
-            case WEEKLY -> from.add(Calendar.WEEK_OF_YEAR, -25);
-            case YEARLY -> from.add(Calendar.YEAR, -25);
+            case DAILY -> from.add(Calendar.DAY_OF_YEAR, -3);
+            case WEEKLY -> from.add(Calendar.WEEK_OF_YEAR, -3);
+            case MONTHLY -> from.add(Calendar.MONTH, -3);
         }
     }
 }

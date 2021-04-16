@@ -8,6 +8,7 @@ import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundExcep
 import es.deusto.deustock.log.DeuLogger;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
+import yahoofinance.histquotes.Interval;
 
 import java.io.IOException;
 import java.util.*;
@@ -39,7 +40,17 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
             }
 
             deustock.setPrice(stock.getQuote(true).getPrice());
-            if(withHistoric) deustock.setHistory(stock.getHistory());
+            Interval interval = null;
+            switch (queryData.getInterval()) {
+			case DAILY: 
+				interval = Interval.DAILY;
+			case WEEKLY: 
+				interval = Interval.WEEKLY;
+			case MONTHLY: 
+				interval = Interval.MONTHLY;
+			}
+            
+            if(withHistoric) deustock.setHistory(stock.getHistory(interval));
         } catch (IOException e) {
             e.printStackTrace();
         }

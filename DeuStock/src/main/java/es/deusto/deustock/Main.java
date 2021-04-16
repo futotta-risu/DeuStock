@@ -6,6 +6,7 @@ import es.deusto.deustock.resources.help.FAQList;
 import es.deusto.deustock.resources.socialnetwork.TwitterSentiment;
 import es.deusto.deustock.resources.stocks.StockDetail;
 import es.deusto.deustock.resources.stocks.StockList;
+import es.deusto.deustock.resources.stocks.StockReportResource;
 import es.deusto.deustock.resources.user.UserDetail;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
@@ -39,6 +40,7 @@ public class Main {
         rc.register(FAQList.class);
         rc.register(UserDetail.class);
         rc.register(UserResource.class);
+        rc.register(StockReportResource.class);
         // create and start a new instance of grizzly http server
         // exposing the Jersey application at BASE_URI
         return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), rc);

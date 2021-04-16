@@ -30,14 +30,11 @@ public class StockReportResource {
   @Produces(MediaType.APPLICATION_OCTET_STREAM)
   public Response createSimplePdfWithChart() throws IOException {
 	  YahooFinanceGateway gateway = (YahooFinanceGateway) StockDataGatewayFactory.getInstance().create(StockDataGatewayEnum.YahooFinance);
-	  System.out.println("1");
-
 	  StockQueryData queryData = new StockQueryData("MSFT", Interval.DAILY);
-	  System.out.println("2");
 
       DeuStock stock = null;
 	try {
-		stock = gateway.getStockData(queryData, false);
+		stock = gateway.getStockData(queryData, true);
 	} catch (StockNotFoundException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
