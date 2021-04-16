@@ -32,7 +32,6 @@ bin/
 .DS_Store
 target/
 
-.mvn
 .project
 .metadata
 .factorypath
