@@ -17,6 +17,12 @@ public class Stock {
     String acronym;
     String description;
 
+    public Stock(String acronym, BigDecimal price){
+        this.acronym =acronym;
+        this.price = price;
+
+    }
+
     //Price per hours last 24h
     List<HistoricalQuote> history = new ArrayList<>();
 
