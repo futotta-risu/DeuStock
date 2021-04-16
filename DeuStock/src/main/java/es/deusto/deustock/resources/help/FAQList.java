@@ -26,7 +26,7 @@ public class FAQList {
         try {
             return DSJSONUtils.readFile(path);
         } catch (IOException | ParseException e) {
-        	DeuLogger.logger.error("Could not get FAQList.");
+        	DeuLogger.logger.error("Could not get FAQList due to problems reading file: " + path);
             e.printStackTrace();
         }
         return new JSONObject();

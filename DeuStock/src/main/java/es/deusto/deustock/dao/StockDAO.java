@@ -9,6 +9,8 @@ import javax.jdo.Query;
 import javax.jdo.Transaction;
 
 import es.deusto.deustock.data.DeuStock;
+import es.deusto.deustock.log.DeuLogger;
+import yahoofinance.Stock;
 
 /**
  * Clase de acceso a datos de Stocks en la BD.<br>
@@ -54,6 +56,7 @@ public class StockDAO extends GenericDAO {
 			tx.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
+			DeuLogger.logger.error("Error storing Stock" + stock.getAcronym());
 		} finally {
 			if (tx.isActive()) {
 				tx.rollback();
@@ -87,6 +90,7 @@ public class StockDAO extends GenericDAO {
 			tx.commit();
 		} catch (Exception ex) {
 			System.out.println("   $ Error Getting stocks: " + ex.getMessage());
+			DeuLogger.logger.error("Error getting Stocks");
 		} finally {
 			if (tx != null && tx.isActive())
 				tx.rollback();
@@ -120,6 +124,7 @@ public class StockDAO extends GenericDAO {
 
 		} catch (Exception ex) {
 			System.out.println("   $ Error Getting Stock: " + ex.getMessage());
+			DeuLogger.logger.error("Error getting stock: " + acronym);
 		} finally {
 
 			if (tx != null && tx.isActive()) {
@@ -142,6 +147,7 @@ public class StockDAO extends GenericDAO {
 //			tx.commit();
 //		} catch (Exception ex) {
 //			System.out.println("   $ Error Updating stock: " + ex.getMessage());
+//			DeuLogger.logger.error("Error updating stock: " + stock.getName());
 //		} finally {
 //			if (tx != null && tx.isActive()) {
 //				tx.rollback();
@@ -150,7 +156,7 @@ public class StockDAO extends GenericDAO {
 //			pm.close();
 //		}
 //	}
-	
+//	
 	
 	/**
 	 * Permite eliminar un stock de la BD a partir de su acronimo
@@ -174,6 +180,7 @@ public class StockDAO extends GenericDAO {
 
 		} catch (Exception ex) {
 			System.out.println("   $ Error Getting Stock: " + ex.getMessage());
+			DeuLogger.logger.error("Error getting stock for deleting: " + acronym);
 		} finally {
 
 			if (tx != null && tx.isActive()) {

@@ -91,10 +91,7 @@ public class DeustockGateway {
             messageDigest = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-            /*
-             * TODO
-             */
-            DeuLogger.logger.error("Could not encrypt, algorithm is not available");
+            DeuLogger.logger.error("Could not encrypt password, algorithm is not available");
         }
         byte[] data = new byte[0];
         data = pass.getBytes(StandardCharsets.UTF_8);

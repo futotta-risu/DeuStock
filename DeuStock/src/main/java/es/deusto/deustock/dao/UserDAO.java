@@ -1,6 +1,7 @@
 package es.deusto.deustock.dao;
 
 import es.deusto.deustock.data.User;
+import es.deusto.deustock.log.DeuLogger;
 
 import javax.jdo.Extent;
 import javax.jdo.PersistenceManager;
@@ -85,6 +86,7 @@ public class UserDAO extends GenericDAO {
 			tx.commit();
 		} catch (Exception ex) {
 			System.out.println("   $ Error Getting users: " + ex.getMessage());
+			DeuLogger.logger.error("Error getting users");
 		} finally {
 			if (tx != null && tx.isActive()) {
 				tx.rollback();
@@ -120,6 +122,7 @@ public class UserDAO extends GenericDAO {
 
 		} catch (Exception ex) {
 			System.out.println("   $ Error Getting User: " + ex.getMessage());
+			DeuLogger.logger.error("Error getting user " + username + "" );
 		} finally {
 
 			if (tx != null && tx.isActive()) {
@@ -144,6 +147,7 @@ public class UserDAO extends GenericDAO {
 //			tx.commit();
 //		} catch (Exception ex) {
 //			System.out.println("   $ Error Updating user: " + ex.getMessage());
+//			DeuLogger.logger.error("Error updating user: " + userInfo.getUsername());
 //		} finally {
 //			if (tx != null && tx.isActive()) {
 //				tx.rollback();

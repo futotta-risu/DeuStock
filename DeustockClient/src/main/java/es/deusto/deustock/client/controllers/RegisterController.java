@@ -81,9 +81,6 @@ public class RegisterController {
 						e.printStackTrace();
 						 DeuLogger.logger.error("Could not register due to unsupported encoding");
 					} catch (NoSuchAlgorithmException e) {
-						/*
-						 * TODO algoritmo?
-						 */
 						DeuLogger.logger.error("Could not register, algorithm is not available");
 						e.printStackTrace();
 					}
