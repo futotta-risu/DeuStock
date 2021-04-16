@@ -31,7 +31,9 @@ public class SentimentAnalyzer {
      * @return Double from 0 to 4. (0-Very Negative, 4-Very Positive)
      */
     public static double analyze(String message) {
-        if(message==null || message.isBlank()) return 2;
+        if( message==null || message.isBlank() ){
+            return 2;
+        }
 
         Properties props = new Properties();
         props.setProperty("annotators", "tokenize, ssplit, parse, sentiment");

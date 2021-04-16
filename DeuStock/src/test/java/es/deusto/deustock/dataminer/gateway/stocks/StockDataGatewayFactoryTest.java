@@ -21,4 +21,10 @@ class StockDataGatewayFactoryTest {
         StockDataAPIGateway  yahooGateway =  factory.create(StockDataGatewayEnum.YahooFinance);
         assertNotNull(yahooGateway);
     }
+
+    @Test
+    void testCannotCreateNullGateway(){
+        StockDataGatewayFactory factory = StockDataGatewayFactory.getInstance();
+        assertThrows(NullPointerException.class, () -> factory.create(null));
+    }
 }

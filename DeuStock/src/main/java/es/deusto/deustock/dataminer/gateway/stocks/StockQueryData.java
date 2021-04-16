@@ -2,6 +2,7 @@ package es.deusto.deustock.dataminer.gateway.stocks;
 
 
 import java.util.Calendar;
+import java.util.Objects;
 
 /**
  *
@@ -21,16 +22,18 @@ public class StockQueryData {
 
 
     public StockQueryData(String acronym, Interval interval) {
-        this.acronym = acronym;
-        this.interval = interval;
-        setDateRangeByInterval();
+        setAcronym(acronym);
+        setInterval(interval);
     }
 
     public String getAcronym() {
         return acronym;
     }
 
-    public StockQueryData setAcronym(String acronym) {
+    private StockQueryData setAcronym(String acronym) {
+        if(acronym.isBlank())
+            throw new IllegalArgumentException("Acronym cannot be empty");
+
         this.acronym = acronym;
         return this;
     }
@@ -49,9 +52,12 @@ public class StockQueryData {
         return interval;
     }
 
-    public StockQueryData setInterval(Interval interval) {
+    private StockQueryData setInterval(Interval interval) {
+        Objects.requireNonNull(interval);
+
         this.interval = interval;
         setDateRangeByInterval();
+
         return this;
     }
 

@@ -2,6 +2,9 @@ package es.deusto.deustock.dataminer.gateway.socialnetworks;
 
 import es.deusto.deustock.dataminer.gateway.socialnetworks.gateways.TwitterGateway;
 
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
+
 /**
  * Factory for the SocialNetworkGateway.
  *
@@ -20,10 +23,14 @@ public class SocialNetworkGatewayFactory {
         return instance;
     }
 
+    @NotNull
     public SocialNetworkAPIGateway create(SocialNetworkGatewayEnum type){
+        Objects.requireNonNull(type);
         return switch (type) {
             case Twitter -> TwitterGateway.getInstance();
         };
+
+
     }
 
 

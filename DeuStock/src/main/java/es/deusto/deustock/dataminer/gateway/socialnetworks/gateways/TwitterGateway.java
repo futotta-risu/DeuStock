@@ -14,6 +14,7 @@ import twitter4j.conf.ConfigurationBuilder;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Twitter gateway.
@@ -70,6 +71,8 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
 
     @Override
     public List<SocialNetworkMessage> getMessageList(SocialNetworkQueryData queryData) {
+        Objects.requireNonNull(queryData);
+
         Twitter twitter = this.twitterF.getInstance();
 
         Query query = new Query(queryData.getSearchQuery()+" -filter:retweets");

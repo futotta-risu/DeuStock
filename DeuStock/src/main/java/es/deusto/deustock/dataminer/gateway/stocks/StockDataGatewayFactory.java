@@ -2,6 +2,9 @@ package es.deusto.deustock.dataminer.gateway.stocks;
 
 import es.deusto.deustock.dataminer.gateway.stocks.gateways.YahooFinanceGateway;
 
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
+
 /**
  * Factory for the SocialNetworkGateway.
  *
@@ -20,7 +23,9 @@ public class StockDataGatewayFactory {
         return instance;
     }
 
+    @NotNull
     public StockDataAPIGateway create(StockDataGatewayEnum type){
+        Objects.requireNonNull(type);
         return switch (type) {
             case YahooFinance -> YahooFinanceGateway.getInstance();
         };

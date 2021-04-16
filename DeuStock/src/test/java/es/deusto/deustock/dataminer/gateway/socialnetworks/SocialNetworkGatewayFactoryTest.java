@@ -18,4 +18,10 @@ class SocialNetworkGatewayFactoryTest {
         SocialNetworkAPIGateway  twitterGateway =  factory.create(SocialNetworkGatewayEnum.Twitter);
         assertNotNull(twitterGateway);
     }
+
+    @Test
+    void testCannotCreateNullGateway(){
+        SocialNetworkGatewayFactory factory = SocialNetworkGatewayFactory.getInstance();
+        assertThrows(NullPointerException.class, () -> factory.create(null));
+    }
 }
