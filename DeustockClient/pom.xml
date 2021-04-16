@@ -35,6 +35,47 @@
                     <mainClass>es.deusto.deustock.client.Main</mainClass>
                 </configuration>
             </plugin>
+            
+            <plugin>
+            	<groupId>org.jacoco</groupId>
+            	<artifactId>jacoco-maven-plugin</artifactId>
+            	<version>0.8.6</version>
+            	<executions>
+            		<execution>
+            			<goals>
+            				<goal>prepare-agent</goal>
+            			</goals>
+            			<configuration>
+            				<append>true</append>
+            				<destFile>${sonar.jacoco.reportPath}</destFile>
+            				<!-- Sets the VM argument line used when unit tests are run. -->
+            				<propertyName>surefireArgLine</propertyName>
+            			</configuration>
+            		</execution>
+            		<execution>
+            			<id>report</id>
+            			<phase>prepare-package</phase>
+            			<goals>
+            				<goal>report</goal>
+            			</goals>
+            		</execution>
+            	</executions>
+            </plugin>
+            
+            <plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-surefire-plugin</artifactId>
+	            <version>3.0.0-M3</version>
+				<configuration>
+					<printSummary>false</printSummary>
+					<redirectTestOutputToFile>true</redirectTestOutputToFile>
+					<forkCount>3</forkCount>
+					<reuseForks>true</reuseForks>
+					<argLine>${surefireArgLine} -Xmx1024m -noverify --enable-preview</argLine>
+				</configuration>
+
+	        </plugin>
+	        
         </plugins>
     </build>
 
@@ -119,6 +160,11 @@
             <artifactId>YahooFinanceAPI</artifactId>
             <version>3.5.0</version>
         </dependency>
+        <dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-surefire-plugin</artifactId>
+			<version>3.0.0-M3</version>
+		</dependency>
     </dependencies>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
