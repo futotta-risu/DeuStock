@@ -4,7 +4,7 @@ import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataQueryData;
+import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import es.deusto.deustock.log.DeuLogger;
 
 import org.json.JSONObject;
