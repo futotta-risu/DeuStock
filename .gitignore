@@ -31,3 +31,9 @@ bin/
 *.iml
 .DS_Store
 target/
+
+.mvn
+.project
+.metadata
+.factorypath
+nb-configuration.xml
