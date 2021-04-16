@@ -52,10 +52,20 @@ jobs:
         twitter_consumer_key_secret : ${{secrets.TWITTERCONSUMERSECRET}}
       run: mvn --file DeuStock/pom.xml --batch-mode --update-snapshots verify
 
-    - name: Build with Maven (Client)
-      run: mvn --file DeustockClient/pom.xml --batch-mode --update-snapshots verify
-
-    - name: Upload coverage to Codecov
+    - name: Upload server coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
+        flags: server
+        directory: ./DeuStock
+
+    - name: Build with Maven (Client)
+      run: mvn --file DeustockClient/pom.xml --batch-mode --update-snapshots verify
+
+    
+     - name: Upload client coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        flags: client
+        directory: ./DeustockClient
