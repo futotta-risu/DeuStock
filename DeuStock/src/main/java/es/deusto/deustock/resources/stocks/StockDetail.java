@@ -6,6 +6,8 @@ import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataQueryData;
+import es.deusto.deustock.log.DeuLogger;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -52,6 +54,9 @@ public class StockDetail {
             stock = gateway.getStockData(queryData, true);
         } catch (IOException e) {
             e.printStackTrace();
+           /*TODO no se consigue obtener el stock data o la conexion con  el gateway?
+            */
+            DeuLogger.logger.error("Could not get Stock Data.");
             return new JSONObject();
         }
         String stockString = new Gson().toJson(stock);

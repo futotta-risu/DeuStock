@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 
 import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.data.User;
+import es.deusto.deustock.log.DeuLogger;
 
 /**
  * Clase que contiene los metodos REST asociados a la clase Usuario
@@ -41,6 +42,7 @@ public class UserResource {
 				return user;
 			}
 		}
+		DeuLogger.logger.error("Wrong username or password");
 		return null;
 	}
 

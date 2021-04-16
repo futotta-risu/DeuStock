@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import es.deusto.deustock.client.gateways.DeustockGateway;
+import es.deusto.deustock.client.log.DeuLogger;
 import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -78,7 +79,12 @@ public class RegisterController {
 						register();
 					} catch (UnsupportedEncodingException e) {
 						e.printStackTrace();
+						 DeuLogger.logger.error("Could not register due to unsupported encoding");
 					} catch (NoSuchAlgorithmException e) {
+						/*
+						 * TODO algoritmo?
+						 */
+						DeuLogger.logger.error("Could not register, algorithm is not available");
 						e.printStackTrace();
 					}
 				}

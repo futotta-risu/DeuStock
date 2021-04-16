@@ -6,6 +6,7 @@ import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataQueryData;
+import es.deusto.deustock.log.DeuLogger;
 
 import org.json.JSONObject;
 
@@ -50,6 +51,10 @@ public class StockList {
                 stocks.add(gateway.getStockData(queryData, false));
             } catch (IOException e) {
                 e.printStackTrace();
+                /*TODO
+                 * gateway?
+                 */
+                DeuLogger.logger.error("Could not add add Stock");
             }
 
         }

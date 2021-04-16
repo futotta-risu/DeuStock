@@ -4,6 +4,7 @@ import com.google.protobuf.TextFormat;
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataQueryData;
+import es.deusto.deustock.log.DeuLogger;
 
 import org.json.simple.parser.ParseException;
 import twitter4j.JSONObject;
@@ -39,6 +40,7 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
             if(withHistoric) deustock.setHistory(stock.getHistory());
         } catch (IOException e) {
             e.printStackTrace();
+            DeuLogger.logger.error("Could not get the stock data.");
         }
         return deustock;
     }

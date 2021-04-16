@@ -1,5 +1,6 @@
 package es.deusto.deustock.resources.help;
 
+import es.deusto.deustock.log.DeuLogger;
 import es.deusto.deustock.util.file.DSJSONUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -25,7 +26,7 @@ public class FAQList {
         try {
             return DSJSONUtils.readFile(path);
         } catch (IOException | ParseException e) {
-            // TODO Change error message
+        	DeuLogger.logger.error("Could not get FAQList.");
             e.printStackTrace();
         }
         return new JSONObject();

@@ -3,6 +3,7 @@ package es.deusto.deustock.client.gateways;
 import es.deusto.deustock.client.data.Stock;
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.data.help.FAQQuestion;
+import es.deusto.deustock.client.log.DeuLogger;
 import es.deusto.deustock.client.net.RESTVars;
 import es.deusto.deustock.client.visual.help.FAQLine;
 
@@ -90,6 +91,10 @@ public class DeustockGateway {
             messageDigest = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
+            /*
+             * TODO
+             */
+            DeuLogger.logger.error("Could not encrypt, algorithm is not available");
         }
         byte[] data = new byte[0];
         data = pass.getBytes(StandardCharsets.UTF_8);

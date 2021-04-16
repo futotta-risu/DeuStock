@@ -51,6 +51,9 @@ public class LoginController {
 					if(login==null) {
 						dialog.setContentText("DATOS ERRONEOS");
 				        dialog.showAndWait();
+				        /*TODO
+				         * Habria que hacer aqui un logger?
+				         */
 						return;
 					}
 
