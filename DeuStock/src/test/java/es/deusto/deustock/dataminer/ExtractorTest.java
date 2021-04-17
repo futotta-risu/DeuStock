@@ -19,7 +19,7 @@ class ExtractorTest {
     }
 
     @Test
-    void getSentimentTendency() {
+    void getSentimentTendency() throws InterruptedException {
         Extractor e = new Extractor(SocialNetworkGatewayEnum.Twitter);
         SocialNetworkQueryData sqd = new SocialNetworkQueryData("BTC");
 
