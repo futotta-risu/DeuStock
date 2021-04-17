@@ -92,7 +92,10 @@ public class SentimentAnalyzerPerformanceTest {
     public void testAnalyzeMessageThreadedJoin() throws InterruptedException {
         SentimentAnalyzer.analyzeMulti(this.msgs);
 
-        for(SocialNetworkMessage msg : this.msgs)
+        for(SocialNetworkMessage msg : this.msgs){
+            System.out.println(msg.getSentiment());
             assertTrue(msg.getSentiment()>0);
+        }
+
     }
 }

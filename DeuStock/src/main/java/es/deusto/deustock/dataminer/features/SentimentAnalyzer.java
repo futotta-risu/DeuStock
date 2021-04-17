@@ -85,9 +85,12 @@ public class SentimentAnalyzer {
             thread.start();
         }
 
+        int i = 0;
         for(AnalyzeSentiment a : threads){
             a.join();
+            System.out.println("Joined the thread number " + i++);
         }
+        System.out.println("Finish");
     }
 
     /**
