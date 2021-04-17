@@ -33,11 +33,11 @@ public class Extractor {
      * @param queryData SocialNetworkQueryData
      * @return Double value between 0 to 4 representing the average sentiment.
      */
-    public double getSentimentTendency(SocialNetworkQueryData queryData) {
+    public double getSentimentTendency(SocialNetworkQueryData queryData) throws InterruptedException {
         List<SocialNetworkMessage> messages = gateway.getMessageList(queryData);
 
         SocialTextCleaner.clean(messages);
-        SentimentAnalyzer.analyze(messages);
+        SentimentAnalyzer.analyzeMulti(messages);
 
         return SentimentAnalyzer.getSentimentTendency(messages);
     }
