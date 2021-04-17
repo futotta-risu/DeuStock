@@ -10,7 +10,7 @@ public class SocialNetworkMessage {
 
 	private String author = null;
 	private String message = null;
-	private double sentiment = 0;
+	private double sentiment = -1;
 
 	public SocialNetworkMessage(){}
 

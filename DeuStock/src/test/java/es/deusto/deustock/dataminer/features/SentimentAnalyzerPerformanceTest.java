@@ -83,9 +83,16 @@ public class SentimentAnalyzerPerformanceTest {
         SentimentAnalyzer.analyze(this.msgs);
 
         for(SocialNetworkMessage msg : this.msgs)
-            assertTrue(msg.getSentiment()>0);
+            assertTrue(msg.getSentiment()>=0);
     }
 
+
+    @Test
+    @DisplayName("Test Performance with Thread/Join")
+    public void testAnalyzeMessageAssertData() throws InterruptedException {
+        SentimentAnalyzer.analyzeMulti(this.msgs);
+        assertTrue(this.msgs.size()>0);
+    }
 
     @Test
     @DisplayName("Test Performance with Thread/Join")
@@ -93,6 +100,6 @@ public class SentimentAnalyzerPerformanceTest {
         SentimentAnalyzer.analyzeMulti(this.msgs);
 
         for(SocialNetworkMessage msg : this.msgs)
-            assertTrue(msg.getSentiment()>0);
+            assertTrue(msg.getSentiment()>=0);
     }
 }
