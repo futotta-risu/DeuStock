@@ -27,7 +27,7 @@ public class TwitterSentiment {
      */
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public String getSentiment(@PathParam("query") String query) {
+    public String getSentiment(@PathParam("query") String query) throws InterruptedException {
         Extractor ext = new Extractor(Twitter);
 
         return String.valueOf(ext.getSentimentTendency(new SocialNetworkQueryData(query)));

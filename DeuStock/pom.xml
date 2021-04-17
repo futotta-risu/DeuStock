@@ -285,6 +285,8 @@
 	            <artifactId>maven-surefire-plugin</artifactId>
 	            <version>3.0.0-M3</version>
 				<configuration>
+					<parallel>classes</parallel>
+					<threadCount>5</threadCount>
 					<printSummary>false</printSummary>
 					<redirectTestOutputToFile>true</redirectTestOutputToFile>
 					<forkCount>3</forkCount>

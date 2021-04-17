@@ -1,14 +1,15 @@
 package es.deusto.deustock.dataminer.features;
 
 import es.deusto.deustock.data.SocialNetworkMessage;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
+@Tag("sentiment")
 public class SentimentAnalyzerTest {
 
     @Test
@@ -20,8 +21,8 @@ public class SentimentAnalyzerTest {
         double positiveStringSentiment = SentimentAnalyzer.analyze(testStringPositive);
         double negativeStringSentiment = SentimentAnalyzer.analyze(testStringNegative);
 
-        assertTrue("Positive String should be possible", positiveStringSentiment > 2);
-        assertTrue("Negative String should be negative", negativeStringSentiment < 2);
+        assertTrue(positiveStringSentiment > 2);
+        assertTrue(negativeStringSentiment < 2);
     }
 
     @Test
@@ -52,8 +53,21 @@ public class SentimentAnalyzerTest {
 
         SentimentAnalyzer.analyze(msgs);
 
-        assertTrue("Positive String should be possible", msgs.get(0).getSentiment() > 2);
-        assertTrue("Negative String should be negative", msgs.get(1).getSentiment() < 2);
+        assertTrue( msgs.get(0).getSentiment() > 2);
+        assertTrue(msgs.get(1).getSentiment() < 2);
+    }
+
+    @Test
+    @DisplayName("Test Threaded Analyze saves Sentiment")
+    public void testAnalyzeMessageThreaded() throws InterruptedException {
+        ArrayList<SocialNetworkMessage> msgs = new ArrayList<>();
+        msgs.add(new SocialNetworkMessage("You are beautiful"));
+        msgs.add(new SocialNetworkMessage("You are really ugly"));
+
+        SentimentAnalyzer.analyzeMulti(msgs);
+
+        assertTrue( msgs.get(0).getSentiment() > 2);
+        assertTrue(msgs.get(1).getSentiment() < 2);
     }
 
 }
