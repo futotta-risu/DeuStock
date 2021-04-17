@@ -1,7 +1,5 @@
 package es.deusto.deustock.jdo;
 
-import static org.junit.Assert.assertTrue;
-
 import java.util.Date;
 import java.util.List;
 

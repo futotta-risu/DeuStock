@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class StockNotFoundExceptionTest {
+public class StockNotFoundExceptionTest {
 
     @Test
     public void testCorrectMessage(){
@@ -16,6 +16,6 @@ class StockNotFoundExceptionTest {
                 () -> { throw new StockNotFoundException(data); }
         );
 
-        assertEquals("Could not find stock AMZN", exception.getMessage());
+        assertEquals("Could not find stock AMZN.", exception.getMessage());
     }
 }

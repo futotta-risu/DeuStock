@@ -1,8 +1,5 @@
 package es.deusto.deustock.dataminer.gateway.stocks;
 
-import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkAPIGateway;
-import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum;
-import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class StockDataGatewayFactoryTest {
 
     @Test
-    void tstGetInstanceNotNull() {
+    void testGetInstanceNotNull() {
         StockDataGatewayFactory factory = StockDataGatewayFactory.getInstance();
         assertNotNull(factory);
     }
@@ -18,7 +15,7 @@ class StockDataGatewayFactoryTest {
     @Test
     void testCreateYahooFinance() {
         StockDataGatewayFactory factory = StockDataGatewayFactory.getInstance();
-        StockDataAPIGateway  yahooGateway =  factory.create(StockDataGatewayEnum.YahooFinance);
+        StockDataAPIGateway yahooGateway =  factory.create(StockDataGatewayEnum.YahooFinance);
         assertNotNull(yahooGateway);
     }
 
