@@ -5,7 +5,11 @@ name: Build
 
 on:
   push:
-    branches: [ main ]
+    branches: 
+     - main 
+
+    # Only for test checking purposes
+     - 'test-*'
   pull_request:
     branches: [ main ]
 
