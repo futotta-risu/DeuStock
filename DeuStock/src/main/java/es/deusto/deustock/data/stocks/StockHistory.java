@@ -1,5 +1,6 @@
 package es.deusto.deustock.data.stocks;
 
+import com.google.common.base.Objects;
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.stocks.OperationType;
@@ -39,5 +40,23 @@ public class StockHistory {
                 ", price=" + price +
                 ", operation=" + operation +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StockHistory that = (StockHistory) o;
+
+        return Double.compare(that.pricePurchase, pricePurchase) == 0
+                && Double.compare(that.priceSell, priceSell) == 0
+                && isSell == that.isSell
+                && Objects.equal(stock, that.stock)
+                && operation == that.operation;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(stock, pricePurchase, priceSell, isSell, operation);
     }
 }

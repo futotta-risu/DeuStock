@@ -34,10 +34,25 @@ public class DeuStock {
         setAcronym(data.getAcronym());
     }
 
-    
-    public BigDecimal getPrice() { return price; }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
     public DeuStock setPrice(BigDecimal price) {
-        this.price = price; return this;
+        this.price = price;
+        return this;
+    }
+    public String getFullName() {
+        return fullName;
+    }
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+    public String getAcronym() {
+        return acronym;
+    }
+    public void setAcronym(String acronym) {
+        this.acronym = acronym;
     }
     public String getFullName() { return fullName; }
     public DeuStock setFullName(String fullName) {
