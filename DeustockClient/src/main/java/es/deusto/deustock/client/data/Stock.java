@@ -16,44 +16,34 @@ public class Stock {
     String fullName;
     String acronym;
     String description;
-
-    public Stock(String acronym, BigDecimal price){
-        this.acronym =acronym;
-        this.price = price;
-
-    }
-
     //Price per hours last 24h
     List<HistoricalQuote> history = new ArrayList<>();
 
-    public BigDecimal getPrice() {
-        return price;
+    
+    public Stock(String acronym, BigDecimal price){
+        this.acronym =acronym;
+        this.price = price;
     }
+
+    
+    public BigDecimal getPrice() { return price; }
     public Stock setPrice(BigDecimal price) {
-        this.price = price;return this;
+        this.price = price; return this;
     }
-    public String getFullName() {
-        return fullName;
-    }
+    public String getFullName() { return fullName; }
     public Stock setFullName(String fullName) {
-        this.fullName = fullName;return this;
+        this.fullName = fullName; return this;
     }
-    public String getAcronym() {
-        return acronym;
-    }
+    public String getAcronym() { return acronym; }
     public Stock setAcronym(String acronym) {
-        this.acronym = acronym;return this;
+        this.acronym = acronym; return this;
     }
-    public String getDescription() {
-        return description;
-    }
+    public String getDescription() { return description; }
     public Stock setDescription(String description) {
-        this.description = description;return this;
+        this.description = description; return this;
     }
-    public List<HistoricalQuote> getHistory() {
-        return history;
-    }
+    public List<HistoricalQuote> getHistory() { return history; }
     public Stock setHistory(List<HistoricalQuote> history) {
-        this.history = history;return this;
+        this.history = history; return this;
     }
 }

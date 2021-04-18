@@ -19,8 +19,18 @@ public class JDOTest {
 	@Test
     public void testUserCreation() {
 		
-        User user1 = new User("JDOTest1", "password", "fullName", new Date(1234567890), "country", "description");
-        User user2 = new User("JDOTest2", "password2", "fullName2", new Date(1234567890), "country2", "description2");
+		User user1 = new User("UserDAOTest1", "password")
+				 .setFullName("fullName")
+				 .setBirthDate(new Date(1234567890))
+				 .setCountry("country")
+				 .setDescription("description");
+
+		User user2 = new User("UserDAOTest2", "password2")
+				 .setFullName("fullName2")
+				 .setBirthDate(new Date(1234567890))
+				 .setCountry("country2")
+				 .setDescription("description2");
+		
         UserDAO.getInstance().storeUser(user1);
         UserDAO.getInstance().storeUser(user2);
 	}
@@ -37,8 +47,6 @@ public class JDOTest {
 		System.out.println(users);
 	}
 	
-
-
 	
 //	/**
 //	 * Test User update
