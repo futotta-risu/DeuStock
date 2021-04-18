@@ -34,39 +34,38 @@ private static TimeChart INSTANCE;
 	}
 	
 	@SuppressWarnings("deprecation")
-	public XYChart getTimeChart(DeuStock deustock, int height, int width) {
-		// Create Chart
-	    XYChart chart = new XYChartBuilder().width(width).height(height).title("Price of " + deustock.getAcronym()).xAxisTitle("Fecha").yAxisTitle("Precio").build();
+	public XYChart getTimeChart(DeuStock deustock, float height, float width) {
+		
+		// CREATE Chart
+	    XYChart chart = new XYChartBuilder().width((int) width).height((int) height).title("Price of " + deustock.getAcronym()).xAxisTitle("Fecha").yAxisTitle("Precio").build();
 	 
-	    // Customize Chart
-	    chart.getStyler().setPlotBackgroundColor(ChartColor.getAWTColor(ChartColor.GREY));
+	    // CUSTOMIZE chart
+	    chart.getStyler().setPlotBackgroundColor(ChartColor.getAWTColor(ChartColor.LIGHT_GREY));
 	    chart.getStyler().setPlotGridLinesColor(new Color(255, 255, 255));
 	    chart.getStyler().setChartBackgroundColor(Color.WHITE);
-	    chart.getStyler().setLegendBackgroundColor(Color.PINK);
-	    chart.getStyler().setChartFontColor(Color.MAGENTA);
-	    chart.getStyler().setChartTitleBoxBackgroundColor(new Color(0, 222, 0));
+	    chart.getStyler().setLegendBackgroundColor(Color.CYAN);
+	    chart.getStyler().setChartFontColor(Color.BLACK);
+	    chart.getStyler().setChartTitleBoxBackgroundColor(Color.LIGHT_GRAY);
 	    chart.getStyler().setChartTitleBoxVisible(true);
 	    chart.getStyler().setChartTitleBoxBorderColor(Color.BLACK);
-	    chart.getStyler().setPlotGridLinesVisible(false);
+	    chart.getStyler().setPlotGridLinesVisible(true);
 	 
 	    chart.getStyler().setAxisTickPadding(5);
-	 
+	    chart.getStyler().setMarkerSize(12);
 	    chart.getStyler().setAxisTickMarkLength(15);
-	 
-	    chart.getStyler().setPlotMargin(20);
+	    chart.getStyler().setPlotMargin(25);
 	 
 	    chart.getStyler().setChartTitleFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
 	    chart.getStyler().setLegendFont(new Font(Font.SERIF, Font.PLAIN, 18));
 	    chart.getStyler().setLegendPosition(LegendPosition.InsideSE);
 	    chart.getStyler().setLegendSeriesLineLength(12);
 	    chart.getStyler().setAxisTitleFont(new Font(Font.SANS_SERIF, Font.ITALIC, 18));
-	    chart.getStyler().setAxisTickLabelsFont(new Font(Font.SERIF, Font.PLAIN, 11));
-	    chart.getStyler().setDatePattern("dd-MMM-YYYY");
+	    chart.getStyler().setAxisTickLabelsFont(new Font(Font.SERIF, Font.PLAIN, 13));
+	    chart.getStyler().setDatePattern("dd-MM-YYYY");
 	    chart.getStyler().setDecimalPattern("#0 €");
-	    chart.getStyler().setLocale(Locale.FRANCE);
-
+	    chart.getStyler().setLocale(Locale.CANADA);
 	 
-	    // generates linear data
+	    // GENERATE LINEAR DATA
 	    List<Date> xData = new ArrayList<Date>();
 	    List<Double> yData = new ArrayList<Double>();
 	 
@@ -88,14 +87,12 @@ private static TimeChart INSTANCE;
 		    yData.add(Double.parseDouble(historicalQuote.getClose().toString()));
 		}
 
-	    // Series
+	    // SERIES
 	    XYSeries series = chart.addSeries("Close Price", xData, yData);
-	    series.setLineColor(XChartSeriesColors.BLUE);
+	    series.setLineColor(XChartSeriesColors.BLACK);
 	    series.setMarkerColor(Color.ORANGE);
 	    series.setMarker(SeriesMarkers.CIRCLE);
 	    series.setLineStyle(SeriesLines.SOLID);
-	    System.out.println("DESPUES5");
-
 	 
 	    return chart;
 	}
