@@ -68,11 +68,14 @@ public class DeustockGateway {
     
     public boolean register(String username, String password, String fullName, Date birthDate, String aboutMe, String country) throws UnsupportedEncodingException, NoSuchAlgorithmException {	
     	Response response = getHostWebTarget().path("users").path("register")
-    			.request("application/json")
-                .post(Entity.entity(
-                        new User(username, getEncrypt(password), fullName, birthDate, aboutMe, country)
-                        , MediaType.APPLICATION_JSON)
-                );
+			.request("application/json")
+            .post(Entity.entity(new User(username, getEncrypt(password))
+	                        			.setFullName(fullName)
+	                        			.setBirthDate(birthDate)
+	                        			.setDescription(aboutMe)
+	                        			.setCountry(country)
+                  , MediaType.APPLICATION_JSON)
+            );
 
         return response.getStatus() == 200;
     }
