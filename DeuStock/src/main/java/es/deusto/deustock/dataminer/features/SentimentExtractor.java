@@ -1,4 +1,4 @@
-package es.deusto.deustock.dataminer;
+package es.deusto.deustock.dataminer.features;
 
 import es.deusto.deustock.data.SocialNetworkMessage;
 import es.deusto.deustock.dataminer.cleaner.SocialTextCleaner;
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Extractor class, used to encapsulate the sentiment extraction process.
  */
-public class Extractor {
+public class SentimentExtractor {
 
     /**
      * Gateway for the Extractor
@@ -22,7 +22,7 @@ public class Extractor {
     private final SocialNetworkAPIGateway gateway;
 
 
-    public Extractor(SocialNetworkGatewayEnum type){
+    public SentimentExtractor(SocialNetworkGatewayEnum type){
         gateway = SocialNetworkGatewayFactory.getInstance().create(type);
     }
 

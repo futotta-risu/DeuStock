@@ -20,6 +20,10 @@ public class StockQueryData {
 
     private StockQueryData() {}
 
+    public StockQueryData(String acronym) {
+        setAcronym(acronym);
+        setInterval(Interval.DAILY);
+    }
 
     public StockQueryData(String acronym, Interval interval) {
         setAcronym(acronym);

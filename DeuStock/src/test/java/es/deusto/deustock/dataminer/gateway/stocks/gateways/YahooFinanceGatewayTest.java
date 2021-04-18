@@ -5,6 +5,7 @@ import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Tag("investment")
 class YahooFinanceGatewayTest {
 
     @Test
@@ -81,9 +83,9 @@ class YahooFinanceGatewayTest {
         stockDataList.add(new StockQueryData("AMZN", StockQueryData.Interval.DAILY));
         stockDataList.add(new StockQueryData("NOK", StockQueryData.Interval.DAILY));
 
-        HashMap<String, DeuStock> stocks = gateway.getStocksGeneralData(stockDataList);
+        HashMap<String, DeuStock> stocks = gateway.getStocksData(stockDataList);
 
-        assertEquals(stocks.size(), 2);
+        assertEquals(2, stocks.size());
         assertTrue(stocks.containsKey("AMZN"));
         assertTrue(stocks.containsKey("NOK"));
         assertNotNull(stocks.get("AMZN"));
@@ -101,9 +103,9 @@ class YahooFinanceGatewayTest {
         stockDataList.add(new StockQueryData("NOK", StockQueryData.Interval.DAILY));
         stockDataList.add(new StockQueryData("TFXD", StockQueryData.Interval.DAILY));
 
-        HashMap<String, DeuStock> stocks = gateway.getStocksGeneralData(stockDataList);
+        HashMap<String, DeuStock> stocks = gateway.getStocksData(stockDataList);
 
-        assertEquals(stocks.size(), 2);
+        assertEquals(2 , stocks.size());
         assertFalse(stocks.containsKey("TFXD"));
     }
 }

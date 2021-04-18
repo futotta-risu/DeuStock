@@ -57,7 +57,7 @@ public class SentimentAnalyzer {
         messages.forEach(c -> c.setSentiment(analyze(c.getMessage())));
     }
 
-    private static class AnalyzeSentiment extends Thread{
+    private static class AnalyzeSentiment extends Thread {
         private final SocialNetworkMessage msg;
         public AnalyzeSentiment(SocialNetworkMessage msg){this.msg = msg;}
 

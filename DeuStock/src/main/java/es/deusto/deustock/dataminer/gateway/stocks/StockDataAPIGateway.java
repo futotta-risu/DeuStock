@@ -14,5 +14,5 @@ import java.util.List;
  */
 public interface StockDataAPIGateway {
 	DeuStock getStockData(StockQueryData queryData, boolean withHistoric) throws StockNotFoundException;
-	HashMap<String, DeuStock> getStocksGeneralData(List<StockQueryData> queryData);
+	HashMap<String, DeuStock> getStocksData(List<StockQueryData> queryData);
 }

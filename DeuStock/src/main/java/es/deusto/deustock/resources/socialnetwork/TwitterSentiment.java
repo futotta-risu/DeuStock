@@ -1,6 +1,6 @@
 package es.deusto.deustock.resources.socialnetwork;
 
-import es.deusto.deustock.dataminer.Extractor;
+import es.deusto.deustock.dataminer.features.SentimentExtractor;
 import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkQueryData;
 
 import javax.ws.rs.GET;
@@ -28,7 +28,7 @@ public class TwitterSentiment {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getSentiment(@PathParam("query") String query) throws InterruptedException {
-        Extractor ext = new Extractor(Twitter);
+        SentimentExtractor ext = new SentimentExtractor(Twitter);
 
         return String.valueOf(ext.getSentimentTendency(new SocialNetworkQueryData(query)));
 

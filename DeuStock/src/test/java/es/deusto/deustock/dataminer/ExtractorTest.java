@@ -1,12 +1,9 @@
 package es.deusto.deustock.dataminer;
 
+import es.deusto.deustock.dataminer.features.SentimentExtractor;
 import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum;
 import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkQueryData;
-import es.deusto.deustock.dataminer.gateway.socialnetworks.gateways.TwitterGateway;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.logging.LoggerFactory;
-import org.slf4j.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,13 +11,13 @@ class ExtractorTest {
 
     @Test
     void testConstructor(){
-        Extractor e = new Extractor(SocialNetworkGatewayEnum.Twitter);
+        SentimentExtractor e = new SentimentExtractor(SocialNetworkGatewayEnum.Twitter);
         assertNotNull(e);
     }
 
     @Test
     void getSentimentTendency() throws InterruptedException {
-        Extractor e = new Extractor(SocialNetworkGatewayEnum.Twitter);
+        SentimentExtractor e = new SentimentExtractor(SocialNetworkGatewayEnum.Twitter);
         SocialNetworkQueryData sqd = new SocialNetworkQueryData("BTC");
 
         double result = e.getSentimentTendency(sqd);
