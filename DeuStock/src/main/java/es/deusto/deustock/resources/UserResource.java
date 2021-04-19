@@ -36,14 +36,21 @@ public class UserResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/login/{username}/{password}")
 	public User login(@PathParam("username") String username, @PathParam("password") String password) {
+		DeuLogger.logger.error("Login petition for User " + username);
+
 		User user = UserDAO.getInstance().getUser(username);
-		if (user != null) {
-			if (user.checkPassword(password)) {
-				return user;
-			}
+		if(user == null) {
+			DeuLogger.logger.error("User not in DB");
+			return null;
 		}
-		DeuLogger.logger.error("Wrong username or password");
-		return null;
+
+		if(!user.checkPassword(password)) {
+			DeuLogger.logger.error("Incorrect password for user " + username);
+			return null;
+		}
+
+		return user;
+
 	}
 
 	/**
@@ -88,16 +95,18 @@ public class UserResource {
 	@Path("/delete/{username}/{password}")
 	public Response delete(@PathParam("username") String username, @PathParam("password") String password) {
 		User user = UserDAO.getInstance().getUser(username);
-		System.out.println("T1-1");
-		if (user != null) {
-			System.out.println("T1-2");
-			if (user.checkPassword(password)) {
-				System.out.println("T1-3");
-				UserDAO.getInstance().deleteUser(username);
-				System.out.println("T1-4");
-				return Response.status(200).build();
-			} else return Response.status(401).build();
-		} else return Response.status(401).build();
+
+		if (user == null) {
+			return Response.status(401).build();
+		}
+
+		if(!user.checkPassword(password)) {
+			return Response.status(401).build();
+		}
+
+		UserDAO.getInstance().deleteUser(username);
+		return Response.status(200).build();
+
 	}
 
 

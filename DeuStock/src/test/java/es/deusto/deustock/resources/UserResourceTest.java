@@ -1,96 +1,178 @@
 package es.deusto.deustock.resources;
 
-import static org.junit.Assert.*;
 
-
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import es.deusto.deustock.Main;
-import es.deusto.deustock.dao.UserDAO;
-import org.glassfish.grizzly.http.server.HttpServer;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import es.deusto.deustock.data.User;
+import es.deusto.deustock.dao.UserDAO;
+
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.test.JerseyTest;
+
+
+import org.junit.jupiter.api.*;
 
 import java.util.Date;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Testea los metodos REST relacionados con el usuario
  * 
  * @author landersanmillan
  */
-/*
-public class UserResourceTest {
+@Tag("server-resource")
+public class UserResourceTest  extends JerseyTest {
 
-	
-    private HttpServer server;
-    private WebTarget target;
+	private User user;
 
-    @Before
-    public void setUp()  {
-        server = Main.startServer();
-        Client c = ClientBuilder.newClient();
-        target = c.target(Main.BASE_URI);
-    }
-    
-	@SuppressWarnings("deprecation")
-	@After
+	private void resetUser(){
+		this.user = new User("TestUser","TestPass")
+				.setCountry("SPAIN")
+				.setFullName("TestFullName")
+				.setDescription("TestAboutMe")
+				.setBirthDate(new Date());
+	}
+
+	@BeforeEach
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+		resetUser();
+	}
+
+	@AfterEach
+	@Override
 	public void tearDown() throws Exception {
-        server.stop();
+		super.tearDown();
 	}
 
-	/**
-	 *  Tests user register
-
-	public void testRegister() {
-	
-		String jsonUser = "{\"birthDate\": \"1970-01-15T06:56:08Z[UTC]\",\"country\": \"SPAIN\",\"description\": \"TestAboutMe\",\"fullName\": \"TestFullName\",\"password\": \"TestPass\",\"username\": \"TestUser\"}";
-		
-		Response response = target.path("users").path("register").request("application/json").post(Entity.json(jsonUser));
-		assertEquals(Response.status(200).build().getStatus(), response.getStatus());
-
-		Response responseCopy = target.path("users").path("register").request("application/json").post(Entity.json(jsonUser));
-		assertEquals(Response.status(401).build().getStatus(), responseCopy.getStatus());
+	@Override
+	protected Application configure() {
+		return new ResourceConfig(UserResource.class);
 	}
-	
-	/**
-	 *  Tests user login
 
+	@Test
+	@DisplayName("Test Register returns 200")
+	public void testRegisterReturns200(){
+		Response response = this.target("users/register")
+				.request("application/json")
+				.post(Entity.json(this.user));
+
+		assertEquals(200, response.getStatus());
+
+		UserDAO.getInstance().deleteUser(this.user.getUsername());
+	}
+
+	@Test
+	@DisplayName("Test Register saves user")
+	public void testRegisterSavesUser(){
+		Response response = this.target("users/register")
+				.request("application/json")
+				.post(Entity.json(user));
+
+		assertTrue(UserDAO.getInstance().getUser(this.user.getUsername()) != null);
+		UserDAO.getInstance().deleteUser("TestUser");
+	}
+
+	@Test
+	@DisplayName("Test Register doesn't save duplicated User")
+	public void testRegisterCannotSaveDuplicatedUser() {
+
+		UserDAO.getInstance().storeUser(this.user);
+		resetUser();
+
+		Response responseCopy = this.target("users/register")
+				.request("application/json")
+				.post(Entity.json(user));
+
+		assertEquals(401, responseCopy.getStatus());
+		UserDAO.getInstance().deleteUser(this.user.getUsername());
+	}
+
+    @Test
+	@DisplayName("Test Login returns 200")
 	public void testLogin() {
-		User user2 = new User("UserResourceTest1", "UserResourceTest1", "fullName3", new Date(1234567890), "country2", "description2");
-		UserDAO.getInstance().storeUser(user2);
+		UserDAO.getInstance().storeUser(this.user);
 
-		Response response = target
-				.path("users").path("login")
-				.path("UserResourceTest1").path("UserResourceTest1").request(MediaType.APPLICATION_JSON).get();
-		User user = response.readEntity(User.class);
+		Response response = target("users/login")
+				.path("TestUser")
+				.path("TestPass")
+				.request(MediaType.APPLICATION_JSON).get();
 
-        assertEquals("fullName3", user.getFullName());
+		User userLogin = response.readEntity(User.class);
+
+        assertEquals("TestUser", userLogin.getUsername());
+		UserDAO.getInstance().deleteUser("TestUser");
 	}
-	
-	/**
-	 *  Tests user delete
 
+	@Test
+	@DisplayName("Test Login returns 401 with incorrect pass")
+	public void testLoginReturns401WithIncorrectPass() {
+		UserDAO.getInstance().storeUser(this.user);
+
+		Response response = target("users/login")
+				.path("TestUser")
+				.path("TestPassIncorrect")
+				.request(MediaType.APPLICATION_JSON).get();
+
+		User userLogin = response.readEntity(User.class);
+
+		assertNull(userLogin);
+		UserDAO.getInstance().deleteUser("TestUser");
+	}
+
+	@Test
+	@DisplayName("Test Login returns 401 with non existent user")
+	public void testLoginReturns401WithNonExistentUser() {
+		Response response = target("users/login")
+				.path("TestUser")
+				.path("TestPass")
+				.request(MediaType.APPLICATION_JSON).get();
+
+		User userLogin = response.readEntity(User.class);
+
+		assertNull(userLogin);
+	}
+
+    @Test
+	@DisplayName("Test Delete user in DB")
 	public void testDelete() {
-		Response response = target
-				.path("users").path("delete")
+		UserDAO.getInstance().storeUser(this.user);
+
+		Response response = target("users")
+				.path("delete")
 				.path("TestUser").path("TestPass")
 				.request().get();
-		assertEquals(Response.status(200).build().getStatus(), response.getStatus());
-		
-		Response responseDelete = target
-				.path("users").path("delete")
+
+		assertEquals(200, response.getStatus());
+	}
+
+	@Test
+	@DisplayName("Test Delete fails on non existent user")
+	public void testCannotDeleteUnknownUser(){
+		Response responseDelete = target("users")
+				.path("delete")
 				.path("TestUser").path("TestPass")
 				.request().get();
-		assertEquals(Response.status(401).build().getStatus(), responseDelete.getStatus());
+
+		assertEquals(401, responseDelete.getStatus());
+	}
+
+	@Test
+	@DisplayName("Test Delete fails on incorrect Pass")
+	public void testCannotDeleteWithIncorrectPass(){
+		UserDAO.getInstance().storeUser(this.user);
+
+		Response response = target("users")
+				.path("delete")
+				.path("TestUser").path("TestPassIncorrect")
+				.request().get();
+
+		assertEquals(401, response.getStatus());
 	}
 
 }
-*/

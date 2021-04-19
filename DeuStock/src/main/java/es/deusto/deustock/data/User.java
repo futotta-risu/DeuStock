@@ -70,17 +70,6 @@ public class User implements Serializable{
 		this.registerDate = Calendar.getInstance().getTime();
 		this.lastActivity = this.registerDate;
 	}
-	
-	public User() {
-		this.username = "NULL";
-		this.password = "NULL";
-		this.fullName = "NULL";
-		this.birthDate = Calendar.getInstance().getTime();
-		this.country = "NULL";
-		this.description = "NULL";
-		this.registerDate = Calendar.getInstance().getTime();
-		this.lastActivity = this.registerDate;
-	}
 
 	public void updateInfo(User u) {
 		this.password = u.password;
