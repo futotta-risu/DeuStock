@@ -1,5 +1,8 @@
 package es.deusto.deustock.data;
 
+import es.deusto.deustock.data.stocks.Wallet;
+
+import java.io.Serial;
 import java.util.Calendar;
 import java.io.Serializable;
 import java.util.Date;
@@ -12,6 +15,7 @@ import javax.jdo.annotations.*;
  */
 @PersistenceCapable(detachable = "true")
 public class User implements Serializable{
+	@Serial
 	private static final long serialVersionUID = 1L;
 	@Unique
 	String username;
@@ -25,6 +29,9 @@ public class User implements Serializable{
 	Date registerDate;
 	@NotPersistent
 	Date lastActivity;
+
+	@Persistent(defaultFetchGroup = "true")
+	Wallet wallet;
 	
 	
 	public String getUsername() { return username; }
@@ -62,7 +69,9 @@ public class User implements Serializable{
 	public User setLastActivity() {
 		this.lastActivity = Calendar.getInstance().getTime(); return this;
 	}
-	
+	public Wallet getWallet(){
+		return this.wallet;
+	}
 	
 	public User(String username, String password) {
 		this.username = username;

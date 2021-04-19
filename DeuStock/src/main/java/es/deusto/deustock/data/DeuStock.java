@@ -42,18 +42,6 @@ public class DeuStock {
         this.price = price;
         return this;
     }
-    public String getFullName() {
-        return fullName;
-    }
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-    public String getAcronym() {
-        return acronym;
-    }
-    public void setAcronym(String acronym) {
-        this.acronym = acronym;
-    }
     public String getFullName() { return fullName; }
     public DeuStock setFullName(String fullName) {
         this.fullName = fullName; return this;
