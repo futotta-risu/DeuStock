@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.scene.control.ButtonBar.ButtonData;
 
 /**
@@ -22,6 +23,9 @@ import javafx.scene.control.ButtonBar.ButtonData;
  * @author landersanmillan
  */
 public class LoginController {
+	
+	@FXML
+	private Pane loginPane;
 	
 	@FXML
     private TextField usernameTxt;
@@ -43,6 +47,7 @@ public class LoginController {
 	    dialog.setTitle("ERROR");
 	    ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
 	    dialog.getDialogPane().getButtonTypes().add(type);
+	    loginPane.styleProperty().set("-fx-background-color: #FFFFFF");
 
 		loginButton.setOnMouseClicked(
 				mouseEvent -> {
