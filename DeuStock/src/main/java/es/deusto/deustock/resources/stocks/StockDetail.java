@@ -55,8 +55,7 @@ public class StockDetail {
         DeuStock stock = null;
         try {
             stock = gateway.getStockData(
-                    new StockQueryData(stockName,tempInterval),
-                    true
+                    new StockQueryData(stockName,tempInterval).setWithHistoric(true)
             );
         } catch (StockNotFoundException e) {
             DeuLogger.logger.error(e.getMessage());

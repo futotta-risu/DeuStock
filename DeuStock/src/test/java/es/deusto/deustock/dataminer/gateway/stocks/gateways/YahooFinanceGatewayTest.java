@@ -27,9 +27,9 @@ class YahooFinanceGatewayTest {
         StockQueryData stockQueryData = new StockQueryData(
                 "AMZN",
                 StockQueryData.Interval.DAILY
-        );
+        ).setWithHistoric(false);
 
-        DeuStock stockData = gateway.getStockData(stockQueryData, false);
+        DeuStock stockData = gateway.getStockData(stockQueryData);
 
         assertNotNull(stockData);
         assertTrue(stockData.getHistory().isEmpty());
@@ -46,10 +46,10 @@ class YahooFinanceGatewayTest {
         StockQueryData stockQueryData = new StockQueryData(
                 "FXQH",
                 StockQueryData.Interval.DAILY
-        );
+        ).setWithHistoric(false);
         assertThrows(
                 StockNotFoundException.class,
-                () ->gateway.getStockData(stockQueryData, false)
+                () ->gateway.getStockData(stockQueryData)
         );
     }
 
@@ -64,9 +64,9 @@ class YahooFinanceGatewayTest {
         StockQueryData stockQueryData = new StockQueryData(
                 "BB",
                 StockQueryData.Interval.DAILY
-        );
+        ).setWithHistoric(true);
 
-        DeuStock stockData = gateway.getStockData(stockQueryData, true);
+        DeuStock stockData = gateway.getStockData(stockQueryData);
 
         assertNotNull(stockData);
         assertTrue(stockData.getHistory().size() > 0);

@@ -18,8 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class SentimentAnalyzerPerformanceTest {
 
 
-    @Test
-    @DisplayName("Test Performance with no threads")
+    //@Test
+    //@DisplayName("Test Performance with no threads")
     public void testAnalyzeMessage() {
         ArrayList<SocialNetworkMessage> msgs = new ArrayList<>();
 
@@ -83,8 +83,8 @@ public class SentimentAnalyzerPerformanceTest {
     }
 
 
-    @Test
-    @DisplayName("Test Performance with Thread/Join")
+    //@Test
+    //@DisplayName("Test Performance with Thread/Join")
     public void testAnalyzeMessageThreadedJoin() throws InterruptedException {
 
         ArrayList<SocialNetworkMessage> msgs = new ArrayList<>();
