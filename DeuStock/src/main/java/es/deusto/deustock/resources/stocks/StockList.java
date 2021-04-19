@@ -54,7 +54,7 @@ public class StockList {
                         .collect(Collectors.toList());
 
         return new ArrayList<>(
-                gateway.getStocksGeneralData(stockDataList).values()
+                gateway.getStocksData(stockDataList).values()
         );
     }
 }

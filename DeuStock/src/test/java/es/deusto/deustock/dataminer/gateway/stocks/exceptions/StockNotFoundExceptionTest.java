@@ -1,11 +1,13 @@
 package es.deusto.deustock.dataminer.gateway.stocks.exceptions;
 
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class StockNotFoundExceptionTest {
+@Tag("investment")
+public class StockNotFoundExceptionTest {
 
     @Test
     public void testCorrectMessage(){
@@ -16,6 +18,6 @@ class StockNotFoundExceptionTest {
                 () -> { throw new StockNotFoundException(data); }
         );
 
-        assertEquals("Could not find stock AMZN", exception.getMessage());
+        assertEquals("Could not find stock AMZN.", exception.getMessage());
     }
 }

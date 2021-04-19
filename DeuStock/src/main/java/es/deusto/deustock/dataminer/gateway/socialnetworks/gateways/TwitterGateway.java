@@ -65,7 +65,10 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
 
 
     public static TwitterGateway getInstance() {
-        if(instance == null) instance = new TwitterGateway();
+        if(instance == null){
+            instance = new TwitterGateway();
+        }
+
         return instance;
     }
 

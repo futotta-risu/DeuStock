@@ -17,9 +17,14 @@ public class StockQueryData {
     private String acronym;
     private Calendar from, to;
     private Interval interval  = Interval.DAILY;
+    private boolean withHistoric = false;
 
     private StockQueryData() {}
 
+    public StockQueryData(String acronym) {
+        setAcronym(acronym);
+        setInterval(Interval.DAILY);
+    }
 
     public StockQueryData(String acronym, Interval interval) {
         setAcronym(acronym);
@@ -69,5 +74,14 @@ public class StockQueryData {
             case WEEKLY -> from.add(Calendar.WEEK_OF_YEAR, -25);
             case YEARLY -> from.add(Calendar.YEAR, -25);
         }
+    }
+
+    public boolean isWithHistoric() {
+        return withHistoric;
+    }
+
+    public StockQueryData setWithHistoric(boolean withHistoric) {
+        this.withHistoric = withHistoric;
+        return this;
     }
 }

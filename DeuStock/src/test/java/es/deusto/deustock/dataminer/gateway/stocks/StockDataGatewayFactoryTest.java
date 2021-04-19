@@ -1,12 +1,11 @@
 package es.deusto.deustock.dataminer.gateway.stocks;
 
-import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkAPIGateway;
-import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum;
-import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayFactory;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Tag("investment")
 class StockDataGatewayFactoryTest {
 
     @Test

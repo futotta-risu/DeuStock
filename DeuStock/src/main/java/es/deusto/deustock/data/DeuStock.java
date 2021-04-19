@@ -24,6 +24,10 @@ public class DeuStock {
     @NotPersistent
     List<HistoricalQuote> history = new ArrayList<>();
 
+    public DeuStock(String acronym){
+        setAcronym(acronym);
+    }
+
     public DeuStock(StockQueryData data){
         setAcronym(data.getAcronym());
     }
