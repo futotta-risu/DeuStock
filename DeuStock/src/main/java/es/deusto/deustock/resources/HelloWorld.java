@@ -1,9 +1,12 @@
 package es.deusto.deustock.resources;
 
+import es.deusto.deustock.log.DeuLogger;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * HelloWorld resource for testing purposes
@@ -21,7 +24,12 @@ public class HelloWorld {
      */
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Hello World";
+    public Response getIt() {
+        DeuLogger.logger.info("Hello World method called.");
+
+        return Response
+                .status(Response.Status.OK)
+                .entity("Hello World")
+                .build();
     }
 }

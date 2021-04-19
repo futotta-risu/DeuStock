@@ -1,4 +1,4 @@
-package es.deusto.deustock.resources;
+package es.deusto.deustock.resources.user;
 
 
 import javax.ws.rs.client.Entity;
@@ -13,6 +13,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 
 
+import org.glassfish.jersey.test.TestProperties;
 import org.junit.jupiter.api.*;
 
 import java.util.Date;
@@ -25,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author landersanmillan
  */
 @Tag("server-resource")
-public class UserResourceTest  extends JerseyTest {
+public class UserResourceTest extends JerseyTest{
 
 	private User user;
 
@@ -48,10 +49,15 @@ public class UserResourceTest  extends JerseyTest {
 	@Override
 	public void tearDown() throws Exception {
 		super.tearDown();
+
+		if(UserDAO.getInstance().getUser("TestUser") != null) {
+			UserDAO.getInstance().deleteUser("TestUser");
+		}
 	}
 
 	@Override
 	protected Application configure() {
+		forceSet(TestProperties.CONTAINER_PORT, "0");
 		return new ResourceConfig(UserResource.class);
 	}
 
@@ -70,26 +76,25 @@ public class UserResourceTest  extends JerseyTest {
 	@Test
 	@DisplayName("Test Register saves user")
 	public void testRegisterSavesUser(){
-		Response response = this.target("users/register")
+		this.target("users/register")
 				.request("application/json")
 				.post(Entity.json(user));
 
-		assertTrue(UserDAO.getInstance().getUser(this.user.getUsername()) != null);
+		assertNotNull(UserDAO.getInstance().getUser(this.user.getUsername()));
 		UserDAO.getInstance().deleteUser("TestUser");
 	}
 
 	@Test
 	@DisplayName("Test Register doesn't save duplicated User")
 	public void testRegisterCannotSaveDuplicatedUser() {
-
 		UserDAO.getInstance().storeUser(this.user);
 		resetUser();
 
-		Response responseCopy = this.target("users/register")
+		Response response = this.target("users/register")
 				.request("application/json")
 				.post(Entity.json(user));
 
-		assertEquals(401, responseCopy.getStatus());
+		assertEquals(401, response.getStatus());
 		UserDAO.getInstance().deleteUser(this.user.getUsername());
 	}
 
@@ -119,9 +124,9 @@ public class UserResourceTest  extends JerseyTest {
 				.path("TestPassIncorrect")
 				.request(MediaType.APPLICATION_JSON).get();
 
-		User userLogin = response.readEntity(User.class);
 
-		assertNull(userLogin);
+		assertEquals(401, response.getStatus());
+
 		UserDAO.getInstance().deleteUser("TestUser");
 	}
 
@@ -133,9 +138,7 @@ public class UserResourceTest  extends JerseyTest {
 				.path("TestPass")
 				.request(MediaType.APPLICATION_JSON).get();
 
-		User userLogin = response.readEntity(User.class);
-
-		assertNull(userLogin);
+		assertEquals(401, response.getStatus());
 	}
 
     @Test

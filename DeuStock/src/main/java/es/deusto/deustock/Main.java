@@ -1,12 +1,5 @@
 package es.deusto.deustock;
 
-import es.deusto.deustock.resources.HelloWorld;
-import es.deusto.deustock.resources.UserResource;
-import es.deusto.deustock.resources.help.FAQList;
-import es.deusto.deustock.resources.socialnetwork.TwitterSentiment;
-import es.deusto.deustock.resources.stocks.StockDetail;
-import es.deusto.deustock.resources.stocks.StockList;
-import es.deusto.deustock.resources.user.UserDetail;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;

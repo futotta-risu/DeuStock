@@ -2,12 +2,14 @@ package es.deusto.deustock.resources.socialnetwork;
 
 import es.deusto.deustock.dataminer.features.SentimentExtractor;
 import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkQueryData;
+import es.deusto.deustock.log.DeuLogger;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import static es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum.Twitter;
 
@@ -19,18 +21,25 @@ import static es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkG
 @Path("twitter/sentiment/{query}")
 public class TwitterSentiment {
 
-    /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
-     *
-     * @return String that will be returned as a text/plain response.
-     */
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public String getSentiment(@PathParam("query") String query) throws InterruptedException {
-        SentimentExtractor ext = new SentimentExtractor(Twitter);
+    public Response getSentiment(@PathParam("query") String query) {
+        DeuLogger.logger.info("Sentiment Analyzer called for query: " + query);
+        SentimentExtractor extractor = new SentimentExtractor(Twitter);
 
-        return String.valueOf(ext.getSentimentTendency(new SocialNetworkQueryData(query)));
+        double sentiment;
+        try {
+            sentiment = extractor.getSentimentTendency(
+                    new SocialNetworkQueryData(query)
+            );
+        } catch (InterruptedException e) {
+            DeuLogger.logger.error("Sentiment Analyzer Interrupted.");
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
 
+        return Response
+                .status(Response.Status.OK)
+                .entity(sentiment)
+                .build();
     }
 }

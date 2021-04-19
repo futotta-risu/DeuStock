@@ -9,6 +9,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 
 
@@ -22,13 +23,17 @@ public class FAQList {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public JSONObject getFAQList() {
+    public Response getFAQList() {
         try {
-            return DSJSONUtils.readFile(path);
+            return Response
+                    .status(Response.Status.OK)
+                    .entity(DSJSONUtils.readFile(path).toString())
+                    .build();
+
         } catch (IOException | ParseException e) {
         	DeuLogger.logger.error("Could not get FAQList due to problems reading file: " + path);
             e.printStackTrace();
         }
-        return new JSONObject();
+        return Response.status(401).build();
     }
 }
