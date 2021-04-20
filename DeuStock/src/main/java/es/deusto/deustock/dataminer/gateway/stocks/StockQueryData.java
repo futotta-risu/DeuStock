@@ -72,7 +72,7 @@ public class StockQueryData {
         switch (this.interval) {
             case DAILY -> from.add(Calendar.DAY_OF_YEAR, -3);
             case WEEKLY -> from.add(Calendar.WEEK_OF_YEAR, -3);
-            case MONTHLY -> from.add(Calendar.MONTH, -3);
+            case YEARLY -> from.add(Calendar.MONTH, -3);
         }
     }
 

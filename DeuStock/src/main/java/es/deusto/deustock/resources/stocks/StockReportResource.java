@@ -39,7 +39,7 @@ public class StockReportResource {
 	  
       DeuStock stock = null;
       try {
-    	  stock = gateway.getStockData(queryData, true);
+    	  stock = gateway.getStockData(queryData);
 	  } catch (StockNotFoundException e) {
 		  e.printStackTrace();
 	  }

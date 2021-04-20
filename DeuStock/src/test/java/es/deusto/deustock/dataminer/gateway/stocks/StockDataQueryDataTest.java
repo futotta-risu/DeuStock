@@ -13,18 +13,4 @@ class StockDataQueryDataTest {
         assertEquals(q.getInterval(), StockQueryData.Interval.DAILY);
     }
 
-    @Test
-    void setAcronym() {
-        StockQueryData q = new StockQueryData("AMZ", StockQueryData.Interval.DAILY);
-        q.setAcronym("GOG");
-        assertEquals(q.getAcronym(),"GOG");
-    }
-
-    @Test
-    void setInterval() {
-        StockQueryData q = new StockQueryData("AMZ", StockQueryData.Interval.DAILY);
-        q.setInterval(StockQueryData.Interval.WEEKLY);
-        assertEquals(q.getInterval(), StockQueryData.Interval.WEEKLY);
-    }
-
 }

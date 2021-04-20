@@ -43,24 +43,6 @@ public class SentimentAnalyzerTest {
         assertEquals(SentimentAnalyzer.analyze("   "),2);
     }
 
-    @Test
-    @DisplayName("Test Analyze String returns average on null")
-    public void testAnalyzeNullString(){
-        assertEquals(SentimentAnalyzer.analyze((String) null),2);
-    }
-
-    @Test
-    @DisplayName("Test Analyze String returns average on empty")
-    public void testAnalyzeEmptyString(){
-        assertEquals(SentimentAnalyzer.analyze(""),2);
-    }
-
-    @Test
-    @DisplayName("Test Analyze String returns average on empty")
-    public void testAnalyzeWhitespaceString(){
-        assertEquals(SentimentAnalyzer.analyze("   "),2);
-    }
-
 
     @Test
     @DisplayName("Test Analyze SocialNetworkMessage")

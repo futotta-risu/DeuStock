@@ -19,7 +19,7 @@ import org.apache.pdfbox.util.Matrix;
 import org.knowm.xchart.BitmapEncoder;
 
 import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.dataminer.Extractor;
+import es.deusto.deustock.dataminer.features.SentimentExtractor;
 import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkQueryData;
 import es.deusto.deustock.util.chart.TimeChart;
 
@@ -45,10 +45,15 @@ public class PdfGenerator {
 	        this.contentStream = new PDPageContentStream(document, page1);
 	       	        
 	        // TWITTER ANALISIS
-		    Extractor ext = new Extractor(Twitter);
-		    String sentiment = String.valueOf(ext.getSentimentTendency(new SocialNetworkQueryData(deustock.getAcronym())));
-	        	
-		    // ADD TEXT & IMAGE TO PDF
+			SentimentExtractor ext = new SentimentExtractor(Twitter);
+			String sentiment = null;
+			try {
+				sentiment = String.valueOf(ext.getSentimentTendency(new SocialNetworkQueryData(deustock.getAcronym())));
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+			// ADD TEXT & IMAGE TO PDF
 	        addTextAtOfssets(225, 775, TIMES_ROMAN, 70, deustock.getAcronym());
 	        addTextAtOfssets(25, 730, TIMES_ROMAN, 14, "Este reporte se ha generado mediante DeuStock, la informacion se ha obtenido de Yahoo Finance.");
 	        addTextAtOfssets(25, 680, TIMES_ROMAN, 12, "Precio [ " + Calendar.getInstance().getTime().toString() + " ] = " + deustock.getPrice() + " €");
