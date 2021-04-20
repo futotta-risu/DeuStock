@@ -47,7 +47,6 @@ public class LoginController {
 	    dialog.setTitle("ERROR");
 	    ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
 	    dialog.getDialogPane().getButtonTypes().add(type);
-	    loginPane.styleProperty().set("-fx-background-color: #FFFFFF");
 
 		loginButton.setOnMouseClicked(
 				mouseEvent -> {
