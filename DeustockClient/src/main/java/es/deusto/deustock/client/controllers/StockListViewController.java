@@ -59,7 +59,27 @@ public class StockListViewController {
             if(!stockLines.containsKey(stock.getAcronym())){
                 StockInfoLine stockLine = new StockInfoLine(stock);
                 stockLines.put(stock.getAcronym(), stockLine);
-
+                
+                Image image1 = new Image("file:src/main/resources/views/img/notfav.png");
+                Image image2 = new Image("file:src/main/resources/views/img/fav.png");
+                Button favButton = new Button();
+                
+                favButton.setGraphic(new ImageView(image1));
+                favButton.setOnAction(new EventHandler<ActionEvent>() {
+                    public void handle(ActionEvent e) {
+                        System.out.println("Añadido a favorito");
+                        favButton.setGraphic(new ImageView(image2));
+                    }
+                });
+                
+                Button detailButton = new Button();
+                detailButton.setText("More Info");
+                detailButton.setOnAction(new EventHandler<ActionEvent>() {
+						public void handle(ActionEvent event) {
+							MainController.getInstance().loadAndChangeSceneWithParams(ViewPaths.StockDetailViewPath, new HashMap<String, Object>() {{ put("acronym", stock.getAcronym()); }});
+						}
+				});
+                
                 stockList.getChildren().add(stockLine);
                 stockList.getChildren().add(new Separator());
             }else

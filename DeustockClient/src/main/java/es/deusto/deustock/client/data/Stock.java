@@ -46,4 +46,28 @@ public class Stock {
     public Stock setHistory(List<HistoricalQuote> history) {
         this.history = history; return this;
     }
+    
+	public double calcularMediaPrecio() {
+		double result = 0;
+		for (HistoricalQuote hq : this.history) {
+			result += Double.parseDouble(hq.getClose().toString());
+		}
+		result = result / this.history.size();
+		return result;
+	}
+	
+	public double calcularSD(){
+        double result = 0.0, standardDeviation = 0.0;
+        
+        for(HistoricalQuote hq : this.history) {
+            result += Double.parseDouble(hq.getClose().toString());
+        }
+        double mean = result/this.history.size();
+        for(HistoricalQuote hq : this.history) {
+            standardDeviation += Math.pow(Double.parseDouble(hq.getClose().toString()) - mean, 2);
+        }
+
+        return Math.sqrt(standardDeviation/this.history.size());
+    }
+	
 }
