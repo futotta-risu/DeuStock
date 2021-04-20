@@ -8,6 +8,7 @@ import es.deusto.deustock.log.DeuLogger;
 
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
+import yahoofinance.histquotes.Interval;
 
 import java.io.IOException;
 import java.util.*;
@@ -112,6 +113,7 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
             }
 
         }
+
         return stocks;
     }
 }
