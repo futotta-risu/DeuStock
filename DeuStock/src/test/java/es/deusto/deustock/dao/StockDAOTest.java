@@ -3,9 +3,9 @@ package es.deusto.deustock.dao;
 
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
-import org.junit.Test;
 
-import java.util.List;
+import org.datanucleus.store.types.wrappers.ArrayList;
+import org.junit.Test;
 
 
 /**
@@ -30,11 +30,11 @@ public class StockDAOTest {
 	/**
 	 * Tests Stock queries
 	*/
-	@SuppressWarnings("unchecked")
+
 	@Test
     public void testStockQuery() {
 		DeuStock stock = StockDAO.getInstance().getStock("MSFT");
-		List<DeuStock> stocks = StockDAO.getInstance().getStocks();
+		ArrayList<DeuStock> stocks = (ArrayList<DeuStock>) StockDAO.getInstance().getStocks();
 		System.out.println(stock);
 		System.out.println(stocks);
 	}

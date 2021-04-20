@@ -14,7 +14,7 @@ import javax.jdo.PersistenceManagerFactory;
  * 
  * @author landersanmillan
  */
-public class GenericDAO {
+public class GenericDAO extends DBManager{
 
 	private static PersistenceManagerFactory pmf = null;
 

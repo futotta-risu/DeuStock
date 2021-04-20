@@ -1,13 +1,11 @@
 package es.deusto.deustock.dao;
 
-import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
 
-import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.data.User;
 
 /**
