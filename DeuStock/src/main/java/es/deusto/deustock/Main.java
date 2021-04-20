@@ -38,7 +38,7 @@ public class Main {
         rc.register(StockList.class);
         rc.register(StockDetail.class);
         rc.register(FAQList.class);
-        rc.register(UserDetail.class);
+        rc.register(UserDetail.class); 
         rc.register(UserResource.class);
         rc.register(StockReportResource.class);
         // create and start a new instance of grizzly http server
