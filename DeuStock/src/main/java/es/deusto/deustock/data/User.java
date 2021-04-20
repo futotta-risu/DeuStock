@@ -10,7 +10,7 @@ import javax.jdo.annotations.*;
  *  un ID por cada instancia que se almacene en la BD
  * @author landersanmillan
  */
-@PersistenceCapable
+@PersistenceCapable(detachable = "true")
 public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Unique

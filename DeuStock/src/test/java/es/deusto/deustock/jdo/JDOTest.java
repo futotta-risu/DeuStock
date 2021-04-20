@@ -5,11 +5,13 @@ import static org.junit.Assert.assertTrue;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.data.User;
+import org.junit.jupiter.api.Tag;
 
+@Tag("dbmanager")
 public class JDOTest {
 
 

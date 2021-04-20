@@ -3,9 +3,14 @@ package es.deusto.deustock.dao;
 
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
-import org.junit.Test;
 
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.util.ArrayList;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Tag;
 
 
 /**
@@ -13,6 +18,7 @@ import java.util.List;
  * 
  * @author landersanmillan
  */
+@Tag("dbmanager")
 public class StockDAOTest {
 
 	/**
@@ -20,23 +26,22 @@ public class StockDAOTest {
 	*/
 	@Test
     public void testStockCreation() {
-      	DeuStock stock1 = new DeuStock(new StockQueryData("MSFT", StockQueryData.Interval.DAILY));
-		DeuStock stock2 = new DeuStock(new StockQueryData("GOOG", StockQueryData.Interval.DAILY));
-        StockDAO.getInstance().storeStock(stock1);
-        StockDAO.getInstance().storeStock(stock2);
+		DeuStock stock = new DeuStock(new StockQueryData("MSFT", StockQueryData.Interval.DAILY));
+        StockDAO manager = StockDAO.getInstance();
+        assertDoesNotThrow( () -> manager.storeObject(stock));
 	}
-
 	
 	/**
 	 * Tests Stock queries
 	*/
-	@SuppressWarnings("unchecked")
+
 	@Test
     public void testStockQuery() {
-		DeuStock stock = StockDAO.getInstance().getStock("MSFT");
-		List<DeuStock> stocks = StockDAO.getInstance().getStocks();
-		System.out.println(stock);
-		System.out.println(stocks);
+		DeuStock stock = new DeuStock(new StockQueryData("MSFT", StockQueryData.Interval.DAILY));
+		StockDAO manager = StockDAO.getInstance();
+		assertDoesNotThrow( () -> manager.storeObject(stock));
+		DeuStock stockResult = StockDAO.getInstance().getStock("MSFT");
+		assertNotNull(stockResult);
 	}
 	
 
