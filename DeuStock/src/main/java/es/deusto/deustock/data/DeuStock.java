@@ -11,7 +11,7 @@ import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Unique;
 
-@PersistenceCapable
+@PersistenceCapable(detachable = "true")
 public class DeuStock {
 
     @NotPersistent

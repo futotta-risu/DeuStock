@@ -8,6 +8,7 @@ import javax.jdo.PersistenceManagerFactory;
 import javax.jdo.Query;
 import javax.jdo.Transaction;
 
+import es.deusto.deustock.data.User;
 import es.deusto.deustock.log.DeuLogger;
 
 public class DBManager implements IDBManager{
@@ -93,7 +94,7 @@ public class DBManager implements IDBManager{
 			System.out.println("   * Querying a Object, conditions: " + conditions);
 
 			tx.begin();
-			Query query = pm.newQuery("SELECT FROM " + entityClass + " WHERE " + conditions);
+			Query query = pm.newQuery("SELECT FROM " + entityClass.getName() + " WHERE " + conditions);
 			query.setUnique(true);
 			object = pm.detachCopy(query.execute());
 			tx.commit();

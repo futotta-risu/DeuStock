@@ -41,11 +41,11 @@ public class StockDAO extends GenericDAO {
 	 */
 	public DeuStock getStock(String acronym) {
 		String whereCondition = "acronym  == '" + acronym + "'";
-		return (DeuStock) getObject(Stock.class, whereCondition);
+		return (DeuStock) getObject(DeuStock.class, whereCondition);
 	}
 	
 	public ArrayList<DeuStock> getStocks(){
-		ArrayList<DeuStock> stockList  = new ArrayList<DeuStock>();
+		ArrayList<DeuStock> stockList  = new ArrayList<>();
 		for (Object stocks : getObjects()) {
 			stockList.add((DeuStock) stocks);
 		}
