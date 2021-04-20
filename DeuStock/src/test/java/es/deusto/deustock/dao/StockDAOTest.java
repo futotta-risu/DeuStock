@@ -4,7 +4,10 @@ package es.deusto.deustock.dao;
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 
-import org.datanucleus.store.types.wrappers.ArrayList;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 
@@ -20,12 +23,10 @@ public class StockDAOTest {
 	*/
 	@Test
     public void testStockCreation() {
-      	DeuStock stock1 = new DeuStock(new StockQueryData("MSFT", StockQueryData.Interval.DAILY));
-		DeuStock stock2 = new DeuStock(new StockQueryData("GOOG", StockQueryData.Interval.DAILY));
-        StockDAO.getInstance().storeStock(stock1);
-        StockDAO.getInstance().storeStock(stock2);
+		DeuStock stock = new DeuStock(new StockQueryData("MSFT", StockQueryData.Interval.DAILY));
+        StockDAO manager = StockDAO.getInstance();
+        assertDoesNotThrow( () -> manager.storeObject(stock));
 	}
-
 	
 	/**
 	 * Tests Stock queries
@@ -34,7 +35,7 @@ public class StockDAOTest {
 	@Test
     public void testStockQuery() {
 		DeuStock stock = StockDAO.getInstance().getStock("MSFT");
-		ArrayList<DeuStock> stocks = (ArrayList<DeuStock>) StockDAO.getInstance().getStocks();
+		ArrayList<DeuStock> stocks = StockDAO.getInstance().getStocks();
 		System.out.println(stock);
 		System.out.println(stocks);
 	}
