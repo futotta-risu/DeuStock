@@ -38,6 +38,11 @@ public class UserResourceTest extends JerseyTest{
 				.setBirthDate(new Date());
 	}
 
+	@BeforeAll
+	static void setUpAll(){
+		UserDAO.getInstance().deleteUser("TestUser");
+	}
+
 	@BeforeEach
 	@Override
 	public void setUp() throws Exception {

@@ -140,7 +140,7 @@ public class DBManager implements IDBManager{
 			System.out.println("   * Querying a Object: ");
 
 			tx.begin();
-			Query query = pm.newQuery("SELECT FROM " + entityClass + " WHERE" + conditions);
+			Query query = pm.newQuery("SELECT FROM " + entityClass.getName() + " WHERE " + conditions);
 			query.setUnique(true);
 			query.deletePersistentAll();
 			tx.commit();
