@@ -59,4 +59,9 @@ public class StockHistory {
     public int hashCode() {
         return Objects.hashCode(stock, pricePurchase, priceSell, isSell, operation);
     }
+
+	public double getStockAmmount() {
+		
+		return 0;
+	}
 }
