@@ -19,6 +19,12 @@ import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
@@ -116,6 +122,14 @@ public class DeustockGateway {
                 .request().get();
 
         return response.getStatus() == 200;
+    }
+    
+    public byte[] getStockReport(String acronym, String interval) throws IOException {
+    	Response data = getHostWebTarget()
+    			.path("reports").path(acronym).path(interval)
+    			.request(MediaType.APPLICATION_OCTET_STREAM).get();
+    	
+    	return data.readEntity(byte[].class);     
     }
 
 

@@ -33,7 +33,7 @@ public class StockReportResource {
   @GET
   @Produces(MediaType.APPLICATION_OCTET_STREAM)
   @Path("/{stock}/{interval}")
-  public Response createSimplePdfWithChart(@PathParam("stock") String stockAcronym, @PathParam("interval") String interval) throws IOException {
+  public Response createSimplePdfWithChart(@PathParam("stock") String stockAcronym, @PathParam("interval") String interval) throws IOException, InterruptedException {
 	  YahooFinanceGateway gateway = (YahooFinanceGateway) StockDataGatewayFactory.getInstance().create(StockDataGatewayEnum.YahooFinance);
 	  StockQueryData queryData = new StockQueryData(stockAcronym, Interval.valueOf(interval));
 	  

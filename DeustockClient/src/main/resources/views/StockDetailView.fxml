@@ -2,22 +2,38 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="424.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.StockDetailController">
   <children>
-    <AnchorPane fx:id="infoTable" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+    <AnchorPane fx:id="infoTable" maxHeight="-1.0" maxWidth="-1.0" prefHeight="416.0" prefWidth="640.0" VBox.vgrow="ALWAYS">
          <children>
-            <Label fx:id="acronymLabel" layoutX="35.0" layoutY="28.0" text="StockName">
+            <Label fx:id="acronymLabel" layoutX="26.0" layoutY="28.0" text="STOCK">
                <font>
-                  <Font name="System Bold" size="26.0" />
+                  <Font name="System Bold" size="38.0" />
                </font>
             </Label>
-            <Button fx:id="downloadButton" layoutX="504.0" layoutY="355.0" mnemonicParsing="false" text="Descargar Reporte" />
-            <TableView fx:id="stockTable" layoutX="139.0" layoutY="74.0" prefHeight="64.0" prefWidth="375.0" />
+            <Button fx:id="downloadButton" layoutX="484.0" layoutY="355.0" mnemonicParsing="false" text="Descargar Reporte" />
+            <Label fx:id="priceLabel" alignment="CENTER_RIGHT" layoutX="446.0" layoutY="33.0" prefHeight="37.0" prefWidth="167.0" text="Precio">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="mediaLabel" layoutX="36.0" layoutY="100.0" prefHeight="23.0" prefWidth="566.0" text="Media">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="SDLabel" layoutX="36.0" layoutY="132.0" prefHeight="23.0" prefWidth="566.0" text="SD">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Line endX="476.0" layoutX="136.0" layoutY="75.0" startX="-110.0" />
+            <Button fx:id="backButton" layoutX="39.0" layoutY="355.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Volver" />
          </children>
     </AnchorPane>
   </children>

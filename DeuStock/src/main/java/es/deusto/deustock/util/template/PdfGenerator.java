@@ -38,22 +38,17 @@ public class PdfGenerator {
 		return INSTANCE;
 	}
 	
-	public byte[] createPdfStockReport(DeuStock deustock) throws IOException {
+	public byte[] createPdfStockReport(DeuStock deustock) throws IOException, InterruptedException {
 	    try (PDDocument document = new PDDocument()) {
 	    	
 	    	PDPage page1 = new PDPage(PDRectangle.A4);
 	        this.contentStream = new PDPageContentStream(document, page1);
 	       	        
 	        // TWITTER ANALISIS
-			SentimentExtractor ext = new SentimentExtractor(Twitter);
-			String sentiment = null;
-			try {
-				sentiment = String.valueOf(ext.getSentimentTendency(new SocialNetworkQueryData(deustock.getAcronym())));
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-
-			// ADD TEXT & IMAGE TO PDF
+		    SentimentExtractor ext = new SentimentExtractor(Twitter);
+		    String sentiment = String.valueOf(ext.getSentimentTendency(new SocialNetworkQueryData(deustock.getAcronym())));
+	        	
+		    // ADD TEXT & IMAGE TO PDF
 	        addTextAtOfssets(225, 775, TIMES_ROMAN, 70, deustock.getAcronym());
 	        addTextAtOfssets(25, 730, TIMES_ROMAN, 14, "Este reporte se ha generado mediante DeuStock, la informacion se ha obtenido de Yahoo Finance.");
 	        addTextAtOfssets(25, 680, TIMES_ROMAN, 12, "Precio [ " + Calendar.getInstance().getTime().toString() + " ] = " + deustock.getPrice() + " €");
