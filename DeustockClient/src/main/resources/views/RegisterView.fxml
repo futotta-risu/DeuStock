@@ -26,14 +26,14 @@
             <Pane opacity="0.3" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000000;" />
             <Pane layoutX="60.0" layoutY="43.0" prefHeight="315.0" prefWidth="481.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 25px;">
                <children>
-                  <Label layoutX="161.0" layoutY="61.0" prefHeight="31.0" prefWidth="161.0" text="Member Register" textAlignment="CENTER" textFill="#979696">
+                  <Label layoutX="162.0" layoutY="55.0" prefHeight="31.0" prefWidth="161.0" text="Member Register" textAlignment="CENTER" textFill="#00b2d9">
                      <font>
                         <Font name="Calibri Bold" size="22.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="211.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="212.0" layoutY="-16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@img/usuario-de-perfil.png" />
+                        <Image url="@img/person-icon.png" />
                      </image>
                   </ImageView>
                   <TextField fx:id="usernameTxt" layoutX="61.0" layoutY="109.0" promptText="Username" />
@@ -41,18 +41,18 @@
                   <TextArea fx:id="aboutMeTxt" layoutX="62.0" layoutY="180.0" prefHeight="49.0" prefWidth="375.0" promptText="Sobre ti" />
                   <PasswordField fx:id="passwordTxt" layoutX="275.0" layoutY="109.0" prefHeight="25.0" prefWidth="161.0" promptText="Password" />
                   <DatePicker fx:id="birthDatePicker" layoutX="275.0" layoutY="144.0" prefHeight="27.0" prefWidth="161.0" promptText="Fecha nacimiento" />
-                  <ChoiceBox fx:id="countryChoice" layoutX="60.0" layoutY="254.0" prefWidth="150.0" style="-fx-background-color: #adadad;" />
-                  <Label layoutX="60.0" layoutY="235.0" text="Pais" textFill="#adadad">
+                  <ChoiceBox fx:id="countryChoice" layoutX="60.0" layoutY="254.0" prefWidth="150.0" style="-fx-background-color: #00b2d9;" />
+                  <Label layoutX="60.0" layoutY="235.0" text="Pais" textFill="#00b2d9">
                      <font>
                         <Font name="Calibri Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Button fx:id="registerBtn" layoutX="250.0" layoutY="250.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" style="-fx-background-color: #adadad;" text="Registrar" textFill="WHITE">
+                  <Button fx:id="registerBtn" layoutX="250.0" layoutY="250.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" style="-fx-background-color: #00b2d9;" text="Registrar" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="cancelBtn" cancelButton="true" layoutX="360.0" layoutY="250.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" style="-fx-background-color: #adadad;" text="Cancelar" textFill="WHITE">
+                  <Button fx:id="cancelBtn" cancelButton="true" layoutX="360.0" layoutY="250.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" style="-fx-background-color: #00b2d9;" text="Cancelar" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="14.0" />
                      </font>

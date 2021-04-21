@@ -23,16 +23,16 @@
             <Pane opacity="0.3" prefHeight="341.0" prefWidth="600.0" style="-fx-background-color: #000000;" />
             <Pane fx:id="loginPane" layoutX="155.0" layoutY="36.0" prefHeight="270.0" prefWidth="290.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 25px;">
                <children>
-                  <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="116.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="114.0" layoutY="-16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@img/usuario-de-perfil.png" />
+                        <Image url="@img/person-icon.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="registerBtn" layoutX="167.0" layoutY="203.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="89.0" style="-fx-background-color: #adadad;" text="Register" textFill="WHITE">
+                  <Button fx:id="registerBtn" layoutX="167.0" layoutY="203.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="89.0" style="-fx-background-color: #00b2d9;" text="Register" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="14.0" />
                      </font></Button>
-                  <Button fx:id="loginButton" layoutX="35.0" layoutY="204.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="89.0" style="-fx-background-color: #adadad;" text="Log In" textFill="WHITE">
+                  <Button fx:id="loginButton" layoutX="35.0" layoutY="204.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="89.0" style="-fx-background-color: #00b2d9;" text="Log In" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="14.0" />
                      </font>
@@ -45,7 +45,7 @@
                      <font>
                         <Font name="Calibri" size="14.0" />
                      </font></TextField>
-                  <Label layoutX="80.0" layoutY="62.0" text="Member Login" textFill="#979696">
+                  <Label layoutX="80.0" layoutY="62.0" text="Member Login" textFill="#00b2d9">
                      <font>
                         <Font name="Calibri Bold" size="22.0" />
                      </font>
