@@ -42,11 +42,6 @@
                   <PasswordField fx:id="passwordTxt" layoutX="275.0" layoutY="109.0" prefHeight="25.0" prefWidth="161.0" promptText="Password" />
                   <DatePicker fx:id="birthDatePicker" layoutX="275.0" layoutY="144.0" prefHeight="27.0" prefWidth="161.0" promptText="Fecha nacimiento" />
                   <ChoiceBox fx:id="countryChoice" layoutX="60.0" layoutY="254.0" prefWidth="150.0" style="-fx-background-color: #00b2d9;" />
-                  <Label layoutX="60.0" layoutY="235.0" text="Pais" textFill="#00b2d9">
-                     <font>
-                        <Font name="Calibri Bold" size="14.0" />
-                     </font>
-                  </Label>
                   <Button fx:id="registerBtn" layoutX="250.0" layoutY="250.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" style="-fx-background-color: #00b2d9;" text="Registrar" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="14.0" />
