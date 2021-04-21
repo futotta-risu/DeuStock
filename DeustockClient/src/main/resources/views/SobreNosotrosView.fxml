@@ -6,19 +6,18 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane prefHeight="406.0" prefWidth="600.0">
          <children>
-            <Text layoutX="26.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Deustock">
-               <font>
-                  <Font name="Agency FB" size="31.0" />
-               </font>
-            </Text>
-            <Label layoutX="230.0" layoutY="19.0" prefHeight="26.0" prefWidth="141.0" text="Sobre Nosotros">
+            <Text fill="#00b2d9" layoutX="26.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Deustock">
                <font>
                   <Font name="Calibri Bold" size="22.0" />
+               </font>
+            </Text>
+            <Label layoutX="239.0" layoutY="37.0" prefHeight="26.0" prefWidth="123.0" text="Sobre Nosotros">
+               <font>
+                  <Font name="Calibri Bold" size="19.0" />
                </font>
             </Label>
             <Text layoutX="160.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Somos un grupo de estudiantes de ingenieria informatica, los cuales hemos desarrollado una aplicación para poder invertir en stocks de una forma muy comoda. Estas son las funcionalidades principales:" textAlignment="JUSTIFY" wrappingWidth="280.31640625">
