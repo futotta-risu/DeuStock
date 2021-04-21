@@ -61,7 +61,7 @@ public class StockReport extends Report {
 
         page = createPage();
         page.setRotation(90);
-        addStockChart(page.getMediaBox().getHeight(), page.getMediaBox().getWidth());
+        addStockChart((int) page.getMediaBox().getHeight(), (int) page.getMediaBox().getWidth());
 
         savePage(page);
     }
@@ -112,7 +112,7 @@ public class StockReport extends Report {
         addSimpleTextLine( "Twitter sentiment: " + sentiment);
     }
 
-    private void addStockChart(float height, float width) throws IOException {
+    private void addStockChart(int height, int width) throws IOException {
 
         //Width and height inverted due to rotation
         XYChart timeChart = TimeChart.getInstance().getTimeChart(stock, width, height);
