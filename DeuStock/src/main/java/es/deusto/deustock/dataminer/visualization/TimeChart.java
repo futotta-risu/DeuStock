@@ -1,4 +1,4 @@
-package es.deusto.deustock.util.chart;
+package es.deusto.deustock.dataminer.visualization;
 
 import java.awt.Color;
 import java.awt.Font;

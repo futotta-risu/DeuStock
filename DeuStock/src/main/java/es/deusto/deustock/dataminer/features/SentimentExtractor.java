@@ -42,4 +42,16 @@ public class SentimentExtractor {
         return SentimentAnalyzer.getSentimentTendency(messages);
     }
 
+    /**
+     * Gets the message list from the gateway, cleans the data and then returns the sentiment tendency.
+     *
+     * @param query String query to search
+     * @return Double value between 0 to 4 representing the average sentiment.
+     *
+     * @see SentimentExtractor#getSentimentTendency(SocialNetworkQueryData queryData)
+     */
+    public double getSentimentTendency(String query) throws InterruptedException {
+        return getSentimentTendency(new SocialNetworkQueryData(query));
+    }
+
 }
