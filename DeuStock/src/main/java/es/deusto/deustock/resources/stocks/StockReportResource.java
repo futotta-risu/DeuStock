@@ -28,7 +28,8 @@ public class StockReportResource {
  
   @GET
   @Produces(MediaType.APPLICATION_OCTET_STREAM)
-  public Response createSimplePdfWithChart() throws IOException {
+  @Path("/{stock}/{interval}")
+  public Response createSimplePdfWithChart(@PathParam("stock") String stockAcronym, @PathParam("interval") String interval) throws IOException, InterruptedException {
 	  YahooFinanceGateway gateway = (YahooFinanceGateway) StockDataGatewayFactory.getInstance().create(StockDataGatewayEnum.YahooFinance);
 	  System.out.println("1");
 
@@ -36,16 +37,24 @@ public class StockReportResource {
 	  System.out.println("2");
 
       DeuStock stock = null;
-	try {
-		stock = gateway.getStockData(queryData, false);
-	} catch (StockNotFoundException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-
-	  System.out.println("4" + stock.getAcronym());
-      return Response.ok(PdfGenerator.getInstance().createPdfStockReport(stock), MediaType.APPLICATION_OCTET_STREAM)
-          .header("Content-Disposition", "attachment; filename=\"simplePdf.pdf\"").build();
+      try {
+    	  stock = gateway.getStockData(queryData);
+	  } catch (StockNotFoundException e) {
+		  e.printStackTrace();
+	  }
+      
+      // RESPONSE BUILD
+      Response response = null;
+      if(stock!= null) {
+    	  Date actualTime = Calendar.getInstance().getTime();
+          response = Response.ok(PdfGenerator.getInstance().createPdfStockReport(stock)
+        		  			 , MediaType.APPLICATION_OCTET_STREAM)
+        		 .header("Content-Disposition", "attachment; filename=\""+stock.getAcronym()+ "-" + actualTime.toString() + ".pdf\"").build();
+      }else {
+    	  response = Response.status(404).build();
+      }
+      
+      return response;     
   }
  
 }
