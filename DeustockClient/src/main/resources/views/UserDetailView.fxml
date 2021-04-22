@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
@@ -9,51 +13,72 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.UserDetailController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.UserDetailController">
    <children>
       <BorderPane prefHeight="403.0" prefWidth="600.0">
          <top>
-            <Pane prefHeight="52.0" prefWidth="579.0" BorderPane.alignment="CENTER">
+            <Pane prefHeight="100.0" prefWidth="600.0" style="-fx-background-color: #00b2d9;" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="usernameLabel" layoutX="244.0" layoutY="9.0" text="Username">
+                  <Label fx:id="usernameLabel" layoutX="14.0" layoutY="14.0" text="DeuStock" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="24.0" />
+                        <Font name="Calibri Bold" size="36.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="46.0" layoutY="50.0" text="Analyze it!" textFill="WHITE">
+                     <font>
+                        <Font name="Calibri" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="267.0" layoutY="33.0" text="Perfil" textFill="WHITE">
+                     <font>
+                        <Font name="Calibri Bold" size="30.0" />
                      </font>
                   </Label>
                </children>
             </Pane>
          </top>
          <center>
-            <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <Pane prefHeight="300.0" prefWidth="398.0" BorderPane.alignment="CENTER">
                <children>
-                  <Text fx:id="descriptionLabel" layoutX="180.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description" />
+                  <Text fx:id="descriptionLabel" layoutX="180.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description">
+                     <font>
+                        <Font name="Calibri" size="14.0" />
+                     </font></Text>
                </children>
             </Pane>
          </center>
          <right>
-            <VBox prefHeight="348.0" prefWidth="180.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="300.0" prefWidth="220.0" BorderPane.alignment="CENTER">
                <children>
                   <FlowPane prefHeight="24.0" prefWidth="180.0">
                      <children>
-                        <Label text="Fecha Nacimiento: ">
+                        <Label text="Fecha Nacimiento: " textFill="#00b2d9">
                            <font>
-                              <Font name="System Bold" size="12.0" />
+                              <Font name="Calibri Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="birthdayLabel" text="Fecha" />
+                        <Label fx:id="birthdayLabel" text="Fecha">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
                      </children>
                   </FlowPane>
                   <FlowPane prefHeight="27.0" prefWidth="180.0">
                      <children>
-                        <Label text="Sexo: ">
+                        <Label text="Sexo: " textFill="#00b2d9">
                            <font>
-                              <Font name="System Bold" size="12.0" />
+                              <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="sexLabel" text="Sexo" />
+                        <Label fx:id="sexLabel" text="Sexo">
+                           <font>
+                              <Font name="Calibri" size="14.0" />
+                           </font>
+                        </Label>
                      </children>
                   </FlowPane>
-                  <Button fx:id="accountDeleteButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="179.0" text="ELiminar" />
+                  <Button fx:id="accountDeleteButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="179.0" style="-fx-background-color: #00b2d9;" text="Eliminar" textFill="WHITE" />
                </children>
             </VBox>
          </right>
