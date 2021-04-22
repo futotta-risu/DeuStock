@@ -87,27 +87,14 @@ public class StockDetailController implements DSGenericController{
         			Stage s = new Stage();
         	        DirectoryChooser directoryChooser = new DirectoryChooser();
                     File selectedDirectory = directoryChooser.showDialog(s);
-                    byte[] bytes = null;
-					try {
-						bytes = gateway.getStockReport(this.acronymLabel.getText(), "DAILY");
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+					File f = gateway.getReport(this.acronymLabel.getText(), "DAILY", selectedDirectory.getAbsolutePath());
 					
-			        // Write to file
-			        File f = new File(selectedDirectory.getAbsolutePath() + "/" + this.acronym + " " + Calendar.getInstance().getTime().toString() + ".pdf");
-			        FileOutputStream fos;
-					try {
-						fos = new FileOutputStream(f);
-				        fos.write(bytes);
-				        fos.close();
-				        // Open the file
-				        Desktop.getDesktop().open(new File(selectedDirectory.getAbsolutePath() + "/" + this.acronym + " " + Calendar.getInstance().getTime().toString() + ".pdf"));
-					} catch (FileNotFoundException e) {
-						e.printStackTrace();
+				    try {
+						Desktop.getDesktop().open(f);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
+
 				}
         );
         

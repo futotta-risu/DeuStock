@@ -85,6 +85,7 @@ public class StockListViewController {
 				});
                 
                 stockList.getChildren().add(stockLine);
+                stockList.getChildren().add(detailButton);
                 stockList.getChildren().add(new Separator());
             }else
                 stockLines.get(stock.getAcronym()).refreshStock(stock);

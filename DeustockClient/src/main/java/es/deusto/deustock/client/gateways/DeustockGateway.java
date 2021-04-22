@@ -7,6 +7,7 @@ import es.deusto.deustock.client.log.DeuLogger;
 import es.deusto.deustock.client.net.RESTVars;
 import es.deusto.deustock.client.visual.help.FAQLine;
 
+import org.apache.maven.surefire.shade.booter.org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.client.ClientResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -129,13 +130,30 @@ public class DeustockGateway {
         return response.getStatus() == 200;
     }
     
-    public byte[] getStockReport(String acronym, String interval) throws IOException {
-    	Response data = getHostWebTarget()
-    			.path("reports").path(acronym).path(interval)
-    			.request(MediaType.APPLICATION_OCTET_STREAM).get();
-    	
-    	return data.readEntity(byte[].class);     
-    }
+    public File getReport(String acronym, String interval, String path){
+        Response response = getHostWebTarget()
+                .path("reports").path(acronym).path(interval)
+                .request("application/pdf")
+                .get();
 
+        InputStream is = response.readEntity(InputStream.class);
+        File downloadfile = new File(path + "/" +acronym + " " + Calendar.getInstance().getTime().toString() + ".pdf");
+        byte[] byteArray = new byte[0];
+        try {
+            byteArray = IOUtils.toByteArray(is);
+            FileOutputStream fos = new FileOutputStream(downloadfile);
+            fos.write(byteArray);
+            fos.flush();
+            fos.close();
+            IOUtils.closeQuietly(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //fetchFeedAnotherWay(is) //use for Java 7
+
+
+        return downloadfile;
+    }
 
 }

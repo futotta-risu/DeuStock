@@ -20,6 +20,8 @@ public class Stock {
     List<HistoricalQuote> history = new ArrayList<>();
 
     
+    public Stock() {}
+    
     public Stock(String acronym, BigDecimal price){
         this.acronym =acronym;
         this.price = price;
