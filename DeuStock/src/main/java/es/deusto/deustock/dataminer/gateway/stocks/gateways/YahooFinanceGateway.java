@@ -25,6 +25,14 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
 
     private YahooFinanceGateway(){ }
 
+    private Interval adaptInterval(StockQueryData.Interval interval){
+        return switch (interval){
+            case DAILY -> Interval.DAILY;
+            case WEEKLY -> Interval.WEEKLY;
+            case MONTHLY -> Interval.MONTHLY;
+        };
+    }
+
     public static YahooFinanceGateway getInstance() {
         return instance;
     }
@@ -33,7 +41,12 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
     public DeuStock getStockData(StockQueryData queryData) throws StockNotFoundException{
         DeuStock deustock = new DeuStock(queryData);
         try {
-            Stock stock = YahooFinance.get(queryData.getAcronym());
+            Stock stock = YahooFinance.get(
+                    queryData.getAcronym(),
+                    queryData.getFrom(),
+                    queryData.getTo(),
+                    adaptInterval(queryData.getInterval())
+            );
 
             if(stock == null){
                 throw new StockNotFoundException(queryData);
