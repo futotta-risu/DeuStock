@@ -49,7 +49,6 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
                         queryData.getTo(),
                         adaptInterval(queryData.getInterval())
                 );
-                deustock.setHistory(stock.getHistory());
             }else{
                 stock = YahooFinance.get(
                         queryData.getAcronym()
@@ -61,6 +60,9 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
             }
 
             deustock.setPrice(stock.getQuote().getPrice());
+            if(queryData.isWithHistoric()){
+                deustock.setHistory(stock.getHistory());
+            }
         } catch (IOException e) {
             e.printStackTrace();
             DeuLogger.logger.error("Could not get the stock data " + queryData.getAcronym());
