@@ -19,6 +19,8 @@ public class Stock {
     //Price per hours last 24h
     List<HistoricalQuote> history = new ArrayList<>();
 
+    // Compulsory for JSON conversion. Don't delete.
+
     public Stock(){}
 
     public Stock(String acronym, BigDecimal price){
@@ -26,7 +28,8 @@ public class Stock {
         this.price = price;
     }
 
-    
+
+
     public BigDecimal getPrice() { return price; }
     public Stock setPrice(BigDecimal price) {
         this.price = price; return this;
