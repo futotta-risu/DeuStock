@@ -1,12 +1,7 @@
 package es.deusto.deustock.dataminer.visualization;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.awt.*;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -14,9 +9,7 @@ import java.util.Locale;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
-import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.XYStyler;
-import org.knowm.xchart.style.colors.ChartColor;
 import org.knowm.xchart.style.colors.XChartSeriesColors;
 import org.knowm.xchart.style.lines.SeriesLines;
 import org.knowm.xchart.style.markers.SeriesMarkers;
@@ -49,26 +42,33 @@ private static TimeChart INSTANCE;
 	    styler.setPlotGridLinesColor(Color.WHITE);
 		styler.setChartBackgroundColor(Color.WHITE);
 	    styler.setChartTitleBoxBackgroundColor(Color.WHITE);
-	    styler.setChartTitleBoxVisible(true);
+
 		styler.setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Area);
 
-	    styler.setChartTitleBoxBorderColor(Color.WHITE);
 
 	    styler.setPlotGridLinesVisible(false);
+		styler.setPlotGridLinesColor(Color.LIGHT_GRAY);
+		styler.setPlotGridLinesStroke(new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.0f, new float[]{10.0f}, 0));
+		styler.setPlotGridHorizontalLinesVisible(true);
 
+		styler.setChartTitleBoxVisible(false);
+		styler.setPlotBorderVisible(false);
 		styler.setYAxisTitleVisible(false);
 		styler.setXAxisTitleVisible(false);
+		styler.setLegendVisible(false);
+
+		styler.setAxisTicksLineVisible(false);
 
 	    styler.setAxisTickPadding(5);
 	    styler.setMarkerSize(12);
-	    styler.setAxisTickMarkLength(15);
+	    styler.setAxisTickMarkLength(5);
 	    styler.setPlotMargin(25);
 
 
 		styler.setChartTitleFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
 	    styler.setAxisTickLabelsFont(new Font(Font.SERIF, Font.PLAIN, 13));
 
-		styler.setLegendVisible(false);
+
 
 	    styler.setDatePattern("dd-MM-YYYY");
 	    styler.setDecimalPattern("#0 €");
@@ -78,22 +78,11 @@ private static TimeChart INSTANCE;
 
 	    List<Date> xData = new ArrayList<>();
 	    List<Double> yData = new ArrayList<>();
-	 
-	    DateFormat dateFormat = new SimpleDateFormat("dd.MM.yy");
 
-	    List<HistoricalQuote> prices = deustock.getHistory();
 
-	    for (HistoricalQuote historicalQuote : prices) {
-			Date date = null;
-	    	Calendar calendar = historicalQuote.getDate();
-			try {
-				String year = calendar.getTime().getYear() + 1900 + "";
-				date = dateFormat.parse(calendar.getTime().getDay() + "." + calendar.getTime().getMonth() + "." + year);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		    xData.add(date);
-		    yData.add(Double.parseDouble(historicalQuote.getClose().toString()));
+	    for (HistoricalQuote historicalQuote : deustock.getHistory()) {
+		    xData.add(historicalQuote.getDate().getTime());
+		    yData.add(historicalQuote.getClose().doubleValue());
 		}
 
 

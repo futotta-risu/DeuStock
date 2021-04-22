@@ -6,7 +6,6 @@ import es.deusto.deustock.dataminer.visualization.TimeChart;
 import es.deusto.deustock.log.DeuLogger;
 
 import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.util.Matrix;
 
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.XYChart;
@@ -16,6 +15,7 @@ import yahoofinance.histquotes.HistoricalQuote;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 
 import java.util.stream.Collectors;
@@ -31,6 +31,9 @@ import static org.apache.pdfbox.pdmodel.graphics.image.JPEGFactory.createFromIma
 public class StockReport extends Report {
 
     final private DeuStock stock;
+
+    final private DecimalFormat decimalFormat =  new DecimalFormat("#.##");
+
 
     public StockReport(DeuStock stock){
         super();
@@ -56,12 +59,7 @@ public class StockReport extends Report {
         addMeanPrice();
         addStandardDeviationPrice();
         addSentiment();
-
-        savePage(page);
-
-        page = createPage();
-        page.setRotation(90);
-        addStockChart((int) page.getMediaBox().getHeight(), (int) page.getMediaBox().getWidth());
+        addStockChart((int) (page.getMediaBox().getWidth()*0.7), (int) page.getMediaBox().getWidth());
 
         savePage(page);
     }
@@ -70,7 +68,7 @@ public class StockReport extends Report {
         String date = Calendar.getInstance().getTime().toString();
         double price = stock.getPrice().doubleValue();
 
-        addSimpleTextLine("Precio [ " + date + " ] = " + price + " €");
+        addSimpleTextLine("Precio [ " + date + " ] = " + decimalFormat.format(price) + " €");
     }
 
 
@@ -83,7 +81,8 @@ public class StockReport extends Report {
                         .collect(Collectors.toList())
         );
 
-        addSimpleTextLine( "Media del precio: " + mean + " €");
+
+        addSimpleTextLine( "Media del precio: " + decimalFormat.format(mean) + " €");
     }
 
     private void addStandardDeviationPrice() throws IOException {
@@ -93,7 +92,7 @@ public class StockReport extends Report {
                 .map(BigDecimal::doubleValue)
                 .collect(Collectors.toList()));
 
-        addSimpleTextLine("Desviacion Estandar del precio = " + std  + " €");
+        addSimpleTextLine("Desviacion Estandar del precio = " + decimalFormat.format(std)  + " €");
 
     }
 
@@ -109,16 +108,15 @@ public class StockReport extends Report {
         }
 
         contentStream.setFont(TIMES_ROMAN, 12);
-        addSimpleTextLine( "Twitter sentiment: " + sentiment);
+        addSimpleTextLine( "Twitter sentiment: " + decimalFormat.format(sentiment));
     }
 
     private void addStockChart(int height, int width) throws IOException {
 
         //Width and height inverted due to rotation
-        XYChart timeChart = TimeChart.getInstance().getTimeChart(stock, width, height);
+        XYChart timeChart = TimeChart.getInstance().getTimeChart(stock, height, width);
         BufferedImage bufferedTimeChart = BitmapEncoder.getBufferedImage(timeChart);
 
-        contentStream.transform(new Matrix(0, 1, -1, 0, width, 0));
         contentStream.drawImage(createFromImage(document,bufferedTimeChart), 0, 0);
         contentStream.close();
     }
