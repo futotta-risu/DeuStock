@@ -42,7 +42,12 @@ public class DeustockGateway {
         return ClientBuilder.newClient().target(RESTVars.restUrl);
     }
 
+    public Stock getStock(String acronym, String interval){
+        Response  response = getHostWebTarget().path("stock")
+                .path("detail").path(acronym).path(interval).request(MediaType.APPLICATION_JSON).get();
 
+        return response.readEntity(Stock.class);
+    }
 
     public List<Stock> getStockList(String listType){
         Response  response = getHostWebTarget().path("stock")
