@@ -79,9 +79,9 @@ class YahooFinanceGatewayTest {
                 .getInstance()
                 .create(StockDataGatewayEnum.YahooFinance);
 
-        List<StockQueryData> stockDataList = new ArrayList<>();
-        stockDataList.add(new StockQueryData("AMZN", StockQueryData.Interval.DAILY));
-        stockDataList.add(new StockQueryData("NOK", StockQueryData.Interval.DAILY));
+        List<String> stockDataList = new ArrayList<>();
+        stockDataList.add("AMZN");
+        stockDataList.add("NOK");
 
         HashMap<String, DeuStock> stocks = gateway.getStocksData(stockDataList);
 
@@ -98,10 +98,10 @@ class YahooFinanceGatewayTest {
                 .getInstance()
                 .create(StockDataGatewayEnum.YahooFinance);
 
-        List<StockQueryData> stockDataList = new ArrayList<>();
-        stockDataList.add(new StockQueryData("AMZN", StockQueryData.Interval.DAILY));
-        stockDataList.add(new StockQueryData("NOK", StockQueryData.Interval.DAILY));
-        stockDataList.add(new StockQueryData("TFXD", StockQueryData.Interval.DAILY));
+        List<String> stockDataList = new ArrayList<>();
+        stockDataList.add("AMZN");
+        stockDataList.add("NOK");
+        stockDataList.add("TFXD");
 
         HashMap<String, DeuStock> stocks = gateway.getStocksData(stockDataList);
 

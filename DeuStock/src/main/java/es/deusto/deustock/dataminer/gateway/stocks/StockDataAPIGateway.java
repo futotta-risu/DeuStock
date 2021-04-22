@@ -28,8 +28,8 @@ public interface StockDataAPIGateway {
 	 *
 	 * The stocks not found will be skipped
 	 *
-	 * @param queryData Search Query Data
+	 * @param stockNames Names of the stocks
 	 * @return Stock list queried
 	 */
-	HashMap<String, DeuStock> getStocksData(List<StockQueryData> queryData);
+	HashMap<String, DeuStock> getStocksData(List<String> stockNames);
 }

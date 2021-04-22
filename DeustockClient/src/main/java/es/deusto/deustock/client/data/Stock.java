@@ -20,6 +20,7 @@ public class Stock {
     List<HistoricalQuote> history = new ArrayList<>();
 
     // Compulsory for JSON conversion. Don't delete.
+
     public Stock(){}
 
     public Stock(String acronym, BigDecimal price){
