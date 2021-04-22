@@ -25,6 +25,8 @@ public abstract class Report {
 
 	private int actPageLine;
 
+	protected Report(){}
+
 	/**
 	 * Initializes the PDDocument
 	 */

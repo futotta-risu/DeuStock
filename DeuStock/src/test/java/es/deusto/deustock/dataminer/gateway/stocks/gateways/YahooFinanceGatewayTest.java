@@ -5,6 +5,8 @@ import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -17,12 +19,17 @@ import static org.junit.jupiter.api.Assertions.*;
 @Tag("investment")
 class YahooFinanceGatewayTest {
 
-    @Test
-    void getStockDataWithoutHistoric() throws StockNotFoundException {
-        YahooFinanceGateway gateway = (YahooFinanceGateway) StockDataGatewayFactory
+    private YahooFinanceGateway gateway;
+
+    @BeforeEach
+    public void setUp(){
+        this.gateway = (YahooFinanceGateway) StockDataGatewayFactory
                 .getInstance()
                 .create(StockDataGatewayEnum.YahooFinance);
+    }
 
+    @Test
+    void getStockDataWithoutHistoric() throws StockNotFoundException {
 
         StockQueryData stockQueryData = new StockQueryData(
                 "AMZN",
@@ -37,16 +44,43 @@ class YahooFinanceGatewayTest {
     }
 
     @Test
-    void getStockDataFailsOnUnknownStock() {
-        YahooFinanceGateway gateway = (YahooFinanceGateway) StockDataGatewayFactory
-                .getInstance()
-                .create(StockDataGatewayEnum.YahooFinance);
+    void getStockDataWithoutHistoricWeekly() throws StockNotFoundException {
 
+        StockQueryData stockQueryData = new StockQueryData(
+                "AMZN",
+                StockQueryData.Interval.WEEKLY
+        ).setWithHistoric(false);
+
+        DeuStock stockData = gateway.getStockData(stockQueryData);
+
+        assertNotNull(stockData);
+        assertTrue(stockData.getHistory().isEmpty());
+        assertTrue(stockData.getPrice().intValue() > 0);
+    }
+
+    @Test
+    void getStockDataWithoutHistoricMonthly() throws StockNotFoundException {
+
+        StockQueryData stockQueryData = new StockQueryData(
+                "AMZN",
+                StockQueryData.Interval.MONTHLY
+        ).setWithHistoric(false);
+
+        DeuStock stockData = gateway.getStockData(stockQueryData);
+
+        assertNotNull(stockData);
+        assertTrue(stockData.getHistory().isEmpty());
+        assertTrue(stockData.getPrice().intValue() > 0);
+    }
+
+    @Test
+    void getStockDataFailsOnUnknownStock() {
 
         StockQueryData stockQueryData = new StockQueryData(
                 "FXQH",
                 StockQueryData.Interval.DAILY
         ).setWithHistoric(false);
+
         assertThrows(
                 StockNotFoundException.class,
                 () ->gateway.getStockData(stockQueryData)
@@ -54,13 +88,10 @@ class YahooFinanceGatewayTest {
     }
 
 
+
+
     @Test
     void getStockDataWithHistoric() throws StockNotFoundException {
-        YahooFinanceGateway gateway = (YahooFinanceGateway) StockDataGatewayFactory
-                .getInstance()
-                .create(StockDataGatewayEnum.YahooFinance);
-
-
         StockQueryData stockQueryData = new StockQueryData(
                 "BB",
                 StockQueryData.Interval.DAILY
@@ -75,10 +106,6 @@ class YahooFinanceGatewayTest {
 
     @Test
     void getStocksGeneralData() {
-        YahooFinanceGateway gateway = (YahooFinanceGateway) StockDataGatewayFactory
-                .getInstance()
-                .create(StockDataGatewayEnum.YahooFinance);
-
         List<String> stockDataList = new ArrayList<>();
         stockDataList.add("AMZN");
         stockDataList.add("NOK");
@@ -94,10 +121,6 @@ class YahooFinanceGatewayTest {
 
     @Test
     void getStocksGeneralDataWithNonExistentStock() {
-        YahooFinanceGateway gateway = (YahooFinanceGateway) StockDataGatewayFactory
-                .getInstance()
-                .create(StockDataGatewayEnum.YahooFinance);
-
         List<String> stockDataList = new ArrayList<>();
         stockDataList.add("AMZN");
         stockDataList.add("NOK");
@@ -108,4 +131,5 @@ class YahooFinanceGatewayTest {
         assertEquals(2 , stocks.size());
         assertFalse(stocks.containsKey("TFXD"));
     }
+
 }
