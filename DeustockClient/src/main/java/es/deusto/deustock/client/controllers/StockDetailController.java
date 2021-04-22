@@ -2,33 +2,28 @@ package es.deusto.deustock.client.controllers;
 
 import java.awt.Desktop;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
-import com.sun.glass.events.MouseEvent;
 
 import es.deusto.deustock.client.data.Stock;
-import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.visual.ViewPaths;
-import es.deusto.deustock.client.visual.stocks.model.StockModel;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 import javafx.fxml.FXML;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import yahoofinance.histquotes.HistoricalQuote;
 
 
 /**
@@ -53,6 +48,12 @@ public class StockDetailController implements DSGenericController{
     Button downloadButton;
     @FXML
     Button backButton;
+    @FXML
+    LineChart<String, Number> lineChart;
+    @FXML
+    CategoryAxis xAxis;   
+    @FXML
+    NumberAxis yAxis;
     
 	@Override
 	public void setParams(HashMap<String, Object> params) {
@@ -82,6 +83,23 @@ public class StockDetailController implements DSGenericController{
         mediaLabel.setText("La media del precio de " + stock.getAcronym() + " es de " + stock.calcularMediaPrecio() + " €");
         SDLabel.setText("La desviacion estandar del precio de " + stock.getAcronym() + " es de " + stock.calcularSD() + " €");
         
+        xAxis = new CategoryAxis();
+        yAxis = new NumberAxis();
+  
+        lineChart.setTitle("Precio de " + stock.getAcronym());
+        XYChart.Series<String, Number> series = new XYChart.Series<String, Number>();
+        series.setName("Precio de " + stock.getAcronym() + " en €");
+        lineChart.getData().add(series);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY - HH:mm:ss");
+        for (HistoricalQuote hq : stock.getHistory()) {
+        	Date date = hq.getDate().getTime();
+        	Number num = hq.getClose().doubleValue();
+		    series.getData().add(new XYChart.Data<String, Number>(dateFormat.format(date),num));
+		}
+      
+
+        
         downloadButton.setOnMouseClicked( 
         		MouseEvent -> {
         			Stage s = new Stage();
@@ -94,7 +112,6 @@ public class StockDetailController implements DSGenericController{
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-
 				}
         );
         
@@ -107,7 +124,7 @@ public class StockDetailController implements DSGenericController{
 	
 	private void getStock(){
         DeustockGateway gateway = new DeustockGateway();
-        stock = gateway.getStock(acronym, "DAILY");
+        stock = gateway.getStock(acronym, "MONTHLY");
         setStock(stock);
     }
 	private void setStock(Stock stock) {
