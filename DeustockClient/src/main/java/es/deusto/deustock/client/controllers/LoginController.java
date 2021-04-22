@@ -1,21 +1,17 @@
 package es.deusto.deustock.client.controllers;
 
 
-import java.io.IOException;
 
-import es.deusto.deustock.client.Main;
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.control.ButtonBar.ButtonData;
 
@@ -29,13 +25,14 @@ import javafx.scene.control.ButtonBar.ButtonData;
  * @author landersanmillan
  */
 public class LoginController {
-	private Stage stage;
-    private Scene scene;
-    private Parent parent;
-	
+
+
 	@FXML
-	private Pane loginPane;
-	
+	private VBox p1;
+
+	@FXML
+	private HBox p2;
+
 	@FXML
     private TextField usernameTxt;
 	
@@ -52,18 +49,10 @@ public class LoginController {
 	 
 	@FXML
 	private void initialize(){
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ViewPaths.LoginViewPath));
-        fxmlLoader.setController(this);
-        try {
-            parent = (Parent) fxmlLoader.load();
-            // set height and width here for this login scene
-            scene = new Scene(parent, 600, 400);
-        } catch (IOException ex) {
-            System.out.println("Error displaying login window");
-            throw new RuntimeException(ex);
-        }
-		
-		Dialog<String> dialog = new Dialog<String>();
+
+
+
+		Dialog<String> dialog = new Dialog<>();
 	    dialog.setTitle("ERROR");
 	    ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
 	    dialog.getDialogPane().getButtonTypes().add(type);

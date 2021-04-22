@@ -1,33 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.HomeViewController">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-color: red;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.HomeViewController">
    <children>
-       <AnchorPane VBox.vgrow="ALWAYS">
+       <AnchorPane style="-fx-border-color: green;" VBox.vgrow="ALWAYS">
           <children>
-              <SplitPane layoutX="116.0" layoutY="94.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <SplitPane layoutX="116.0" layoutY="94.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="640.0" style="-fx-border-color: blue;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                  <items>
-                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                        <children>
-                        <Label layoutX="107.0" layoutY="103.0" text="Trending stocks:" textFill="#00b2d9">
-                           <font>
-                              <Font name="Calibri Bold" size="16.0" />
-                           </font>
-                        </Label>
-                        <VBox fx:id="stockList" layoutX="107.0" layoutY="121.0" prefHeight="141.0" prefWidth="437.0" />
-                        <Pane prefHeight="88.0" prefWidth="640.0" style="-fx-background-color: #00b2d9;">
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <VBox fx:id="stockList" prefHeight="141.0" prefWidth="437.0">
+                                 <children>
+                                    <Label text="Trending stocks:" textFill="#00b2d9">
+                                       <font>
+                                          <Font name="Calibri Bold" size="16.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </center>
+                     <top>
+                        <Pane fx:id="topMenu" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #00b2d9; -fx-border-color: yellow;" BorderPane.alignment="CENTER">
                            <children>
                                   <Label layoutX="14.0" layoutY="14.0" text="DeuStock" textFill="WHITE">
                                       <font>
@@ -41,8 +45,8 @@
                                   </Label>
                            </children>
                         </Pane>
-                        </children>
-                     </AnchorPane>
+                     </top>
+                  </BorderPane>
                  </items>
       
               </SplitPane>
