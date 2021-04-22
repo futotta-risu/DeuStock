@@ -49,14 +49,8 @@ public class StockList {
                 .getInstance()
                 .create(StockDataGatewayEnum.YahooFinance);
 
-
-        List<StockQueryData> stockDataList =
-                stockList.stream()
-                        .map( c -> new StockQueryData(c, DAILY) )
-                        .collect(Collectors.toList());
-
         ArrayList<DeuStock> stocks = new ArrayList<>(
-                gateway.getStocksData(stockDataList).values()
+                gateway.getStocksData(stockList).values()
         );
 
         return Response
