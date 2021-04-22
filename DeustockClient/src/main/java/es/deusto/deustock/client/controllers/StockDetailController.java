@@ -80,8 +80,8 @@ public class StockDetailController implements DSGenericController{
         	priceLabel.setTextFill(Color.GREEN);
         }
         
-        mediaLabel.setText("La media del precio de " + stock.getAcronym() + " es de " + stock.calcularMediaPrecio() + " €");
-        SDLabel.setText("La desviacion estandar del precio de " + stock.getAcronym() + " es de " + stock.calcularSD() + " €");
+        mediaLabel.setText("La media del precio de " + stock.getAcronym() + " es de " + (double)Math.round(stock.calcularMediaPrecio()*100)/100 + " €");
+        SDLabel.setText("La desviacion estandar del precio de " + stock.getAcronym() + " es de " + (double)Math.round(stock.calcularSD()*100)/100 + " €");
         
         xAxis = new CategoryAxis();
         yAxis = new NumberAxis();
@@ -91,7 +91,7 @@ public class StockDetailController implements DSGenericController{
         series.setName("Precio de " + stock.getAcronym() + " en €");
         lineChart.getData().add(series);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY - HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
         for (HistoricalQuote hq : stock.getHistory()) {
         	Date date = hq.getDate().getTime();
         	Number num = hq.getClose().doubleValue();
