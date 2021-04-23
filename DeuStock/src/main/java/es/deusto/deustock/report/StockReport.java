@@ -20,6 +20,7 @@ import java.util.Calendar;
 
 import java.util.stream.Collectors;
 
+import static es.deusto.deustock.util.math.Financial.rsi;
 import static es.deusto.deustock.util.math.Statistics.*;
 import static es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum.Twitter;
 import static org.apache.pdfbox.pdmodel.font.PDType1Font.TIMES_ROMAN;
@@ -59,6 +60,7 @@ public class StockReport extends Report {
         addMeanPrice();
         addStandardDeviationPrice();
         addSentiment();
+        addRSI();
         addStockChart((int) (page.getMediaBox().getWidth()*0.7), (int) page.getMediaBox().getWidth());
 
         savePage(page);
@@ -112,12 +114,20 @@ public class StockReport extends Report {
     }
 
     private void addStockChart(int height, int width) throws IOException {
-
-        //Width and height inverted due to rotation
         XYChart timeChart = TimeChart.getInstance().getTimeChart(stock, height, width);
         BufferedImage bufferedTimeChart = BitmapEncoder.getBufferedImage(timeChart);
 
         contentStream.drawImage(createFromImage(document,bufferedTimeChart), 0, 0);
         contentStream.close();
+    }
+
+    private void addRSI() throws IOException {
+        double std = rsi(stock.getHistory()
+                .stream()
+                .map(HistoricalQuote::getClose)
+                .map(BigDecimal::doubleValue)
+                .collect(Collectors.toList()), 5);
+
+        addSimpleTextLine("RSI(5) = " + decimalFormat.format(std)  + " €");
     }
 }

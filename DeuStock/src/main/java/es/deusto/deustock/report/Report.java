@@ -1,35 +1,25 @@
 package es.deusto.deustock.report;
 
-import static es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum.Twitter;
 import static org.apache.pdfbox.pdmodel.font.PDType1Font.TIMES_ROMAN;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
 import java.util.Calendar;
-import java.util.List;
-import java.util.stream.Collectors;
 
-import es.deusto.deustock.util.math.Statistics;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.graphics.image.JPEGFactory;
-import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-import org.apache.pdfbox.util.Matrix;
-import org.knowm.xchart.BitmapEncoder;
-
-import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.dataminer.features.SentimentExtractor;
-import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkQueryData;
-import es.deusto.deustock.dataminer.visualization.TimeChart;
-
-import yahoofinance.histquotes.HistoricalQuote;
 
 
+/**
+ * Report template abstract class for PDF report generation.
+ *
+ * @author Erik B. Terres
+ * @author Lander San Millan
+ */
 public abstract class Report {
 
 	PDDocument document;
@@ -37,10 +27,20 @@ public abstract class Report {
 
 	private int actPageLine;
 
+
+	protected Report(){}
+
+	/**
+	 * Initializes the PDDocument
+	 */
 	private void initReport(){
 		this.document = new PDDocument();
 	}
 
+
+	/**
+	 * Appends a page to put the generic report data.
+	 */
 	protected void setTemplateData() throws IOException {
 		PDPage page = createPage();
 
@@ -52,9 +52,15 @@ public abstract class Report {
 						" la informacion se ha obtenido de Yahoo Finance."
 		);
 
+		savePage(page);
 	}
 
-	protected void setFrontPage() throws IOException {
+	/**
+	 * Appends the Front page.
+	 *
+	 * @see Report#getTitle()
+	 */
+  protected void setFrontPage() throws IOException {
 		PDPage page = createPage();
 
 		this.contentStream.setFont(TIMES_ROMAN, 70);
@@ -62,10 +68,27 @@ public abstract class Report {
 		savePage(page);
 	}
 
+
+	/**
+	 * Sets the metadata of the file.
+	 */
 	protected abstract void setMetadata();
+
+	/**
+	 * Returns the title of the file.
+	 */
 	protected abstract String getTitle();
+
+	/**
+	 * Function to set the content of the report.
+	 */
 	protected abstract void setContent() throws IOException;
 
+	/**
+	 * Generates the PDF based on the template fucntions, saves it and returns the File.
+	 *
+	 * @return File linked to the saved report.
+	 */
 	public File generate() throws IOException{
 		initReport();
 
@@ -75,9 +98,14 @@ public abstract class Report {
 		setContent();
 
 		return save();
-	};
+	}
 
-	private File save() throws IOException {
+	/**
+	 * Saves the report to a file and returns a File linking to the saved file.
+	 *
+	 * @return File linked to the saved report.
+	 */
+  private File save() throws IOException {
 		String filePath = "media/reports/" + Calendar.getInstance().getTimeInMillis() + ".pdf";
 
 		this.document.save(filePath);
@@ -86,6 +114,11 @@ public abstract class Report {
 	}
 
 
+	/**
+	 * Creates a new PDPage and sets the new contentStream
+	 *
+	 * @return New PDPage
+	 */
 	protected PDPage createPage() throws IOException {
 		PDPage page = new PDPage(PDRectangle.A4);
 		this.contentStream = new PDPageContentStream(document, page);
@@ -95,12 +128,21 @@ public abstract class Report {
 		return page;
 	}
 
+	/**
+	 * Saves the page to the document and closes the contentStream.
+	 *
+	 * @param page Page to save
+	 */
 	protected void savePage(PDPage page) throws IOException {
 		this.contentStream.close();
 		this.document.addPage(page);
 	}
 
 
+
+	/**
+	 * Adds text on (x,y) coordinates.
+	 */
 	protected void addTextAtOfssets( int x, int y, String text) throws IOException {
 		this.contentStream.beginText();
 
@@ -109,6 +151,10 @@ public abstract class Report {
 		this.contentStream.endText();
 	}
 
+
+	/**
+	 * Adds text line dynamically.
+	 */
 	protected void addSimpleTextLine(String text) throws IOException {
 		this.contentStream.setFont(TIMES_ROMAN, 12);
 		this.contentStream.beginText();
@@ -116,8 +162,5 @@ public abstract class Report {
 		this.contentStream.showText(text);
 		this.contentStream.endText();
 	}
-	
 
-	
-	
 }

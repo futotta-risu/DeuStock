@@ -41,19 +41,29 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
     public DeuStock getStockData(StockQueryData queryData) throws StockNotFoundException{
         DeuStock deustock = new DeuStock(queryData);
         try {
-            Stock stock = YahooFinance.get(
-                    queryData.getAcronym(),
-                    queryData.getFrom(),
-                    queryData.getTo(),
-                    adaptInterval(queryData.getInterval())
-            );
+
+            Stock stock;
+            if(queryData.isWithHistoric()){
+                stock = YahooFinance.get(
+                        queryData.getAcronym(),
+                        queryData.getFrom(),
+                        queryData.getTo(),
+                        adaptInterval(queryData.getInterval())
+                );
+            }else{
+                stock = YahooFinance.get(
+                        queryData.getAcronym()
+                );
+            }
 
             if(stock == null){
                 throw new StockNotFoundException(queryData);
             }
 
-            deustock.setPrice(stock.getQuote(true).getPrice());
-            if(queryData.isWithHistoric()) deustock.setHistory(stock.getHistory());
+            deustock.setPrice(stock.getQuote().getPrice());
+            if(queryData.isWithHistoric()){
+                deustock.setHistory(stock.getHistory());
+            }
         } catch (IOException e) {
             e.printStackTrace();
             DeuLogger.logger.error("Could not get the stock data " + queryData.getAcronym());

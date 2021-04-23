@@ -27,7 +27,6 @@ import es.deusto.deustock.report.StockReport;
 @Path("reports")
 public class StockReportResource {
 
-
     @GET
     @Produces("application/pdf")
     @Path("/{stock}/{interval}")
