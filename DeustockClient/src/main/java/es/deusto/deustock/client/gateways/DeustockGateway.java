@@ -7,6 +7,7 @@ import es.deusto.deustock.client.log.DeuLogger;
 import es.deusto.deustock.client.net.RESTVars;
 import es.deusto.deustock.client.visual.help.FAQLine;
 
+import org.apache.maven.surefire.shade.booter.org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.client.ClientResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,6 +20,12 @@ import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
@@ -36,7 +43,12 @@ public class DeustockGateway {
         return ClientBuilder.newClient().target(RESTVars.restUrl);
     }
 
+    public Stock getStock(String acronym, String interval){
+        Response  response = getHostWebTarget().path("stock")
+                .path("detail").path(acronym).path(interval).request(MediaType.APPLICATION_JSON).get();
 
+        return response.readEntity(Stock.class);
+    }
 
     public List<Stock> getStockList(String listType){
         Response  response = getHostWebTarget().path("stock")
@@ -117,6 +129,31 @@ public class DeustockGateway {
 
         return response.getStatus() == 200;
     }
+    
+    public File getReport(String acronym, String interval, String path){
+        Response response = getHostWebTarget()
+                .path("reports").path(acronym).path(interval)
+                .request("application/pdf")
+                .get();
 
+        InputStream is = response.readEntity(InputStream.class);
+        File downloadfile = new File(path + "/" +acronym + " " + Calendar.getInstance().getTime().toString() + ".pdf");
+        byte[] byteArray = new byte[0];
+        try {
+            byteArray = IOUtils.toByteArray(is);
+            FileOutputStream fos = new FileOutputStream(downloadfile);
+            fos.write(byteArray);
+            fos.flush();
+            fos.close();
+            IOUtils.closeQuietly(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //fetchFeedAnotherWay(is) //use for Java 7
+
+
+        return downloadfile;
+    }
 
 }

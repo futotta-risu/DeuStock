@@ -23,7 +23,6 @@ public class Statistics {
                 .orElse(0);
     }
 
-
     /**
      * Returns the variance of a List of Number.
      *

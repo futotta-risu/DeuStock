@@ -41,6 +41,7 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
     public DeuStock getStockData(StockQueryData queryData) throws StockNotFoundException{
         DeuStock deustock = new DeuStock(queryData);
         try {
+
             Stock stock;
             if(queryData.isWithHistoric()){
                 stock = YahooFinance.get(

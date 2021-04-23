@@ -7,10 +7,12 @@ import java.io.IOException;
 
 import java.util.Calendar;
 
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
+
 
 /**
  * Report template abstract class for PDF report generation.
@@ -25,6 +27,7 @@ public abstract class Report {
 
 	private int actPageLine;
 
+
 	protected Report(){}
 
 	/**
@@ -33,6 +36,7 @@ public abstract class Report {
 	private void initReport(){
 		this.document = new PDDocument();
 	}
+
 
 	/**
 	 * Appends a page to put the generic report data.
@@ -47,8 +51,8 @@ public abstract class Report {
 				"Este reporte se ha generado mediante DeuStock," +
 						" la informacion se ha obtenido de Yahoo Finance."
 		);
-		savePage(page);
 
+		savePage(page);
 	}
 
 	/**
@@ -56,13 +60,14 @@ public abstract class Report {
 	 *
 	 * @see Report#getTitle()
 	 */
-	protected void setFrontPage() throws IOException {
+  protected void setFrontPage() throws IOException {
 		PDPage page = createPage();
 
 		this.contentStream.setFont(TIMES_ROMAN, 70);
 		addTextAtOfssets(225, 775, getTitle());
 		savePage(page);
 	}
+
 
 	/**
 	 * Sets the metadata of the file.
@@ -100,7 +105,7 @@ public abstract class Report {
 	 *
 	 * @return File linked to the saved report.
 	 */
-	private File save() throws IOException {
+  private File save() throws IOException {
 		String filePath = "media/reports/" + Calendar.getInstance().getTimeInMillis() + ".pdf";
 
 		this.document.save(filePath);
@@ -134,6 +139,7 @@ public abstract class Report {
 	}
 
 
+
 	/**
 	 * Adds text on (x,y) coordinates.
 	 */
@@ -144,6 +150,7 @@ public abstract class Report {
 		this.contentStream.showText(text);
 		this.contentStream.endText();
 	}
+
 
 	/**
 	 * Adds text line dynamically.
@@ -156,5 +163,4 @@ public abstract class Report {
 		this.contentStream.endText();
 	}
 
-	
 }

@@ -64,5 +64,5 @@ public class StockReportResource {
 
         return response.build();
     }
- 
+
 }
