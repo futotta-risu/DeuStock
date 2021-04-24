@@ -3,6 +3,8 @@ package es.deusto.deustock.client.data;
 import java.util.Calendar;
 import java.util.Date;
 
+import es.deusto.deustock.client.data.stocks.Wallet;
+
 public class User {
 	
 	String username;
@@ -14,7 +16,9 @@ public class User {
 	Date registerDate;
 	Date lastActivity;
 	
+	Wallet wallet;
 	
+
 	public String getUsername() { return username; }
 	public User setUsername(String username) {
 		this.username = username; return this;
@@ -49,6 +53,10 @@ public class User {
 	}
 	public User setLastActivity() {
 		this.lastActivity = Calendar.getInstance().getTime(); return this;
+	}	
+	public Wallet getWallet() { return wallet; }
+	public User setWallet(Wallet wallet) {
+		this.wallet = wallet; return this;
 	}
 	
 	
@@ -57,6 +65,7 @@ public class User {
 		this.password = password;
 		this.registerDate = Calendar.getInstance().getTime();
 		this.lastActivity = this.registerDate;
+		this.wallet = new Wallet();
 	}
 	
 	public User() {
@@ -68,6 +77,7 @@ public class User {
 		this.description = "NULL";
 		this.registerDate = Calendar.getInstance().getTime();
 		this.lastActivity = this.registerDate;
+		this.wallet = new Wallet();
 	}
 
 	
@@ -79,19 +89,14 @@ public class User {
 		this.description = u.description;
 		this.registerDate = u.registerDate;
 		this.lastActivity = u.lastActivity;
+		this.wallet = u.wallet;
 	}
 	
+	@Override
 	public String toString() {
 		return "User [username=" + username + ", password=" + password + ", fullName=" + fullName + ", birthDate="
 				+ birthDate + ", country=" + country + ", description=" + description + ", registerDate=" + registerDate
-				+ ", lastActivity=" + lastActivity + "]";
+				+ ", lastActivity=" + lastActivity + ", wallet=" + wallet + "]";
 	}
 	
-
-	
-	
-	
-	
-	
-
 }
