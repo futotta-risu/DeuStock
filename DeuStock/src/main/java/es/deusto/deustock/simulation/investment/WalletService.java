@@ -52,11 +52,11 @@ public class WalletService {
 
 
     public void openOperation(Operation operation){
-        if(!wallet.hasEnoughMoney(operation.getOpenPrice())){
+        double openPrice = operation.getOpenPrice();
+        if(!wallet.hasEnoughMoney(openPrice)){
             DeuLogger.logger.error("Not enough money on wallet.");
             return;
         }
-
 
         StockHistory stockHistory = stockHistoryDAO.create(
                 wallet,
@@ -66,7 +66,15 @@ public class WalletService {
         );
 
         stockHistoryDAO.store(stockHistory);
-        walletDAO.updateMoney(wallet, -operation.getOpenPrice());
+        walletDAO.updateMoney(wallet, -openPrice);
 
     }
+
+    public void closeOperation(Operation operation, StockHistory stockHistory){
+        double closePrice = operation.getClosePrice();
+
+        walletDAO.updateMoney(wallet, closePrice);
+        stockHistoryDAO.update(stockHistory.setClosed(true));
+    }
+
 }

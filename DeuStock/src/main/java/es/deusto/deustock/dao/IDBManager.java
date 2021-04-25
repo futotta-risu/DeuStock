@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public interface IDBManager {
 
 	public void storeObject(Object object);
-	public ArrayList<Object> getObjects();
+	public ArrayList<Object> getObjects(Class entityClass);
 	public Object getObject(Class entityClass, String conditions);
 	public void deleteObject(Class entityClass, String conditions);
 	public void updateObject(Object object);

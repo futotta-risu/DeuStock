@@ -1,19 +1,21 @@
 package es.deusto.deustock.data.stocks;
 
-import com.google.common.base.Objects;
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.simulation.investment.operations.OperationType;
 
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
-@PersistenceCapable
+@PersistenceCapable(detachable = "true")
 public class StockHistory  implements Serializable {
 
+    @PrimaryKey
+    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+    long id;
+
     long date;
-    DeuStock stock;
     double price;
     double amount;
 
@@ -21,8 +23,11 @@ public class StockHistory  implements Serializable {
 
     boolean isClosed;
 
-    @Persistent
+    @Persistent(defaultFetchGroup = "true")
     Wallet wallet;
+
+    @Persistent(defaultFetchGroup = "true")
+    DeuStock stock;
 
     public StockHistory(Wallet wallet, DeuStock stock, double price, double amount, OperationType operation){
         this.stock = stock;
@@ -34,6 +39,7 @@ public class StockHistory  implements Serializable {
         date =  new Date().getTime();
     }
 
+
     public DeuStock getStock() {
         return stock;
     }
@@ -42,8 +48,19 @@ public class StockHistory  implements Serializable {
         return price;
     }
 
+    public double getAmount(){ return amount;}
+
     public OperationType getOperation() {
         return operation;
+    }
+
+    public Wallet getWallet(){
+        return this.wallet;
+    }
+
+    public StockHistory setClosed(boolean closed) {
+        isClosed = closed;
+        return this;
     }
 
     @Override

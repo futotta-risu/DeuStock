@@ -46,7 +46,7 @@ public class UserDAO extends GenericDAO {
 	
 	public ArrayList<User> getUsers(){
 		ArrayList<User> usersList  = new ArrayList<User>();
-		for (Object users : getObjects()) {
+		for (Object users : getObjects(User.class)) {
 			usersList.add((User) users);
 		}
 		return usersList;

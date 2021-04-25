@@ -1,5 +1,6 @@
 package es.deusto.deustock.resources.stocks;
 
+import es.deusto.deustock.dao.StockDAO;
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
@@ -21,17 +22,19 @@ import static es.deusto.deustock.simulation.investment.operations.OperationType.
 /**
  * @author Erik B. Terres
  */
-@Path("stock/operation")
-public class StockOperationResource {
+@Path("stock/operation/open")
+public class OpenOperationResource {
 
     private WalletService walletService;
     private OperationFactory operationFactory;
     private StockDataAPIGateway stockDataAPIGateway;
+    private StockDAO stockDAO;
 
-    public StockOperationResource(){
+    public OpenOperationResource(){
         walletService = new WalletService();
         operationFactory = OperationFactory.getInstance();
         stockDataAPIGateway = StockDataGatewayFactory.getInstance().create(StockDataGatewayEnum.YahooFinance);
+        stockDAO = StockDAO.getInstance();
     }
 
     public void setOperationFactory(OperationFactory operationFactory) {
@@ -42,6 +45,10 @@ public class StockOperationResource {
         this.stockDataAPIGateway = stockDataAPIGateway;
     }
 
+    public void setStockDAO(StockDAO stockDAO){
+        this.stockDAO = stockDAO;
+    }
+
     public void setWalletService(WalletService walletService){
         this.walletService = walletService;
     }
@@ -49,7 +56,7 @@ public class StockOperationResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/open/{operation}/{symbol}/{walletID}/{amount}")
+    @Path("/{operation}/{symbol}/{walletID}/{amount}")
     public Response openOperation(
             @PathParam("operation") String operationTypeString,
             @PathParam("symbol") String symbol,
@@ -60,8 +67,18 @@ public class StockOperationResource {
 
         OperationType operationType = OperationType.valueOf(operationTypeString);
 
-        DeuStock stock = stockDataAPIGateway
+        DeuStock stock;
+        if(!stockDAO.hasStock(symbol)){
+            stock = new DeuStock(symbol);
+            stockDAO.storeStock(stock);
+
+        }
+        stock = stockDAO.getStock(symbol);
+
+        DeuStock stockData = stockDataAPIGateway
                 .getStockData(new StockQueryData(symbol).setWithHistoric(false));
+
+        stock.setPrice(stockData.getPrice());
 
         Operation operation = operationFactory.create(operationType, stock, amount);
 

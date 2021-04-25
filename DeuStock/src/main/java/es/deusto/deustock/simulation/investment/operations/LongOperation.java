@@ -15,8 +15,8 @@ public class LongOperation extends Operation  {
 	}
 
 	@Override
-	public double getClosePrice(double actualPrice) {
-		return actualPrice * getAmount();
+	public double getClosePrice() {
+		return stock.getPrice() * getAmount();
 	}
 
 	@Override

@@ -46,7 +46,7 @@ public class StockDAO extends GenericDAO {
 	
 	public ArrayList<DeuStock> getStocks(){
 		ArrayList<DeuStock> stockList  = new ArrayList<>();
-		for (Object stocks : getObjects()) {
+		for (Object stocks : getObjects(DeuStock.class)) {
 			stockList.add((DeuStock) stocks);
 		}
 		return stockList;
@@ -63,6 +63,18 @@ public class StockDAO extends GenericDAO {
 
 	public void updateStock(DeuStock stock) {
 		updateObject(stock);
+	}
+
+	public boolean hasStock(String acronym){
+		DeuStock stock = getStock(acronym);
+		return stock != null;
+	}
+
+	public DeuStock getOrCreateStock(String acronym){
+		if(!hasStock(acronym)){
+			storeStock(new DeuStock(acronym));
+		}
+		return (DeuStock) getStock(acronym);
 	}
 }
 

@@ -6,7 +6,7 @@ import es.deusto.deustock.data.stocks.Wallet;
 
 public interface StockOperation {
     double getOpenPrice();
-    double getClosePrice(double actualPrice);
+    double getClosePrice();
 
     OperationType getType();
 }

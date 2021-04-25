@@ -54,7 +54,7 @@ public class DBManager implements IDBManager{
 	 *         almacenados en la BD
 	 */
 	
-	public ArrayList<Object> getObjects() {
+	public ArrayList<Object> getObjects(Class entityClass) {
 		
 			PersistenceManager pm = pmf.getPersistenceManager();
 			pm.getFetchPlan().setMaxFetchDepth(-1);
@@ -67,7 +67,7 @@ public class DBManager implements IDBManager{
 
 				tx.begin();
 	
-				Extent<Object> extent = pm.getExtent(Object.class, true);
+				Extent<Object> extent = pm.getExtent(entityClass, true);
 
 				for (Object s : extent) {
 					objects.add(pm.detachCopy(s));
