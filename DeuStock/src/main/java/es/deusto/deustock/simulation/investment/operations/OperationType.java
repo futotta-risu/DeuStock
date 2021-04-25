@@ -1,8 +1,10 @@
-package es.deusto.deustock.data.stocks;
+package es.deusto.deustock.simulation.investment.operations;
 
 import javax.jdo.annotations.PersistenceCapable;
 
 @PersistenceCapable
 public enum OperationType {
-    LONG, SHORT
+    LONG, SHORT;
+
+    OperationType(){}
 }

@@ -1,33 +1,26 @@
 package es.deusto.deustock.simulation.investment.operations;
 
 import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.data.stocks.OperationType;
-import es.deusto.deustock.data.stocks.StockHistory;
-import es.deusto.deustock.data.stocks.Wallet;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
 
-public class LongOperation implements StockOperation{
+public class LongOperation extends Operation  {
 
-    private LongOperation(){}
+	public LongOperation(DeuStock stock, double amount){
+		super(stock, amount);
+	}
 
-    @Override
-    public void operate(Wallet wallet, DeuStock stock) {
-       //TODO
-        return;
-    }
 
 	@Override
-	public double getActualValue(StockHistory story) {
-		DeuStock stock = story.getStock();
-		StockDataGatewayFactory factory = StockDataGatewayFactory.getInstance();
-		StockDataAPIGateway gateway = factory.create(StockDataGatewayEnum.YahooFinance);
-		double priceActual = gateway.getActualPrice(stock.getAcronym());
-		
-		double actualCapital =  priceActual * story.getStockAmmount();
+	public double getOpenPrice() {
 		return 0;
 	}
-    
-    
+
+	@Override
+	public double getClosePrice(double actualPrice) {
+		return 0;
+	}
+
+	@Override
+	public OperationType getType(){
+		return OperationType.LONG;
+	}
 }

@@ -2,11 +2,9 @@ package es.deusto.deustock.data.stocks;
 
 import com.google.common.base.Objects;
 import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.data.User;
-import es.deusto.deustock.data.stocks.OperationType;
+import es.deusto.deustock.simulation.investment.operations.OperationType;
 
 import javax.jdo.annotations.PersistenceCapable;
-import java.math.BigDecimal;
 
 @PersistenceCapable
 public class StockHistory {
@@ -15,10 +13,13 @@ public class StockHistory {
 
     OperationType operation;
 
-    public StockHistory(DeuStock stock, double price, OperationType operation){
+    Wallet wallet;
+
+    public StockHistory(Wallet wallet, DeuStock stock, double price, OperationType operation){
         this.stock = stock;
         this.price = price;
         this.operation = operation;
+        this.wallet = wallet;
     }
 
     public DeuStock getStock() {
@@ -42,26 +43,4 @@ public class StockHistory {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        StockHistory that = (StockHistory) o;
-
-        return Double.compare(that.pricePurchase, pricePurchase) == 0
-                && Double.compare(that.priceSell, priceSell) == 0
-                && isSell == that.isSell
-                && Objects.equal(stock, that.stock)
-                && operation == that.operation;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(stock, pricePurchase, priceSell, isSell, operation);
-    }
-
-	public double getStockAmmount() {
-		
-		return 0;
-	}
 }

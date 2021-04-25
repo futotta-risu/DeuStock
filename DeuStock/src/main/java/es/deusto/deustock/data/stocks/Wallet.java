@@ -1,9 +1,8 @@
 package es.deusto.deustock.data.stocks;
 
 
-import com.googlecode.javaewah.IntIteratorOverIteratingRLW;
 import es.deusto.deustock.data.DeuStock;
-import yahoofinance.Stock;
+import es.deusto.deustock.simulation.investment.operations.OperationType;
 
 import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
@@ -18,6 +17,7 @@ public class Wallet {
     private final double INITIAL_MONEY = 5000;
 
     List<StockHistory> history;
+    List<StockHistory> holdings;
     double money;
 
     public Wallet(){
@@ -40,30 +40,23 @@ public class Wallet {
         return money;
     }
 
-    public void changeMoney(double amount) throws Exception {
+    public boolean hasEnoughMoney(double money){
+        return this.money >= money;
+    }
+
+    public void changeMoney(double amount)  {
         if(this.getMoney() + amount < 0)
-            throw new Exception("Cannot subtract more money than the account has");
+            throw new IllegalArgumentException("Cannot subtract more money than the account has");
 
         this.money += amount;
     }
 
-    public void addStock(DeuStock stock, OperationType operation){
-        Objects.requireNonNull(history);
-        Objects.requireNonNull(operation);
-
-        if(stock.getPrice() == null){
-            // This may be processed in other way, but we don't know yet
-            return;
-        }
-
-
-        this.holdings.add(
-                new StockHistory( stock, stock.getPrice().doubleValue(), operation)
-        );
+    public void addHistory(StockHistory history){
+        this.holdings.add(history);
     }
 
     public void deleteStockHistory(StockHistory history){
-        this.history.add(history);
         this.holdings.remove(history);
+        this.history.add(history);
     }
 }
