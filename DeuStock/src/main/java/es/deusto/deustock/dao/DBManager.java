@@ -2,19 +2,18 @@ package es.deusto.deustock.dao;
 
 import java.util.ArrayList;
 
-import javax.jdo.Extent;
-import javax.jdo.PersistenceManager;
-import javax.jdo.PersistenceManagerFactory;
-import javax.jdo.Query;
-import javax.jdo.Transaction;
+import javax.jdo.*;
 
-import es.deusto.deustock.data.User;
 import es.deusto.deustock.log.DeuLogger;
 
 public class DBManager implements IDBManager{
     private static IDBManager instance;
-	private PersistenceManagerFactory pmf = GenericDAO.getPMF();
-	
+	private final PersistenceManagerFactory pmf;
+
+	private DBManager(){
+		pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
+	}
+
 	public static IDBManager getInstance() {
 		if (instance == null) {
 			instance = new DBManager();

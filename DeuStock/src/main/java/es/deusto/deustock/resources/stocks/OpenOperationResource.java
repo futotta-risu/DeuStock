@@ -69,12 +69,12 @@ public class OpenOperationResource {
         OperationType operationType = OperationType.valueOf(operationTypeString);
 
         DeuStock stock;
-        if(!stockDAO.hasStock(symbol)){
+        if(!stockDAO.has(symbol)){
             stock = new DeuStock(symbol);
-            stockDAO.storeStock(stock);
+            stockDAO.store(stock);
 
         }
-        stock = stockDAO.getStock(symbol);
+        stock = stockDAO.get(symbol);
 
         DeuStock stockData = stockDataAPIGateway
                 .getStockData(new StockQueryData(symbol).setWithHistoric(false));

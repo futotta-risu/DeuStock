@@ -58,8 +58,8 @@ class OpenOperationResourceTest {
         doNothing().when(walletDAO).update(any(Wallet.class));
         doNothing().when(stockHistoryDAO).store(any());
 
-        when(stockDAO.hasStock(anyString())).thenReturn(true);
-        when(stockDAO.getStock(anyString())).thenReturn(stock);
+        when(stockDAO.has(anyString())).thenReturn(true);
+        when(stockDAO.get(anyString())).thenReturn(stock);
 
         when(stockDataAPIGateway.getStockData(any(StockQueryData.class))).thenReturn(stock);
 

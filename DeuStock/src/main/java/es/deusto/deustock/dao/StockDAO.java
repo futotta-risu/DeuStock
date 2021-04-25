@@ -1,6 +1,8 @@
 package es.deusto.deustock.dao;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 import es.deusto.deustock.data.DeuStock;
 import yahoofinance.Stock;
@@ -12,13 +14,12 @@ import yahoofinance.Stock;
  * <li>DAO</li>
  * <li>Singleton</li>
  * </ul>
- * 
- * @see GenericDAO
+ *
  * @author landersanmillan
  */
-public class StockDAO extends GenericDAO {
+public class StockDAO implements IDAO<DeuStock>{
 
-	private static StockDAO INSTANCE;
+	private static StockDAO instance;
 
 	private StockDAO() {
 	}
@@ -29,52 +30,68 @@ public class StockDAO extends GenericDAO {
 	 * @return <strong>StockDAO</strong> -> Instancia de la clase StockDAO
 	 */
 	public static StockDAO getInstance() {
-		if (INSTANCE == null)
-			INSTANCE = new StockDAO();
-		return INSTANCE;
+		if (instance == null) {
+			instance = new StockDAO();
+		}
+		return instance;
+	}
+
+
+	public DeuStock getOrCreateStock(String acronym){
+		if(!has(acronym)){
+			store(new DeuStock(acronym));
+		}
+		return get(acronym);
 	}
 
 	/**
-	 * Se llama a la funcion getObject de DBManager pasando la clase y los parametros del query
-	 * @param acronym el parametro a añadir en el query
-	 * @return se devuelve el objeto Stock
+	 *
+	 * @param identity Symbol of the Stock
 	 */
-	public DeuStock getStock(String acronym) {
-		String whereCondition = "acronym  == '" + acronym + "'";
-		return (DeuStock) getObject(DeuStock.class, whereCondition);
-	}
-	
-	public ArrayList<DeuStock> getStocks(){
-		ArrayList<DeuStock> stockList  = new ArrayList<>();
-		for (Object stocks : getObjects(DeuStock.class)) {
-			stockList.add((DeuStock) stocks);
-		}
-		return stockList;
-	}
-	
-	public void deleteStock(String acronym) {
-		String whereCondition = "acronym  == '" + acronym + "'";
-		deleteObject(Stock.class, whereCondition);
-	}
-	
-	public void storeStock(DeuStock stock) {
-		storeObject(stock);
+	@Override
+	public boolean has(Object identity) {
+		return get(identity) != null;
 	}
 
-	public void updateStock(DeuStock stock) {
-		updateObject(stock);
+	@Override
+	public void store(DeuStock object) {
+		DBManager.getInstance().storeObject(object);
 	}
 
-	public boolean hasStock(String acronym){
-		DeuStock stock = getStock(acronym);
-		return stock != null;
+	/**
+	 * Get a Stock from the persistence manager
+	 *
+	 * @param identity Symbol of the Stock
+	 */
+	@Override
+	public DeuStock get(Object identity) {
+		String whereCondition = "acronym  == '" + identity + "'";
+		return (DeuStock) DBManager.getInstance().getObject(DeuStock.class, whereCondition);
 	}
 
-	public DeuStock getOrCreateStock(String acronym){
-		if(!hasStock(acronym)){
-			storeStock(new DeuStock(acronym));
-		}
-		return (DeuStock) getStock(acronym);
+	@Override
+	public Collection<DeuStock> getAll() {
+		return DBManager.getInstance()
+				.getObjects(DeuStock.class).stream()
+				.filter(DeuStock.class::isInstance)
+				.map(DeuStock.class::cast)
+				.collect(Collectors.toList());
+
+	}
+
+	@Override
+	public void update(DeuStock object) {
+		DBManager.getInstance().updateObject(object);
+	}
+
+	public void deleteBySymbol(String symbol){
+		String whereCondition = "acronym  == '" + symbol + "'";
+		DBManager.getInstance().deleteObject(Stock.class, whereCondition);
+	}
+
+	@Override
+	public void delete(DeuStock object) {
+		deleteBySymbol(object.getAcronym());
 	}
 }
 

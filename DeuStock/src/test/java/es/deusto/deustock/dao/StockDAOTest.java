@@ -4,13 +4,12 @@ package es.deusto.deustock.dao;
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Tag;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 /**
@@ -28,7 +27,7 @@ public class StockDAOTest {
     public void testStockCreation() {
 		DeuStock stock = new DeuStock(new StockQueryData("MSFT", StockQueryData.Interval.DAILY));
         StockDAO manager = StockDAO.getInstance();
-        assertDoesNotThrow( () -> manager.storeObject(stock));
+        assertDoesNotThrow( () -> manager.store(stock));
 	}
 	
 	/**
@@ -39,9 +38,10 @@ public class StockDAOTest {
     public void testStockQuery() {
 		DeuStock stock = new DeuStock(new StockQueryData("MSFT", StockQueryData.Interval.DAILY));
 		StockDAO manager = StockDAO.getInstance();
-		assertDoesNotThrow( () -> manager.storeObject(stock));
-		DeuStock stockResult = StockDAO.getInstance().getStock("MSFT");
+		assertDoesNotThrow( () -> manager.store(stock));
+		DeuStock stockResult = StockDAO.getInstance().get("MSFT");
 		assertNotNull(stockResult);
+		assertEquals("MSFT", stockResult.getAcronym());
 	}
 	
 
@@ -63,7 +63,8 @@ public class StockDAOTest {
 	*/
 	@Test
     public void testUserDeletion() {
-        StockDAO.getInstance().deleteStock("MSFT");
+		DeuStock stock = StockDAO.getInstance().get("MSFT");
+        StockDAO.getInstance().delete(stock);
         System.out.println("Deleted User from DB: MSFT");
     }
 

@@ -2,6 +2,7 @@ package es.deusto.deustock.resources.user;
 
 import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.data.User;
+import es.deusto.deustock.data.dto.UserDTO;
 import es.deusto.deustock.log.DeuLogger;
 import org.json.simple.JSONObject;
 
@@ -21,7 +22,10 @@ public class UserDetail {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUsername(@PathParam("username") String username) {
-        User user = UserDAO.getInstance().getUser(username);
+        UserDAO userDAO = UserDAO.getInstance();
+
+        User user = userDAO.getUser(username);
+        UserDTO userDTO = userDAO.getDTO(user);
 
         if(user == null){
             DeuLogger.logger.error("Cannot get '" + username + "' user  information");
