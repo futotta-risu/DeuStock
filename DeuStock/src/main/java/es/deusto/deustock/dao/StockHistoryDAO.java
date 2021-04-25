@@ -26,8 +26,7 @@ public class StockHistoryDAO {
     }
 
     public StockHistory create(Wallet wallet, DeuStock stock, double amount, OperationType operationType){
-        StockHistory stockHistory = new StockHistory(wallet, stock, stock.getPrice(), amount, operationType);
-        return stockHistory;
+        return new StockHistory(wallet, stock, stock.getPrice(), amount, operationType);
     }
 
 

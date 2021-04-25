@@ -66,14 +66,17 @@ public class WalletService {
         );
 
         stockHistoryDAO.store(stockHistory);
-        walletDAO.updateMoney(wallet, -openPrice);
+        wallet.changeMoney(-openPrice);
+        walletDAO.update(wallet);
 
     }
 
     public void closeOperation(Operation operation, StockHistory stockHistory){
         double closePrice = operation.getClosePrice();
 
-        walletDAO.updateMoney(wallet, closePrice);
+        wallet.changeMoney(closePrice);
+        walletDAO.update(wallet);
+
         stockHistoryDAO.update(stockHistory.setClosed(true));
     }
 

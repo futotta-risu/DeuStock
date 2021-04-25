@@ -54,6 +54,7 @@ public class OpenOperationResource {
     }
 
 
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{operation}/{symbol}/{walletID}/{amount}")

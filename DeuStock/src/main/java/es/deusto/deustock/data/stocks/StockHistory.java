@@ -58,6 +58,10 @@ public class StockHistory  implements Serializable {
         return this.wallet;
     }
 
+    public boolean isClosed(){
+        return isClosed;
+    }
+
     public StockHistory setClosed(boolean closed) {
         isClosed = closed;
         return this;

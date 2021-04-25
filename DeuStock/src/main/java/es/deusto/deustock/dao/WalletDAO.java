@@ -28,10 +28,6 @@ public class WalletDAO {
         DBManager.getInstance().updateObject(wallet);
     }
 
-    public void updateMoney(Wallet wallet, double amount){
-        wallet.changeMoney(amount);
-        update(wallet);
-    }
 
     public Wallet getWallet(String walletID) {
         String condition = "id == '" + walletID + "'";

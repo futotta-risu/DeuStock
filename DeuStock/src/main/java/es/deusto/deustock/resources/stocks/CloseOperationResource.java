@@ -60,13 +60,19 @@ public class CloseOperationResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{stockhistoyid}")
-    public Response openOperation(
-            @PathParam("stockhistoyid") String stockhistoyid
+    @Path("/{stockHistoyID}")
+    public Response closeOperation(
+            @PathParam("stockHistoyID") String stockHistoyID
     ) throws StockNotFoundException {
-        DeuLogger.logger.info("Petition to close the operation " + stockhistoyid);
+        DeuLogger.logger.info("Petition to close the operation " + stockHistoyID);
 
-        StockHistory stockHistory = stockHistoryDAO.get(stockhistoyid);
+
+        StockHistory stockHistory = stockHistoryDAO.get(stockHistoyID);
+
+        if(stockHistory == null || stockHistory.isClosed()){
+            return Response.status(401).build();
+        }
+
         DeuStock stock = stockDataAPIGateway
                 .getStockData(
                         new StockQueryData(
@@ -80,11 +86,8 @@ public class CloseOperationResource {
                 stockHistory.getAmount()
         );
 
-
         walletService.setWallet(stockHistory.getWallet());
         walletService.closeOperation(operation, stockHistory);
-
-
 
         return Response.status(200).build();
     }
