@@ -69,14 +69,14 @@ public class UserTest {
 	public void testGetCountry() {
 		User user = new User("Gartzi", "si");
 		user.setCountry("Spain");
-		assertTrue("getCountry doesn't work", user.getFullName() == "Spain");
+		assertTrue("getCountry doesn't work", user.getCountry() == "Spain");
 	}
 	
 	@Test
 	public void testSetCountry() {
 		User user = new User("Gartzi", "si");
 		user.setCountry("Spain");
-		assertTrue("setCountry doesn't work", user.getFullName() == "Spain");
+		assertTrue("setCountry doesn't work", user.getCountry() == "Spain");
 	}
 	
 	@Test
@@ -96,7 +96,7 @@ public class UserTest {
 	@Test
 	public void testGetRegisterDate() {
 		User user = new User("Gartzi", "si");
-		assertTrue("getRegisterDate doesn't work", user.getRegisterDate() == Calendar.getInstance().getTime());
+		assertTrue("getRegisterDate doesn't work", user.getRegisterDate() == user.getLastActivity());
 	}
 	
 	@Test
@@ -110,7 +110,7 @@ public class UserTest {
 	@Test
 	public void testGetLastActivity() {
 		User user = new User("Gartzi", "si");
-		assertTrue("getLastActivity doesn't work", user.getLastActivity() == Calendar.getInstance().getTime());
+		assertTrue("getLastActivity doesn't work", user.getLastActivity() == user.getRegisterDate());
 	}
 	
 	@Test
@@ -121,11 +121,6 @@ public class UserTest {
 		assertTrue("setLastActivity doesn't work", user.getLastActivity() == date);
 	}
 
-	@Test
-	public void testUpdateInfo() {
-		
-	}
-	
 	@Test
 	public void testCheckPassword() {
 		User user = new User("Gartzi", "si");
