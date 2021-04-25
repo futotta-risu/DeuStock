@@ -13,61 +13,82 @@ import yahoofinance.histquotes.HistoricalQuote;
 public class DeuStockTest {
 
 	@Test
-	public void testPrice() {
+	public void testGetPrice() {
 		DeuStock deustock = new DeuStock();
-		BigDecimal testDecimal = new BigDecimal(50);
-		BigDecimal expectedDecimal = new BigDecimal(50);
-		
-		deustock.setPrice(testDecimal);
-		
-		assertEquals("getPrice and setPrice doesn't work", expectedDecimal, deustock.getPrice());
+		BigDecimal decimal = new BigDecimal(50);
+		deustock.setPrice(decimal);
+		assertTrue("getPrice doesn't work", deustock.getPrice() == decimal);
 	}
 	
 	@Test
-	public void testFullName() {
+	public void testSetPrice() {
 		DeuStock deustock = new DeuStock();
-		String testString = "Aritz Zugazaga";
-		String expectedString = "Aritz Zugazaga";
-		
-		deustock.setFullName(testString);
-		
-		assertEquals("getFullName and setFullName doesn't work", expectedString, deustock.getFullName());
+		BigDecimal decimal = new BigDecimal(50);
+		deustock.setPrice(decimal);
+		assertTrue("setPrice doesn't work", deustock.getPrice() == decimal);
 	}
 	
 	@Test
-	public void testAcronym() {
+	public void testGetFullName() {
 		DeuStock deustock = new DeuStock();
-		String testString = "AZ";
-		String expectedString = "AZ";
-		
-		deustock.setAcronym(testString);
-		
-		assertEquals("getAcronym and setAcronym doesn't work", expectedString, deustock.getAcronym());
+		deustock.setFullName("Aritz Zugazaga");
+		assertTrue("getFullName doesn't work", deustock.getFullName() == "Aritz Zugazaga");
+	}
+	
+	@Test
+	public void testSetFullName() {
+		DeuStock deustock = new DeuStock();
+		deustock.setFullName("Aritz Zugazaga");
+		assertTrue("setFullName doesn't work", deustock.getFullName() == "Aritz Zugazaga");
+	}
+	
+	@Test
+	public void testGetAcronym() {
+		DeuStock deustock = new DeuStock();
+		deustock.setAcronym("AZ");
+		assertTrue("getAcronym doesn't work", deustock.getAcronym() == "AZ");
+	}
+	
+	@Test
+	public void testSetAcronym() {
+		DeuStock deustock = new DeuStock();
+		deustock.setAcronym("AZ");
+		assertTrue("setAcronym doesn't work", deustock.getAcronym() == "AZ");
 	}
 
 	@Test
-	public void testDescription() {
+	public void testGetDescription() {
 		DeuStock deustock = new DeuStock();
-		String testString = "Hola me gusta la CocaCola";
-		String expectedString = "Hola me gusta la CocaCola";
-		
-		deustock.setDescription(testString);
-		
-		assertEquals("getDescription and setDescription doesn't work", expectedString, deustock.getDescription());
+		deustock.setDescription("Hola me gusta la CocaCola");
+		assertTrue("getDescription doesn't work", deustock.getDescription() == "Hola me gusta la CocaCola");
 	}
 	
 	@Test
-	public void testHistory() {
+	public void testSetDescription() {
 		DeuStock deustock = new DeuStock();
-		List<HistoricalQuote> testList = new ArrayList<HistoricalQuote>();
-		List<HistoricalQuote> expectedList = new ArrayList<HistoricalQuote>();
+		deustock.setDescription("Hola me gusta la CocaCola");
+		assertTrue("setDescription doesn't work", deustock.getDescription() == "Hola me gusta la CocaCola");
+	}
+	
+	@Test
+	public void testGetHistory() {
+		DeuStock deustock = new DeuStock();
+		List<HistoricalQuote> list = new ArrayList<HistoricalQuote>();
 		HistoricalQuote HQ = new HistoricalQuote();
-		
 		HQ.setSymbol("BTC");
-		testList.add(HQ);
-		expectedList.add(HQ);
-		deustock.setHistory(testList);
-		
-		assertEquals("getHistory and setHistory doesn't work", expectedList, deustock.getHistory());
+		list.add(HQ);
+		deustock.setHistory(list);
+		assertTrue("getHistory doesn't work", deustock.getHistory() == list);
+	}
+	
+	@Test
+	public void testSetHistory() {
+		DeuStock deustock = new DeuStock();
+		List<HistoricalQuote> list = new ArrayList<HistoricalQuote>();
+		HistoricalQuote HQ = new HistoricalQuote();
+		HQ.setSymbol("BTC");
+		list.add(HQ);
+		deustock.setHistory(list);
+		assertTrue("setHistory doesn't work", deustock.getHistory() == list);
 	}
 }
