@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.ChangeUserDetailController">
+   <children>
+      <AnchorPane prefHeight="402.0" prefWidth="600.0">
+         <children>
+            <ImageView fitHeight="400.0" fitWidth="600.0">
+               <image>
+                  <Image url="@img/blanco.jpeg" />
+               </image>
+            </ImageView>
+            <Label id="usernameLabel" layoutX="158.0" layoutY="59.0" text="Username" />
+            <ComboBox id="countryChoice" layoutX="233.0" layoutY="247.0" prefWidth="150.0" />
+            <DatePicker id="birthDatePicker" layoutX="234.0" layoutY="130.0" />
+            <TextField id="fullNameTxt" layoutX="234.0" layoutY="91.0" />
+            <Button id="changeBtn" defaultButton="true" layoutX="85.0" layoutY="314.0" mnemonicParsing="false" text="Save" textAlignment="CENTER" />
+            <Button id="cancelBtn" cancelButton="true" layoutX="459.0" layoutY="314.0" mnemonicParsing="false" text="Cancel" textAlignment="CENTER" />
+            <Label layoutX="55.0" layoutY="32.0" text="Edit profile">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label id="fullNameLabel" layoutX="158.0" layoutY="95.0" text="Full name:" />
+            <Label id="birthLabel" layoutX="141.0" layoutY="134.0" text="Date of birth:" />
+            <TextArea id="aboutMeTxt" layoutX="234.0" layoutY="169.0" prefHeight="62.0" prefWidth="271.0" />
+            <Label id="aboutMeLabel" layoutX="155.0" layoutY="169.0" text="About me:" />
+            <Label id="countryLabel" layoutX="163.0" layoutY="251.0" text="Country:" />
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

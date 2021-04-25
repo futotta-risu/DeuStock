@@ -65,7 +65,7 @@ public class ChangeUserDetailController implements DSGenericController{
 	private void initialize() {
 		initRoot();
 	}
-		@Override
+
 	    public void setParams(HashMap<String, Object> params) {
 	        if(params.containsKey("username"))
 	            this.username = String.valueOf(params.get("username"));
@@ -87,7 +87,7 @@ public class ChangeUserDetailController implements DSGenericController{
 			DeustockGateway dg = new DeustockGateway();
 			
 			if(!fullName.equals("") && birthDate != null && aboutMe.equals("") ) {
-				if(dg.updateUser(username, fullName, birthDate, country)) {
+				if(dg.updateUser(username, fullName, birthDate, aboutMe, country)) {
 					MainController.getInstance().loadAndChangeScene(
 							ViewPaths.UserDetailViewPath
 					);
@@ -134,7 +134,6 @@ public class ChangeUserDetailController implements DSGenericController{
 							String country = countryChoice.getValue();
 							update(country);
 					}
-					
 			);
 					
 			cancelBtn.setOnMouseClicked(
