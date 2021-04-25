@@ -44,16 +44,15 @@ public class DeuStockTest {
 	
 	@Test
 	public void testGetAcronym() {
-		DeuStock deustock = new DeuStock();
-		deustock.setAcronym("AZ");
+		DeuStock deustock = new DeuStock("AZ");
 		assertTrue("getAcronym doesn't work", deustock.getAcronym() == "AZ");
 	}
 	
 	@Test
 	public void testSetAcronym() {
-		DeuStock deustock = new DeuStock();
-		deustock.setAcronym("AZ");
-		assertTrue("setAcronym doesn't work", deustock.getAcronym() == "AZ");
+		DeuStock deustock = new DeuStock("AZ");
+		deustock.setAcronym("LS");
+		assertTrue("setAcronym doesn't work", deustock.getAcronym() == "LS");
 	}
 
 	@Test
