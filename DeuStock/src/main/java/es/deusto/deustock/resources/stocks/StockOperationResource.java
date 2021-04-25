@@ -53,7 +53,7 @@ public class StockOperationResource {
     public Response openOperation(
             @PathParam("operation") String operationTypeString,
             @PathParam("symbol") String symbol,
-            @PathParam("walletID") int walletID,
+            @PathParam("walletID") String walletID,
             @PathParam("amount") double amount
     ) throws StockNotFoundException {
         DeuLogger.logger.info("Petition to open a operation from " + walletID);

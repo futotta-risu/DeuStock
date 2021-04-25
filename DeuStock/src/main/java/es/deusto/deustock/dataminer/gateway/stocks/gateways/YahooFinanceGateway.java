@@ -60,7 +60,7 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
                 throw new StockNotFoundException(queryData);
             }
 
-            deustock.setPrice(stock.getQuote().getPrice());
+            deustock.setPrice(stock.getQuote().getPrice().doubleValue());
             if(queryData.isWithHistoric()){
                 deustock.setHistory(stock.getHistory());
             }
@@ -80,7 +80,7 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
 
             for( Stock stock : stocks.values()){
                 DeuStock deustock = new DeuStock(stock.getSymbol());
-                deustock.setPrice(stock.getQuote(true).getPrice());
+                deustock.setPrice(stock.getQuote(true).getPrice().doubleValue());
                 stocksAdapted.put(deustock.getAcronym(), deustock);
             }
 

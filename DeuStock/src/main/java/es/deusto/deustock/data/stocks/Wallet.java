@@ -1,28 +1,38 @@
 package es.deusto.deustock.data.stocks;
 
-
-import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.simulation.investment.operations.OperationType;
+import es.deusto.deustock.data.User;
 
 import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.UUID;
 
-@PersistenceCapable
-public class Wallet {
+@PersistenceCapable(detachable = "true")
+public class Wallet  implements Serializable {
+
+
+
+    @PrimaryKey
+    String id;
 
     @NotPersistent
     private final double INITIAL_MONEY = 5000;
 
+    @Persistent(mappedBy = "wallet")
     List<StockHistory> history;
-    List<StockHistory> holdings;
+
     double money;
 
+    @Persistent(mappedBy = "wallet")
+    User user;
+
     public Wallet(){
+        this.id = UUID.randomUUID().toString();
         this.history = new ArrayList<>();
-        this.holdings = new ArrayList<>();
 
         this.money = INITIAL_MONEY;
     }
@@ -32,12 +42,13 @@ public class Wallet {
         return history;
     }
 
-    public List<StockHistory> getHoldings(){
-        return this.holdings;
-    }
 
     public double getMoney() {
         return money;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public boolean hasEnoughMoney(double money){
@@ -52,11 +63,7 @@ public class Wallet {
     }
 
     public void addHistory(StockHistory history){
-        this.holdings.add(history);
-    }
-
-    public void deleteStockHistory(StockHistory history){
-        this.holdings.remove(history);
         this.history.add(history);
     }
+
 }

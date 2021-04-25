@@ -11,12 +11,12 @@ public class LongOperation extends Operation  {
 
 	@Override
 	public double getOpenPrice() {
-		return 0;
+		return getAmount()*getStockOpenPrice();
 	}
 
 	@Override
 	public double getClosePrice(double actualPrice) {
-		return 0;
+		return actualPrice * getAmount();
 	}
 
 	@Override

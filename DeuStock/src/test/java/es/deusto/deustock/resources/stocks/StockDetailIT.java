@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * @author Erik B. Terres
  */
-@Tag("server-resource")
-public class StockDetailTest extends JerseyTest {
+@Tag("server-integration-resource")
+public class StockDetailIT extends JerseyTest {
     @BeforeEach
     @Override
     public void setUp() throws Exception {
@@ -57,7 +57,7 @@ public class StockDetailTest extends JerseyTest {
         DeuStock stock = response.readEntity(DeuStock.class);
 
         assertEquals("BB", stock.getAcronym());
-        assertTrue(stock.getPrice().doubleValue() > 0);
+        assertTrue(stock.getPrice() > 0);
         assertFalse(stock.getHistory().isEmpty());
     }
 

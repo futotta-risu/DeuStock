@@ -13,7 +13,7 @@ public class StockHistoryTest {
         DeuStock stock = new DeuStock("AMZN");
         Wallet wallet = new Wallet();
         assertDoesNotThrow(
-                () -> new StockHistory(wallet, stock, 100, LONG)
+                () -> new StockHistory(wallet, stock,100, 100, LONG)
         );
     }
 
@@ -21,7 +21,7 @@ public class StockHistoryTest {
     public void testConstructor(){
         DeuStock stock = new DeuStock("AMZN");
         Wallet wallet = new Wallet();
-        StockHistory stockH = new StockHistory(wallet, stock, 100, LONG);
+        StockHistory stockH = new StockHistory(wallet, stock,100,  100, LONG);
         System.out.println(stockH.toString());
         assertEquals(stockH.toString(), "StockHistory{stock=AMZN, price=100.0, operation=LONG}");
     }

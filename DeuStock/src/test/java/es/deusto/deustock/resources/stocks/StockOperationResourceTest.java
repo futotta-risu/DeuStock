@@ -29,11 +29,13 @@ class StockOperationResourceTest{
     void openOperation() throws StockNotFoundException {
 
         Wallet wallet = new Wallet();
+        WalletDAO walletDAO = mock(WalletDAO.class);
+        when(walletDAO.getWallet(anyString())).thenReturn(wallet);
 
-        WalletService walletService = mock(WalletService.class);
+        WalletService walletService = new WalletService();
         walletService.setWallet(wallet);
+        walletService.setWalletDAO(walletDAO);
 
-        doNothing().when(walletService).setWallet(anyInt());
 
         StockHistoryDAO stockHistoryDAO = mock(StockHistoryDAO.class);
         doNothing().when(stockHistoryDAO).store(any());
@@ -41,14 +43,15 @@ class StockOperationResourceTest{
 
         StockDataAPIGateway stockDataAPIGateway = mock(StockDataAPIGateway.class);
         when(stockDataAPIGateway.getStockData(any())).thenReturn(
-                new DeuStock("BB").setPrice(new BigDecimal(22))
+                new DeuStock("BB").setPrice(22)
         );
 
         StockOperationResource resource = new StockOperationResource();
         resource.setStockDataAPIGateway(stockDataAPIGateway);
         resource.setWalletService(walletService);
 
-        Response response =  resource.openOperation("LONG", "BB", 23, 34);
+        Response response =  resource.openOperation("LONG", "BB", "TestWallet", 34);
         assertEquals(response.getStatus(), 200);
+        assertEquals(wallet.getMoney(), 4252);
     }
 }

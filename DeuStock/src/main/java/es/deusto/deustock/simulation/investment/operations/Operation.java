@@ -9,6 +9,8 @@ import es.deusto.deustock.log.DeuLogger;
 public abstract class Operation implements StockOperation{
 
     DeuStock stock;
+
+    double stockOpenPrice;
     double amount;
 
     private Operation(){}
@@ -16,6 +18,7 @@ public abstract class Operation implements StockOperation{
     public Operation(DeuStock stock, double amount){
         this.stock = stock;
         this.amount = amount;
+        this.stockOpenPrice = stock.getPrice();
     }
 
     public DeuStock getStock() {
@@ -24,5 +27,9 @@ public abstract class Operation implements StockOperation{
 
     public double getAmount() {
         return amount;
+    }
+
+    public double getStockOpenPrice() {
+        return stockOpenPrice;
     }
 }

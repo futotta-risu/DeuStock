@@ -20,8 +20,24 @@ public class WalletDAO {
         return instance;
     }
 
-    public Wallet getWallet(int walletID) {
-        return null;
+    public void store(Wallet wallet){
+        DBManager.getInstance().storeObject(wallet);
     }
+
+    public void update(Wallet wallet){
+        DBManager.getInstance().updateObject(wallet);
+    }
+
+    public void updateMoney(Wallet wallet, double amount){
+        wallet.changeMoney(amount);
+        update(wallet);
+    }
+
+    public Wallet getWallet(String walletID) {
+        String condition = "id == '" + walletID + "'";
+        return (Wallet) DBManager.getInstance().getObject(Wallet.class, condition);
+    }
+
+
 
 }

@@ -2,6 +2,7 @@ package es.deusto.deustock.simulation.investment;
 
 import es.deusto.deustock.dao.StockHistoryDAO;
 import es.deusto.deustock.dao.WalletDAO;
+import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.data.stocks.StockHistory;
 import es.deusto.deustock.data.stocks.Wallet;
 import es.deusto.deustock.log.DeuLogger;
@@ -25,7 +26,7 @@ public class WalletService {
         walletDAO = WalletDAO.getInstance();
     }
 
-    public WalletService(int walletID){
+    public WalletService(String walletID){
         this.wallet = WalletDAO.getInstance().getWallet(walletID);
     }
 
@@ -45,8 +46,8 @@ public class WalletService {
         this.wallet = wallet;
     }
 
-    public void setWallet(int walletID){
-        this.wallet = WalletDAO.getInstance().getWallet(walletID);
+    public void setWallet(String walletID){
+        this.wallet = walletDAO.getWallet(walletID);
     }
 
 
@@ -57,16 +58,15 @@ public class WalletService {
         }
 
 
-        StockHistory stockHistory = stockHistoryDAO.create(wallet,
+        StockHistory stockHistory = stockHistoryDAO.create(
+                wallet,
                 operation.getStock(),
                 operation.getAmount(),
                 operation.getType()
         );
-        wallet.addHistory(stockHistory);
 
         stockHistoryDAO.store(stockHistory);
-
-        wallet.changeMoney(operation.getOpenPrice());
+        walletDAO.updateMoney(wallet, -operation.getOpenPrice());
 
     }
 }

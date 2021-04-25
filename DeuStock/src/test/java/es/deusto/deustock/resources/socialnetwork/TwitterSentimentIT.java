@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Erik B. Terres
  */
 @Tag("integration-resource")
-public class TwitterSentimentIntegrationTest extends JerseyTest {
+public class TwitterSentimentIT extends JerseyTest {
 
     @BeforeEach
     @Override
