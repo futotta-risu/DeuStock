@@ -14,6 +14,10 @@ import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.data.User;
 import es.deusto.deustock.log.DeuLogger;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Clase que contiene los metodos REST asociados a la clase Usuario
  * 
@@ -100,5 +104,24 @@ public class UserResource {
 		} else return Response.status(401).build();
 	}
 
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("update/{username}/{fullName}/{birthDate}/{aboutMe}/{country}")
+	public Response update(@PathParam("username") String username, @PathParam("fullName") String fullName,
+						   @PathParam("birthDate") String birthDate, @PathParam("aboutMe") String aboutMe, @PathParam("country") String country) throws ParseException {
+		User user = UserDAO.getInstance().getUser(username);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
+		Date birthDateC = dateFormat.parse(birthDate);
+		if(user!=null){
+			user.setFullName(fullName);
+			user.setBirthDate(birthDateC);
+			user.setDescription(aboutMe);
+			user.setCountry(country);
+			UserDAO.getInstance().storeUser(user);
+			return Response.status(200).build();
+		}else {
+		return Response.status(401).build();
+	}
+	}
 
 }
