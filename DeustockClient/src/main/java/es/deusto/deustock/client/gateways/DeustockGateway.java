@@ -3,6 +3,7 @@ package es.deusto.deustock.client.gateways;
 import es.deusto.deustock.client.data.Stock;
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.data.help.FAQQuestion;
+import es.deusto.deustock.client.data.stocks.Wallet;
 import es.deusto.deustock.client.log.DeuLogger;
 import es.deusto.deustock.client.net.RESTVars;
 import es.deusto.deustock.client.visual.help.FAQLine;
@@ -78,7 +79,8 @@ public class DeustockGateway {
         return questionList;
     }
     
-    public boolean register(String username, String password, String fullName, Date birthDate, String aboutMe, String country) throws UnsupportedEncodingException, NoSuchAlgorithmException {	
+    public boolean register(String username, String password, String fullName, Date birthDate, String aboutMe, String country, Wallet wallet) throws UnsupportedEncodingException, NoSuchAlgorithmException {	
+    	System.out.println("Wallet on Client -->" + wallet);
     	Response response = getHostWebTarget().path("users").path("register")
 			.request("application/json")
             .post(Entity.entity(new User(username, getEncrypt(password))
@@ -86,6 +88,7 @@ public class DeustockGateway {
 	                        			.setBirthDate(birthDate)
 	                        			.setDescription(aboutMe)
 	                        			.setCountry(country)
+	                        			.setWallet(wallet)
                   , MediaType.APPLICATION_JSON)
             );
 
@@ -96,7 +99,7 @@ public class DeustockGateway {
     	Response response = getHostWebTarget().path("users").path("login")
                 .path(username).path(getEncrypt(password))
                 .request(MediaType.APPLICATION_JSON).get();
-
+    	System.out.println(response.readEntity(String.class));
         return response.readEntity(User.class);
     }
     

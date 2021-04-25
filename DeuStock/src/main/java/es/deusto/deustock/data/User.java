@@ -91,12 +91,13 @@ public class User implements Serializable{
 		this.lastActivity = u.lastActivity;
 	}
 	
+	
+	@Override
 	public String toString() {
 		return "User [username=" + username + ", password=" + password + ", fullName=" + fullName + ", birthDate="
 				+ birthDate + ", country=" + country + ", description=" + description + ", registerDate=" + registerDate
-				+ ", lastActivity=" + lastActivity + "]";
+				+ ", lastActivity=" + lastActivity + ", wallet=" + wallet + "]";
 	}
-	
 	public boolean checkPassword(String password){
 		return this.password.equals(password);
 	}

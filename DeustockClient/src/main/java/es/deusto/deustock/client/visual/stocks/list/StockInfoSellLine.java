@@ -3,6 +3,7 @@ package es.deusto.deustock.client.visual.stocks.list;
 import es.deusto.deustock.client.controllers.MainController;
 import es.deusto.deustock.client.data.Stock;
 import es.deusto.deustock.client.data.User;
+import es.deusto.deustock.client.data.stocks.StockHistory;
 import es.deusto.deustock.client.data.stocks.Wallet;
 import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.scene.control.Button;
@@ -28,7 +29,7 @@ public class StockInfoSellLine extends GridPane{
 		this.user = user;
 		this.wallet = user.getWallet();
 		this.indexInWallet = indexInWallet;
-		this.buyPrice = wallet.getHoldings().get(indexInWallet).getPricePurchase();
+		this.buyPrice = wallet.getHistory().get(indexInWallet).getPrice();
 		//Pueden ser beneficios negativos
 		this.profits = calculateProfits();
         initPane();
@@ -38,14 +39,14 @@ public class StockInfoSellLine extends GridPane{
         this.stockNameLabel = new Label(stock.getAcronym());
         this.stockNameLabel.getStyleClass().add("stock-line-name");
         
-        double buyPrice = wallet.getHoldings().get(indexInWallet).getPricePurchase();
+        double buyPrice = this.buyPrice;
         this.stockBuyPriceLabel = new Label(String.valueOf(buyPrice) + " €");
         this.stockBuyPriceLabel.getStyleClass().add("stock-line-price");
         
         this.stockActPriceLabel = new Label(String.valueOf(stock.getPrice()) + " €");
         this.stockActPriceLabel.getStyleClass().add("stock-line-price");
         
-        this.stockCuantityLabel = new Label("Tienes " + String.valueOf(wallet.getHoldings().get(indexInWallet).getStockAmmount() + " stocks diferentes"));
+        this.stockCuantityLabel = new Label("X " + String.valueOf(this.wallet.getHistory().get(indexInWallet).getAmount()));
                         
         this.priceDiferenceLabel = new Label(this.profits + " €");
         this.priceDiferenceLabel.setTextFill(Color.RED);

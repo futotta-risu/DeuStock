@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import es.deusto.deustock.client.data.stocks.Wallet;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.log.DeuLogger;
 import es.deusto.deustock.client.visual.ViewPaths;
@@ -118,7 +119,7 @@ public class RegisterController {
 
 		if(!username.equals("") && !password.equals("") && !fullName.equals("") && birthDate != null && !aboutMe.equals("") ) {
 			System.out.println("T15");
-			if(dg.register(username, password, fullName, birthDate, aboutMe, "Spain")) {
+			if(dg.register(username, password, fullName, birthDate, aboutMe, "Spain", new Wallet())) {
 				System.out.println("T16");
 				MainController.getInstance().loadAndChangeScene(ViewPaths.LoginViewPath);
 			}else {

@@ -39,6 +39,8 @@ public class UserResource {
 		DeuLogger.logger.info("Login petition for User " + username);
 
 		User user = UserDAO.getInstance().getUser(username);
+		System.out.println("USER RESOURCE");
+		System.out.println(user.toString());
 		if(user == null) {
 			DeuLogger.logger.warn("User not in DB");
 			return Response.status(401).build();
@@ -78,7 +80,7 @@ public class UserResource {
 			DeuLogger.logger.warn("Cannot register User. User " + user.getUsername() + " alredy in DB");
 			return Response.status(401).build();
 		}
-
+		System.out.println("Wallet en server --> " + user.getWallet());
 		UserDAO.getInstance().storeUser(user);
 		return Response.status(200).build();
 	}

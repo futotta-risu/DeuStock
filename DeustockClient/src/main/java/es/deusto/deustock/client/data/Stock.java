@@ -2,7 +2,6 @@ package es.deusto.deustock.client.data;
 
 import yahoofinance.histquotes.HistoricalQuote;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +11,7 @@ import java.util.List;
  */
 public class Stock {
 
-    BigDecimal price;
+    double price;
     String fullName;
     String acronym;
     String description;
@@ -23,15 +22,15 @@ public class Stock {
     // Compulsory for JSON conversion. Don't delete.
     public Stock(){}
 
-    public Stock(String acronym, BigDecimal price){
+    public Stock(String acronym, double price){
         this.acronym =acronym;
         this.price = price;
     }
 
 
 
-    public BigDecimal getPrice() { return price; }
-    public Stock setPrice(BigDecimal price) {
+    public double getPrice() { return price; }
+    public Stock setPrice(double price) {
         this.price = price; return this;
     }
     public String getFullName() { return fullName; }

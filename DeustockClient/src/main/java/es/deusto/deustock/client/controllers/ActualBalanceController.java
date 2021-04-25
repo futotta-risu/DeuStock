@@ -69,7 +69,11 @@ public class ActualBalanceController implements DSGenericController{
         wallet = this.user.getWallet();
         moneyLabel.setText(calculateActualBalance() + " €");
         
-        stockCuantityLabel.setText(String.valueOf(this.wallet.getHoldings().size()));
+        int totalStocks = 0;
+        for (StockHistory sh : wallet.getHistory()) {
+			if(!sh.isClosed()) totalStocks++;
+		}
+        stockCuantityLabel.setText("Tienes un total de " + String.valueOf(totalStocks) + " stocks diferentes");
                 
         stockLines = new HashMap<>();
         refreshStocks();
@@ -81,8 +85,8 @@ public class ActualBalanceController implements DSGenericController{
     
     private double calculateActualBalance() {
     	double result = 0;
-    	for (StockHistory sh : this.wallet.getHoldings()) {
-			result += Double.parseDouble(sh.getStock().getPrice()+"");
+    	for (StockHistory sh : this.wallet.getHistory()) {
+			if(!sh.isClosed()) result += Double.parseDouble(sh.getStock().getPrice()+"");
 		}
     	result += this.wallet.getMoney();
     	return result;
@@ -92,12 +96,14 @@ public class ActualBalanceController implements DSGenericController{
     	this.stockList.getChildren().remove(0, this.stockList.getChildren().size());
         DeustockGateway gateway = new DeustockGateway();
         int stockWalletIndex = 0;
-        for(StockHistory stock : this.wallet.getHoldings()){
-            StockInfoSellLine stockLine = new StockInfoSellLine(stock.getStock(), this.user, stockWalletIndex);
-            stockLines.put(stock.getStock().getAcronym(), stockLine);
-                           
-            stockList.getChildren().add(stockLine);
-            stockList.getChildren().add(new Separator());
+        for(StockHistory sh : this.wallet.getHistory()){
+            if(!sh.isClosed()) {
+            	StockInfoSellLine stockLine = new StockInfoSellLine(sh.getStock(), this.user, stockWalletIndex);
+                stockLines.put(sh.getStock().getAcronym(), stockLine);
+                               
+                stockList.getChildren().add(stockLine);
+                stockList.getChildren().add(new Separator());
+            }
             stockWalletIndex++;
         }
         if(stockWalletIndex == 0) stockList.getChildren().add(new Label("No tienes ningun stock en posesion"));
