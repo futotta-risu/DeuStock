@@ -161,6 +161,13 @@ public class DeustockGateway {
 
         return response.readEntity(new GenericType<>(){});
     }
+    
+    public boolean resetHoldings(String username, String password) {
+    	Response response = getHostWebTarget()
+    			.path("user").path(username).path(password).path("holdings").path("reset")
+    			.request().get();
+    	return response.getStatus() == 200;
+    }
 
     public double getBalance(String username){
         Response response = getHostWebTarget()

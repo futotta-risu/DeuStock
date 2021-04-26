@@ -32,6 +32,9 @@ public class UserDetailController implements DSGenericController{
 
     @FXML
     Button accountDeleteButton;
+    
+    @FXML
+    Button resetWalletButton;
 
     public  UserDetailController(){}
 
@@ -80,5 +83,14 @@ public class UserDetailController implements DSGenericController{
         this.accountDeleteButton.setOnMouseClicked(
                 mouseEvent -> deleteUser()
         );
+    	this.resetWalletButton.setOnMouseClicked(
+    			mouseEvent -> resetAccountWallet()
+    	);
+    	
+    }
+    
+    public void resetAccountWallet() {
+    	DeustockGateway gateway = new DeustockGateway();
+    	gateway.resetHoldings(this.user.getUsername(), this.user.getPassword());
     }
 }
