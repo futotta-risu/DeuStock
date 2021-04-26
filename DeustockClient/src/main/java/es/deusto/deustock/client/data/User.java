@@ -1,23 +1,16 @@
 package es.deusto.deustock.client.data;
 
-import java.util.Calendar;
-import java.util.Date;
-
-import es.deusto.deustock.client.data.stocks.Wallet;
 
 public class User {
 	
 	String username;
 	String password;
 	String fullName;
-	Date birthDate;
 	String country;
 	String description;
-	Date registerDate;
-	Date lastActivity;
-	
-	Wallet wallet;
-	
+
+
+	public User() {}
 
 	public String getUsername() { return username; }
 	public User setUsername(String username) {
@@ -27,14 +20,12 @@ public class User {
 	public User setPassword(String password) {
 		this.password = password; return this;
 	}
+
 	public String getFullName() { return fullName; }
 	public User setFullName(String fullName) {
 		this.fullName = fullName; return this;
 	}
-	public Date getBirthDate() { return birthDate; }
-	public User setBirthDate(Date birthDate) {
-		this.birthDate = birthDate; return this;
-	}
+
 	public String getCountry() { return country; }
 	public User setCountry(String country) {
 		this.country = country; return this;
@@ -43,60 +34,16 @@ public class User {
 	public User setDescription(String description) {
 		this.description = description; return this;
 	}
-	public Date getRegisterDate() { return registerDate; }
-	public User setRegisterDate(Date registerDate) {
-		this.registerDate = registerDate; return this;
-	}
-	public Date getLastActivity() { return lastActivity; }
-	public User setLastActivity(Date lastActivity) {
-		this.lastActivity = lastActivity; return this;
-	}
-	public User setLastActivity() {
-		this.lastActivity = Calendar.getInstance().getTime(); return this;
-	}	
-	public Wallet getWallet() { return wallet; }
-	public User setWallet(Wallet wallet) {
-		this.wallet = wallet; return this;
-	}
-	
-	
-	public User(String username, String password) {
-		this.username = username;
-		this.password = password;
-		this.registerDate = Calendar.getInstance().getTime();
-		this.lastActivity = this.registerDate;
-		this.wallet = new Wallet();
-	}
-	
-	public User() {
-		this.username = "NULL";
-		this.password = "NULL";
-		this.fullName = "NULL";
-		this.birthDate = Calendar.getInstance().getTime();
-		this.country = "NULL";
-		this.description = "NULL";
-		this.registerDate = Calendar.getInstance().getTime();
-		this.lastActivity = this.registerDate;
-		this.wallet = new Wallet();
-	}
-
 	
 	public void updateInfo(User u) {
-		this.password = u.password;
 		this.fullName = u.fullName;
-		this.birthDate = u.birthDate;
 		this.country = u.country;
 		this.description = u.description;
-		this.registerDate = u.registerDate;
-		this.lastActivity = u.lastActivity;
-		this.wallet = u.wallet;
 	}
 	
 	@Override
 	public String toString() {
-		return "User [username=" + username + ", password=" + password + ", fullName=" + fullName + ", birthDate="
-				+ birthDate + ", country=" + country + ", description=" + description + ", registerDate=" + registerDate
-				+ ", lastActivity=" + lastActivity + ", wallet=" + wallet + "]";
+		return "User [username=" + username +  ", fullName=" + fullName +  ", country=" + country + ", description=" + description + "]";
 	}
 	
 }

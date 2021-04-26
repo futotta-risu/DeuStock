@@ -1,35 +1,32 @@
-package es.deusto.deustock.client.data.stocks;
+package es.deusto.deustock.data.dto.stocks;
 
-
-import es.deusto.deustock.client.simulation.investment.operations.OperationType;
-
-import java.io.Serializable;
+import es.deusto.deustock.simulation.investment.operations.OperationType;
 
 /**
  * @author Erik B. Terres
  */
-public class StockHistory  implements Serializable {
+public class StockHistoryDTO {
 
     String symbol;
     double openPrice;
     double actualPrice;
+
     double amount;
+
     double openValue;
     double actualValue;
 
 
-
-
     OperationType operation;
 
-    public StockHistory(){}
+    public StockHistoryDTO(){}
 
 
     public String getSymbol() {
         return symbol;
     }
 
-    public StockHistory setSymbol(String symbol) {
+    public StockHistoryDTO setSymbol(String symbol) {
         this.symbol = symbol;
         return this;
     }
@@ -38,17 +35,8 @@ public class StockHistory  implements Serializable {
         return openPrice;
     }
 
-    public StockHistory setOpenPrice(double openPrice) {
+    public StockHistoryDTO setOpenPrice(double openPrice) {
         this.openPrice = openPrice;
-        return this;
-    }
-
-    public double getOpenValue() {
-        return openValue;
-    }
-
-    public StockHistory setOpenValue(double openValue) {
-        this.openValue = openValue;
         return this;
     }
 
@@ -56,7 +44,7 @@ public class StockHistory  implements Serializable {
         return actualPrice;
     }
 
-    public StockHistory setActualPrice(double actualPrice) {
+    public StockHistoryDTO setActualPrice(double actualPrice) {
         this.actualPrice = actualPrice;
         return this;
     }
@@ -65,8 +53,17 @@ public class StockHistory  implements Serializable {
         return amount;
     }
 
-    public StockHistory setAmount(double amount) {
+    public StockHistoryDTO setAmount(double amount) {
         this.amount = amount;
+        return this;
+    }
+
+    public double getOpenValue() {
+        return openValue;
+    }
+
+    public StockHistoryDTO setOpenValue(double openValue) {
+        this.openValue = openValue;
         return this;
     }
 
@@ -74,7 +71,7 @@ public class StockHistory  implements Serializable {
         return actualValue;
     }
 
-    public StockHistory setActualValue(double actualValue) {
+    public StockHistoryDTO setActualValue(double actualValue) {
         this.actualValue = actualValue;
         return this;
     }
@@ -83,9 +80,8 @@ public class StockHistory  implements Serializable {
         return operation;
     }
 
-    public StockHistory setOperation(OperationType operation) {
+    public StockHistoryDTO setOperation(OperationType operation) {
         this.operation = operation;
         return this;
     }
-
 }

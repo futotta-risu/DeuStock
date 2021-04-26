@@ -3,14 +3,21 @@ package es.deusto.deustock.simulation.investment;
 import es.deusto.deustock.dao.StockHistoryDAO;
 import es.deusto.deustock.dao.WalletDAO;
 import es.deusto.deustock.data.DeuStock;
+import es.deusto.deustock.data.dto.stocks.StockHistoryDTO;
 import es.deusto.deustock.data.stocks.StockHistory;
 import es.deusto.deustock.data.stocks.Wallet;
+import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
+import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
+import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
 import es.deusto.deustock.log.DeuLogger;
 import es.deusto.deustock.simulation.investment.operations.Operation;
 import es.deusto.deustock.simulation.investment.operations.OperationType;
 import es.deusto.deustock.simulation.investment.operations.StockOperation;
 
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Erik B. Terres
@@ -78,6 +85,19 @@ public class WalletService {
         walletDAO.update(wallet);
 
         stockHistoryDAO.update(stockHistory.setClosed(true));
+    }
+
+    public List<StockHistoryDTO> getHoldings(){
+        System.out.println("dasd-32 " + wallet);
+        System.out.println("dasd-33 " + wallet.getHistory());
+        List<StockHistoryDTO> result =  wallet.getHistory()
+                .stream()
+                .filter(c -> !c.isClosed())
+                .map(stockHistoryDAO::getDTO)
+                .collect(Collectors.toList());
+
+        System.out.println(" Este el total " + result.size());
+        return result;
     }
 
 }

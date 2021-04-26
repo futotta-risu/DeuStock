@@ -30,7 +30,7 @@ public class User implements Serializable{
 	@NotPersistent
 	Date lastActivity;
 
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	Wallet wallet;
 	
 	
@@ -69,6 +69,10 @@ public class User implements Serializable{
 	public User setLastActivity() {
 		this.lastActivity = Calendar.getInstance().getTime(); return this;
 	}
+
+	public void setWallet(Wallet wallet){
+		this.wallet = wallet;
+	}
 	public Wallet getWallet(){
 		return this.wallet;
 	}
@@ -78,7 +82,6 @@ public class User implements Serializable{
 		this.password = password;
 		this.registerDate = Calendar.getInstance().getTime();
 		this.lastActivity = this.registerDate;
-		this.wallet = new Wallet();
 	}
 
 	public void updateInfo(User u) {

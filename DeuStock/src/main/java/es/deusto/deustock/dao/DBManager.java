@@ -1,6 +1,7 @@
 package es.deusto.deustock.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.jdo.*;
 
@@ -53,7 +54,7 @@ public class DBManager implements IDBManager{
 	 *         almacenados en la BD
 	 */
 	
-	public ArrayList<Object> getObjects(Class entityClass) {
+	public List<Object> getObjects(Class entityClass) {
 		
 			PersistenceManager pm = pmf.getPersistenceManager();
 			pm.getFetchPlan().setMaxFetchDepth(-1);
@@ -81,6 +82,36 @@ public class DBManager implements IDBManager{
 				pm.close();
 			}
 			return objects;
+	}
+
+	@Override
+	public List<Object> getObjects(Class entityClass, String conditions) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		pm.getFetchPlan().setMaxFetchDepth(-1);
+		Transaction tx = pm.currentTransaction();
+		pm.setDetachAllOnCommit(true);
+		List<Object> object = null;
+		try {
+			System.out.println("   * Querying a Object, conditions: " + conditions);
+
+			tx.begin();
+			Query query = pm.newQuery("SELECT FROM " + entityClass.getName() + " WHERE " + conditions);
+			query.setUnique(false);
+			object = (List<Object>) query.execute();
+			tx.commit();
+
+		} catch (Exception ex) {
+			System.out.println("   $ Error Getting Object: " + ex.getMessage());
+			DeuLogger.logger.error("Error getting Object: " + conditions);
+		} finally {
+
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+
+			pm.close();
+		}
+		return object;
 	}
 
 	public Object getObject(Class entityClass, String conditions) {

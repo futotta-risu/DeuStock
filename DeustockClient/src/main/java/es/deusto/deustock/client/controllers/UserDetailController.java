@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Erik B. Terres
@@ -77,7 +76,6 @@ public class UserDetailController implements DSGenericController{
         this.usernameLabel.setText(user.getUsername());
         //this.sexLabel.setText(String.valueOf(user.isSex()));
         this.descriptionLabel.setText(user.getDescription());
-        this.birthdayLabel.setText(user.getBirthDate().toString());
 
         this.accountDeleteButton.setOnMouseClicked(
                 mouseEvent -> deleteUser()

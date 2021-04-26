@@ -3,32 +3,24 @@ package es.deusto.deustock.client.gateways;
 import es.deusto.deustock.client.data.Stock;
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.data.help.FAQQuestion;
-import es.deusto.deustock.client.data.stocks.Wallet;
+import es.deusto.deustock.client.data.stocks.StockHistory;
 import es.deusto.deustock.client.log.DeuLogger;
 import es.deusto.deustock.client.net.RESTVars;
-import es.deusto.deustock.client.visual.help.FAQLine;
 
 import org.apache.maven.surefire.shade.booter.org.apache.commons.io.IOUtils;
-import org.glassfish.jersey.client.ClientResponse;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -79,16 +71,16 @@ public class DeustockGateway {
         return questionList;
     }
     
-    public boolean register(String username, String password, String fullName, Date birthDate, String aboutMe, String country, Wallet wallet) throws UnsupportedEncodingException, NoSuchAlgorithmException {	
-    	System.out.println("Wallet on Client -->" + wallet);
+    public boolean register(String username, String password, String fullName, String aboutMe, String country){
+
     	Response response = getHostWebTarget().path("users").path("register")
 			.request("application/json")
-            .post(Entity.entity(new User(username, getEncrypt(password))
-	                        			.setFullName(fullName)
-	                        			.setBirthDate(birthDate)
-	                        			.setDescription(aboutMe)
-	                        			.setCountry(country)
-	                        			.setWallet(wallet)
+            .post(Entity.entity(new User()
+                        .setUsername(username)
+                        .setPassword(getEncrypt(password))
+                        .setFullName(fullName)
+                        .setDescription(aboutMe)
+                        .setCountry(country)
                   , MediaType.APPLICATION_JSON)
             );
 
@@ -99,8 +91,12 @@ public class DeustockGateway {
     	Response response = getHostWebTarget().path("users").path("login")
                 .path(username).path(getEncrypt(password))
                 .request(MediaType.APPLICATION_JSON).get();
-    	System.out.println(response.readEntity(String.class));
-        return response.readEntity(User.class);
+
+    	System.out.println("T-3");
+    	User userDTO = response.readEntity(User.class);
+    	System.out.println(userDTO);
+        System.out.println("T-5");
+        return userDTO;
     }
     
     private String getEncrypt(String pass) {
@@ -153,10 +149,32 @@ public class DeustockGateway {
             e.printStackTrace();
         }
 
-        //fetchFeedAnotherWay(is) //use for Java 7
-
-
         return downloadfile;
+    }
+
+    public List<StockHistory> getHoldings(String username){
+        Response response = getHostWebTarget()
+                .path("user").path(username).path("holdings")
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+
+        return response.readEntity(new GenericType<>(){});
+    }
+
+    public double getBalance(String username){
+        System.out.println("El username es " + username);
+
+        WebTarget obj = getHostWebTarget()
+                .path("holdings").path(username).path("balance");
+        System.out.println("El enlace es " + obj.toString());
+        Response response = obj.request(MediaType.TEXT_PLAIN)
+                .get();
+
+
+
+        double result = Double.parseDouble(response.readEntity(String.class));
+        System.out.println("-" + result + "-");
+        return result;
     }
 
 }

@@ -2,10 +2,7 @@ package es.deusto.deustock.data.stocks;
 
 import es.deusto.deustock.data.User;
 
-import javax.jdo.annotations.NotPersistent;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
+import javax.jdo.annotations.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

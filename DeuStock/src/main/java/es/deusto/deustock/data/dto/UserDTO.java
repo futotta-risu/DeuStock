@@ -1,6 +1,7 @@
 package es.deusto.deustock.data.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author Erik B. Terres
@@ -11,6 +12,7 @@ public class UserDTO implements Serializable {
     private String fullName;
     private String country;
     private String description;
+    private String password;
 
     public UserDTO() {}
 
@@ -30,6 +32,10 @@ public class UserDTO implements Serializable {
         return description;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public UserDTO setUsername(String username) {
         this.username = username;
         return this;
@@ -47,6 +53,11 @@ public class UserDTO implements Serializable {
 
     public UserDTO setDescription(String description) {
         this.description = description;
+        return this;
+    }
+
+    public UserDTO setPassword(String password) {
+        this.password = password;
         return this;
     }
 

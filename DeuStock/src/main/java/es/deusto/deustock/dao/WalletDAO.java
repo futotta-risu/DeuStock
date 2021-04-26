@@ -1,6 +1,9 @@
 package es.deusto.deustock.dao;
 
+import es.deusto.deustock.data.stocks.StockHistory;
 import es.deusto.deustock.data.stocks.Wallet;
+
+import java.util.List;
 
 /**
  * @author Erik B. Terres
@@ -33,7 +36,6 @@ public class WalletDAO {
         String condition = "id == '" + walletID + "'";
         return (Wallet) DBManager.getInstance().getObject(Wallet.class, condition);
     }
-
 
 
 }

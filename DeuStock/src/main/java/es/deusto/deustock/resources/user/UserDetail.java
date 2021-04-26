@@ -25,16 +25,17 @@ public class UserDetail {
         UserDAO userDAO = UserDAO.getInstance();
 
         User user = userDAO.getUser(username);
-        UserDTO userDTO = userDAO.getDTO(user);
 
         if(user == null){
             DeuLogger.logger.error("Cannot get '" + username + "' user  information");
             return Response.status(401).build();
         }
 
+        UserDTO userDTO = userDAO.getDTO(user);
+
         return Response
                 .status(Response.Status.OK)
-                .entity(user)
+                .entity(userDTO)
                 .build();
     }
 }

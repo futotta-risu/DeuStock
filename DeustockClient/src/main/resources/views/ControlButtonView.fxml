@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="98.0" prefWidth="785.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.ControlButtonController">
+<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="98.0" prefWidth="923.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.ControlButtonController">
    <children>
       <Button fx:id="homeButton" mnemonicParsing="false" prefHeight="101.0" prefWidth="141.0" text="Home">
          <font>
@@ -31,5 +31,6 @@
             <Font name="Ebrima" size="22.0" />
          </font>
       </Button>
+      <Button fx:id="myStocksButton" mnemonicParsing="false" prefHeight="100.0" prefWidth="144.0" text="MyStocks" />
    </children>
 </FlowPane>
