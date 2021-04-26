@@ -8,7 +8,6 @@ import es.deusto.deustock.client.data.stocks.StockHistory;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.visual.stocks.list.StockInfoSellLine;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -60,6 +59,7 @@ public class CurrentBalanceController implements DSGenericController {
         Button refreshButton = new Button("Refresh");
         refreshButton.setOnMouseClicked(mouseEvent -> refreshStocks());
         stockList.getChildren().add(refreshButton);
+        
     }
     
 
@@ -70,17 +70,15 @@ public class CurrentBalanceController implements DSGenericController {
 
         stockCuantityLabel.setText("Tienes un total de " + stockHistories.size() + " stocks diferentes");
 
-        int stockWalletIndex = 0;
         for(StockHistory sh : stockHistories){
             StockInfoSellLine stockLine = new StockInfoSellLine(sh);
             stockLines.add(stockLine);
             stockList.getChildren().add(stockLine);
             stockList.getChildren().add(new Separator());
-
-            stockWalletIndex++;
         }
+        
         if(stockHistories.size() == 0) stockList.getChildren().add(new Label("No tienes ningun stock en posesion"));
     }
-
+    
 
 }
