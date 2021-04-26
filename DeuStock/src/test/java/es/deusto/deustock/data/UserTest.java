@@ -120,7 +120,38 @@ public class UserTest {
 		user.setLastActivity(date);
 		assertTrue("setLastActivity doesn't work", user.getLastActivity() == date);
 	}
+	
+	@Test
+	public void testConstructor() {
+		User user = new User("Gartzi", "si");
+		assertTrue("Constructor doesn't work", user.getUsername() == "Gartzi");
+		assertTrue("Constructor doesn't work", user.getPassword() == "si");
+		assertTrue("Constructor doesn't work", user.getRegisterDate() == user.getLastActivity());
+		assertTrue("Constructor doesn't work", user.getLastActivity() == user.getRegisterDate());
+	}
+	
+	@Test
+	public void testUpdateInfo() {
+		Date date = new Date();
+		User user = new User("Gartzi", "si");
+		User updater = new User("updater" ,"no");
+		updater.setFullName("Aritz Zugazaga");
+		updater.setBirthDate(date);
+		updater.setCountry("Spain");
+		updater.setDescription("Hola me gusta la CocaCola");
+		updater.setRegisterDate(date);
+		updater.setLastActivity(date);
+		user.updateInfo(updater);
+		assertTrue("updateInfo doesn't work", user.getPassword() == "no");
+		assertTrue("updateInfo doesn't work", user.getFullName() == "Aritz Zugazaga");
+		assertTrue("updateInfo doesn't work", user.getBirthDate() == date);
+		assertTrue("updateInfo doesn't work", user.getCountry() == "Spain");
+		assertTrue("updateInfo doesn't work", user.getDescription() == "Hola me gusta la CocaCola");
+		assertTrue("updateInfo doesn't work", user.getRegisterDate() == date);
+		assertTrue("updateInfo doesn't work", user.getLastActivity() == date);
 
+	}
+	
 	@Test
 	public void testCheckPassword() {
 		User user = new User("Gartzi", "si");

@@ -8,9 +8,23 @@ import java.util.List;
 
 import org.junit.Test;
 
+import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import yahoofinance.histquotes.HistoricalQuote;
 
 public class DeuStockTest {
+	
+	@Test
+	public void testConstructor1() {
+		DeuStock deustock = new DeuStock("AZ");
+		assertTrue("Constructor1 doesn't work", deustock.getAcronym() == "AZ");
+	}
+	
+	@Test
+	public void testConstructor2() {
+		StockQueryData sqd = new StockQueryData("AZ");
+		DeuStock deustock = new DeuStock(sqd);
+		assertTrue("Constructor2 doesn't work", deustock.getAcronym() == "AZ");
+	}
 
 	@Test
 	public void testGetPrice() {
@@ -89,5 +103,16 @@ public class DeuStockTest {
 		list.add(HQ);
 		deustock.setHistory(list);
 		assertTrue("setHistory doesn't work", deustock.getHistory() == list);
+	}
+	
+	@Test
+	public void testToString() {
+		DeuStock deustock = new DeuStock("AZ");
+		BigDecimal decimal = new BigDecimal(50);
+		deustock.setPrice(decimal);
+		assertTrue("toString doesn't work", deustock.toString() == "DeuStock{" +
+                												   "price=" + deustock.getPrice() +
+                												   ", acronym='" + deustock.getAcronym() + '\'' +
+                												   '}');
 	}
 }
