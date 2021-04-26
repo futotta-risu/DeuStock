@@ -61,7 +61,7 @@ jobs:
         restore-keys: ${{ runner.os }}-m2
 
     - name: Create database schema
-      run: 
+      run: |
         cd DeuStock
         mvn compile datanucleus:enhance
           
@@ -71,6 +71,8 @@ jobs:
         twitter_access_token_secret : ${{secrets.TWITTERACCESSTOKENSECRET}}
         twitter_consumer_key : ${{secrets.TWITTERCONSUMERKEY}}
         twitter_consumer_key_secret : ${{secrets.TWITTERCONSUMERSECRET}}
+      run: mvn --file DeuStock/pom.xml --batch-mode --update-snapshots verify
+
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
@@ -95,7 +97,6 @@ jobs:
     #    uses a compiled language
 
     - run: |
-       mvn --file DeuStock/pom.xml --batch-mode --update-snapshots verify
        mvn --file DeustockClient/pom.xml --batch-mode --update-snapshots verify
 
     - name: Perform CodeQL Analysis
