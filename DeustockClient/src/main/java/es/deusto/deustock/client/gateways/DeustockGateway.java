@@ -7,6 +7,7 @@ import es.deusto.deustock.client.data.stocks.StockHistory;
 import es.deusto.deustock.client.log.DeuLogger;
 import es.deusto.deustock.client.net.RESTVars;
 
+import es.deusto.deustock.client.simulation.investment.operations.OperationType;
 import org.apache.maven.surefire.shade.booter.org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 
@@ -169,19 +170,39 @@ public class DeustockGateway {
     }
 
     public double getBalance(String username){
-        System.out.println("El username es " + username);
-
-        WebTarget obj = getHostWebTarget()
-                .path("holdings").path(username).path("balance");
-        System.out.println("El enlace es " + obj.toString());
-        Response response = obj.request(MediaType.TEXT_PLAIN)
+        Response response = getHostWebTarget()
+                .path("holdings").path(username).path("balance")
+                .request(MediaType.TEXT_PLAIN)
                 .get();
 
+        return Double.parseDouble(response.readEntity(String.class));
+    }
 
+    public void openOperation(OperationType operationType, Stock stock, String username, double amount){
+        if(operationType == null){
+            throw new IllegalArgumentException("Invalid operation type");
+        }
+        if(amount < 0){
+            throw new IllegalArgumentException("Is not posible to set negative ammount");
+        }
+        if(amount == 0){
+            return;
+        }
 
-        double result = Double.parseDouble(response.readEntity(String.class));
-        System.out.println("-" + result + "-");
-        return result;
+        Response response = getHostWebTarget()
+                .path("stock/operation/open")
+                .path(operationType.name())
+                .path(stock.getAcronym())
+                .path(username)
+                .path(String.valueOf(amount))
+                .request().get();
+    }
+
+    public void closeOperation(String stockHistoryID){
+        Response response = getHostWebTarget()
+                .path("stock/operation/close")
+                .path(stockHistoryID)
+                .request().get();
     }
 
 }

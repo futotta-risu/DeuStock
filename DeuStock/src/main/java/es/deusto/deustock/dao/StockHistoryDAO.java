@@ -64,7 +64,8 @@ public class StockHistoryDAO {
                 .setOpenPrice(stockHistory.getPrice())
                 .setAmount(stockHistory.getAmount())
                 .setSymbol(stockHistory.getStock().getAcronym())
-                .setOperation(stockHistory.getOperation());
+                .setOperation(stockHistory.getOperation())
+                .setId(stockHistory.getId());
     }
 
     /**

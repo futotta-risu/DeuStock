@@ -39,6 +39,9 @@ public class StockHistory  implements Serializable {
         date =  new Date().getTime();
     }
 
+    public long getId() {
+        return id;
+    }
 
     public DeuStock getStock() {
         return stock;

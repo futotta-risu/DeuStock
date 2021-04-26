@@ -7,6 +7,8 @@ import es.deusto.deustock.simulation.investment.operations.OperationType;
  */
 public class StockHistoryDTO {
 
+    long id;
+
     String symbol;
     double openPrice;
     double actualPrice;
@@ -16,11 +18,18 @@ public class StockHistoryDTO {
     double openValue;
     double actualValue;
 
-
     OperationType operation;
 
     public StockHistoryDTO(){}
 
+    public long getId() {
+        return id;
+    }
+
+    public StockHistoryDTO setId(long id) {
+        this.id = id;
+        return this;
+    }
 
     public String getSymbol() {
         return symbol;

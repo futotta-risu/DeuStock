@@ -1,7 +1,9 @@
 package es.deusto.deustock.resources.stocks;
 
 import es.deusto.deustock.dao.StockDAO;
+import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.data.DeuStock;
+import es.deusto.deustock.data.User;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
@@ -29,12 +31,14 @@ public class OpenOperationResource {
     private OperationFactory operationFactory;
     private StockDataAPIGateway stockDataAPIGateway;
     private StockDAO stockDAO;
+    private UserDAO userDAO;
 
     public OpenOperationResource(){
         walletService = new WalletService();
         operationFactory = OperationFactory.getInstance();
         stockDataAPIGateway = StockDataGatewayFactory.getInstance().create(StockDataGatewayEnum.YahooFinance);
         stockDAO = StockDAO.getInstance();
+        userDAO = UserDAO.getInstance();
     }
 
     public void setOperationFactory(OperationFactory operationFactory) {
@@ -53,18 +57,20 @@ public class OpenOperationResource {
         this.walletService = walletService;
     }
 
-
+    public void setUserDAO(UserDAO userDAO){
+        this.userDAO = userDAO;
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{operation}/{symbol}/{walletID}/{amount}")
+    @Path("/{operation}/{symbol}/{username}/{amount}")
     public Response openOperation(
             @PathParam("operation") String operationTypeString,
             @PathParam("symbol") String symbol,
-            @PathParam("walletID") String walletID,
+            @PathParam("username") String username,
             @PathParam("amount") double amount
     ) throws StockNotFoundException {
-        DeuLogger.logger.info("Petition to open a operation from " + walletID);
+        DeuLogger.logger.info("Petition to open a operation from " + username);
 
         OperationType operationType = OperationType.valueOf(operationTypeString);
 
@@ -82,8 +88,9 @@ public class OpenOperationResource {
         stock.setPrice(stockData.getPrice());
 
         Operation operation = operationFactory.create(operationType, stock, amount);
+        User user = userDAO.getUser(username);
 
-        walletService.setWallet(walletID);
+        walletService.setWallet(user.getWallet());
         walletService.openOperation(operation);
 
         return Response.status(200).build();

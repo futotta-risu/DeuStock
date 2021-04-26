@@ -69,45 +69,37 @@ public class HoldingsListResources {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getHoldings(@PathParam("username") String username) throws StockNotFoundException {
         User user = userDAO.getUser(username);
-        System.out.println("T.1");
+
         if(user == null){
             throw new IllegalArgumentException("Username does not exit");
         }
-        System.out.println("T.2");
         Wallet wallet = user.getWallet();
-        System.out.println("T.3 " + wallet.toString());
+
         walletService.setWallet(wallet);
         List<StockHistory> holdingsN = StockHistoryDAO.getInstance().getStockHistory(wallet.getId());
+        holdingsN = holdingsN.stream().filter(c -> !c.isClosed()).collect(Collectors.toList());
         List<StockHistoryDTO> holdings = StockHistoryDAO.getInstance().getDTO(holdingsN);
-        System.out.println("T.6");
+
         for(StockHistoryDTO stockHistoryDTO : holdings){
-            System.out.println("T.8a " + stockHistoryDTO.getSymbol());
             DeuStock stock = new DeuStock(stockHistoryDTO.getSymbol())
                     .setPrice(stockHistoryDTO.getOpenPrice());
 
-            System.out.println("T.8b " + stockHistoryDTO.getOpenPrice());
-            System.out.println("T.8b " + stockHistoryDTO.getOperation());
-            System.out.println("T.8b " + stockHistoryDTO.getAmount());
-            OperationType opeartion = stockHistoryDTO.getOperation();
-            System.out.println("P-2");
-            Operation openOperation = operationFactory.create(opeartion, stock, stockHistoryDTO.getAmount());
+            OperationType operation = stockHistoryDTO.getOperation();
 
-            System.out.println("T.8bc");
+            Operation openOperation = operationFactory.create(operation, stock, stockHistoryDTO.getAmount());
+
             stockHistoryDTO.setOpenValue(openOperation.getOpenPrice());
 
-            System.out.println("T.8c");
             stock = stockGateway.getStockData(
                     new StockQueryData(stockHistoryDTO.getSymbol())
                             .setWithHistoric(false)
             );
-            System.out.println("T.8d");
             // Close y Actual
             Operation closeOperation = operationFactory.create(stockHistoryDTO.getOperation(), stock, stockHistoryDTO.getAmount());
             stockHistoryDTO.setActualPrice(stock.getPrice())
                     .setActualValue(closeOperation.getClosePrice());
 
         }
-        System.out.println("T.8e");
         return Response.status(200).entity(holdings).build();
     }
     

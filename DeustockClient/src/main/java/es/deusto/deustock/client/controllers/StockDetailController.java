@@ -47,7 +47,7 @@ public class StockDetailController implements DSGenericController{
     @FXML
     Button downloadButton;
     @FXML
-    Button backButton;
+    Button backButton, buyButton;
     @FXML
     LineChart<String, Number> lineChart;
     @FXML
@@ -116,8 +116,18 @@ public class StockDetailController implements DSGenericController{
         );
         
         backButton.setOnMouseClicked(
-                mouseevent -> MainController.getInstance().loadAndChangeScene(
+                mouseevent -> MainController.getInstance().loadAndChangePane(
                         ViewPaths.StockListViewPath
+                )
+        );
+
+        buyButton.setOnMouseClicked(
+                e -> MainController.getInstance().loadAndChangePaneWithParams(
+                        ViewPaths.OperationView,
+                        new HashMap<String, Object>() {{
+                            put("username",MainController.getInstance().getUser().getUsername());
+                            put("stock", stock);
+                        }}
                 )
         );
     }
