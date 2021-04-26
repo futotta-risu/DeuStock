@@ -59,11 +59,10 @@ public class UserResource {
 		User user = userDAO.getUser(username);
 
 		if(user == null) {
-			System.out.println("ads23 " + username);
 			DeuLogger.logger.warn("User not in DB");
 			return Response.status(401).build();
 		}
-		System.out.println("ads");
+
 		if(!user.checkPassword(password)) {
 			DeuLogger.logger.warn("Incorrect password for user " + username);
 			return Response.status(401).build();

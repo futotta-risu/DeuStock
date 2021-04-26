@@ -1,5 +1,6 @@
-package es.deusto.deustock.client.controllers;
+package es.deusto.deustock.client.controllers.stocks;
 
+import es.deusto.deustock.client.controllers.MainController;
 import es.deusto.deustock.client.data.Stock;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.visual.ViewPaths;
@@ -71,7 +72,6 @@ public class StockListViewController {
                 favButton.setGraphic(new ImageView(image1));
                 favButton.setOnAction(new EventHandler<ActionEvent>() {
                     public void handle(ActionEvent e) {
-                        System.out.println("Añadido a favorito");
                         favButton.setGraphic(new ImageView(image2));
                     }
                 });

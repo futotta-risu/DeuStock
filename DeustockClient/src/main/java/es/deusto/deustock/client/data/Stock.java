@@ -15,7 +15,7 @@ public class Stock {
     String fullName;
     String acronym;
     String description;
-    //Price per hours last 24h
+
     List<HistoricalQuote> history = new ArrayList<>();
 
 
@@ -49,7 +49,7 @@ public class Stock {
     public Stock setHistory(List<HistoricalQuote> history) {
         this.history = history; return this;
     }
-    
+
 	public double calcularMediaPrecio() {
 		double result = 0;
 		for (HistoricalQuote hq : this.history) {
@@ -58,10 +58,10 @@ public class Stock {
 		result = result / this.history.size();
 		return result;
 	}
-	
+
 	public double calcularSD(){
         double result = 0.0, standardDeviation = 0.0;
-        
+
         for(HistoricalQuote hq : this.history) {
             result += Double.parseDouble(hq.getClose().toString());
         }

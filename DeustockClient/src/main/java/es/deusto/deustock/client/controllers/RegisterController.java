@@ -58,8 +58,8 @@ public class RegisterController {
 	@FXML
 	private Button cancelBtn;
 	
-	public RegisterController(){};
-	 
+	public RegisterController(){}
+
 	@FXML
 	private void initialize(){
 		List<String> countries = new ArrayList<String>();

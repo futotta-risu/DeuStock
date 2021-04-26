@@ -1,6 +1,5 @@
 package es.deusto.deustock.client.data;
 
-
 public class User {
 	
 	String username;

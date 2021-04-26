@@ -34,8 +34,8 @@ public class LoginController {
 	@FXML
 	private Button registerBtn;
 
-	public LoginController(){};
-	 
+	public LoginController(){}
+
 	@FXML
 	private void initialize(){
 		Dialog<String> dialog = new Dialog<String>();

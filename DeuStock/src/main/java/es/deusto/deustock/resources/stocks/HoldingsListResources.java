@@ -120,10 +120,10 @@ public class HoldingsListResources {
 			stockHistory.setClosed(true);
 			StockHistoryDAO.getInstance().update(stockHistory);
 		}
-		wallet.setHistory(new ArrayList<StockHistory>());
+		wallet.setHistory(new ArrayList<>());
 		wallet.setMoney(5000);
 		WalletDAO.getInstance().update(wallet);
-		System.out.println("Wallet Reseted");
+
 		return Response.status(200).build();
 	}
 }

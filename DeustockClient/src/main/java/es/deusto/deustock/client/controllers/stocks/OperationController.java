@@ -49,7 +49,7 @@ public class OperationController implements DSGenericController {
 
         initRoot();
     }
-    public OperationController(){};
+    public OperationController(){}
 
     @FXML
     private void initialize() {

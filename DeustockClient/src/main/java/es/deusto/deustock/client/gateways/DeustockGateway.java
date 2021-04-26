@@ -93,11 +93,7 @@ public class DeustockGateway {
                 .path(username).path(getEncrypt(password))
                 .request(MediaType.APPLICATION_JSON).get();
 
-    	System.out.println("T-3");
-    	User userDTO = response.readEntity(User.class);
-    	System.out.println(userDTO);
-        System.out.println("T-5");
-        return userDTO;
+        return response.readEntity(User.class);
     }
     
     private String getEncrypt(String pass) {

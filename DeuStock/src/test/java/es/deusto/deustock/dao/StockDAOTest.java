@@ -65,7 +65,6 @@ public class StockDAOTest {
     public void testUserDeletion() {
 		DeuStock stock = StockDAO.getInstance().get("MSFT");
         StockDAO.getInstance().delete(stock);
-        System.out.println("Deleted User from DB: MSFT");
     }
 
 }

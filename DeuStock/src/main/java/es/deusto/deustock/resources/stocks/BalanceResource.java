@@ -23,7 +23,6 @@ public class BalanceResource {
     private UserDAO userDAO;
 
     public BalanceResource(){
-        System.out.println("t.6");
         userDAO = UserDAO.getInstance();
     }
 
@@ -35,19 +34,12 @@ public class BalanceResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response getBalance(@PathParam("username") String username){
-        System.out.println("t.1");
         User user = userDAO.getUser(username);
-        System.out.println("t.4");
+
         if(user == null){
-            System.out.println("t.3");
             return Response.status(401).build();
         }
-        System.out.println("t.2");
-        System.out.println(user == null);
-        System.out.println(user.toString());
-        System.out.println(user.getWallet());
-        System.out.println(user.getWallet().getMoney());
-        System.out.println("t.1");
+
         return Response.status(Response.Status.OK)
                 .entity(user.getWallet().getMoney())
                 .build();

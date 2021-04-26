@@ -21,12 +21,12 @@ public class CurrentBalanceController implements DSGenericController {
     private String username;
     private double balance;
 
-    private List<StockInfoSellLine> stockLines;
+    private final List<StockInfoSellLine> stockLines;
  
 	@FXML
 	Label moneyLabel;
 	@FXML
-	Label stockCuantityLabel;
+	Label stockQuantityLabel;
 	@FXML
 	VBox stockList;
 
@@ -48,11 +48,10 @@ public class CurrentBalanceController implements DSGenericController {
 
 
     private void initRoot(){
-	    System.out.println("Imprimiendo el user " + this.username);
         if(this.username==null) return;
 
         this.balance = new DeustockGateway().getBalance(this.username);
-        System.out.println("El balance es " + this.balance);
+
         moneyLabel.setText(this.balance  + " €");
 
         refreshStocks();
@@ -68,7 +67,7 @@ public class CurrentBalanceController implements DSGenericController {
     	this.stockList.getChildren().remove(0, this.stockList.getChildren().size());
         List<StockHistory> stockHistories = new DeustockGateway().getHoldings(username);
 
-        stockCuantityLabel.setText("Tienes un total de " + stockHistories.size() + " stocks diferentes");
+        stockQuantityLabel.setText("You have a total of " + stockHistories.size() + " different stocks");
 
         for(StockHistory sh : stockHistories){
             StockInfoSellLine stockLine = new StockInfoSellLine(sh);
@@ -77,7 +76,7 @@ public class CurrentBalanceController implements DSGenericController {
             stockList.getChildren().add(new Separator());
         }
         
-        if(stockHistories.size() == 0) stockList.getChildren().add(new Label("No tienes ningun stock en posesion"));
+        if(stockHistories.size() == 0) stockList.getChildren().add(new Label("You don't have stocks"));
     }
     
 

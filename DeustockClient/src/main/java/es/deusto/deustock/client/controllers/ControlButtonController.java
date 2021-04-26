@@ -19,14 +19,11 @@ public class ControlButtonController implements DSGenericController{
 
     @FXML
     private void initialize(){
-int i = 0;
-        System.out.println("T-" + i++);
         stockListButton.setOnMouseClicked(
             mouseevent -> MainController.getInstance().loadAndChangePane(
                     ViewPaths.StockListViewPath
             )
         );
-        System.out.println("T-" + i++);
         helpButton.setOnMouseClicked(
                 mouseevent -> MainController.getInstance().loadAndChangePane(
                         ViewPaths.HelpViewPath
@@ -38,25 +35,23 @@ int i = 0;
                         ViewPaths.UserDetailViewPath, new HashMap<>() {{ put("username", username); }}
                 )
         );
-        System.out.println("T-" + i++);
+
         aboutButton.setOnMouseClicked(
                 mouseevent -> MainController.getInstance().loadAndChangePane(
                         ViewPaths.AboutUsViewPath
                 )
         );
-        System.out.println("T-" + i++);
+
         homeButton.setOnMouseClicked(
                 mouseEvent -> MainController.getInstance().loadAndChangePane(
                         ViewPaths.HomeViewPath)
         );
-        System.out.println("T-" + i++);
+
         myStocksButton.setOnMouseClicked(
                 mouseevent -> MainController.getInstance().loadAndChangePaneWithParams(
                         ViewPaths.CurrentBalanceView, new HashMap<>() {{ put("username", username); }}
                 )
         );
-
-        System.out.println("T-" + i++);
     }
 
     public String getUsername() {
@@ -67,12 +62,9 @@ int i = 0;
 
     @Override
     public void setParams(HashMap<String, Object> params) {
-        int i = 0;
-        System.out.println("Q-" + i++);
         if(params.containsKey("username"))
             this.username = String.valueOf(params.get("username"));
-        System.out.println("Q-" + i++);
+
         profileButton.setText(username);
-        System.out.println("Q-" + i++);
     }
 }
