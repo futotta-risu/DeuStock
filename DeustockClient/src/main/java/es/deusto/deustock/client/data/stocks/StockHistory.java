@@ -10,20 +10,25 @@ import java.io.Serializable;
  */
 public class StockHistory  implements Serializable {
 
+    long id;
     String symbol;
     double openPrice;
     double actualPrice;
     double amount;
     double openValue;
     double actualValue;
-
-
-
-
     OperationType operation;
 
     public StockHistory(){}
 
+    public long getId() {
+        return id;
+    }
+
+    public StockHistory setId(long id) {
+        this.id = id;
+        return this;
+    }
 
     public String getSymbol() {
         return symbol;

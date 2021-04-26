@@ -80,7 +80,10 @@ public class StockListViewController {
                 detailButton.setText("More Info");
                 detailButton.setOnAction(new EventHandler<ActionEvent>() {
 						public void handle(ActionEvent event) {
-							MainController.getInstance().loadAndChangeSceneWithParams(ViewPaths.StockDetailViewPath, new HashMap<String, Object>() {{ put("acronym", stock.getAcronym()); }});
+							MainController.getInstance().loadAndChangePaneWithParams(
+							        ViewPaths.StockDetailViewPath,
+                                    new HashMap<String, Object>() {{ put("acronym", stock.getAcronym()); }}
+                                    );
 						}
 				});
                 

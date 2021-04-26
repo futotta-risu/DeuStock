@@ -2,6 +2,7 @@ package es.deusto.deustock.client.visual.stocks.list;
 
 import es.deusto.deustock.client.controllers.MainController;
 import es.deusto.deustock.client.data.stocks.StockHistory;
+import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -55,9 +56,10 @@ public class StockInfoSellLine extends GridPane{
                         ViewPaths.StockDetailViewPath
                 )
         );
-        
-        //TODO Funcionalidad vender stock
-        this.sellButton.setOnMouseClicked(null);
+
+        sellButton.setOnMouseClicked(
+                e -> new DeustockGateway().closeOperation(String.valueOf(stockHistory.getId()))
+        );
         
         add(stockNameLabel,1,0);
         add(stockBuyPriceLabel,2,0);

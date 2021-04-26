@@ -9,6 +9,7 @@ public class ViewPaths {
     public static final String StockListViewPath = "/views/StockListView.fxml";
     public static final String StockDetailViewPath = "/views/StockDetailView.fxml";
     public static final String ActualBalanceView = "/views/ActualBalanceView.fxml";
+    public static final String OperationView = "/views/stocks/OperationView.fxml";
 
     public static final String HelpViewPath = "/views/HelpView.fxml";
     

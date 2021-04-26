@@ -83,8 +83,8 @@ public class WalletService {
 
         wallet.changeMoney(closePrice);
         walletDAO.update(wallet);
-
-        stockHistoryDAO.update(stockHistory.setClosed(true));
+        stockHistory.setClosed(true);
+        stockHistoryDAO.update(stockHistory);
     }
 
     public List<StockHistoryDTO> getHoldings(){

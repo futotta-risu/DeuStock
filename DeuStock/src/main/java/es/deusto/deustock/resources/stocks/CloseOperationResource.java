@@ -60,14 +60,14 @@ public class CloseOperationResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{stockHistoyID}")
+    @Path("/{stockHistoryID}")
     public Response closeOperation(
-            @PathParam("stockHistoyID") String stockHistoyID
+            @PathParam("stockHistoryID") String stockHistoryID
     ) throws StockNotFoundException {
-        DeuLogger.logger.info("Petition to close the operation " + stockHistoyID);
+        DeuLogger.logger.info("Petition to close the operation " + stockHistoryID);
 
 
-        StockHistory stockHistory = stockHistoryDAO.get(stockHistoyID);
+        StockHistory stockHistory = stockHistoryDAO.get(stockHistoryID);
 
         if(stockHistory == null || stockHistory.isClosed()){
             return Response.status(401).build();
