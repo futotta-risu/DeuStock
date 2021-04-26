@@ -7,6 +7,13 @@ import org.junit.Test;
 public class SocialNetworkMessageTest {
 	
 	@Test
+	public void testConstructor0() {
+		SocialNetworkMessage socialNetworkMessage = new SocialNetworkMessage();
+		assertTrue("Constructor1 doesn't work", socialNetworkMessage.getAuthor() == null);
+		assertTrue("Constructor1 doesn't work", socialNetworkMessage.getMessage() == null);
+	}
+	
+	@Test
 	public void testConstructor1() {
 		SocialNetworkMessage socialNetworkMessage = new SocialNetworkMessage("Gartzi", "Hola no me gusta la CocaCola");
 		assertTrue("Constructor1 doesn't work", socialNetworkMessage.getAuthor() == "Gartzi");
@@ -63,7 +70,9 @@ public class SocialNetworkMessageTest {
 	public void testToString() {
 		SocialNetworkMessage socialNetworkMessage = new SocialNetworkMessage("Gartzi", "Hola no me gusta la CocaCola");
 		socialNetworkMessage.setSentiment(12.5);
-		assertTrue("toString doesn't work", socialNetworkMessage.toString() == socialNetworkMessage.getAuthor() + ":\n" + socialNetworkMessage.getMessage() + '\n' +"Sentiment=" + socialNetworkMessage.getSentiment() + "\n");
+		String actuals = socialNetworkMessage.toString();
+		String expected = "Gartzi:\n" + "Hola no me gusta la CocaCola" + '\n' +"Sentiment=" + 12.5 + "\n";
+		assertEquals("toString doesn't work", expected, actuals);
 	}
 
 }

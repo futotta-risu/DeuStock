@@ -14,6 +14,12 @@ import yahoofinance.histquotes.HistoricalQuote;
 public class DeuStockTest {
 	
 	@Test
+	public void testConstructor0() {
+		DeuStock deustock = new DeuStock();
+		assertTrue("Constructor1 doesn't work", deustock.getAcronym() == null);
+	}
+	
+	@Test
 	public void testConstructor1() {
 		DeuStock deustock = new DeuStock("AZ");
 		assertTrue("Constructor1 doesn't work", deustock.getAcronym() == "AZ");
@@ -110,9 +116,8 @@ public class DeuStockTest {
 		DeuStock deustock = new DeuStock("AZ");
 		BigDecimal decimal = new BigDecimal(50);
 		deustock.setPrice(decimal);
-		assertTrue("toString doesn't work", deustock.toString() == "DeuStock{" +
-                												   "price=" + deustock.getPrice() +
-                												   ", acronym='" + deustock.getAcronym() + '\'' +
-                												   '}');
+		String actuals = deustock.toString();
+		String expected = "DeuStock{price=50, acronym='AZ"+ '\'' + '}';
+		assertEquals("toString doesn't work", expected, actuals);
 	}
 }

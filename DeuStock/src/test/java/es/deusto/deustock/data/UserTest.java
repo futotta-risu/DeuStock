@@ -153,6 +153,23 @@ public class UserTest {
 	}
 	
 	@Test
+	public void testToString() {
+		Date date = new Date();
+		User updater = new User("updater" ,"no");
+		updater.setFullName("Aritz Zugazaga");
+		updater.setBirthDate(date);
+		updater.setCountry("Spain");
+		updater.setDescription("Hola me gusta la CocaCola");
+		updater.setRegisterDate(date);
+		updater.setLastActivity(date);
+		String actuals = updater.toString();
+		String expected = "User [username=" + "updater" + ", password=" + "no" + ", fullName=" + "Aritz Zugazaga" + ", birthDate="
+				+ date + ", country=" + "Spain" + ", description=" + "Hola me gusta la CocaCola" + ", registerDate=" + date
+				+ ", lastActivity=" + date + "]";
+		assertEquals("toString doesn't work", expected, actuals);
+	}
+	
+	@Test
 	public void testCheckPassword() {
 		User user = new User("Gartzi", "si");
 		assertTrue("checkPassword doesn't work", user.checkPassword("si"));
