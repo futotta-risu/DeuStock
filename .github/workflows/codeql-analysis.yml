@@ -24,6 +24,17 @@ jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
+    services:
+        mysql:
+            image: mysql:8.0
+            env:
+                MYSQL_USER: deustock_user1
+                MYSQL_PASSWORD: 12345
+                MYSQL_ROOT_PASSWORD: 12345
+                MYSQL_DATABASE: deustockdb
+            ports:
+                - '3306:3306'
+            options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     strategy:
       fail-fast: false
@@ -41,6 +52,25 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 14
+        
+    - name: Cache Maven packages
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+
+    - name: Create database schema
+      run: |
+        cd DeuStock
+        mvn compile datanucleus:enhance
+          
+    - name: Build with Maven (Server)
+      env:
+        twitter_access_token : ${{secrets.TWITTERACCESSTOKEN}}
+        twitter_access_token_secret : ${{secrets.TWITTERACCESSTOKENSECRET}}
+        twitter_consumer_key : ${{secrets.TWITTERCONSUMERKEY}}
+        twitter_consumer_key_secret : ${{secrets.TWITTERCONSUMERSECRET}}
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
