@@ -60,8 +60,8 @@ jobs:
     #    uses a compiled language
 
     - run: |
-       make bootstrap
-       make release
+       mvn --file DeuStock/pom.xml --batch-mode --update-snapshots verify
+       mvn --file DeustockClient/pom.xml --batch-mode --update-snapshots verify
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
