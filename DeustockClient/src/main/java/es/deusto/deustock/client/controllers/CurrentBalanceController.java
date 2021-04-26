@@ -1,7 +1,6 @@
 package es.deusto.deustock.client.controllers;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 import es.deusto.deustock.client.data.stocks.StockHistory;
@@ -21,8 +20,6 @@ public class CurrentBalanceController implements DSGenericController {
     private String username;
     private double balance;
 
-    private final List<StockInfoSellLine> stockLines;
- 
 	@FXML
 	Label moneyLabel;
 	@FXML
@@ -30,13 +27,7 @@ public class CurrentBalanceController implements DSGenericController {
 	@FXML
 	VBox stockList;
 
-	@FXML
-	public void initialize(){
-	}
-	
-    public CurrentBalanceController(){
-        stockLines = new LinkedList<>();
-    }
+    public CurrentBalanceController(){}
     
 	@Override
 	public void setParams(HashMap<String, Object> params) {
@@ -71,7 +62,6 @@ public class CurrentBalanceController implements DSGenericController {
 
         for(StockHistory sh : stockHistories){
             StockInfoSellLine stockLine = new StockInfoSellLine(sh);
-            stockLines.add(stockLine);
             stockList.getChildren().add(stockLine);
             stockList.getChildren().add(new Separator());
         }

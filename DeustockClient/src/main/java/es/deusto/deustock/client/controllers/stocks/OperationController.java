@@ -7,12 +7,10 @@ import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.simulation.investment.operations.OperationType;
 import es.deusto.deustock.client.visual.ViewPaths;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 
-import java.util.Arrays;
 import java.util.HashMap;
 
 /**

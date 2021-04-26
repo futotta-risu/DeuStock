@@ -38,7 +38,7 @@ public class LoginController {
 
 	@FXML
 	private void initialize(){
-		Dialog<String> dialog = new Dialog<String>();
+		Dialog<String> dialog = new Dialog<>();
 	    dialog.setTitle("ERROR");
 	    ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
 	    dialog.getDialogPane().getButtonTypes().add(type);
@@ -70,7 +70,7 @@ public class LoginController {
 	
 	@FXML
 	private User login(){
-		Dialog<String> dialog = new Dialog<String>();
+		Dialog<String> dialog = new Dialog<>();
 	    dialog.setTitle("ERROR");
 	    ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
 	    dialog.getDialogPane().getButtonTypes().add(type);

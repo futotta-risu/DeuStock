@@ -2,10 +2,7 @@ package es.deusto.deustock.client.controllers;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import es.deusto.deustock.client.gateways.DeustockGateway;
@@ -62,7 +59,7 @@ public class RegisterController {
 
 	@FXML
 	private void initialize(){
-		List<String> countries = new ArrayList<String>();
+		List<String> countries = new ArrayList<>();
 		for (CountryEnum country : CountryEnum.values()) {
 			countries.add(country.name());
 		}
@@ -72,20 +69,7 @@ public class RegisterController {
 		
 		birthDatePicker.setValue(java.time.LocalDate.now());
 
-		
-		registerBtn.setOnMouseClicked(		
-				mouseEvent -> {
-					try {
-						register();
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-						 DeuLogger.logger.error("Could not register due to unsupported encoding");
-					} catch (NoSuchAlgorithmException e) {
-						DeuLogger.logger.error("Could not register, algorithm is not available");
-						e.printStackTrace();
-					}
-				}
-		);
+		registerBtn.setOnMouseClicked( e -> register() );
 		
 		cancelBtn.setOnMouseClicked(			
 				mouseEvent -> MainController.getInstance().loadAndChangeScene(ViewPaths.LoginViewPath)
@@ -93,9 +77,9 @@ public class RegisterController {
 	}
 	
 
-	private void register() throws UnsupportedEncodingException, NoSuchAlgorithmException {
+	private void register()  {
 	    Dialog<String> dialog = new Dialog<>();
-	    dialog.setTitle("ERROR");
+	    dialog.setTitle("Error");
 	    ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
 	    dialog.getDialogPane().getButtonTypes().add(type);
 		
@@ -108,7 +92,7 @@ public class RegisterController {
 		DeustockGateway dg = new DeustockGateway();
 
 		if(username.isBlank() || password.isBlank() || fullName.isBlank()  || aboutMe.isBlank() ) {
-			dialog.setContentText("CAMPOS NULOS");
+			dialog.setContentText("Null fields detected");
 			dialog.showAndWait();
 			return;
 		}
@@ -116,7 +100,7 @@ public class RegisterController {
 		if(dg.register(username, password, fullName,  aboutMe, "Spain")) {
 			MainController.getInstance().loadAndChangeScene(ViewPaths.LoginViewPath);
 		}else {
-			dialog.setContentText("REGISTRO INVALIDO");
+			dialog.setContentText("Invalid register");
 			dialog.showAndWait();
 		}
 	}

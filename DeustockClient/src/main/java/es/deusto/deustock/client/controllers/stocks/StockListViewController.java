@@ -70,22 +70,16 @@ public class StockListViewController {
                 Button favButton = new Button();
                 
                 favButton.setGraphic(new ImageView(image1));
-                favButton.setOnAction(new EventHandler<ActionEvent>() {
-                    public void handle(ActionEvent e) {
-                        favButton.setGraphic(new ImageView(image2));
-                    }
-                });
+                favButton.setOnAction(e -> favButton.setGraphic(new ImageView(image2)));
                 
                 Button detailButton = new Button();
                 detailButton.setText("More Info");
-                detailButton.setOnAction(new EventHandler<ActionEvent>() {
-						public void handle(ActionEvent event) {
-							MainController.getInstance().loadAndChangePaneWithParams(
-							        ViewPaths.StockDetailViewPath,
-                                    new HashMap<String, Object>() {{ put("acronym", stock.getAcronym()); }}
-                                    );
-						}
-				});
+                detailButton.setOnAction(event -> MainController.getInstance().loadAndChangePaneWithParams(
+                        ViewPaths.StockDetailViewPath,
+                        new HashMap<>() {{
+                            put("acronym", stock.getAcronym());
+                        }}
+                ));
                 
                 stockList.getChildren().add(stockLine);
                 stockList.getChildren().add(detailButton);
