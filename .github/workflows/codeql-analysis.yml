@@ -61,7 +61,7 @@ jobs:
         restore-keys: ${{ runner.os }}-m2
 
     - name: Create database schema
-      run: |
+      run: 
         cd DeuStock
         mvn compile datanucleus:enhance
           
