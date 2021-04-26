@@ -52,7 +52,7 @@ int i = 0;
         System.out.println("T-" + i++);
         myStocksButton.setOnMouseClicked(
                 mouseevent -> MainController.getInstance().loadAndChangePaneWithParams(
-                        ViewPaths.ActualBalanceView, new HashMap<>() {{ put("username", username); }}
+                        ViewPaths.CurrentBalanceView, new HashMap<>() {{ put("username", username); }}
                 )
         );
 

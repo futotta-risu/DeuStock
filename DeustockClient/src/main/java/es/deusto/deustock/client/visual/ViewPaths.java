@@ -8,7 +8,7 @@ package es.deusto.deustock.client.visual;
 public class ViewPaths {
     public static final String StockListViewPath = "/views/StockListView.fxml";
     public static final String StockDetailViewPath = "/views/StockDetailView.fxml";
-    public static final String ActualBalanceView = "/views/ActualBalanceView.fxml";
+	public static final String CurrentBalanceView = "/views/CurrentBalanceView.fxml";
 
     public static final String HelpViewPath = "/views/HelpView.fxml";
     

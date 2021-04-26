@@ -91,6 +91,9 @@ public class UserDetailController implements DSGenericController{
     
     public void resetAccountWallet() {
     	DeustockGateway gateway = new DeustockGateway();
-    	gateway.resetHoldings(this.user.getUsername(), this.user.getPassword());
+    	boolean succesfullyReseted = gateway.resetHoldings(this.user.getUsername());
+    	if(!succesfullyReseted) {
+    		System.out.println("No se ha podido resetear");
+    	}
     }
 }
