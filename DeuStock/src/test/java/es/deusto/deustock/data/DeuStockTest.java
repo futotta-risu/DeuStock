@@ -117,7 +117,7 @@ public class DeuStockTest {
 		DeuStock deustock = new DeuStock("AZ");
 		deustock.setPrice(50);
 		String actuals = deustock.toString();
-		String expected = "DeuStock{price=50.0, acronym='AZ"+ '\'' + '}';
-		assertEquals("toString doesn't work", expected, actuals);
+		String expected = "DeuStock{price=50.0, acronym='AZ'}";
+		assertTrue( expected.equals(actuals));
 	}
 }

@@ -71,28 +71,28 @@ public class OpenOperationResource {
             @PathParam("amount") double amount
     ) throws StockNotFoundException {
         DeuLogger.logger.info("Petition to open a operation from " + username);
-
+        DeuLogger.logger.error("Prueba T-12");
         OperationType operationType = OperationType.valueOf(operationTypeString);
-
+        DeuLogger.logger.error("Prueba T-13");
         DeuStock stock;
         if(!stockDAO.has(symbol)){
             stock = new DeuStock(symbol);
             stockDAO.store(stock);
-
         }
+        DeuLogger.logger.error("Prueba T-14");
         stock = stockDAO.get(symbol);
-
+        DeuLogger.logger.error("Prueba T-15");
         DeuStock stockData = stockDataAPIGateway
                 .getStockData(new StockQueryData(symbol).setWithHistoric(false));
-
+        DeuLogger.logger.error("Prueba T-16");
         stock.setPrice(stockData.getPrice());
-
+        DeuLogger.logger.error("Prueba T-17");
         Operation operation = operationFactory.create(operationType, stock, amount);
         User user = userDAO.getUser(username);
-
+        DeuLogger.logger.error("Prueba T-18");
         walletService.setWallet(user.getWallet());
         walletService.openOperation(operation);
-
+        DeuLogger.logger.error("Prueba T-19");
         return Response.status(200).build();
     }
 

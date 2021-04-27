@@ -7,7 +7,6 @@ import es.deusto.deustock.simulation.investment.operations.OperationType;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import javax.jdo.JDOHelper;
 
 import java.util.List;
 
