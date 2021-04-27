@@ -33,6 +33,9 @@ public class UserDetailController implements DSGenericController{
 
     @FXML
     Button accountDeleteButton;
+    
+    @FXML
+    Button editProfileButton;
 
     public  UserDetailController(){}
 
@@ -81,6 +84,11 @@ public class UserDetailController implements DSGenericController{
 
         this.accountDeleteButton.setOnMouseClicked(
                 mouseEvent -> deleteUser()
+        );
+        
+        String username = this.username;
+        this.editProfileButton.setOnMouseClicked(
+        		moseEvent -> MainController.getInstance().loadAndChangePaneWithParams(ViewPaths.ChangeUserDetailViewPath,  new HashMap<String, Object>() {{ put("username", username ); }})
         );
     }
 }

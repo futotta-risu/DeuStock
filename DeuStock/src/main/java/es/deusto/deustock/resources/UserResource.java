@@ -106,22 +106,22 @@ public class UserResource {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("update/{username}/{fullName}/{birthDate}/{aboutMe}/{country}")
-	public Response update(@PathParam("username") String username, @PathParam("fullName") String fullName,
-						   @PathParam("birthDate") String birthDate, @PathParam("aboutMe") String aboutMe, @PathParam("country") String country) throws ParseException {
-		User user = UserDAO.getInstance().getUser(username);
+	@Path("/update")
+	public Response update(User user) throws ParseException {
+		User toUpdate = UserDAO.getInstance().getUser(user.getUsername());
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
-		Date birthDateC = dateFormat.parse(birthDate);
-		if(user!=null){
-			user.setFullName(fullName);
-			user.setBirthDate(birthDateC);
-			user.setDescription(aboutMe);
-			user.setCountry(country);
-			UserDAO.getInstance().storeUser(user);
+		Date birthDateC = dateFormat.parse(user.getBirthDate().toString());
+		System.out.println("TO UPDATE" + toUpdate);
+		System.out.println("NEW DATA" + user);
+		if(toUpdate!=null){
+			toUpdate.setFullName(user.getFullName());
+			toUpdate.setBirthDate(user.getBirthDate());
+			toUpdate.setDescription(user.getDescription());
+			toUpdate.setCountry(user.getCountry());
+			UserDAO.getInstance().storeUser(toUpdate);
 			return Response.status(200).build();
-		}else {
-		return Response.status(401).build();
-	}
+		}else return Response.status(401).build();
+		
 	}
 
 }

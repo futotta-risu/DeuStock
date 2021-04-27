@@ -72,7 +72,7 @@ public class ChangeUserDetailController implements DSGenericController{
 	        initRoot();
 	    }
 		
-		private void update(String country){
+		private void update(){
 
 			Dialog<String> dialog = new Dialog<String>();
 			dialog.setTitle("ERROR");
@@ -83,10 +83,18 @@ public class ChangeUserDetailController implements DSGenericController{
 			LocalDate date = birthDatePicker.getValue();
 			Date birthDate = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
 			String aboutMe = aboutMeTxt.getText();
+			String country = countryChoice.getValue();
 			
 			DeustockGateway dg = new DeustockGateway();
-			
-			if(!fullName.equals("") && birthDate != null && aboutMe.equals("") ) {
+			System.out.println("################");
+			System.out.println(username);
+			System.out.println(fullName);
+			System.out.println(birthDate);
+			System.out.println(aboutMe);
+			System.out.println(country);
+			System.out.println("################");
+
+			if(!fullName.equals("") && birthDate != null && !aboutMe.equals("") ) {
 				if(dg.updateUser(username, fullName, birthDate, aboutMe, country)) {
 					MainController.getInstance().loadAndChangeScene(
 							ViewPaths.UserDetailViewPath
@@ -114,7 +122,8 @@ public class ChangeUserDetailController implements DSGenericController{
 			if(this.user == null || !this.user.getUsername().equals(this.username)) {
 				getUser();
 			}
-			this.usernameLabel.setText(user.getUsername());
+			System.out.println("El username es..." + user.getUsername());
+			//this.usernameLabel.setText(user.getUsername());
 				
 			//Comprobar que funciona la lista de countries
 			List<String> countries = new ArrayList<String>();
@@ -131,8 +140,7 @@ public class ChangeUserDetailController implements DSGenericController{
 
 			changeBtn.setOnMouseClicked(
 					mouseEvent -> {
-							String country = countryChoice.getValue();
-							update(country);
+							update();
 					}
 			);
 					

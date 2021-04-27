@@ -42,7 +42,13 @@ public class DeustockGateway {
         return ClientBuilder.newClient().target(RESTVars.restUrl);
     }
 
+    public Stock getStock(String acronym, String interval){
+        Response  response = getHostWebTarget().path("stock")
+                .path("detail").path(acronym).path(interval).request(MediaType.APPLICATION_JSON).get();
 
+        return response.readEntity(Stock.class);
+    }
+    
     public List<Stock> getStockList(String listType){
         Response  response = getHostWebTarget().path("stock")
                 .path("list").path(listType).request(MediaType.APPLICATION_JSON).get();
@@ -130,10 +136,11 @@ public class DeustockGateway {
 
 
     public boolean updateUser(String username, String fullName, Date birthDate, String aboutMe, String country) {
-        Response response = getHostWebTarget().path("users").path("update").path(username).path(fullName).path(String.valueOf(birthDate)).path(aboutMe).path(country)
+        Response response = getHostWebTarget().path("users").path("update")
                 .request("application/json")
-                .post(Entity.entity(new User(username, "",fullName,birthDate,aboutMe, country), MediaType.APPLICATION_JSON));
+                .post(Entity.entity(new User(username, "pass",fullName,birthDate,aboutMe, country), MediaType.APPLICATION_JSON));
 
+        System.out.println(response);
         return response.getStatus() == 200;
     }
 }

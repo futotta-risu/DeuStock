@@ -2,10 +2,13 @@ package es.deusto.deustock.resources.stocks;
 
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -38,7 +41,7 @@ public class StockReportResource {
 
       DeuStock stock = null;
       try {
-    	  stock = gateway.getStockData(queryData);
+    	  stock = gateway.getStockData(queryData, true);
 	  } catch (StockNotFoundException e) {
 		  e.printStackTrace();
 	  }
