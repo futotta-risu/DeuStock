@@ -21,6 +21,16 @@ public class UserDAO {
 
 	private static UserDAO instance;
 
+	private IDBManager dbManager;
+
+	private UserDAO(){
+		dbManager = DBManager.getInstance();
+	}
+
+	public void setDBManager(IDBManager dbManager){
+		this.dbManager = dbManager;
+	}
+
 	/**
 	 * Se obtiene la unica instancia de la clase UserDAO
 	 * 
@@ -44,28 +54,28 @@ public class UserDAO {
 
 	public User getUser(String username) {
 		String whereCondition = "username == '" + username + "'";
-		return (User) DBManager.getInstance().getObject(User.class, whereCondition);
+		return (User) dbManager.getObject(User.class, whereCondition);
 	
 	}
 	public void deleteUser(String username) {
 		String whereCondition = "username  == '" + username + "'";
-		DBManager.getInstance().deleteObject(User.class, whereCondition);
+		dbManager.deleteObject(User.class, whereCondition);
 	}
 	
 	public void storeUser(User user) {
-		DBManager.getInstance().storeObject(user);
+		dbManager.storeObject(user);
 	}
 	
 	public List<User> getUsers(){
 		List<User> usersList  = new ArrayList<>();
-		for (Object users : DBManager.getInstance().getObjects(User.class)) {
+		for (Object users : dbManager.getObjects(User.class)) {
 			usersList.add((User) users);
 		}
 		return usersList;
 	}
 	
 	public void updateUser(User user) {
-		DBManager.getInstance().updateObject(user);
+		dbManager.updateObject(user);
 	}
 
 	public UserDTO getDTO(User user){
