@@ -2,6 +2,8 @@ package es.deusto.deustock.dao;
 
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.data.User;
+import es.deusto.deustock.data.dto.UserDTO;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -116,6 +118,51 @@ public class UserDAOTest {
         assertEquals(2, result.size());
         assertEquals(user0, result.get(0));
         assertEquals(user1, result.get(1));
+    }
+    
+    @Test
+    @DisplayName("Test create a User from UserDTO")
+    public void testCreateUserFromUserDTO() {
+    	UserDTO userDTO = new UserDTO();
+    	userDTO.setCountry("countryTest1")
+    		   .setDescription("descriptionTest1")
+    		   .setFullName("fullnameTest1")
+    		   .setPassword("passwordTest1")
+    		   .setUsername("usernameTest1");
+    	
+    	User user = userDAO.getInstance().create(userDTO);
+    	
+    	assertEquals("countryTest1", user.getCountry());
+    	assertEquals("descriptionTest1", user.getDescription());
+    	assertEquals("fullnameTest1", user.getFullName());
+    	assertEquals("usernameTest1", user.getUsername());	
+    }
+    
+    @Test
+    @DisplayName("Test create a UserDTO from User")
+    public void testCreateUserDTOFromUser() {
+    	User user = new User("usernameTest1", "passwordTest1");
+    	user.setCountry("countryTest1")
+    		   .setDescription("descriptionTest1")
+    		   .setFullName("fullnameTest1");
+
+    	
+    	UserDTO userDTO = userDAO.getInstance().getDTO(user);
+    	
+    	assertEquals("countryTest1", userDTO.getCountry());
+    	assertEquals("descriptionTest1", userDTO.getDescription());
+    	assertEquals("fullnameTest1", userDTO.getFullName());
+    	assertEquals("usernameTest1", userDTO.getUsername());	
+    	assertEquals("", userDTO.getPassword());	
+
+    }
+    
+    @Test
+    @DisplayName("Test delete a User from DB given User Object does not throw error")
+    public void testDeleteGivenUser() {
+        doNothing().when(dbManager).deleteObject(eq(User.class));
+
+        assertDoesNotThrow( () -> userDAO.deleteUser(new User("test", "pass")));
     }
 
 }

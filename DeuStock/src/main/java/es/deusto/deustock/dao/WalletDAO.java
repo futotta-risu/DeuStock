@@ -9,11 +9,16 @@ import java.util.List;
  * @author Erik B. Terres
  */
 public class WalletDAO {
-
+	
+    private IDBManager dbManager;
     private static WalletDAO instance = null;
 
     private WalletDAO(){
         super();
+    }
+    
+    public void setDBManager(IDBManager dbManager){
+        this.dbManager = dbManager;
     }
 
     public static WalletDAO getInstance(){

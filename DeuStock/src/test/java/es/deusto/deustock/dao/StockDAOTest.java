@@ -155,5 +155,18 @@ public class StockDAOTest {
         assertNotNull(result);
         assertEquals(result.size(),2);
     }
+    
+    @Test
+    @DisplayName("Test getOrCreateStock function returns stock")
+    public void testGetOrCreateStock(){
+        DeuStock stock = new DeuStock("Test");
+
+        when(dbManager.getObject(eq(DeuStock.class), anyString())).thenReturn(stock);
+
+        DeuStock stockObtained = stockDAO.getOrCreateStock("acronymTest");
+        
+        assertNotNull(stockObtained);
+        assertEquals(stockObtained.getAcronym(), "Test");
+    }
 
 }
