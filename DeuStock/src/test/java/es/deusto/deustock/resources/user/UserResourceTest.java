@@ -1,6 +1,5 @@
 package es.deusto.deustock.resources.user;
 
-
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
@@ -17,7 +16,6 @@ import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
 import org.junit.jupiter.api.*;
 
-import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,36 +27,16 @@ import static org.junit.jupiter.api.Assertions.*;
 @Tag("server-resource")
 public class UserResourceTest extends JerseyTest{
 
-	private User user;
-
-	private void resetUser(){
-		this.user = new User("TestUser","TestPass")
-				.setCountry("SPAIN")
-				.setFullName("TestFullName")
-				.setDescription("TestAboutMe")
-				.setBirthDate(new Date());
-	}
-
-	@BeforeAll
-	static void setUpAll(){
-		UserDAO.getInstance().deleteUser("TestUser");
-	}
-
 	@BeforeEach
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-		resetUser();
 	}
 
 	@AfterEach
 	@Override
 	public void tearDown() throws Exception {
 		super.tearDown();
-
-		if(UserDAO.getInstance().getUser("TestUser") != null) {
-			UserDAO.getInstance().deleteUser("TestUser");
-		}
 	}
 
 	@Override
@@ -70,118 +48,165 @@ public class UserResourceTest extends JerseyTest{
 	@Test
 	@DisplayName("Test Register returns 200")
 	public void testRegisterReturns200(){
+		// Given
+		User user = new User("ResourceRegisterReturns200", "TestPass");
+
+		// When
 		Response response = this.target("users/register")
 				.request("application/json")
-				.post(Entity.json(this.user));
+				.post(Entity.json(user));
 
+		// Then
 		assertEquals(200, response.getStatus());
 
-		UserDAO.getInstance().deleteUser(this.user.getUsername());
+		// After
+		UserDAO.getInstance().deleteUser(user.getUsername());
 	}
 
 	@Test
 	@DisplayName("Test Register saves user")
 	public void testRegisterSavesUser(){
+		// Given
+		User user = new User("ResourceRegisterSavesUser", "TestPass");
+
+		// When
 		this.target("users/register")
 				.request("application/json")
 				.post(Entity.json(user));
 
-		assertNotNull(UserDAO.getInstance().getUser(this.user.getUsername()));
-		UserDAO.getInstance().deleteUser("TestUser");
+		// Then
+		assertNotNull(UserDAO.getInstance().getUser(user.getUsername()));
+
+		// After
+		UserDAO.getInstance().deleteUser(user.getUsername());
 	}
 
 	@Test
 	@DisplayName("Test Register doesn't save duplicated User")
 	public void testRegisterCannotSaveDuplicatedUser() {
-		UserDAO.getInstance().storeUser(this.user);
-		resetUser();
+		//Given
+		User user = new User("ResourceRegisterDoesNotSaveDuplicated", "TestPass");
+		UserDAO.getInstance().storeUser(user);
 
+		// When
 		Response response = this.target("users/register")
 				.request("application/json")
 				.post(Entity.json(user));
 
+		// Then
 		assertEquals(401, response.getStatus());
-		UserDAO.getInstance().deleteUser(this.user.getUsername());
+
+		// After
+		UserDAO.getInstance().deleteUser(user.getUsername());
 	}
 
     @Test
-	@DisplayName("Test Login returns 200")
-	public void testLogin() {
-		UserDAO.getInstance().storeUser(this.user);
+	@DisplayName("Test Login returns 200 on success")
+	public void testLoginReturns200OnSuccess() {
+		// Given
+		User user = new User("ResourceLoginReturns200", "TestPass");
+		UserDAO.getInstance().storeUser(user);
 
+		// When
 		Response response = target("users/login")
-				.path("TestUser")
+				.path("ResourceLoginReturns200")
 				.path("TestPass")
 				.request(MediaType.APPLICATION_JSON).get();
 
 		UserDTO userLogin = response.readEntity(UserDTO.class);
 
-        assertEquals("TestUser", userLogin.getUsername());
-		UserDAO.getInstance().deleteUser("TestUser");
+		// Then
+        assertEquals("ResourceLoginReturns200", userLogin.getUsername());
+
+        // After
+		UserDAO.getInstance().deleteUser(user.getUsername());
 	}
 
 	@Test
 	@DisplayName("Test Login returns 401 with incorrect pass")
 	public void testLoginReturns401WithIncorrectPass() {
-		UserDAO.getInstance().storeUser(this.user);
+		// Given
+		User user = new User("ResourceLoginReturns401WithIncorrectPass", "TestPass");
+		UserDAO.getInstance().storeUser(user);
 
+		// When
 		Response response = target("users/login")
-				.path("TestUser")
+				.path("ResourceLoginReturns401WithIncorrectPass")
 				.path("TestPassIncorrect")
 				.request(MediaType.APPLICATION_JSON).get();
 
-
+		// Then
 		assertEquals(401, response.getStatus());
 
-		UserDAO.getInstance().deleteUser("TestUser");
+		// After
+		UserDAO.getInstance().deleteUser(user.getUsername());
 	}
 
 	@Test
 	@DisplayName("Test Login returns 401 with non existent user")
 	public void testLoginReturns401WithNonExistentUser() {
+		// Given
+
+		// When
 		Response response = target("users/login")
-				.path("TestUser")
+				.path("LoginReturns401WithNonExistentUser")
 				.path("TestPass")
 				.request(MediaType.APPLICATION_JSON).get();
 
+		// Then
 		assertEquals(401, response.getStatus());
 	}
 
     @Test
-	@DisplayName("Test Delete user in DB")
-	public void testDelete() {
-		UserDAO.getInstance().storeUser(this.user);
+	@DisplayName("Test Delete user returns 200")
+	public void testDeleteReturns200() {
+		// Given
+		User user = new User("ResourceDelete200", "TestPass");
+		UserDAO.getInstance().storeUser(user);
 
+		// When
 		Response response = target("users")
 				.path("delete")
-				.path("TestUser").path("TestPass")
+				.path("ResourceDelete200").path("TestPass")
 				.request().get();
 
+		// Then
 		assertEquals(200, response.getStatus());
 	}
 
 	@Test
-	@DisplayName("Test Delete fails on non existent user")
-	public void testCannotDeleteUnknownUser(){
+	@DisplayName("Test Delete returns 401 on non existent user")
+	public void testDeleteReturns401OnUnknownUser(){
+		// Given
+
+		// When
 		Response responseDelete = target("users")
 				.path("delete")
-				.path("TestUser").path("TestPass")
+				.path("DeleteReturns401OnUnknownUser").path("TestPass")
 				.request().get();
 
+		// Then
 		assertEquals(401, responseDelete.getStatus());
 	}
 
 	@Test
-	@DisplayName("Test Delete fails on incorrect Pass")
-	public void testCannotDeleteWithIncorrectPass(){
-		UserDAO.getInstance().storeUser(this.user);
+	@DisplayName("Test Delete returns 401 on incorrect Pass")
+	public void testDeleteReturns401WithIncorrectPass(){
+		// Given
+		User user = new User("ResourceDelete401IncorrectPass", "TestPass");
+		UserDAO.getInstance().storeUser(user);
 
+		// When
 		Response response = target("users")
 				.path("delete")
-				.path("TestUser").path("TestPassIncorrect")
+				.path("ResourceDelete401IncorrectPass").path("TestPassIncorrect")
 				.request().get();
 
+		// Then
 		assertEquals(401, response.getStatus());
+
+		// After
+		UserDAO.getInstance().deleteUser(user.getUsername());
 	}
 
 }

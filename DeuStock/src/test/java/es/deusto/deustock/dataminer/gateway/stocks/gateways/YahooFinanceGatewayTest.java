@@ -6,39 +6,68 @@ import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import yahoofinance.Stock;
+import yahoofinance.YahooFinance;
+import yahoofinance.histquotes.HistoricalQuote;
+import yahoofinance.quotes.stock.StockQuote;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
-@Tag("investment")
-class YahooFinanceGatewayTest {
-
+/**
+ * @author Erik B. Terres
+ */
+public class YahooFinanceGatewayTest {
     private YahooFinanceGateway gateway;
+    private Stock stock, stockFake;
 
     @BeforeEach
     public void setUp(){
         this.gateway = (YahooFinanceGateway) StockDataGatewayFactory
                 .getInstance()
                 .create(StockDataGatewayEnum.YahooFinance);
+
+        stock = new Stock("AMZN");
+        StockQuote quote = new StockQuote("AMZN");
+        quote.setPrice(new BigDecimal(2000));
+        stock.setQuote(quote);
+
+        stockFake = new Stock("AMZN1");
+        StockQuote quoteFake = new StockQuote("AMZN1");
+        quoteFake.setPrice(new BigDecimal(2001));
+        stockFake.setQuote(quoteFake);
     }
 
     @Test
-    void getStockDataWithoutHistoric() throws StockNotFoundException {
+    void getStockDataWithoutHistoric() throws StockNotFoundException, IOException {
 
+        // Given
         StockQueryData stockQueryData = new StockQueryData(
-                "AMZN",
-                StockQueryData.Interval.DAILY
+                "AMZN", StockQueryData.Interval.DAILY
         ).setWithHistoric(false);
 
-        DeuStock stockData = gateway.getStockData(stockQueryData);
+        DeuStock stockData;
 
+        try (MockedStatic<YahooFinance> yahooFinanceMock = mockStatic(YahooFinance.class)) {
+
+            yahooFinanceMock.when(() -> YahooFinance.get(anyString())).thenReturn(stock);
+            yahooFinanceMock.when(() -> YahooFinance.get(anyString(),any(),any(), any())).thenReturn(stockFake);
+
+            // When
+            stockData = gateway.getStockData(stockQueryData);
+        }
+
+        // Then
         assertNotNull(stockData);
+        assertEquals(stockData.getAcronym(), "AMZN");
         assertTrue(stockData.getHistory().isEmpty());
         assertTrue(stockData.getPrice() > 0);
     }
@@ -51,7 +80,16 @@ class YahooFinanceGatewayTest {
                 StockQueryData.Interval.WEEKLY
         ).setWithHistoric(false);
 
-        DeuStock stockData = gateway.getStockData(stockQueryData);
+        DeuStock stockData;
+
+        try (MockedStatic<YahooFinance> yahooFinanceMock = mockStatic(YahooFinance.class)) {
+
+            yahooFinanceMock.when(() -> YahooFinance.get(anyString())).thenReturn(stock);
+            yahooFinanceMock.when(() -> YahooFinance.get(anyString(),any(),any(), any())).thenReturn(stockFake);
+
+            // When
+            stockData = gateway.getStockData(stockQueryData);
+        }
 
         assertNotNull(stockData);
         assertTrue(stockData.getHistory().isEmpty());
@@ -66,7 +104,16 @@ class YahooFinanceGatewayTest {
                 StockQueryData.Interval.MONTHLY
         ).setWithHistoric(false);
 
-        DeuStock stockData = gateway.getStockData(stockQueryData);
+        DeuStock stockData;
+
+        try (MockedStatic<YahooFinance> yahooFinanceMock = mockStatic(YahooFinance.class)) {
+
+            yahooFinanceMock.when(() -> YahooFinance.get(anyString())).thenReturn(stock);
+            yahooFinanceMock.when(() -> YahooFinance.get(anyString(),any(),any(), any())).thenReturn(stockFake);
+
+            // When
+            stockData = gateway.getStockData(stockQueryData);
+        }
 
         assertNotNull(stockData);
         assertTrue(stockData.getHistory().isEmpty());
@@ -81,10 +128,20 @@ class YahooFinanceGatewayTest {
                 StockQueryData.Interval.DAILY
         ).setWithHistoric(false);
 
-        assertThrows(
-                StockNotFoundException.class,
-                () ->gateway.getStockData(stockQueryData)
-        );
+        try (MockedStatic<YahooFinance> yahooFinanceMock = mockStatic(YahooFinance.class)) {
+
+            yahooFinanceMock.when(() -> YahooFinance.get(anyString())).thenReturn(null);
+            yahooFinanceMock.when(() -> YahooFinance.get(anyString(),any(),any(), any())).thenReturn(stockFake);
+
+            // When
+
+            // Then
+            assertThrows(
+                    StockNotFoundException.class,
+                    () ->gateway.getStockData(stockQueryData)
+            );
+        }
+
     }
 
 
@@ -92,12 +149,27 @@ class YahooFinanceGatewayTest {
 
     @Test
     void getStockDataWithHistoric() throws StockNotFoundException {
+        // Given
         StockQueryData stockQueryData = new StockQueryData(
                 "BB",
                 StockQueryData.Interval.DAILY
         ).setWithHistoric(true);
 
-        DeuStock stockData = gateway.getStockData(stockQueryData);
+        List<HistoricalQuote> historicalQuotes = new LinkedList<>();
+        historicalQuotes.add(new HistoricalQuote());
+        historicalQuotes.add(new HistoricalQuote());
+        stock.setHistory(historicalQuotes);
+
+        DeuStock stockData;
+
+        try (MockedStatic<YahooFinance> yahooFinanceMock = mockStatic(YahooFinance.class)) {
+
+            yahooFinanceMock.when(() -> YahooFinance.get(anyString())).thenReturn(stockFake);
+            yahooFinanceMock.when(() -> YahooFinance.get(anyString(),any(),any(), any())).thenReturn(stock);
+
+            // When
+            stockData = gateway.getStockData(stockQueryData);
+        }
 
         assertNotNull(stockData);
         assertTrue(stockData.getHistory().size() > 0);
@@ -106,30 +178,55 @@ class YahooFinanceGatewayTest {
 
     @Test
     void getStocksGeneralData() {
+        // Given
         List<String> stockDataList = new ArrayList<>();
         stockDataList.add("AMZN");
-        stockDataList.add("NOK");
+        stockDataList.add("AMZN1");
 
-        HashMap<String, DeuStock> stocks = gateway.getStocksData(stockDataList);
+        Map<String, Stock> stocks = new HashMap<>();
+        stocks.put("AMZN", stock);
+        stocks.put("AMZN1", stockFake);
 
-        assertEquals(2, stocks.size());
-        assertTrue(stocks.containsKey("AMZN"));
-        assertTrue(stocks.containsKey("NOK"));
-        assertNotNull(stocks.get("AMZN"));
-        assertNotNull(stocks.get("NOK"));
+        HashMap<String, DeuStock> result;
+
+        try (MockedStatic<YahooFinance> yahooFinanceMock = mockStatic(YahooFinance.class)) {
+
+            yahooFinanceMock.when(() -> YahooFinance.get(any(String[].class), anyBoolean())).thenReturn(stocks);
+
+            // When
+            result = gateway.getStocksData(stockDataList);
+        }
+
+        // Then
+        assertEquals(2, result.size());
+        assertTrue(result.containsKey("AMZN"));
+        assertTrue(result.containsKey("AMZN1"));
+        assertNotNull(result.get("AMZN"));
+        assertNotNull(result.get("AMZN1"));
     }
 
     @Test
     void getStocksGeneralDataWithNonExistentStock() {
+        // Given
         List<String> stockDataList = new ArrayList<>();
         stockDataList.add("AMZN");
         stockDataList.add("NOK");
         stockDataList.add("TFXD");
 
-        HashMap<String, DeuStock> stocks = gateway.getStocksData(stockDataList);
+        Map<String, Stock> stocks = new HashMap<>();
+        stocks.put("AMZN", stock);
+        stocks.put("NOK", stockFake);
 
-        assertEquals(2 , stocks.size());
-        assertFalse(stocks.containsKey("TFXD"));
+        HashMap<String, DeuStock> result;
+
+        try (MockedStatic<YahooFinance> yahooFinanceMock = mockStatic(YahooFinance.class)) {
+
+            yahooFinanceMock.when(() -> YahooFinance.get(any(String[].class), anyBoolean())).thenReturn(stocks);
+
+            // When
+            result = gateway.getStocksData(stockDataList);
+        }
+        assertEquals(2 , result.size());
+        assertFalse(result.containsKey("TFXD"));
     }
-
 }
