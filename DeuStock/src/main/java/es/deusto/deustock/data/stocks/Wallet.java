@@ -33,15 +33,28 @@ public class Wallet  implements Serializable {
         this.money = INITIAL_MONEY;
     }
 
-    public double getMoney() { return money; }
-    public void setMoney(double money) { this.money = money; }
-	public String getId() { return id; }
-    public List<StockHistory> getHistory() { return history; }
-    public void setHistory(List<StockHistory> history) { this.history = history; }
+    public double getMoney() {
+        return money;
+    }
+    public void setMoney(double money) {
+        this.money = money;
+    }
 
-    public boolean hasEnoughMoney(double money){ return this.money >= money; }
+    public String getId() {
+        return id;
+    }
+
+    public List<StockHistory> getHistory() {
+        return history;
+    }
+
+    public boolean hasEnoughMoney(double money){
+        return this.money >= money;
+    }
     
-    public void addHistory(StockHistory history){ this.history.add(history); }
+    public void addHistory(StockHistory history){
+        this.history.add(history);
+    }
 	
     public void changeMoney(double amount)  {
         if(this.getMoney() + amount < 0)

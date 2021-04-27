@@ -120,7 +120,6 @@ public class HoldingsListResources {
 			stockHistory.setClosed(true);
 			StockHistoryDAO.getInstance().update(stockHistory);
 		}
-		wallet.setHistory(new ArrayList<>());
 		wallet.setMoney(5000);
 		WalletDAO.getInstance().update(wallet);
 

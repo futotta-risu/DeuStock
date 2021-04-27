@@ -1,10 +1,14 @@
 package es.deusto.deustock.data.stocks;
 
 import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.simulation.investment.operations.OperationType;
-import org.junit.Test;
+import es.deusto.deustock.data.dto.stocks.StockHistoryDTO;
 
-import java.math.BigDecimal;
+import es.deusto.deustock.simulation.investment.operations.OperationType;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,6 +22,23 @@ public class WalletTest {
     }
 
     @Test
+    @DisplayName("Test getID works")
+    public void testGetterId() throws NoSuchFieldException, IllegalAccessException {
+        //given
+        final Wallet wallet = new Wallet();
+        final Field field = wallet.getClass().getDeclaredField("id");
+        field.setAccessible(true);
+        field.set(wallet, "TestID");
+
+        //when
+        final String result = wallet.getId();
+
+        //then
+        assertEquals( result, "TestID");
+    }
+
+
+    @Test
     public void testInitialMoneyIsCorrect(){
         Wallet wallet = new Wallet();
         assertEquals(wallet.getMoney(),5000);
@@ -28,6 +49,23 @@ public class WalletTest {
         Wallet wallet = new Wallet();
         assertTrue(wallet.getHistory().isEmpty());
     }
+
+    @Test
+    @DisplayName("Test setMoney works")
+    public void testSetMoney() throws NoSuchFieldException, IllegalAccessException {
+        //given
+        final Wallet wallet = new Wallet();
+
+        //when
+        wallet.setMoney(55.0);
+
+        //then
+        final Field field = wallet.getClass().getDeclaredField("money");
+        field.setAccessible(true);
+
+        assertEquals(field.get(wallet), (double) 55);
+    }
+
 
     @Test
     public void testAddMoney() throws Exception {
@@ -58,5 +96,41 @@ public class WalletTest {
             assertEquals(wallet.getMoney(), 5000);
         }
     }
+
+    @Test
+    @DisplayName("Test Has Enough Money returns true if it has more money")
+    public void testHasEnoughMoney(){
+        Wallet wallet = new Wallet();
+        assertTrue(wallet.hasEnoughMoney(200));
+    }
+    @Test
+    @DisplayName("Test Has Enough Money returns false if it does not have more money")
+    public void testDoesNotHaveEnoughMoney(){
+        Wallet wallet = new Wallet();
+        assertFalse(wallet.hasEnoughMoney(20000));
+    }
+
+    @Test
+    @DisplayName("Test setMoney works")
+    public void testAddHistory() throws NoSuchFieldException, IllegalAccessException {
+        //given
+        final Wallet wallet = new Wallet();
+        final DeuStock stock = new DeuStock("BB");
+        final StockHistory stockHistory = new StockHistory(wallet,  stock, 20, 30, OperationType.LONG);
+
+        final ArrayList<StockHistory> stockHistories = new ArrayList<>();
+        stockHistories.add(stockHistory);
+
+
+        //when
+        wallet.addHistory(stockHistory);
+
+        //then
+        final Field field = wallet.getClass().getDeclaredField("history");
+        field.setAccessible(true);
+
+        assertEquals(field.get(wallet), stockHistories);
+    }
+
 
 }
