@@ -80,7 +80,7 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
 
             for( Stock stock : stocks.values()){
                 DeuStock deustock = new DeuStock(stock.getSymbol());
-                deustock.setPrice(stock.getQuote(true).getPrice().doubleValue());
+                deustock.setPrice(stock.getQuote().getPrice().doubleValue());
                 stocksAdapted.put(deustock.getAcronym(), deustock);
             }
 
