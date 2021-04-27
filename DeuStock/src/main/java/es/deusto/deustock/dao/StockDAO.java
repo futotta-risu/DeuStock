@@ -20,8 +20,15 @@ import yahoofinance.Stock;
 public class StockDAO implements IDAO<DeuStock>{
 
 	private static StockDAO instance;
+	private IDBManager dbManager;
+
 
 	private StockDAO() {
+		dbManager = DBManager.getInstance();
+	}
+
+	public void setDbManager(IDBManager dbManager) {
+		this.dbManager = dbManager;
 	}
 
 	/**
@@ -55,7 +62,7 @@ public class StockDAO implements IDAO<DeuStock>{
 
 	@Override
 	public void store(DeuStock object) {
-		DBManager.getInstance().storeObject(object);
+		dbManager.storeObject(object);
 	}
 
 	/**
@@ -66,12 +73,12 @@ public class StockDAO implements IDAO<DeuStock>{
 	@Override
 	public DeuStock get(Object identity) {
 		String whereCondition = "acronym  == '" + identity + "'";
-		return (DeuStock) DBManager.getInstance().getObject(DeuStock.class, whereCondition);
+		return (DeuStock) dbManager.getObject(DeuStock.class, whereCondition);
 	}
 
 	@Override
 	public Collection<DeuStock> getAll() {
-		return DBManager.getInstance()
+		return dbManager
 				.getObjects(DeuStock.class).stream()
 				.filter(DeuStock.class::isInstance)
 				.map(DeuStock.class::cast)
@@ -86,7 +93,7 @@ public class StockDAO implements IDAO<DeuStock>{
 
 	public void deleteBySymbol(String symbol){
 		String whereCondition = "acronym  == '" + symbol + "'";
-		DBManager.getInstance().deleteObject(Stock.class, whereCondition);
+		dbManager.deleteObject(Stock.class, whereCondition);
 	}
 
 	@Override
