@@ -19,7 +19,7 @@ import yahoofinance.Stock;
  */
 public class StockDAO implements IDAO<DeuStock>{
 
-	private static StockDAO instance;
+	private static StockDAO instance = null;
 	private IDBManager dbManager;
 
 

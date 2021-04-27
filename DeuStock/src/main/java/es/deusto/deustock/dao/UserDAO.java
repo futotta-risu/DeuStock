@@ -19,7 +19,7 @@ import es.deusto.deustock.data.stocks.Wallet;
  */
 public class UserDAO {
 
-	private static UserDAO instance;
+	private static UserDAO instance = null;
 
 	private IDBManager dbManager;
 

@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class WalletDAO {
 
-    private static WalletDAO instance;
+    private static WalletDAO instance = null;
 
     private WalletDAO(){
         super();

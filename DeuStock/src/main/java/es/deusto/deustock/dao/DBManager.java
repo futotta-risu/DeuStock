@@ -5,11 +5,10 @@ import java.util.List;
 
 import javax.jdo.*;
 
-import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.log.DeuLogger;
 
 public class DBManager implements IDBManager{
-    private static IDBManager instance;
+    private static IDBManager instance = null;
 	private final PersistenceManagerFactory pmf;
 
 	private DBManager(){
