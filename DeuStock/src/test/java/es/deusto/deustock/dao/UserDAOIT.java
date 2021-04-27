@@ -1,16 +1,21 @@
 package es.deusto.deustock.dao;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+//import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.io.FileInputStream;
+import java.sql.SQLException;
 import java.util.Date;
 
 import org.dbunit.DBTestCase;
+import org.dbunit.DatabaseUnitException;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
+import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import es.deusto.deustock.data.User;
@@ -22,6 +27,9 @@ import es.deusto.deustock.data.User;
  * @author landersanmillan
  */
 public class UserDAOIT extends DBTestCase{
+	
+	private final String[] COLUMNS = {"USER_ID", "COUNTRY", "DESCRIPTION", "FULLNAME", "PASSWORD", "USERNAME"};
+
   
 	public UserDAOIT(String name) {
         super(name);
@@ -35,23 +43,31 @@ public class UserDAOIT extends DBTestCase{
 	protected IDataSet getDataSet() throws Exception {
 		return new FlatXmlDataSetBuilder().build(new FileInputStream("db/userTestingDatasets/user.xml"));
 	}
-	protected IDataSet getUserAddedDataSet() throws Exception {
-		return new FlatXmlDataSetBuilder().build(new FileInputStream("db/userTestingDatasets/userAdded.xml"));
-	}
-	protected IDataSet getUserDeletedDataSet() throws Exception {
-		return new FlatXmlDataSetBuilder().build(new FileInputStream("db/userTestingDatasets/userDeleted.xml"));
-	}
-	protected IDataSet getUserUpdatedDataSet() throws Exception {
-		return new FlatXmlDataSetBuilder().build(new FileInputStream("db/userTestingDatasets/userUpdated.xml"));
-	}
-	
+
     protected DatabaseOperation getSetUpOperation() throws Exception {
-        return DatabaseOperation.REFRESH;
+        return DatabaseOperation.CLEAN_INSERT;
     }
  
     protected DatabaseOperation getTearDownOperation() throws Exception {
-        return DatabaseOperation.NONE;
+        return DatabaseOperation.DELETE_ALL;
     }
+    
+	private ITable getFilteredTable(String[] columns) throws SQLException, Exception {
+	    IDataSet databaseDataSet = getConnection().createDataSet();
+	    return DefaultColumnFilter.includedColumnsTable(databaseDataSet.getTable("USER"), columns);
+	}
+    
+   
+    @Before
+    public void setUp() throws DatabaseUnitException, SQLException, Exception {
+    	this.getDatabaseTester().getSetUpOperation().execute(this.getConnection(), this.getDataSet());
+    }
+    
+    @After
+    public void tearDown() throws DatabaseUnitException, SQLException, Exception {
+    	this.getDatabaseTester().getTearDownOperation().execute(this.getConnection(), this.getDataSet());
+    }
+    
     
 	/**
 	 * Tests User creation
@@ -64,12 +80,13 @@ public class UserDAOIT extends DBTestCase{
 				 .setBirthDate(new Date(1234567890))
 				 .setCountry("SPAIN")
 				 .setDescription("descriptionTest3");
-	    IDataSet expectedDataSet = getUserAddedDataSet();
-	    ITable expectedTable = expectedDataSet.getTable("USER");
-	    assertDoesNotThrow( () -> UserDAO.getInstance().storeUser(user3));
-	    IDataSet databaseDataSet = getConnection().createDataSet();
-	    ITable actualTable = databaseDataSet.getTable("USER");
-	    assertEquals(expectedTable, actualTable);
+		
+		UserDAO.getInstance().storeUser(user3);
+		
+		ITable filteredActualTable = getFilteredTable(COLUMNS);
+		
+	    assertEquals(3, filteredActualTable.getRowCount());
+	    assertNotNull(UserDAO.getInstance().getUser("usernameTest3"));
 	}
 	
 	/**
@@ -77,28 +94,30 @@ public class UserDAOIT extends DBTestCase{
 	*/
 	@Test
     public void testUserQueryReturnsNotNull() {
-		User user = UserDAO.getInstance().getUser("usernameTest1");
-		assertNotNull(user);
+		assertNotNull(UserDAO.getInstance().getUser("usernameTest1"));
 	}
 	@Test
     public void testUserQueryReturnsNull() {
-		User user = UserDAO.getInstance().getUser("usernameNotExist");
-		assertNull(user);
+		assertNull(UserDAO.getInstance().getUser("usernameNotExist"));
 	}
-	
 	
 	/**
 	 * Tests user deletion
 	 * @throws Exception 
 	*/
 	@Test
-    public void testUserDeletion() throws Exception {
-	    IDataSet expectedDataSet = getUserDeletedDataSet();
-	    ITable expectedTable = expectedDataSet.getTable("USER");
-	    assertDoesNotThrow( () -> UserDAO.getInstance().deleteUser("usernameTest2"));
-	    IDataSet databaseDataSet = getConnection().createDataSet();
-	    ITable actualTable = databaseDataSet.getTable("USER");
-	    assertEquals(expectedTable, actualTable);
+    public void testUserDeletion() throws Exception {	
+		User userToDelete1 = UserDAO.getInstance().getUser("usernameTest1");
+		UserDAO.getInstance().deleteUser(userToDelete1);
+		
+		User userToDelete2 = UserDAO.getInstance().getUser("usernameTest2");
+		UserDAO.getInstance().deleteUser(userToDelete2);
+		
+	    ITable filteredActualTable = getFilteredTable(COLUMNS);
+
+	    assertEquals(0, filteredActualTable.getRowCount());
+	    assertNull(UserDAO.getInstance().getUser("usernameTest1"));
+	    assertNull(UserDAO.getInstance().getUser("usernameTest2"));
     }
 	
 	/**
@@ -106,18 +125,20 @@ public class UserDAOIT extends DBTestCase{
 	 * @throws Exception 
 	*/
 	@Test
-	public void testUserUpdate() throws Exception {
-		User userUpdated = new User("usernameTest1", "passTest1")
-				 .setFullName("fullNameUpdated1")
-				 .setBirthDate(new Date(1234567890))
-				 .setCountry("SPAIN")
-				 .setDescription("descriptionTest1");
-	    IDataSet expectedDataSet = getUserUpdatedDataSet();
-	    ITable expectedTable = expectedDataSet.getTable("USER");
-	    assertDoesNotThrow( () ->UserDAO.getInstance().updateUser(userUpdated));
-	    IDataSet databaseDataSet = getConnection().createDataSet();
-	    ITable actualTable = databaseDataSet.getTable("USER");
-	    assertEquals(expectedTable, actualTable);
+	public void testUserUpdate() throws Exception {	
+		User userToUpdate = UserDAO.getInstance().getUser("usernameTest1");
+		userToUpdate.setFullName("fullNameUpdated1");
+		
+		UserDAO.getInstance().updateUser(userToUpdate);
+	    ITable filteredActualTable = getFilteredTable(COLUMNS);
+	    
+	    User userUpdated = UserDAO.getInstance().getUser("usernameTest1");
+	    
+	    assertEquals(2, filteredActualTable.getRowCount());
+	    assertNotNull(userUpdated);
+	    assertEquals(userUpdated.getFullName(), "fullNameUpdated1");
 	}
+	
+
 
 }

@@ -97,8 +97,8 @@ public class StockDAO implements IDAO<DeuStock>{
 	}
 
 	@Override
-	public void delete(DeuStock object) {
-		deleteBySymbol(object.getAcronym());
+	public void delete(DeuStock stock) {
+		dbManager.deleteObject(stock);
 	}
 }
 
