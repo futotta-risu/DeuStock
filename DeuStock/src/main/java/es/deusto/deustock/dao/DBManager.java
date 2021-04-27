@@ -1,20 +1,20 @@
 package es.deusto.deustock.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import javax.jdo.Extent;
-import javax.jdo.PersistenceManager;
-import javax.jdo.PersistenceManagerFactory;
-import javax.jdo.Query;
-import javax.jdo.Transaction;
+import javax.jdo.*;
 
-import es.deusto.deustock.data.User;
 import es.deusto.deustock.log.DeuLogger;
 
 public class DBManager implements IDBManager{
     private static IDBManager instance;
-	private PersistenceManagerFactory pmf = GenericDAO.getPMF();
-	
+	private final PersistenceManagerFactory pmf;
+
+	private DBManager(){
+		pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
+	}
+
 	public static IDBManager getInstance() {
 		if (instance == null) {
 			instance = new DBManager();
@@ -54,7 +54,7 @@ public class DBManager implements IDBManager{
 	 *         almacenados en la BD
 	 */
 	
-	public ArrayList<Object> getObjects() {
+	public List<Object> getObjects(Class entityClass) {
 		
 			PersistenceManager pm = pmf.getPersistenceManager();
 			pm.getFetchPlan().setMaxFetchDepth(-1);
@@ -67,7 +67,7 @@ public class DBManager implements IDBManager{
 
 				tx.begin();
 	
-				Extent<Object> extent = pm.getExtent(Object.class, true);
+				Extent<Object> extent = pm.getExtent(entityClass, true);
 
 				for (Object s : extent) {
 					objects.add(pm.detachCopy(s));
@@ -82,6 +82,36 @@ public class DBManager implements IDBManager{
 				pm.close();
 			}
 			return objects;
+	}
+
+	@Override
+	public List<Object> getObjects(Class entityClass, String conditions) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		pm.getFetchPlan().setMaxFetchDepth(-1);
+		Transaction tx = pm.currentTransaction();
+		pm.setDetachAllOnCommit(true);
+		List<Object> object = null;
+		try {
+			System.out.println("   * Querying a Object, conditions: " + conditions);
+
+			tx.begin();
+			Query query = pm.newQuery("SELECT FROM " + entityClass.getName() + " WHERE " + conditions);
+			query.setUnique(false);
+			object = (List<Object>) query.execute();
+			tx.commit();
+
+		} catch (Exception ex) {
+			System.out.println("   $ Error Getting Object: " + ex.getMessage());
+			DeuLogger.logger.error("Error getting Object: " + conditions);
+		} finally {
+
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+
+			pm.close();
+		}
+		return object;
 	}
 
 	public Object getObject(Class entityClass, String conditions) {

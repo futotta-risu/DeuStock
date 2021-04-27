@@ -15,7 +15,7 @@ import javax.jdo.annotations.Unique;
 public class DeuStock {
 
     @NotPersistent
-    BigDecimal price;
+    double price;
     String fullName;
     @Unique
     String acronym;
@@ -34,10 +34,13 @@ public class DeuStock {
         setAcronym(data.getAcronym());
     }
 
-    
-    public BigDecimal getPrice() { return price; }
-    public DeuStock setPrice(BigDecimal price) {
-        this.price = price; return this;
+
+    public double getPrice() {
+        return price;
+    }
+    public DeuStock setPrice(double price) {
+        this.price = price;
+        return this;
     }
     public String getFullName() { return fullName; }
     public DeuStock setFullName(String fullName) {

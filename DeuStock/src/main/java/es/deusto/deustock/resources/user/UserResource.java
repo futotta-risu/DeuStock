@@ -11,7 +11,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import es.deusto.deustock.dao.UserDAO;
+import es.deusto.deustock.dao.WalletDAO;
 import es.deusto.deustock.data.User;
+import es.deusto.deustock.data.dto.UserDTO;
+import es.deusto.deustock.data.stocks.Wallet;
 import es.deusto.deustock.log.DeuLogger;
 
 /**
@@ -22,6 +25,21 @@ import es.deusto.deustock.log.DeuLogger;
  */
 @Path("/users")
 public class UserResource {
+
+	private UserDAO userDAO;
+	private WalletDAO walletDAO;
+
+	public UserResource(){
+		this.userDAO = UserDAO.getInstance();
+		this.walletDAO = WalletDAO.getInstance();
+	}
+
+	public void setUserDAO(UserDAO userDAO){
+		this.userDAO = userDAO;
+	}
+	public void setWalletDAO(WalletDAO walletDAO){
+		this.walletDAO = walletDAO;
+	}
 
 	/**
 	 * Metodo que permite iniciar sesion a un usuario, en el path se reciben el
@@ -38,7 +56,8 @@ public class UserResource {
 	public Response login(@PathParam("username") String username, @PathParam("password") String password) {
 		DeuLogger.logger.info("Login petition for User " + username);
 
-		User user = UserDAO.getInstance().getUser(username);
+		User user = userDAO.getUser(username);
+
 		if(user == null) {
 			DeuLogger.logger.warn("User not in DB");
 			return Response.status(401).build();
@@ -49,9 +68,11 @@ public class UserResource {
 			return Response.status(401).build();
 		}
 
+		UserDTO userDTO = userDAO.getDTO(user);
+		System.out.println(userDTO);
 		return Response
 				.status(Response.Status.OK)
-				.entity(user)
+				.entity(userDTO)
 				.build();
 
 	}
@@ -60,7 +81,7 @@ public class UserResource {
 	 * Metodo que permite registrar un nuevo usuario en la BD, se recibe la
 	 * informacion del mimso a traves de un JSON
 	 * 
-	 * @param user Objeto usuario generado del JSON
+	 * @param userDTO Objeto usuario generado del JSON
 	 * @return <strong>Response</strong> Devuelve una respuesta dependiendo del
 	 *         estado resultante del registro:
 	 *         <ul>
@@ -71,15 +92,18 @@ public class UserResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/register")
-	public Response register(User user) {
-		DeuLogger.logger.info("Register petition for User " + user.getUsername());
+	public Response register(UserDTO userDTO) {
+		DeuLogger.logger.info("Register petition for User " + userDTO.getUsername());
 
-		if ( UserDAO.getInstance().getUser(user.getUsername()) != null) {
-			DeuLogger.logger.warn("Cannot register User. User " + user.getUsername() + " alredy in DB");
+		if ( userDAO.getUser(userDTO.getUsername()) != null) {
+			DeuLogger.logger.warn("Cannot register User. User " + userDTO.getUsername() + " alredy in DB");
 			return Response.status(401).build();
 		}
 
-		UserDAO.getInstance().storeUser(user);
+		User user = userDAO.create(userDTO);
+
+		userDAO.storeUser(user);
+
 		return Response.status(200).build();
 	}
 
@@ -101,7 +125,7 @@ public class UserResource {
 	@Path("/delete/{username}/{password}")
 	public Response delete(@PathParam("username") String username, @PathParam("password") String password) {
 		DeuLogger.logger.info("User delete petition for User " + username);
-		User user = UserDAO.getInstance().getUser(username);
+		User user = userDAO.getUser(username);
 
 		if (user == null) {
 			DeuLogger.logger.warn("User " + username + " not found in DB while deleting");
@@ -113,7 +137,7 @@ public class UserResource {
 			return Response.status(401).build();
 		}
 
-		UserDAO.getInstance().deleteUser(username);
+		userDAO.deleteUser(username);
 		return Response.status(200).build();
 
 	}

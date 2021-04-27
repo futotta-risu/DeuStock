@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="583.0" prefWidth="842.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.StockDetailController">
+<VBox prefHeight="583.0" prefWidth="842.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.stocks.StockDetailController">
   <children>
     <AnchorPane fx:id="infoTable" maxHeight="-1.0" maxWidth="-1.0" prefHeight="416.0" prefWidth="640.0" VBox.vgrow="ALWAYS">
          <children>
@@ -39,12 +39,13 @@
             <Button fx:id="backButton" layoutX="249.0" layoutY="517.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="141.0" text="Volver" />
             <LineChart fx:id="lineChart" layoutX="36.0" layoutY="168.0" prefHeight="337.0" prefWidth="768.0">
               <xAxis>
-                <CategoryAxis fx:id="xAxis" side="BOTTOM" />
+                <CategoryAxis side="BOTTOM" fx:id="xAxis" />
               </xAxis>
               <yAxis>
                 <NumberAxis fx:id="yAxis" side="LEFT" />
               </yAxis>
             </LineChart>
+            <Button fx:id="buyButton" layoutX="650.0" layoutY="517.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="141.0" text="Buy" />
          </children>
     </AnchorPane>
   </children>

@@ -1,5 +1,6 @@
-package es.deusto.deustock.client.controllers;
+package es.deusto.deustock.client.controllers.stocks;
 
+import es.deusto.deustock.client.controllers.MainController;
 import es.deusto.deustock.client.data.Stock;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.visual.ViewPaths;
@@ -69,20 +70,16 @@ public class StockListViewController {
                 Button favButton = new Button();
                 
                 favButton.setGraphic(new ImageView(image1));
-                favButton.setOnAction(new EventHandler<ActionEvent>() {
-                    public void handle(ActionEvent e) {
-                        System.out.println("Añadido a favorito");
-                        favButton.setGraphic(new ImageView(image2));
-                    }
-                });
+                favButton.setOnAction(e -> favButton.setGraphic(new ImageView(image2)));
                 
                 Button detailButton = new Button();
                 detailButton.setText("More Info");
-                detailButton.setOnAction(new EventHandler<ActionEvent>() {
-						public void handle(ActionEvent event) {
-							MainController.getInstance().loadAndChangeSceneWithParams(ViewPaths.StockDetailViewPath, new HashMap<String, Object>() {{ put("acronym", stock.getAcronym()); }});
-						}
-				});
+                detailButton.setOnAction(event -> MainController.getInstance().loadAndChangePaneWithParams(
+                        ViewPaths.StockDetailViewPath,
+                        new HashMap<>() {{
+                            put("acronym", stock.getAcronym());
+                        }}
+                ));
                 
                 stockList.getChildren().add(stockLine);
                 stockList.getChildren().add(detailButton);

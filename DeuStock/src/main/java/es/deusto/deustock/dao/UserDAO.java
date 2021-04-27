@@ -1,8 +1,11 @@
 package es.deusto.deustock.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import es.deusto.deustock.data.User;
+import es.deusto.deustock.data.dto.UserDTO;
+import es.deusto.deustock.data.stocks.Wallet;
 
 /**
  * Clase de acceso a datos de Usuarios en la BD.<br>
@@ -11,13 +14,12 @@ import es.deusto.deustock.data.User;
  *      <li>DAO</li>
  *      <li>Singleton</li>
  * </ul>
- * 
- * @see GenericDAO
+ *
  * @author landersanmillan
  */
-public class UserDAO extends GenericDAO {
+public class UserDAO {
 
-	private static UserDAO INSTANCE;
+	private static UserDAO instance;
 
 	/**
 	 * Se obtiene la unica instancia de la clase UserDAO
@@ -25,35 +27,54 @@ public class UserDAO extends GenericDAO {
 	 * @return <strong>UserDAO</strong> -> Instancia de la clase User
 	 */
 	public static UserDAO getInstance() {
-		if (INSTANCE == null)
-			INSTANCE = new UserDAO();
-		return INSTANCE;
+		if (instance == null)
+			instance = new UserDAO();
+		return instance;
 	}
-	
+
+	public User create(UserDTO userDTO){
+		User user = new User(userDTO.getUsername(), userDTO.getPassword());
+		user.setCountry(userDTO.getCountry());
+		user.setDescription(userDTO.getDescription());
+		user.setFullName(userDTO.getFullName());
+		user.setWallet(new Wallet());
+
+		return user;
+	}
+
 	public User getUser(String username) {
 		String whereCondition = "username == '" + username + "'";
-		return (User) getObject(User.class, whereCondition);
+		return (User) DBManager.getInstance().getObject(User.class, whereCondition);
 	
 	}
 	public void deleteUser(String username) {
 		String whereCondition = "username  == '" + username + "'";
-		deleteObject(User.class, whereCondition);
+		DBManager.getInstance().deleteObject(User.class, whereCondition);
 	}
 	
 	public void storeUser(User user) {
-		storeObject(user);
+		DBManager.getInstance().storeObject(user);
 	}
 	
-	public ArrayList<User> getUsers(){
-		ArrayList<User> usersList  = new ArrayList<User>();
-		for (Object users : getObjects()) {
+	public List<User> getUsers(){
+		List<User> usersList  = new ArrayList<>();
+		for (Object users : DBManager.getInstance().getObjects(User.class)) {
 			usersList.add((User) users);
 		}
 		return usersList;
 	}
 	
 	public void updateUser(User user) {
-		updateObject(user);
+		DBManager.getInstance().updateObject(user);
+	}
+
+	public UserDTO getDTO(User user){
+		return new UserDTO()
+				.setUsername(user.getUsername())
+				.setPassword("")
+				.setFullName(user.getFullName())
+				.setCountry(user.getCountry())
+				.setDescription(user.getDescription());
 	}
 	
 }

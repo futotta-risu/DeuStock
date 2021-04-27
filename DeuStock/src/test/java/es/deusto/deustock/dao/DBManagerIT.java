@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.dbunit.DBTestCase;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
@@ -46,7 +47,7 @@ public class DBManagerIT extends DBTestCase{
     
     @Test
     public void testGetObjectsReturnsNotNull() {
-    	ArrayList<Object> objects = DBManager.getInstance().getObjects();
+    	List<Object> objects = DBManager.getInstance().getObjects(Object.class);
     	assertNotNull(objects);
     	assertEquals(2, objects.size());  	
     }

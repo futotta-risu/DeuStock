@@ -68,7 +68,7 @@ public class StockReport extends Report {
 
     private void addActualPrice() throws IOException {
         String date = Calendar.getInstance().getTime().toString();
-        double price = stock.getPrice().doubleValue();
+        double price = stock.getPrice();
 
         addSimpleTextLine("Precio [ " + date + " ] = " + decimalFormat.format(price) + " €");
     }

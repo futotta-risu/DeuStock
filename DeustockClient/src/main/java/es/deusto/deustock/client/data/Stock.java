@@ -2,7 +2,6 @@ package es.deusto.deustock.client.data;
 
 import yahoofinance.histquotes.HistoricalQuote;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,26 +11,26 @@ import java.util.List;
  */
 public class Stock {
 
-    BigDecimal price;
+    double price;
     String fullName;
     String acronym;
     String description;
-    //Price per hours last 24h
+
     List<HistoricalQuote> history = new ArrayList<>();
 
 
     // Compulsory for JSON conversion. Don't delete.
     public Stock(){}
 
-    public Stock(String acronym, BigDecimal price){
+    public Stock(String acronym, double price){
         this.acronym =acronym;
         this.price = price;
     }
 
 
 
-    public BigDecimal getPrice() { return price; }
-    public Stock setPrice(BigDecimal price) {
+    public double getPrice() { return price; }
+    public Stock setPrice(double price) {
         this.price = price; return this;
     }
     public String getFullName() { return fullName; }
@@ -50,7 +49,7 @@ public class Stock {
     public Stock setHistory(List<HistoricalQuote> history) {
         this.history = history; return this;
     }
-    
+
 	public double calcularMediaPrecio() {
 		double result = 0;
 		for (HistoricalQuote hq : this.history) {
@@ -59,10 +58,10 @@ public class Stock {
 		result = result / this.history.size();
 		return result;
 	}
-	
+
 	public double calcularSD(){
         double result = 0.0, standardDeviation = 0.0;
-        
+
         for(HistoricalQuote hq : this.history) {
             result += Double.parseDouble(hq.getClose().toString());
         }

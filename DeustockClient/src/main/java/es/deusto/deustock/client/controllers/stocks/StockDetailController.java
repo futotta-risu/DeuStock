@@ -1,4 +1,4 @@
-package es.deusto.deustock.client.controllers;
+package es.deusto.deustock.client.controllers.stocks;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.HashMap;
 
 
+import es.deusto.deustock.client.controllers.DSGenericController;
+import es.deusto.deustock.client.controllers.MainController;
 import es.deusto.deustock.client.data.Stock;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.visual.ViewPaths;
@@ -29,10 +31,10 @@ import yahoofinance.histquotes.HistoricalQuote;
 /**
  * @author landersanmillan
  */
-public class StockDetailController implements DSGenericController{
+public class StockDetailController implements DSGenericController {
 	
 
-    private static DeustockGateway gateway = new DeustockGateway();
+    private static final DeustockGateway gateway = new DeustockGateway();
     private String acronym = null;
     private Stock stock = null;
     
@@ -47,7 +49,7 @@ public class StockDetailController implements DSGenericController{
     @FXML
     Button downloadButton;
     @FXML
-    Button backButton;
+    Button backButton, buyButton;
     @FXML
     LineChart<String, Number> lineChart;
     @FXML
@@ -87,15 +89,15 @@ public class StockDetailController implements DSGenericController{
         yAxis = new NumberAxis();
   
         lineChart.setTitle("Precio de " + stock.getAcronym());
-        XYChart.Series<String, Number> series = new XYChart.Series<String, Number>();
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Precio de " + stock.getAcronym() + " en €");
         lineChart.getData().add(series);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         for (HistoricalQuote hq : stock.getHistory()) {
         	Date date = hq.getDate().getTime();
         	Number num = hq.getClose().doubleValue();
-		    series.getData().add(new XYChart.Data<String, Number>(dateFormat.format(date),num));
+		    series.getData().add(new XYChart.Data<>(dateFormat.format(date),num));
 		}
       
 
@@ -116,8 +118,18 @@ public class StockDetailController implements DSGenericController{
         );
         
         backButton.setOnMouseClicked(
-                mouseevent -> MainController.getInstance().loadAndChangeScene(
+                mouseevent -> MainController.getInstance().loadAndChangePane(
                         ViewPaths.StockListViewPath
+                )
+        );
+
+        buyButton.setOnMouseClicked(
+                e -> MainController.getInstance().loadAndChangePaneWithParams(
+                        ViewPaths.OperationView,
+                        new HashMap<>() {{
+                            put("username",MainController.getInstance().getUser().getUsername());
+                            put("stock", stock);
+                        }}
                 )
         );
     }

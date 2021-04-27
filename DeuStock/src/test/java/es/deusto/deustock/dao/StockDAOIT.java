@@ -68,7 +68,7 @@ public class StockDAOIT extends DBTestCase{
 
 	    IDataSet expectedDataSet = getStockAddedDataSet();
 	    ITable expectedTable = expectedDataSet.getTable("DEUSTOCK");
-	    assertDoesNotThrow( () -> StockDAO.getInstance().storeStock(stock3));
+	    assertDoesNotThrow( () -> StockDAO.getInstance().store(stock3));
 	    
 	    IDataSet databaseDataSet = getConnection().createDataSet();
 	    ITable actualTable = databaseDataSet.getTable("DEUSTOCK");
@@ -80,12 +80,12 @@ public class StockDAOIT extends DBTestCase{
 	*/
 	@Test
     public void testStockQueryreturnNotNull() {
-		DeuStock stockResult = StockDAO.getInstance().getStock("acronymTest1");
+		DeuStock stockResult = StockDAO.getInstance().get("acronymTest1");
 		assertNotNull(stockResult);
 	}
 	@Test
     public void testStockQueryreturnNull() {
-		DeuStock stockResult = StockDAO.getInstance().getStock("acronymNotExist");
+		DeuStock stockResult = StockDAO.getInstance().get("acronymNotExist");
 		assertNull(stockResult);
 	}
 	
@@ -97,7 +97,8 @@ public class StockDAOIT extends DBTestCase{
     public void testStockDeletion() throws Exception {
 	    IDataSet expectedDataSet = getStockDeletedDataSet();
 	    ITable expectedTable = expectedDataSet.getTable("DEUSTOCK");
-	    assertDoesNotThrow( () -> StockDAO.getInstance().deleteStock("acronymTest2"));
+	    DeuStock stock = StockDAO.getInstance().get("acronymTest2");
+	    assertDoesNotThrow( () -> StockDAO.getInstance().delete(stock));
 	    IDataSet databaseDataSet = getConnection().createDataSet();
 	    ITable actualTable = databaseDataSet.getTable("DEUSTOCK");
 	    assertEquals(expectedTable, actualTable);
@@ -115,7 +116,7 @@ public class StockDAOIT extends DBTestCase{
 				.setFullName("fullNameUpdated2");
 	    IDataSet expectedDataSet = getStockUpdatedDataSet();
 	    ITable expectedTable = expectedDataSet.getTable("DEUSTOCK");
-	    assertDoesNotThrow( () ->StockDAO.getInstance().updateStock(stockUpdated));
+	    assertDoesNotThrow( () ->StockDAO.getInstance().update(stockUpdated));
 	    IDataSet databaseDataSet = getConnection().createDataSet();
 	    ITable actualTable = databaseDataSet.getTable("DEUSTOCK");
 	    assertEquals(expectedTable, actualTable);

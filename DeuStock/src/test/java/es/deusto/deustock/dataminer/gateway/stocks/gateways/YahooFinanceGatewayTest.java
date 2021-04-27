@@ -40,7 +40,7 @@ class YahooFinanceGatewayTest {
 
         assertNotNull(stockData);
         assertTrue(stockData.getHistory().isEmpty());
-        assertTrue(stockData.getPrice().intValue() > 0);
+        assertTrue(stockData.getPrice() > 0);
     }
 
     @Test
@@ -55,7 +55,7 @@ class YahooFinanceGatewayTest {
 
         assertNotNull(stockData);
         assertTrue(stockData.getHistory().isEmpty());
-        assertTrue(stockData.getPrice().intValue() > 0);
+        assertTrue(stockData.getPrice() > 0);
     }
 
     @Test
@@ -70,7 +70,7 @@ class YahooFinanceGatewayTest {
 
         assertNotNull(stockData);
         assertTrue(stockData.getHistory().isEmpty());
-        assertTrue(stockData.getPrice().intValue() > 0);
+        assertTrue(stockData.getPrice() > 0);
     }
 
     @Test
@@ -101,7 +101,7 @@ class YahooFinanceGatewayTest {
 
         assertNotNull(stockData);
         assertTrue(stockData.getHistory().size() > 0);
-        assertTrue(stockData.getPrice().intValue() > 0);
+        assertTrue(stockData.getPrice() > 0);
     }
 
     @Test

@@ -19,19 +19,26 @@ import static es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkG
  * @author Erik B. Terres
  */
 @Path("twitter/sentiment/{query}")
-public class TwitterSentiment {
+public class TwitterSentimentResource {
+
+    private SentimentExtractor extractor;
+
+    public TwitterSentimentResource(){
+        extractor = new SentimentExtractor(Twitter);
+    }
+
+    public TwitterSentimentResource(SentimentExtractor extractor){
+        this.extractor = extractor;
+    }
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response getSentiment(@PathParam("query") String query) {
         DeuLogger.logger.info("Sentiment Analyzer called for query: " + query);
-        SentimentExtractor extractor = new SentimentExtractor(Twitter);
 
         double sentiment;
         try {
-            sentiment = extractor.getSentimentTendency(
-                    new SocialNetworkQueryData(query)
-            );
+            sentiment = extractor.getSentimentTendency(query);
         } catch (InterruptedException e) {
             DeuLogger.logger.error("Sentiment Analyzer Interrupted.");
             return Response.status(Response.Status.NOT_FOUND).build();

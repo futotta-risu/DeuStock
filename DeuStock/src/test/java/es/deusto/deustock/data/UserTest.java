@@ -165,7 +165,7 @@ public class UserTest {
 		String actuals = updater.toString();
 		String expected = "User [username=" + "updater" + ", password=" + "no" + ", fullName=" + "Aritz Zugazaga" + ", birthDate="
 				+ date + ", country=" + "Spain" + ", description=" + "Hola me gusta la CocaCola" + ", registerDate=" + date
-				+ ", lastActivity=" + date + "]";
+				+ ", lastActivity=" + date + ", wallet=null]";
 		assertEquals("toString doesn't work", expected, actuals);
 	}
 	
