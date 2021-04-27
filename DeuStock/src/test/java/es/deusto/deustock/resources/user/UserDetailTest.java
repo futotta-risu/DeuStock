@@ -2,6 +2,7 @@ package es.deusto.deustock.resources.user;
 
 import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.data.User;
+import es.deusto.deustock.data.dto.UserDTO;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 
@@ -80,7 +81,7 @@ public class UserDetailTest extends JerseyTest {
                 .request()
                 .get();
 
-        User returnUser = response.readEntity(User.class);
+        UserDTO returnUser = response.readEntity(UserDTO.class);
 
         assertEquals(this.user.getUsername(), returnUser.getUsername());
         UserDAO.getInstance().deleteUser(this.user.getUsername());

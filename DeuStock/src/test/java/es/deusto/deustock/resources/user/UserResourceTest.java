@@ -9,6 +9,7 @@ import javax.ws.rs.core.Response;
 import es.deusto.deustock.data.User;
 import es.deusto.deustock.dao.UserDAO;
 
+import es.deusto.deustock.data.dto.UserDTO;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 
@@ -113,7 +114,7 @@ public class UserResourceTest extends JerseyTest{
 				.path("TestPass")
 				.request(MediaType.APPLICATION_JSON).get();
 
-		User userLogin = response.readEntity(User.class);
+		UserDTO userLogin = response.readEntity(UserDTO.class);
 
         assertEquals("TestUser", userLogin.getUsername());
 		UserDAO.getInstance().deleteUser("TestUser");
