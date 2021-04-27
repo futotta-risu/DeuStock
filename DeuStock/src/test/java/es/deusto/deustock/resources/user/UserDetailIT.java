@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author Erik B. Terres
  */
 @Tag("server-resource")
-public class UserDetailTest extends JerseyTest {
+public class UserDetailIT extends JerseyTest {
 
     @BeforeEach
     @Override

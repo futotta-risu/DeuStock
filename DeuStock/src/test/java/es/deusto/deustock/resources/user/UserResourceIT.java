@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author landersanmillan
  */
 @Tag("server-resource")
-public class UserResourceTest extends JerseyTest{
+public class UserResourceIT extends JerseyTest{
 
 	@BeforeEach
 	@Override
