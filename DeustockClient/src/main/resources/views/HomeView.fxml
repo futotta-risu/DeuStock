@@ -12,11 +12,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-border-color: red;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.HomeViewController">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.HomeViewController">
    <children>
-       <AnchorPane style="-fx-border-color: green;" VBox.vgrow="ALWAYS">
+       <AnchorPane VBox.vgrow="ALWAYS">
           <children>
-              <SplitPane layoutX="116.0" layoutY="94.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="640.0" style="-fx-border-color: blue;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <SplitPane layoutX="116.0" layoutY="94.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                  <items>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <center>

@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<VBox xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.HelpViewController">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.HelpViewController">
    <children>
       <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;">
          <content>

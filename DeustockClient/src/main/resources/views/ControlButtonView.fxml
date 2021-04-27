@@ -8,31 +8,31 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="98.0" prefWidth="785.0" style="-fx-background-color: #00b2d9;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.ControlButtonController">
+<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="800.0" style="-fx-background-color: #00b2d9;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.ControlButtonController">
    <children>
-      <Button fx:id="homeButton" mnemonicParsing="false" prefHeight="101.0" prefWidth="141.0" style="-fx-background-color: #00b2d9;" text="Home" textFill="WHITE">
+      <Button fx:id="homeButton" mnemonicParsing="false" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #00b2d9;" text="Home" textFill="WHITE">
          <font>
-            <Font name="Calibri" size="30.0" />
+            <Font size="28.0" />
          </font>
       </Button>
-      <Button id="aboutButton" fx:id="aboutButton" mnemonicParsing="false" prefHeight="101.0" prefWidth="160.0" style="-fx-background-color: #00b2d9;" text="Sobre Nosotros" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+      <Button id="aboutButton" fx:id="aboutButton" mnemonicParsing="false" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #00b2d9;" text="Sobre Nosotros" textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
-            <Font name="Calibri" size="30.0" />
+            <Font size="28.0" />
          </font>
       </Button>
-      <Button id="helpButton" fx:id="helpButton" mnemonicParsing="false" prefHeight="101.0" prefWidth="160.0" style="-fx-background-color: #00b2d9;" text="Ayuda" textFill="WHITE">
+      <Button id="helpButton" fx:id="helpButton" mnemonicParsing="false" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #00b2d9;" text="Ayuda" textFill="WHITE">
          <font>
-            <Font name="Ebrima" size="30.0" />
+            <Font size="28.0" />
          </font>
       </Button>
-      <Button id="stockButton" fx:id="stockListButton" mnemonicParsing="false" prefHeight="101.0" prefWidth="160.0" style="-fx-background-color: #00b2d9;" text="Stock" textFill="WHITE">
+      <Button id="stockButton" fx:id="stockListButton" mnemonicParsing="false" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #00b2d9;" text="Stock" textFill="WHITE">
          <font>
-            <Font name="Ebrima" size="30.0" />
+            <Font size="28.0" />
          </font>
       </Button>
-      <Button id="profileButton" fx:id="profileButton" mnemonicParsing="false" prefHeight="99.0" prefWidth="164.0" style="-fx-background-color: #00b2d9;" text="Perfil" textFill="WHITE">
+      <Button id="profileButton" fx:id="profileButton" mnemonicParsing="false" prefHeight="101.0" prefWidth="160.0" style="-fx-background-color: #00b2d9;" text="Perfil" textFill="WHITE">
          <font>
-            <Font name="Ebrima" size="30.0" />
+            <Font size="28.0" />
          </font>
       </Button>
    </children>
