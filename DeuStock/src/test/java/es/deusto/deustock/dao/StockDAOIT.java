@@ -4,18 +4,22 @@ package es.deusto.deustock.dao;
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+//import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.io.FileInputStream;
-
+import java.sql.SQLException;
 
 import org.dbunit.DBTestCase;
+import org.dbunit.DatabaseUnitException;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
+import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 
 /**
@@ -24,6 +28,8 @@ import org.junit.jupiter.api.Test;
  * @author landersanmillan
  */
 public class StockDAOIT extends DBTestCase{
+	
+	private final String[] COLUMNS = {"DEUSTOCK_ID", "ACRONYM", "DESCRIPTION", "FULLNAME"};
 
 	public StockDAOIT(String name) {
         super(name);
@@ -37,42 +43,48 @@ public class StockDAOIT extends DBTestCase{
 	protected IDataSet getDataSet() throws Exception {
 		return new FlatXmlDataSetBuilder().build(new FileInputStream("db/stockTestingDatasets/deustock.xml"));
 	}
-	protected IDataSet getStockAddedDataSet() throws Exception {
-		return new FlatXmlDataSetBuilder().build(new FileInputStream("db/stockTestingDatasets/stockAdded.xml"));
-	}
-	protected IDataSet getStockDeletedDataSet() throws Exception {
-		return new FlatXmlDataSetBuilder().build(new FileInputStream("db/stockTestingDatasets/stockDeleted.xml"));
-	}
-	protected IDataSet getStockUpdatedDataSet() throws Exception {
-		return new FlatXmlDataSetBuilder().build(new FileInputStream("db/stockTestingDatasets/stockUpdated.xml"));
-	}
-	
+
     protected DatabaseOperation getSetUpOperation() throws Exception {
-        return DatabaseOperation.REFRESH;
+        return DatabaseOperation.CLEAN_INSERT;
     }
  
     protected DatabaseOperation getTearDownOperation() throws Exception {
-        return DatabaseOperation.NONE;
+        return DatabaseOperation.DELETE_ALL;
     }
+    
+	private ITable getFilteredTable(String[] columns) throws SQLException, Exception {
+	    IDataSet databaseDataSet = getConnection().createDataSet();
+	    return DefaultColumnFilter.includedColumnsTable(databaseDataSet.getTable("DEUSTOCK"), columns);
+	}
 	
+   
+    @Before
+    public void setUp() throws DatabaseUnitException, SQLException, Exception {
+    	this.getDatabaseTester().getSetUpOperation().execute(this.getConnection(), this.getDataSet());
+    }
+    
+    @After
+    public void tearDown() throws DatabaseUnitException, SQLException, Exception {
+    	this.getDatabaseTester().getTearDownOperation().execute(this.getConnection(), this.getDataSet());
+    }
+    
+    
     /**
 	 * Tests Stock creation
      * @throws Exception 
 	*/
 	@Test
     public void testStockCreation() throws Exception {
-
 		DeuStock stock3 = new DeuStock(new StockQueryData("acronymTest3", StockQueryData.Interval.DAILY))
 							.setDescription("descriptionTest3")
 							.setFullName("fullNameTest3");
-
-	    IDataSet expectedDataSet = getStockAddedDataSet();
-	    ITable expectedTable = expectedDataSet.getTable("DEUSTOCK");
-	    assertDoesNotThrow( () -> StockDAO.getInstance().store(stock3));
+		    
+		StockDAO.getInstance().store(stock3);
+		
+		ITable filteredActualTable = getFilteredTable(COLUMNS);
 	    
-	    IDataSet databaseDataSet = getConnection().createDataSet();
-	    ITable actualTable = databaseDataSet.getTable("DEUSTOCK");
-	    assertEquals(expectedTable, actualTable);
+	    assertEquals(3, filteredActualTable.getRowCount());
+	    assertNotNull(StockDAO.getInstance().get("acronymTest3"));
 	}
 	
 	/**
@@ -80,13 +92,11 @@ public class StockDAOIT extends DBTestCase{
 	*/
 	@Test
     public void testStockQueryreturnNotNull() {
-		DeuStock stockResult = StockDAO.getInstance().get("acronymTest1");
-		assertNotNull(stockResult);
+		assertNotNull(StockDAO.getInstance().get("acronymTest1"));
 	}
 	@Test
     public void testStockQueryreturnNull() {
-		DeuStock stockResult = StockDAO.getInstance().get("acronymNotExist");
-		assertNull(stockResult);
+		assertNull(StockDAO.getInstance().get("acronymNotExist"));
 	}
 	
 	/**
@@ -95,13 +105,17 @@ public class StockDAOIT extends DBTestCase{
 	*/
 	@Test
     public void testStockDeletion() throws Exception {
-	    IDataSet expectedDataSet = getStockDeletedDataSet();
-	    ITable expectedTable = expectedDataSet.getTable("DEUSTOCK");
-	    DeuStock stock = StockDAO.getInstance().get("acronymTest2");
-	    assertDoesNotThrow( () -> StockDAO.getInstance().delete(stock));
-	    IDataSet databaseDataSet = getConnection().createDataSet();
-	    ITable actualTable = databaseDataSet.getTable("DEUSTOCK");
-	    assertEquals(expectedTable, actualTable);
+		DeuStock stockToDelete1 = StockDAO.getInstance().get("acronymTest1"); 
+	    StockDAO.getInstance().delete(stockToDelete1);
+	    
+	    DeuStock stockToDelete2 = StockDAO.getInstance().get("acronymTest2"); 
+	    StockDAO.getInstance().delete(stockToDelete2);
+	    
+	    ITable filteredActualTable = getFilteredTable(COLUMNS);
+	    
+		assertEquals(0, filteredActualTable.getRowCount());
+	    assertNull(StockDAO.getInstance().get("acronymTest1"));
+	    assertNull(StockDAO.getInstance().get("acronymTest2"));
     }
 	
 	
@@ -111,18 +125,17 @@ public class StockDAOIT extends DBTestCase{
 	 */
 	@Test
 	public void testStockUpdate() throws Exception {
-		DeuStock stockUpdated = new DeuStock(new StockQueryData("acronymTest2", StockQueryData.Interval.DAILY))
-				.setDescription("descriptionTest2")
-				.setFullName("fullNameUpdated2");
-	    IDataSet expectedDataSet = getStockUpdatedDataSet();
-	    ITable expectedTable = expectedDataSet.getTable("DEUSTOCK");
-	    assertDoesNotThrow( () ->StockDAO.getInstance().update(stockUpdated));
-	    IDataSet databaseDataSet = getConnection().createDataSet();
-	    ITable actualTable = databaseDataSet.getTable("DEUSTOCK");
-	    assertEquals(expectedTable, actualTable);
+		DeuStock stockToUpdate = StockDAO.getInstance().get("acronymTest2");
+		stockToUpdate.setFullName("fullNameUpdated2");
+	    
+		StockDAO.getInstance().update(stockToUpdate);
+	    ITable filteredActualTable = getFilteredTable(COLUMNS);
+	    
+		DeuStock stockUpdated = StockDAO.getInstance().get("acronymTest2");
+
+	    assertEquals(2, filteredActualTable.getRowCount());
+	    assertNotNull(stockUpdated);
+	    assertEquals(stockUpdated.getFullName(), "fullNameUpdated2");    
 	}
-
-	
-
 
 }

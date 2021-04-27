@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.jdo.*;
 
+import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.log.DeuLogger;
 
 public class DBManager implements IDBManager{
@@ -167,7 +168,7 @@ public class DBManager implements IDBManager{
 		Transaction tx = pm.currentTransaction();
 		pm.setDetachAllOnCommit(true);
 		try {
-			System.out.println("   * Querying a Object: ");
+			System.out.println("   * Querying a Object, conditions:" + conditions);
 
 			tx.begin();
 			Query query = pm.newQuery("SELECT FROM " + entityClass.getName() + " WHERE " + conditions);
@@ -184,6 +185,24 @@ public class DBManager implements IDBManager{
 				tx.rollback();
 			}
 
+			pm.close();
+		}
+	}	
+	
+	@Override
+	public void deleteObject(Object object) {
+		PersistenceManager pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+			pm.deletePersistent(object);
+			tx.commit();
+		} catch (Exception ex) {
+			System.out.println("   $ Error retreiving an extent: " + ex.getMessage());
+		} finally {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
 			pm.close();
 		}
 	}	

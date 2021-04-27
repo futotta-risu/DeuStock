@@ -61,6 +61,9 @@ public class UserDAO {
 		String whereCondition = "username  == '" + username + "'";
 		dbManager.deleteObject(User.class, whereCondition);
 	}
+	public void deleteUser(User user) {
+		dbManager.deleteObject(user);
+	}
 	
 	public void storeUser(User user) {
 		dbManager.storeObject(user);

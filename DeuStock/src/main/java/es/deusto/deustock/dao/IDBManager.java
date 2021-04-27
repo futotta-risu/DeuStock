@@ -10,5 +10,6 @@ public interface IDBManager {
 	public List<Object> getObjects(Class entityClass, String conditions);
 	public Object getObject(Class entityClass, String conditions);
 	public void deleteObject(Class entityClass, String conditions);
+	public void deleteObject(Object object);
 	public void updateObject(Object object);
 }
