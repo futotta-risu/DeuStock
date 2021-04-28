@@ -140,9 +140,19 @@ public class DeustockGateway {
 
 
     public boolean updateUser(String username, String fullName, Date birthDate, String aboutMe, String country) {
+        User user = new User()
+                .setUsername(username)
+                .setDescription(aboutMe)
+                .setCountry(country)
+                .setFullName(fullName);
+
         Response response = getHostWebTarget().path("users").path("update")
                 .request("application/json")
-                .post(Entity.entity(new User(username, "pass",fullName,birthDate,aboutMe, country), MediaType.APPLICATION_JSON));
+                .post(Entity.entity(user, MediaType.APPLICATION_JSON));
+
+        return response.getStatus() == 200;
+    }
+
     public File getReport(String acronym, String interval, String path){
         Response response = getHostWebTarget()
                 .path("reports").path(acronym).path(interval)
@@ -218,7 +228,5 @@ public class DeustockGateway {
                 .request().get();
     }
 
-        System.out.println(response);
-        return response.getStatus() == 200;
-    }
+
 }

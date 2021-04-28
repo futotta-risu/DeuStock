@@ -1,16 +1,13 @@
 package es.deusto.deustock.client.controller;
 
-import com.sun.research.ws.wadl.Response;
-import es.deusto.deustock.client.controllers.LoginController;
-import es.deusto.deustock.client.controllers.MainController;
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.gateways.DeustockGateway;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import org.junit.Before;
-import org.junit.Test;
 
-import java.util.Date;
+import javafx.scene.control.TextField;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -23,11 +20,16 @@ class LoginControllerTest{
     User mockUser;
     User user;
 
-    @Before
+    @BeforeEach
     public void setUp(){
         mockUser = mock(User.class);
         gateway = mock(DeustockGateway.class);
-        user = new User("juangomez", "juan123", "Juan Gomez", new Date(2012-2-12), "Spain", "Hola");
+        user = new User()
+                .setUsername("juangomez")
+                .setPassword("juan123")
+                .setFullName("Juan Gomez")
+                .setCountry("Spain")
+                .setDescription("Hola");
     }
 
     @Test

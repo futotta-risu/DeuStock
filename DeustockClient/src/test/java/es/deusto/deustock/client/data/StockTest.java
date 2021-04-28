@@ -1,7 +1,8 @@
 package es.deusto.deustock.client.data;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import yahoofinance.histquotes.HistoricalQuote;
 
 import java.math.BigDecimal;
@@ -15,9 +16,10 @@ public class StockTest{
     Stock stock;
     List<HistoricalQuote> history = new ArrayList<>();
 
-    @Before
+    @BeforeEach
     public void setUp(){
-        stock.setPrice(BigDecimal.valueOf(600));
+        stock = new Stock();
+        stock.setPrice(600);
         stock.setFullName("testFullNameStock");
         stock.setAcronym("AC");
         stock.setDescription("Description1");
@@ -33,13 +35,14 @@ public class StockTest{
 
     @Test
     public void testGetPrice(){
-        assertEquals(BigDecimal.valueOf(600), stock.getPrice());
+        assertEquals(600, stock.getPrice());
     }
 
     @Test
     public void testSetPrice(){
-        stock.setPrice(BigDecimal.valueOf(500));
-        assertEquals(BigDecimal.valueOf(500), stock.getPrice());
+        stock.setPrice(500);
+
+        assertEquals(500, stock.getPrice());
     }
 
     @Test

@@ -2,18 +2,21 @@ package es.deusto.deustock.client.data.help;
 
 import junit.framework.TestCase;
 import org.json.JSONObject;
-import org.junit.Before;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class FAQQuestionTest extends TestCase {
+
+class FAQQuestionTest{
 
     FAQQuestion faqQuestion;
 
-    @Before
+    @BeforeEach
     public void setUp(){
         faqQuestion = new FAQQuestion("question","answer");
         faqQuestion.setDate(new Date(2020-3-30));
@@ -22,7 +25,6 @@ class FAQQuestionTest extends TestCase {
     @Test
     public void testGetQuestion(){
         assertEquals("question", faqQuestion.getQuestion());
-
     }
 
     @Test
@@ -60,6 +62,7 @@ class FAQQuestionTest extends TestCase {
 
     @Test
     public void testConstructorJSON(){
+        // TODO El JSON no debe estar vacio, sino da error. Eso puede ser otro test nuevo
         FAQQuestion faqQuestion1 = new FAQQuestion(new JSONObject());
         assertNotNull(faqQuestion1);
     }

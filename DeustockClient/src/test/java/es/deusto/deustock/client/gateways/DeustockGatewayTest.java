@@ -2,15 +2,15 @@ package es.deusto.deustock.client.gateways;
 
 import es.deusto.deustock.client.data.Stock;
 import es.deusto.deustock.client.net.RESTVars;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,18 +28,20 @@ public class DeustockGatewayTest{
     List<Stock> stockList;
     Double sentiment;
 
-    @Before
+    @BeforeEach
     public void setUp(){
         mockResponse = mock(Response.class);
         mockClient = mock(Client.class);
         mockWebTarget = mock(WebTarget.class);
         mockRest = mock(RESTVars.class);
+
         stock = new Stock();
-        stock.setPrice(BigDecimal.valueOf(600));
+        stock.setPrice(600);
         stock.setFullName("TestStock");
         stock.setAcronym("TS");
         stock.setDescription("Test Stock description");
 
+        // TODO La stockList no esta iniciada
         stockList.add(stock);
 
         sentiment = 20.0;

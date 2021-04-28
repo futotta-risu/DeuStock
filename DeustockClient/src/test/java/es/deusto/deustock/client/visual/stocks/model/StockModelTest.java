@@ -1,17 +1,19 @@
 package es.deusto.deustock.client.visual.stocks.model;
 
-import es.deusto.deustock.client.data.Stock;
 import junit.framework.TestCase;
-import org.junit.Before;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class StockModelTest extends TestCase {
+
+class StockModelTest{
 
     StockModel stockModel;
 
-    @Before
+    @BeforeEach
     public void setUp(){
         stockModel = new StockModel("23", "12.2", "6.2");
     }
@@ -24,6 +26,7 @@ class StockModelTest extends TestCase {
         assertNotNull(stockModel);
 
     }
+
     @Test
     public void getPrice() { assertEquals("23", stockModel.getPrice()); }
 
