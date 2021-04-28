@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static es.deusto.deustock.dataminer.cleaner.SocialTextCleaner.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SocialTextCleanerTest {
 
@@ -16,7 +16,7 @@ public class SocialTextCleanerTest {
         String testString = "yes, im communist ☭ yeah ☭";
         String expectedString = "yes, im communist  yeah ";
 
-        assertEquals("The invalid chars remover doesn't work", expectedString, removeInvalidChars(testString));
+        assertEquals(expectedString, removeInvalidChars(testString));
     }
 
     @Test
@@ -24,7 +24,7 @@ public class SocialTextCleanerTest {
         String testString = "Test url http://www.google.com, and, https://www.facebook.com";
         String expectedString = "Test url , and, ";
 
-        assertEquals("HTTP urls can be removed", expectedString, removeURLS(testString));
+        assertEquals(expectedString, removeURLS(testString));
     }
 
     @Test
@@ -32,7 +32,7 @@ public class SocialTextCleanerTest {
         String testString = "Test url http://www.google.com, and, https://www.facebook.com";
         String expectedString = "Test url , and, ";
 
-        assertEquals( "HTTPS urls can be removed", expectedString, removeURLS(testString));
+        assertEquals( expectedString, removeURLS(testString));
     }
 
     @Test
@@ -40,7 +40,7 @@ public class SocialTextCleanerTest {
         String testString = "Test url www.google.com, and, www.facebook.com";
         String expectedString = "Test url , and, ";
 
-        assertEquals("No HTTP format urls can be removed", expectedString, removeURLS(testString));
+        assertEquals(expectedString, removeURLS(testString));
     }
 
     @Test
@@ -48,7 +48,7 @@ public class SocialTextCleanerTest {
         String testString = "I really like #BTC #ETH";
         String expectedString = "I really like BTC ETH";
 
-        assertEquals("Cannot remove hashtags from string", expectedString, removeHashtags(testString));
+        assertEquals(expectedString, removeHashtags(testString));
     }
 
     @Test
@@ -56,7 +56,7 @@ public class SocialTextCleanerTest {
         String testString = "Today I went with @Mike";
         String expectedString = "Today I went with Tom";
 
-        assertEquals("Cannot remove hashtags from string", expectedString, removeUsernames(testString));
+        assertEquals(expectedString, removeUsernames(testString));
     }
 
     @Test
@@ -64,7 +64,7 @@ public class SocialTextCleanerTest {
         String testString = " I  really   like spaces   ";
         String expectedString = "I really like spaces";
 
-        assertEquals("Cannot remove extra spaces", expectedString, removeExtraSpaces(testString));
+        assertEquals(expectedString, removeExtraSpaces(testString));
     }
 
     @Test
@@ -72,8 +72,7 @@ public class SocialTextCleanerTest {
         String testString = " I  am currently holding  #BTC with @mike!! ☭☭  Buy more in http://www.binance.com! ";
         String expectedString = "I am currently holding BTC with Tom Buy more in !";
 
-        assertEquals("Cannot totally clean string",
-                expectedString, clean(testString));
+        assertEquals(expectedString, clean(testString));
     }
 
     @Test
@@ -86,8 +85,8 @@ public class SocialTextCleanerTest {
 
         clean(messages);
 
-        assertEquals("Cannot totally clean string", expectedString, messages.get(0));
-        assertEquals("Cannot totally clean string", expectedString, messages.get(1));
+        assertEquals(expectedString, messages.get(0));
+        assertEquals(expectedString, messages.get(1));
     }
 
     @Test
@@ -101,7 +100,7 @@ public class SocialTextCleanerTest {
 
         clean(messages);
 
-        assertEquals("Cannot totally clean string", expectedString, messages.get(0).getMessage());
-        assertEquals("Cannot totally clean string", expectedString, messages.get(1).getMessage());
+        assertEquals(expectedString, messages.get(0).getMessage());
+        assertEquals(expectedString, messages.get(1).getMessage());
     }
 }

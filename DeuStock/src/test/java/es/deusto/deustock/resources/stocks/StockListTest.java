@@ -1,7 +1,6 @@
 package es.deusto.deustock.resources.stocks;
 
 import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.resources.user.UserDetail;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
@@ -12,7 +11,6 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 

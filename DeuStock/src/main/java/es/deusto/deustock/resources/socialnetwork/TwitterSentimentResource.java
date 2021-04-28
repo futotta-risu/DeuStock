@@ -1,7 +1,6 @@
 package es.deusto.deustock.resources.socialnetwork;
 
 import es.deusto.deustock.dataminer.features.SentimentExtractor;
-import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkQueryData;
 import es.deusto.deustock.log.DeuLogger;
 
 import javax.ws.rs.GET;

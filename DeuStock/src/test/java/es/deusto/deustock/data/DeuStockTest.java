@@ -3,7 +3,6 @@ package es.deusto.deustock.data;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,63 +52,63 @@ public class DeuStockTest {
 	public void testGetFullName() {
 		DeuStock deustock = new DeuStock();
 		deustock.setFullName("Aritz Zugazaga");
-		assertTrue(deustock.getFullName() == "Aritz Zugazaga");
+		assertEquals(deustock.getFullName(), "Aritz Zugazaga");
 	}
 	
 	@Test
 	public void testSetFullName() {
 		DeuStock deustock = new DeuStock();
 		deustock.setFullName("Aritz Zugazaga");
-		assertTrue( deustock.getFullName() == "Aritz Zugazaga");
+		assertEquals(deustock.getFullName(), "Aritz Zugazaga");
 	}
 	
 	@Test
 	public void testGetAcronym() {
 		DeuStock deustock = new DeuStock("AZ");
-		assertTrue(deustock.getAcronym() == "AZ");
+		assertEquals(deustock.getAcronym(), "AZ");
 	}
 	
 	@Test
 	public void testSetAcronym() {
 		DeuStock deustock = new DeuStock("AZ");
 		deustock.setAcronym("LS");
-		assertTrue(deustock.getAcronym() == "LS");
+		assertEquals(deustock.getAcronym(), "LS");
 	}
 
 	@Test
 	public void testGetDescription() {
 		DeuStock deustock = new DeuStock();
 		deustock.setDescription("Hola me gusta la CocaCola");
-		assertTrue( deustock.getDescription() == "Hola me gusta la CocaCola");
+		assertEquals(deustock.getDescription(), "Hola me gusta la CocaCola");
 	}
 	
 	@Test
 	public void testSetDescription() {
 		DeuStock deustock = new DeuStock();
 		deustock.setDescription("Hola me gusta la CocaCola");
-		assertTrue(deustock.getDescription() == "Hola me gusta la CocaCola");
+		assertEquals(deustock.getDescription(), "Hola me gusta la CocaCola");
 	}
 	
 	@Test
 	public void testGetHistory() {
 		DeuStock deustock = new DeuStock();
-		List<HistoricalQuote> list = new ArrayList<HistoricalQuote>();
+		List<HistoricalQuote> list = new ArrayList<>();
 		HistoricalQuote HQ = new HistoricalQuote();
 		HQ.setSymbol("BTC");
 		list.add(HQ);
 		deustock.setHistory(list);
-		assertTrue(deustock.getHistory() == list);
+		assertSame(deustock.getHistory(), list);
 	}
 	
 	@Test
 	public void testSetHistory() {
 		DeuStock deustock = new DeuStock();
-		List<HistoricalQuote> list = new ArrayList<HistoricalQuote>();
+		List<HistoricalQuote> list = new ArrayList<>();
 		HistoricalQuote HQ = new HistoricalQuote();
 		HQ.setSymbol("BTC");
 		list.add(HQ);
 		deustock.setHistory(list);
-		assertTrue(deustock.getHistory() == list);
+		assertSame(deustock.getHistory(), list);
 	}
 	
 	@Test
@@ -118,6 +117,6 @@ public class DeuStockTest {
 		deustock.setPrice(50);
 		String actuals = deustock.toString();
 		String expected = "DeuStock{price=50.0, acronym='AZ'}";
-		assertTrue( expected.equals(actuals));
+		assertEquals(actuals, expected);
 	}
 }

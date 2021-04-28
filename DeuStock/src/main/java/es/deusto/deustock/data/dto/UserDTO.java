@@ -1,7 +1,6 @@
 package es.deusto.deustock.data.dto;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author Erik B. Terres

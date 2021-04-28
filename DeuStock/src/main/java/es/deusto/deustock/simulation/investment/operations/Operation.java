@@ -1,9 +1,6 @@
 package es.deusto.deustock.simulation.investment.operations;
 
 import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.log.DeuLogger;
-
-import javax.validation.constraints.Null;
 
 /**
  * @author Erik B. Terres

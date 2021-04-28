@@ -437,7 +437,7 @@
 				</configuration>
 				<executions>
 					<execution>
-						<phase>verify</phase>
+						<phase>pre-integration-test</phase>
 						<goals>
 							<goal>enhance</goal>
 							<goal>schema-create</goal>

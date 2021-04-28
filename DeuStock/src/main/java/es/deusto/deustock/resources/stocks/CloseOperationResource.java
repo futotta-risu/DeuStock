@@ -1,7 +1,6 @@
 package es.deusto.deustock.resources.stocks;
 
 import es.deusto.deustock.dao.StockHistoryDAO;
-import es.deusto.deustock.dao.WalletDAO;
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.data.stocks.StockHistory;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
@@ -13,8 +12,6 @@ import es.deusto.deustock.log.DeuLogger;
 import es.deusto.deustock.simulation.investment.OperationFactory;
 import es.deusto.deustock.simulation.investment.WalletService;
 import es.deusto.deustock.simulation.investment.operations.Operation;
-import es.deusto.deustock.simulation.investment.operations.OperationType;
-import yahoofinance.Stock;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

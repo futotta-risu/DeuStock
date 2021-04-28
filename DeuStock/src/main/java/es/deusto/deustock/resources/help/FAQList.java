@@ -2,7 +2,6 @@ package es.deusto.deustock.resources.help;
 
 import es.deusto.deustock.log.DeuLogger;
 import es.deusto.deustock.util.file.DSJSONUtils;
-import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import javax.ws.rs.GET;

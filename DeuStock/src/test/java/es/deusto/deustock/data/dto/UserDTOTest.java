@@ -1,7 +1,6 @@
 package es.deusto.deustock.data.dto;
 
 
-import es.deusto.deustock.data.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -30,7 +30,7 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
     private static TwitterGateway instance = null;
 
     private TwitterGateway(){
-        JSONObject config = null;
+        JSONObject config;
         try {
             config = getConfiguration();
         } catch (IOException | ParseException e) {

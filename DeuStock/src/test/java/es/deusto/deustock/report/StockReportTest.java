@@ -1,7 +1,6 @@
 package es.deusto.deustock.report;
 
 import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
@@ -9,13 +8,9 @@ import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundExcep
 import es.deusto.deustock.dataminer.gateway.stocks.gateways.YahooFinanceGateway;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
-import yahoofinance.YahooFinance;
 
 import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("report")
 class StockReportTest {

@@ -12,7 +12,7 @@ public class StockQueryData {
 
     public enum Interval {
         DAILY, WEEKLY, MONTHLY
-    };
+    }
 
     private final int DEFAULT_INTERVAL_SIZE = 25;
 

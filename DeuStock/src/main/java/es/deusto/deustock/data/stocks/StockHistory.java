@@ -6,7 +6,6 @@ import es.deusto.deustock.simulation.investment.operations.OperationType;
 import javax.jdo.annotations.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.UUID;
 
 @PersistenceCapable(detachable = "true")
 public class StockHistory  implements Serializable {

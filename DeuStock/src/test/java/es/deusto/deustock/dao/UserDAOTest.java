@@ -1,6 +1,5 @@
 package es.deusto.deustock.dao;
 
-import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.dto.UserDTO;
 
@@ -8,15 +7,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 /**
@@ -130,7 +125,7 @@ public class UserDAOTest {
     		   .setPassword("passwordTest1")
     		   .setUsername("usernameTest1");
     	
-    	User user = userDAO.getInstance().create(userDTO);
+    	User user = userDAO.create(userDTO);
     	
     	assertEquals("countryTest1", user.getCountry());
     	assertEquals("descriptionTest1", user.getDescription());
@@ -147,7 +142,7 @@ public class UserDAOTest {
     		   .setFullName("fullnameTest1");
 
     	
-    	UserDTO userDTO = userDAO.getInstance().getDTO(user);
+    	UserDTO userDTO = userDAO.getDTO(user);
     	
     	assertEquals("countryTest1", userDTO.getCountry());
     	assertEquals("descriptionTest1", userDTO.getDescription());

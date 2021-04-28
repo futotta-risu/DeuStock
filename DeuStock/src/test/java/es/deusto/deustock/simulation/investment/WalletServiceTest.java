@@ -11,13 +11,11 @@ import es.deusto.deustock.simulation.investment.operations.LongOperation;
 import es.deusto.deustock.simulation.investment.operations.Operation;
 import es.deusto.deustock.simulation.investment.operations.OperationType;
 import org.junit.jupiter.api.Test;
-import yahoofinance.Stock;
 
 import java.lang.reflect.Field;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 /**

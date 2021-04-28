@@ -9,9 +9,6 @@ import es.deusto.deustock.simulation.investment.operations.OperationType;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -124,7 +121,7 @@ public class StockHistoryDAOTest {
         StockHistory stockHistory2 = new StockHistory(
                 wallet, stock, 10, 32, OperationType.LONG
         );
-        List<StockHistory> stockHistoryList = new ArrayList<StockHistory>();
+        List<StockHistory> stockHistoryList = new ArrayList<>();
         stockHistoryList.add(stockHistory1);
         stockHistoryList.add(stockHistory2);
 
@@ -171,7 +168,7 @@ public class StockHistoryDAOTest {
         StockHistory stockHistory2 = new StockHistory(
                 wallet, stock, 10, 32, OperationType.LONG
         );
-        List<Object> stockHistoryList = new ArrayList<Object>();
+        List<Object> stockHistoryList = new ArrayList<>();
         stockHistoryList.add(stockHistory1);
         stockHistoryList.add(stockHistory2);
        
@@ -204,7 +201,7 @@ public class StockHistoryDAOTest {
         StockHistory stockHistory2 = new StockHistory(
                 wallet, stock, 10, 32, OperationType.LONG
         );
-        List<Object> stockHistoryList = new ArrayList<Object>();
+        List<Object> stockHistoryList = new ArrayList<>();
         stockHistoryList.add(stockHistory1);
         stockHistoryList.add(stockHistory2);
        

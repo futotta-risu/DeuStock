@@ -1,7 +1,6 @@
 package es.deusto.deustock.data.stocks;
 
 import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.data.dto.stocks.StockHistoryDTO;
 
 import es.deusto.deustock.simulation.investment.operations.OperationType;
 import org.junit.jupiter.api.Test;
@@ -68,14 +67,14 @@ public class WalletTest {
 
 
     @Test
-    public void testAddMoney() throws Exception {
+    public void testAddMoney() {
         Wallet wallet = new Wallet();
         wallet.changeMoney(100);
         assertEquals(wallet.getMoney(),5100);
     }
 
     @Test
-    public void testTakeMoney() throws Exception {
+    public void testTakeMoney() {
         Wallet wallet = new Wallet();
         wallet.changeMoney(-230.4);
         assertEquals(wallet.getMoney(),4769.6);

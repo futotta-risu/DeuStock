@@ -18,8 +18,6 @@ import java.math.BigDecimal;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -47,7 +45,7 @@ public class YahooFinanceGatewayTest {
     }
 
     @Test
-    void getStockDataWithoutHistoric() throws StockNotFoundException, IOException {
+    void getStockDataWithoutHistoric() throws StockNotFoundException {
 
         // Given
         StockQueryData stockQueryData = new StockQueryData(

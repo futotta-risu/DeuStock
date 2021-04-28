@@ -37,7 +37,7 @@ public class TwitterSentimentIT extends JerseyTest {
     }
 
     @Test
-    public void testTwitterSentimentReturns200() throws InterruptedException {
+    public void testTwitterSentimentReturns200() {
         Response response = target("twitter/sentiment")
                 .path("BTC")
                 .request().get();

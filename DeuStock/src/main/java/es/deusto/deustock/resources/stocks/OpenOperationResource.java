@@ -20,8 +20,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static es.deusto.deustock.simulation.investment.operations.OperationType.LONG;
-
 /**
  * @author Erik B. Terres
  */

@@ -6,7 +6,6 @@ import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 

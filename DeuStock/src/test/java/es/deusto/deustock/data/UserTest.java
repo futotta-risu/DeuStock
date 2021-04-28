@@ -2,7 +2,6 @@ package es.deusto.deustock.data;
 
 import static org.junit.Assert.*;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.Test;
@@ -12,41 +11,41 @@ public class UserTest {
 	@Test
 	public void testGetUsername() {
 		User user = new User("Gartzi", "si");
-		assertTrue("getUsername doesn't work", user.getUsername() == "Gartzi");
+		assertEquals("getUsername doesn't work", "Gartzi", user.getUsername());
 	}
 	
 	@Test
 	public void testSetUsername() {
 		User user = new User("Gartzi", "si");
 		user.setUsername("DarthGartzi");
-		assertTrue("setUsername doesn't work", user.getUsername() == "DarthGartzi");
+		assertEquals("setUsername doesn't work", "DarthGartzi", user.getUsername());
 	}
 	
 	@Test
 	public void testGetPassword() {
 		User user = new User("Gartzi", "si");
-		assertTrue("getPassword doesn't work", user.getPassword() == "si");
+		assertEquals("getPassword doesn't work", "si", user.getPassword());
 	}
 	
 	@Test
 	public void testSetPassword() {
 		User user = new User("Gartzi", "si");
 		user.setPassword("no");
-		assertTrue("setPassword doesn't work", user.getPassword() == "no");
+		assertEquals("setPassword doesn't work", "no", user.getPassword());
 	}
 	
 	@Test
 	public void testGetFullName() {
 		User user = new User("Gartzi", "si");
 		user.setFullName("Aritz Zugazaga");
-		assertTrue("getFullName doesn't work", user.getFullName() == "Aritz Zugazaga");
+		assertEquals("getFullName doesn't work", "Aritz Zugazaga", user.getFullName());
 	}
 	
 	@Test
 	public void testSetFullName() {
 		User user = new User("Gartzi", "si");
 		user.setFullName("Aritz Zugazaga");
-		assertTrue("setFullName doesn't work", user.getFullName() == "Aritz Zugazaga");
+		assertEquals("setFullName doesn't work", "Aritz Zugazaga", user.getFullName());
 	}
 	
 	@Test
@@ -54,7 +53,7 @@ public class UserTest {
 		User user = new User("Gartzi", "si");
 		Date date = new Date();
 		user.setBirthDate(date);
-		assertTrue("getBirthDate doesn't work", user.getBirthDate() == date);
+		assertSame("getBirthDate doesn't work", user.getBirthDate(), date);
 	}
 	
 	@Test
@@ -62,41 +61,41 @@ public class UserTest {
 		User user = new User("Gartzi", "si");
 		Date date = new Date();
 		user.setBirthDate(date);
-		assertTrue("setBirthDate doesn't work", user.getBirthDate() == date);
+		assertSame("setBirthDate doesn't work", user.getBirthDate(), date);
 	}
 	
 	@Test
 	public void testGetCountry() {
 		User user = new User("Gartzi", "si");
 		user.setCountry("Spain");
-		assertTrue("getCountry doesn't work", user.getCountry() == "Spain");
+		assertEquals("getCountry doesn't work", "Spain", user.getCountry());
 	}
 	
 	@Test
 	public void testSetCountry() {
 		User user = new User("Gartzi", "si");
 		user.setCountry("Spain");
-		assertTrue("setCountry doesn't work", user.getCountry() == "Spain");
+		assertEquals("setCountry doesn't work", "Spain", user.getCountry());
 	}
 	
 	@Test
 	public void testGetDescription() {
 		User user = new User("Gartzi", "si");
 		user.setDescription("Hola me gusta la CocaCola");
-		assertTrue("getDescription doesn't work", user.getDescription() == "Hola me gusta la CocaCola");
+		assertEquals("getDescription doesn't work", "Hola me gusta la CocaCola", user.getDescription());
 	}
 	
 	@Test
 	public void testSetDescription() {
 		User user = new User("Gartzi", "si");
 		user.setDescription("Hola me gusta la CocaCola");
-		assertTrue("setDescription doesn't work", user.getDescription() == "Hola me gusta la CocaCola");
+		assertEquals("setDescription doesn't work", "Hola me gusta la CocaCola", user.getDescription());
 	}
 	
 	@Test
 	public void testGetRegisterDate() {
 		User user = new User("Gartzi", "si");
-		assertTrue("getRegisterDate doesn't work", user.getRegisterDate() == user.getLastActivity());
+		assertSame("getRegisterDate doesn't work", user.getRegisterDate(), user.getLastActivity());
 	}
 	
 	@Test
@@ -104,13 +103,13 @@ public class UserTest {
 		User user = new User("Gartzi", "si");
 		Date date = new Date();
 		user.setRegisterDate(date);
-		assertTrue("setRegisterDate doesn't work", user.getRegisterDate() == date);
+		assertSame("setRegisterDate doesn't work", user.getRegisterDate(), date);
 	}
 	
 	@Test
 	public void testGetLastActivity() {
 		User user = new User("Gartzi", "si");
-		assertTrue("getLastActivity doesn't work", user.getLastActivity() == user.getRegisterDate());
+		assertSame("getLastActivity doesn't work", user.getLastActivity(), user.getRegisterDate());
 	}
 	
 	@Test
@@ -118,16 +117,16 @@ public class UserTest {
 		User user = new User("Gartzi", "si");
 		Date date = new Date();
 		user.setLastActivity(date);
-		assertTrue("setLastActivity doesn't work", user.getLastActivity() == date);
+		assertSame("setLastActivity doesn't work", user.getLastActivity(), date);
 	}
 	
 	@Test
 	public void testConstructor() {
 		User user = new User("Gartzi", "si");
-		assertTrue("Constructor doesn't work", user.getUsername() == "Gartzi");
-		assertTrue("Constructor doesn't work", user.getPassword() == "si");
-		assertTrue("Constructor doesn't work", user.getRegisterDate() == user.getLastActivity());
-		assertTrue("Constructor doesn't work", user.getLastActivity() == user.getRegisterDate());
+		assertEquals("Constructor doesn't work", "Gartzi", user.getUsername());
+		assertEquals("Constructor doesn't work", "si", user.getPassword());
+		assertSame("Constructor doesn't work", user.getRegisterDate(), user.getLastActivity());
+		assertSame("Constructor doesn't work", user.getLastActivity(), user.getRegisterDate());
 	}
 	
 	@Test
@@ -142,13 +141,13 @@ public class UserTest {
 		updater.setRegisterDate(date);
 		updater.setLastActivity(date);
 		user.updateInfo(updater);
-		assertTrue("updateInfo doesn't work", user.getPassword() == "no");
-		assertTrue("updateInfo doesn't work", user.getFullName() == "Aritz Zugazaga");
-		assertTrue("updateInfo doesn't work", user.getBirthDate() == date);
-		assertTrue("updateInfo doesn't work", user.getCountry() == "Spain");
-		assertTrue("updateInfo doesn't work", user.getDescription() == "Hola me gusta la CocaCola");
-		assertTrue("updateInfo doesn't work", user.getRegisterDate() == date);
-		assertTrue("updateInfo doesn't work", user.getLastActivity() == date);
+		assertEquals("updateInfo doesn't work", "no", user.getPassword());
+		assertEquals("updateInfo doesn't work", "Aritz Zugazaga", user.getFullName());
+		assertSame("updateInfo doesn't work", user.getBirthDate(), date);
+		assertEquals("updateInfo doesn't work", "Spain", user.getCountry());
+		assertEquals("updateInfo doesn't work", "Hola me gusta la CocaCola", user.getDescription());
+		assertSame("updateInfo doesn't work", user.getRegisterDate(), date);
+		assertSame("updateInfo doesn't work", user.getLastActivity(), date);
 
 	}
 	

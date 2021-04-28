@@ -1,16 +1,12 @@
 package es.deusto.deustock.dao;
 
-import com.sun.mail.imap.protocol.ID;
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.data.dto.stocks.StockHistoryDTO;
 import es.deusto.deustock.data.stocks.StockHistory;
 import es.deusto.deustock.data.stocks.Wallet;
-import es.deusto.deustock.simulation.investment.OperationFactory;
-import es.deusto.deustock.simulation.investment.operations.Operation;
 import es.deusto.deustock.simulation.investment.operations.OperationType;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**

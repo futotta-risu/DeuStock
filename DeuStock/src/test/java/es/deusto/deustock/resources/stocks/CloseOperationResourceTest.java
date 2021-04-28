@@ -22,8 +22,6 @@ import javax.ws.rs.core.Response;
 
 import static es.deusto.deustock.simulation.investment.operations.OperationType.LONG;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.Mockito.*;
 
 @Tag("server-resource")

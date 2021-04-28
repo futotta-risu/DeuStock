@@ -39,27 +39,27 @@ public class DBManagerIT extends DBTestCase{
 		return new FlatXmlDataSetBuilder().build(new FileInputStream("db/userTestingDatasets/user.xml"));
 	}
 	
-    protected DatabaseOperation getSetUpOperation() throws Exception {
+    protected DatabaseOperation getSetUpOperation() {
         return DatabaseOperation.CLEAN_INSERT;
     }
  
-    protected DatabaseOperation getTearDownOperation() throws Exception {
+    protected DatabaseOperation getTearDownOperation() {
         return DatabaseOperation.DELETE_ALL;
     }
     
-    private ITable getFilteredTable(String table, String[] columns) throws SQLException, Exception {
+    private ITable getFilteredTable(String table, String[] columns) throws Exception {
 	    IDataSet databaseDataSet = getConnection().createDataSet();
 	    return DefaultColumnFilter.includedColumnsTable(databaseDataSet.getTable(table), columns);
 	}
     
     
     @Before
-    public void setUp() throws DatabaseUnitException, SQLException, Exception {
+    public void setUp() throws Exception {
     	this.getDatabaseTester().getSetUpOperation().execute(this.getConnection(), this.getDataSet());
     }
     
     @After
-    public void tearDown() throws DatabaseUnitException, SQLException, Exception {
+    public void tearDown() throws Exception {
     	this.getDatabaseTester().getTearDownOperation().execute(this.getConnection(), this.getDataSet());
     }
     

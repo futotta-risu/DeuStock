@@ -4,7 +4,6 @@ import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
-import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -17,9 +16,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static es.deusto.deustock.dataminer.gateway.stocks.StockQueryData.Interval.*;
 
 
 /**
