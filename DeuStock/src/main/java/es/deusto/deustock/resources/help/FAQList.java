@@ -19,7 +19,7 @@ import java.io.IOException;
 @Path("help/faq/list")
 public class FAQList {
 
-    private final String path ="data/faq_list.json";
+    private static final String PATH ="data/faq_list.json";
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -27,11 +27,11 @@ public class FAQList {
         try {
             return Response
                     .status(Response.Status.OK)
-                    .entity(DSJSONUtils.readFile(path).toString())
+                    .entity(DSJSONUtils.readFile(PATH).toString())
                     .build();
 
         } catch (IOException | ParseException e) {
-        	DeuLogger.logger.error("Could not get FAQList due to problems reading file: " + path);
+        	DeuLogger.logger.error("Could not get FAQList due to problems reading file: " + PATH);
             e.printStackTrace();
         }
         return Response.status(401).build();

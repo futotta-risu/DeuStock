@@ -21,7 +21,7 @@ import static es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkG
 @Path("twitter/sentiment/{query}")
 public class TwitterSentimentResource {
 
-    private SentimentExtractor extractor;
+    private final SentimentExtractor extractor;
 
     public TwitterSentimentResource(){
         extractor = new SentimentExtractor(Twitter);

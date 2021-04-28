@@ -15,6 +15,7 @@ public class WalletDAO {
 
     private WalletDAO(){
         super();
+        dbManager = DBManager.getInstance();
     }
     
     public void setDBManager(IDBManager dbManager){
@@ -29,17 +30,17 @@ public class WalletDAO {
     }
 
     public void store(Wallet wallet){
-        DBManager.getInstance().storeObject(wallet);
+        dbManager.storeObject(wallet);
     }
 
     public void update(Wallet wallet){
-        DBManager.getInstance().updateObject(wallet);
+        dbManager.updateObject(wallet);
     }
 
 
     public Wallet getWallet(String walletID) {
         String condition = "id == '" + walletID + "'";
-        return (Wallet) DBManager.getInstance().getObject(Wallet.class, condition);
+        return (Wallet) dbManager.getObject(Wallet.class, condition);
     }
 
 

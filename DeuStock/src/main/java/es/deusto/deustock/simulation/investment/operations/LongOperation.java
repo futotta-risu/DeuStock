@@ -8,7 +8,6 @@ public class LongOperation extends Operation  {
 		super(stock, amount);
 	}
 
-
 	@Override
 	public double getOpenPrice() {
 		return getAmount()*getStockOpenPrice();

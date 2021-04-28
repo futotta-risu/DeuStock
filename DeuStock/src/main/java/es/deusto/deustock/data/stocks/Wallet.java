@@ -17,7 +17,7 @@ public class Wallet  implements Serializable {
     String id;
 
     @NotPersistent
-    private final double INITIAL_MONEY = 5000;
+    private static final double INITIAL_MONEY = 5000;
 
     @Persistent(mappedBy = "wallet")
     List<StockHistory> history;

@@ -2,20 +2,14 @@ package es.deusto.deustock.simulation.investment;
 
 import es.deusto.deustock.dao.StockHistoryDAO;
 import es.deusto.deustock.dao.WalletDAO;
-import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.data.dto.stocks.StockHistoryDTO;
 import es.deusto.deustock.data.stocks.StockHistory;
 import es.deusto.deustock.data.stocks.Wallet;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
 import es.deusto.deustock.log.DeuLogger;
+import es.deusto.deustock.simulation.investment.exceptions.OperationException;
 import es.deusto.deustock.simulation.investment.operations.Operation;
-import es.deusto.deustock.simulation.investment.operations.OperationType;
-import es.deusto.deustock.simulation.investment.operations.StockOperation;
 
-import javax.ws.rs.core.Response;
-import java.util.ArrayList;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,14 +25,6 @@ public class WalletService {
     public WalletService(){
         stockHistoryDAO = StockHistoryDAO.getInstance();
         walletDAO = WalletDAO.getInstance();
-    }
-
-    public WalletService(String walletID){
-        this.wallet = WalletDAO.getInstance().getWallet(walletID);
-    }
-
-    public WalletService(Wallet wallet){
-        this.wallet = wallet;
     }
 
     public void setStockHistoryDAO(StockHistoryDAO stockHistoryDAO) {
@@ -58,11 +44,11 @@ public class WalletService {
     }
 
 
-    public void openOperation(Operation operation){
+    public void openOperation(@NotNull Operation operation) throws OperationException {
         double openPrice = operation.getOpenPrice();
         if(!wallet.hasEnoughMoney(openPrice)){
             DeuLogger.logger.error("Not enough money on wallet.");
-            return;
+            throw new OperationException("Not enough money to open operation");
         }
 
         StockHistory stockHistory = stockHistoryDAO.create(
@@ -75,7 +61,6 @@ public class WalletService {
         stockHistoryDAO.store(stockHistory);
         wallet.changeMoney(-openPrice);
         walletDAO.update(wallet);
-
     }
 
     public void closeOperation(Operation operation, StockHistory stockHistory){
@@ -88,16 +73,12 @@ public class WalletService {
     }
 
     public List<StockHistoryDTO> getHoldings(){
-        System.out.println("dasd-32 " + wallet);
-        System.out.println("dasd-33 " + wallet.getHistory());
-        List<StockHistoryDTO> result =  wallet.getHistory()
+
+        return wallet.getHistory()
                 .stream()
                 .filter(c -> !c.isClosed())
                 .map(stockHistoryDAO::getDTO)
                 .collect(Collectors.toList());
-
-        System.out.println(" Este el total " + result.size());
-        return result;
     }
 
 }
