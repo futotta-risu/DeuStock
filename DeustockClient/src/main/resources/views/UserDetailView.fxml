@@ -55,6 +55,7 @@
                      </children>
                   </FlowPane>
                   <Button fx:id="accountDeleteButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="179.0" text="ELiminar" />
+                  <Button fx:id="resetWalletButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="181.0" text="Resetear Wallet" />
                </children>
             </VBox>
          </right>

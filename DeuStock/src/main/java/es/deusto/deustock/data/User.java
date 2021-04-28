@@ -1,5 +1,8 @@
 package es.deusto.deustock.data;
 
+import es.deusto.deustock.data.stocks.Wallet;
+
+import java.io.Serial;
 import java.util.Calendar;
 import java.io.Serializable;
 import java.util.Date;
@@ -10,8 +13,9 @@ import javax.jdo.annotations.*;
  *  un ID por cada instancia que se almacene en la BD
  * @author landersanmillan
  */
-@PersistenceCapable
+@PersistenceCapable(detachable = "true")
 public class User implements Serializable{
+	@Serial
 	private static final long serialVersionUID = 1L;
 	@Unique
 	String username;
@@ -25,84 +29,61 @@ public class User implements Serializable{
 	Date registerDate;
 	@NotPersistent
 	Date lastActivity;
+
+	@Persistent(defaultFetchGroup = "true")
+	Wallet wallet;
 	
 	
-	public String getUsername() {
-		return username;
+	public String getUsername() { return username; }
+	public User setUsername(String username) {
+		this.username = username; return this;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public String getPassword() { return password; }
+	public User setPassword(String password) {
+		this.password = password; return this;
 	}
-	public String getPassword() {
-		return password;
+	public String getFullName() { return fullName; }
+	public User setFullName(String fullName) {
+		this.fullName = fullName; return this;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public Date getBirthDate() { return birthDate; }
+	public User setBirthDate(Date birthDate) {
+		this.birthDate = birthDate; return this;
 	}
-	public String getFullName() {
-		return fullName;
+	public String getCountry() { return country; }
+	public User setCountry(String country) {
+		this.country = country; return this;
 	}
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
+	public String getDescription() { return description; }
+	public User setDescription(String description) {
+		this.description = description; return this;
 	}
-	public Date getBirthDate() {
-		return birthDate;
+	public Date getRegisterDate() { return registerDate; }
+	public User setRegisterDate(Date registerDate) {
+		this.registerDate = registerDate; return this;
 	}
-	public void setBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
+	public Date getLastActivity() { return lastActivity; }
+	public User setLastActivity(Date lastActivity) {
+		this.lastActivity = lastActivity; return this;
 	}
-	public String getCountry() {
-		return country;
+	public User setLastActivity() {
+		this.lastActivity = Calendar.getInstance().getTime(); return this;
 	}
-	public void setCountry(String country) {
-		this.country = country;
+
+	public void setWallet(Wallet wallet){
+		this.wallet = wallet;
 	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public Date getRegisterDate() {
-		return registerDate;
-	}
-	public void setRegisterDate(Date registerDate) {
-		this.registerDate = registerDate;
-	}
-	public Date getLastActivity() {
-		return lastActivity;
-	}
-	public void setLastActivity(Date lastActivity) {
-		this.lastActivity = lastActivity;
-	}
-	public void setLastActivity() {
-		this.lastActivity = Calendar.getInstance().getTime();
+	public Wallet getWallet(){
+		return this.wallet;
 	}
 	
-	
-	public User(String username, String password, String fullName, Date birthDate, String country, String description) {
+	public User(String username, String password) {
 		this.username = username;
 		this.password = password;
-		this.fullName = fullName;
-		this.birthDate = birthDate;
-		this.country = country;
-		this.description = description;
-		this.registerDate = Calendar.getInstance().getTime();
-		this.lastActivity = this.registerDate;
-	}
-	
-	public User() {
-		this.username = "NULL";
-		this.password = "NULL";
-		this.fullName = "NULL";
-		this.birthDate = Calendar.getInstance().getTime();
-		this.country = "NULL";
-		this.description = "NULL";
 		this.registerDate = Calendar.getInstance().getTime();
 		this.lastActivity = this.registerDate;
 	}
 
-	
 	public void updateInfo(User u) {
 		this.password = u.password;
 		this.fullName = u.fullName;
@@ -113,19 +94,15 @@ public class User implements Serializable{
 		this.lastActivity = u.lastActivity;
 	}
 	
+	
+	@Override
 	public String toString() {
 		return "User [username=" + username + ", password=" + password + ", fullName=" + fullName + ", birthDate="
 				+ birthDate + ", country=" + country + ", description=" + description + ", registerDate=" + registerDate
-				+ ", lastActivity=" + lastActivity + "]";
+				+ ", lastActivity=" + lastActivity + ", wallet=" + wallet + "]";
 	}
-	
-
 	public boolean checkPassword(String password){
 		return this.password.equals(password);
 	}
 	
-	
-	
-	
-
 }

@@ -2,6 +2,7 @@ package es.deusto.deustock.dataminer.gateway.stocks;
 
 
 import java.util.Calendar;
+import java.util.Objects;
 
 /**
  *
@@ -10,27 +11,39 @@ import java.util.Calendar;
 public class StockQueryData {
 
     public enum Interval {
-        DAILY, WEEKLY, YEARLY
+        DAILY, WEEKLY, MONTHLY
     };
+
+    private final int DEFAULT_INTERVAL_SIZE = 25;
 
     private String acronym;
     private Calendar from, to;
     private Interval interval  = Interval.DAILY;
+    private boolean withHistoric = false;
+    private int intervalSize = DEFAULT_INTERVAL_SIZE;
+
+
 
     private StockQueryData() {}
 
+    public StockQueryData(String acronym) {
+        setAcronym(acronym);
+        setInterval(Interval.DAILY);
+    }
 
     public StockQueryData(String acronym, Interval interval) {
-        this.acronym = acronym;
-        this.interval = interval;
-        setDateRangeByInterval();
+        setAcronym(acronym);
+        setInterval(interval);
     }
 
     public String getAcronym() {
         return acronym;
     }
 
-    public StockQueryData setAcronym(String acronym) {
+    private StockQueryData setAcronym(String acronym) {
+        if(acronym.isBlank())
+            throw new IllegalArgumentException("Acronym cannot be empty");
+
         this.acronym = acronym;
         return this;
     }
@@ -49,19 +62,38 @@ public class StockQueryData {
         return interval;
     }
 
-    public StockQueryData setInterval(Interval interval) {
+    private StockQueryData setInterval(Interval interval) {
+        Objects.requireNonNull(interval);
+
         this.interval = interval;
+        setDateRangeByInterval();
+
+        return this;
+    }
+
+    public StockQueryData setIntervalSize(int size){
+        this.intervalSize = size;
         setDateRangeByInterval();
         return this;
     }
+
 
     private void setDateRangeByInterval() {
         this.from = Calendar.getInstance();
         this.to = Calendar.getInstance();
         switch (this.interval) {
-            case DAILY -> from.add(Calendar.DAY_OF_YEAR, -25);
-            case WEEKLY -> from.add(Calendar.WEEK_OF_YEAR, -25);
-            case YEARLY -> from.add(Calendar.YEAR, -25);
+            case DAILY -> from.add(Calendar.DAY_OF_YEAR, -intervalSize);
+            case WEEKLY -> from.add(Calendar.WEEK_OF_YEAR, -intervalSize);
+            case MONTHLY -> from.add(Calendar.MONTH, -intervalSize);
         }
+    }
+
+    public boolean isWithHistoric() {
+        return withHistoric;
+    }
+
+    public StockQueryData setWithHistoric(boolean withHistoric) {
+        this.withHistoric = withHistoric;
+        return this;
     }
 }

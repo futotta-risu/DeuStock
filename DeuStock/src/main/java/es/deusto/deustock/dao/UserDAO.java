@@ -1,15 +1,11 @@
 package es.deusto.deustock.dao;
 
-import es.deusto.deustock.data.User;
-import es.deusto.deustock.log.DeuLogger;
-
-import javax.jdo.Extent;
-import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
-import javax.jdo.Transaction;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.deusto.deustock.data.User;
+import es.deusto.deustock.data.dto.UserDTO;
+import es.deusto.deustock.data.stocks.Wallet;
 
 /**
  * Clase de acceso a datos de Usuarios en la BD.<br>
@@ -18,13 +14,22 @@ import java.util.List;
  *      <li>DAO</li>
  *      <li>Singleton</li>
  * </ul>
- * 
- * @see GenericDAO
+ *
  * @author landersanmillan
  */
-public class UserDAO extends GenericDAO {
+public class UserDAO {
 
-	private static UserDAO INSTANCE;
+	private static UserDAO instance = null;
+
+	private IDBManager dbManager;
+
+	private UserDAO(){
+		dbManager = DBManager.getInstance();
+	}
+
+	public void setDBManager(IDBManager dbManager){
+		this.dbManager = dbManager;
+	}
 
 	/**
 	 * Se obtiene la unica instancia de la clase UserDAO
@@ -32,159 +37,57 @@ public class UserDAO extends GenericDAO {
 	 * @return <strong>UserDAO</strong> -> Instancia de la clase User
 	 */
 	public static UserDAO getInstance() {
-		if (INSTANCE == null)
-			INSTANCE = new UserDAO();
-		return INSTANCE;
+		if (instance == null)
+			instance = new UserDAO();
+		return instance;
 	}
 
-	/**
-	 * Permite almacenar un usuario en la BD
-	 * 
-	 * @param user -> Objeto usuario que se quiere almacenar en la BD
-	 */
-	public void storeUser(User user) {
-		PersistenceManager pm = getPMF().getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
+	public User create(UserDTO userDTO){
+		User user = new User(userDTO.getUsername(), userDTO.getPassword());
+		user.setCountry(userDTO.getCountry());
+		user.setDescription(userDTO.getDescription());
+		user.setFullName(userDTO.getFullName());
+		user.setWallet(new Wallet());
 
-		try {
-			tx.begin();
-			pm.makePersistent(user);
-			tx.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (tx.isActive()) {
-				tx.rollback();
-			}
-			pm.close();
-		}
-	}
-
-	/**
-	 * Permite obtener una lista con todos los usuarios que se encuentran en la BD
-	 * 
-	 * @return <strong> List[User]</strong> -> Lista que contiene todos los usuarios
-	 *         almacenados en la BD
-	 */
-	public List<User> getUsers() {
-		PersistenceManager pm = getPMF().getPersistenceManager();
-		pm.getFetchPlan().setMaxFetchDepth(-1);
-
-		Transaction tx = pm.currentTransaction();
-		List<User> users = new ArrayList<>();
-
-		try {
-			System.out.println("   * Retrieving an Extent for User.");
-
-			tx.begin();
-			Extent<User> extent = pm.getExtent(User.class, true);
-
-			for (User u : extent) {
-				users.add((User) pm.detachCopy(u));
-			}
-
-			tx.commit();
-		} catch (Exception ex) {
-			System.out.println("   $ Error Getting users: " + ex.getMessage());
-			DeuLogger.logger.error("Error getting users");
-		} finally {
-			if (tx != null && tx.isActive()) {
-				tx.rollback();
-			}
-
-			pm.close();
-		}
-		return users;
-
-	}
-
-	/**
-	 * Permite obtener un usuario de la BD a partir de su username
-	 * 
-	 * @param username -> Nombre del usuario
-	 * @return <strong> User </strong> Objeto usuario solicitado
-	 */
-	public User getUser(String username) {
-		PersistenceManager pm = getPMF().getPersistenceManager();
-		pm.getFetchPlan().setMaxFetchDepth(-1);
-		Transaction tx = pm.currentTransaction();
-		User user = null;
-		pm.setDetachAllOnCommit(true);
-		try {
-			System.out.println("   * Querying a User: " + username);
-
-			tx.begin();
-			Query query = pm
-					.newQuery("SELECT FROM " + User.class.getName() + " WHERE username == '" + username + "'");
-			query.setUnique(true);
-			user = (User) pm.detachCopy((User) query.execute());
-			tx.commit();
-
-		} catch (Exception ex) {
-			System.out.println("   $ Error Getting User: " + ex.getMessage());
-			DeuLogger.logger.error("Error getting user " + username + "" );
-		} finally {
-
-			if (tx != null && tx.isActive()) {
-				tx.rollback();
-			}
-
-			pm.close();
-		}
 		return user;
 	}
 
-
-
-//	public static void updateUser(User userInfo) {
-//		PersistenceManager pm = getPMF().getPersistenceManager();
-//		Transaction tx = pm.currentTransaction();
-//
-//		try {
-//			tx.begin();
-//			Query<?> query = pm.newQuery("UPDATE " + User.class.getName() + " SET FULLNAME == '" + userInfo.getFullName() +"' WHERE username == '" + userInfo.getUsername() +"'" );
-//			query.execute();
-//			tx.commit();
-//		} catch (Exception ex) {
-//			System.out.println("   $ Error Updating user: " + ex.getMessage());
-//			DeuLogger.logger.error("Error updating user: " + userInfo.getUsername());
-//		} finally {
-//			if (tx != null && tx.isActive()) {
-//				tx.rollback();
-//			}
-//
-//			pm.close();
-//		}
-//	}
-
-	/**
-	 * Permite eliminar un stock de la BD a partir de su acronimo
-	 * 
-	 * @param username -> Nombre del usuario que se quiere eliminar
-	 */
-	public void deleteUser(String username) {
-		PersistenceManager pm = getPMF().getPersistenceManager();
-		pm.getFetchPlan().setMaxFetchDepth(-1);
-		Transaction tx = pm.currentTransaction();
-		pm.setDetachAllOnCommit(true);
-		try {
-			System.out.println("   * Querying a User: " + username);
-
-			tx.begin();
-			Query query = pm.newQuery("SELECT FROM " + User.class.getName() + " WHERE username == '" + username + "'");
-			query.setUnique(true);
-			query.deletePersistentAll();
-			tx.commit();
-
-		} catch (Exception ex) {
-			System.out.println("   $ Error Getting User: " + ex.getMessage());
-		} finally {
-
-			if (tx != null && tx.isActive()) {
-				tx.rollback();
-			}
-
-			pm.close();
-		}
+	public User getUser(String username) {
+		String whereCondition = "username == '" + username + "'";
+		return (User) dbManager.getObject(User.class, whereCondition);
+	
 	}
+	public void deleteUser(String username) {
+		String whereCondition = "username  == '" + username + "'";
+		dbManager.deleteObject(User.class, whereCondition);
+	}
+	public void deleteUser(User user) {
+		dbManager.deleteObject(user);
+	}
+	
+	public void storeUser(User user) {
+		dbManager.storeObject(user);
+	}
+	
+	public List<User> getUsers(){
+		List<User> usersList  = new ArrayList<>();
+		for (Object users : dbManager.getObjects(User.class)) {
+			usersList.add((User) users);
+		}
+		return usersList;
+	}
+	
+	public void updateUser(User user) {
+		dbManager.updateObject(user);
+	}
+
+	public UserDTO getDTO(User user){
+		return new UserDTO()
+				.setUsername(user.getUsername())
+				.setPassword("")
+				.setFullName(user.getFullName())
+				.setCountry(user.getCountry())
+				.setDescription(user.getDescription());
+	}
+	
 }

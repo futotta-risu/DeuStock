@@ -14,6 +14,7 @@ import twitter4j.conf.ConfigurationBuilder;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Twitter gateway.
@@ -22,7 +23,7 @@ import java.util.List;
  */
 public class TwitterGateway implements SocialNetworkAPIGateway {
 
-    private final String path ="data/secret_keys/secret_twitter_keys.json";
+    private static final String PATH ="data/secret_keys/secret_twitter_keys.json";
 
     private final TwitterFactory twitterF;
 
@@ -48,7 +49,7 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
             configuration.put("ConsumerKey",System.getenv("twitter_consumer_key"));
             configuration.put("ConsumerSecret",System.getenv("twitter_consumer_key_secret"));
             return configuration;
-        }else return DSJSONUtils.readFile(path);
+        }else return DSJSONUtils.readFile(PATH);
 
     }
 
@@ -64,12 +65,17 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
 
 
     public static TwitterGateway getInstance() {
-        if(instance == null) instance = new TwitterGateway();
+        if(instance == null){
+            instance = new TwitterGateway();
+        }
+
         return instance;
     }
 
     @Override
     public List<SocialNetworkMessage> getMessageList(SocialNetworkQueryData queryData) {
+        Objects.requireNonNull(queryData);
+
         Twitter twitter = this.twitterF.getInstance();
 
         Query query = new Query(queryData.getSearchQuery()+" -filter:retweets");

@@ -4,13 +4,13 @@ import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkQueryDat
 import es.deusto.deustock.util.file.DSJSONUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 
 
 import java.io.IOException;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TwitterGatewayTest {
 
@@ -19,7 +19,7 @@ public class TwitterGatewayTest {
     public void testGetMessageList() {
         SocialNetworkQueryData queryData = new SocialNetworkQueryData();
         queryData.setSearchQuery("\"BTC\"");
-        assertTrue("Cannot get messages from Twitter API", TwitterGateway.getInstance().getMessageList(queryData).size()>0);
+        assertTrue(TwitterGateway.getInstance().getMessageList(queryData).size()>0);
     }
 
     @Test
@@ -38,5 +38,13 @@ public class TwitterGatewayTest {
         assertEquals(configuration.get("AccessToken"),"TestAccessToken");
         assertEquals(configuration.get("AccessTokenSecret"),"TestAccessTokenSecret");
 
+    }
+
+    @Test
+    public void testCannotGetMessageListOnNullQueryData(){
+        assertThrows(
+                NullPointerException.class,
+                () -> TwitterGateway.getInstance().getMessageList(null)
+        );
     }
 }

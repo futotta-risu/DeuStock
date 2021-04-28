@@ -11,54 +11,52 @@ import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Unique;
 
-@PersistenceCapable
+@PersistenceCapable(detachable = "true")
 public class DeuStock {
 
     @NotPersistent
-    BigDecimal price;
+    double price;
     String fullName;
     @Unique
     String acronym;
     String description;
-
     //Price per hours last 24h
     @NotPersistent
     List<HistoricalQuote> history = new ArrayList<>();
+
+    // Don't erase. Compulsory for JSON
+    public  DeuStock(){}
+    public DeuStock(String acronym){
+        setAcronym(acronym);
+    }
 
     public DeuStock(StockQueryData data){
         setAcronym(data.getAcronym());
     }
 
 
-    public BigDecimal getPrice() {
+    public double getPrice() {
         return price;
     }
-    public void setPrice(BigDecimal price) {
+    public DeuStock setPrice(double price) {
         this.price = price;
+        return this;
     }
-    public String getFullName() {
-        return fullName;
+    public String getFullName() { return fullName; }
+    public DeuStock setFullName(String fullName) {
+        this.fullName = fullName; return this;
     }
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public String getAcronym() { return acronym; }
+    public DeuStock setAcronym(String acronym) {
+        this.acronym = acronym; return this;
     }
-    public String getAcronym() {
-        return acronym;
+    public String getDescription() { return description; }
+    public DeuStock setDescription(String description) {
+        this.description = description; return this;
     }
-    public void setAcronym(String acronym) {
-        this.acronym = acronym;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public List<HistoricalQuote> getHistory() {
-        return history;
-    }
-    public void setHistory(List<HistoricalQuote> history) {
-        this.history = history;
+    public List<HistoricalQuote> getHistory() { return history; }
+    public DeuStock setHistory(List<HistoricalQuote> history) {
+        this.history = history; return this;
     }
 
     @Override

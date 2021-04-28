@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.stocks.OperationController">
+   <children>
+      <FlowPane alignment="CENTER" prefHeight="117.0" prefWidth="600.0">
+         <children>
+            <Label fx:id="stockNameLabel" alignment="CENTER" text="StockName">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </FlowPane>
+      <FlowPane alignment="CENTER" hgap="10.0" prefHeight="21.0" prefWidth="600.0">
+         <children>
+            <Label alignment="CENTER" text="Stock Price">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="stockPriceLabel" text="StockPrice" />
+         </children>
+      </FlowPane>
+      <FlowPane alignment="CENTER" hgap="20.0" prefHeight="64.0" prefWidth="600.0">
+         <children>
+            <Label text="StockAmount" />
+            <TextField fx:id="amountTextField" />
+            <Button fx:id="calculateCostButton" mnemonicParsing="false" text="Calculate Cost" />
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </FlowPane>
+      <FlowPane alignment="CENTER" prefHeight="54.0" prefWidth="600.0">
+         <children>
+            <ChoiceBox fx:id="operationSelect" prefWidth="150.0" />
+         </children>
+      </FlowPane>
+      <FlowPane alignment="CENTER" prefHeight="12.0" prefWidth="600.0">
+         <children>
+            <Label text="Yout Balance:" />
+            <Label fx:id="balanceLabel" text="Balance" />
+         </children>
+      </FlowPane>
+      <FlowPane alignment="CENTER" prefHeight="18.0" prefWidth="600.0">
+         <children>
+            <Label text="Operation Cost: " />
+            <Label fx:id="costLabel" text="Cost" />
+         </children>
+      </FlowPane>
+      <FlowPane alignment="CENTER" hgap="10.0" prefHeight="46.0" prefWidth="600.0">
+         <children>
+            <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel" />
+            <Button fx:id="operateButton" mnemonicParsing="false" text="Operate" />
+         </children>
+      </FlowPane>
+   </children>
+</VBox>

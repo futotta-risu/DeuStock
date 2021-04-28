@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <USER user_id='1' username='usernameTest1' password='passTest1' fullname='fullNameTest1' description='descriptionTest1' country='SPAIN'/>
+</dataset>

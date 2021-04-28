@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
@@ -17,8 +20,8 @@
                   <Font name="System Bold" size="38.0" />
                </font>
             </Label>
-            <Button fx:id="downloadButton" layoutX="484.0" layoutY="355.0" mnemonicParsing="false" text="Descargar Reporte" />
-            <Label fx:id="priceLabel" alignment="CENTER_RIGHT" layoutX="446.0" layoutY="33.0" prefHeight="37.0" prefWidth="167.0" text="Precio">
+            <Button fx:id="downloadButton" layoutX="463.0" layoutY="517.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="141.0" text="Descargar Reporte" />
+            <Label fx:id="priceLabel" alignment="CENTER_RIGHT" layoutX="650.0" layoutY="33.0" prefHeight="37.0" prefWidth="167.0" text="Precio">
                <font>
                   <Font size="30.0" />
                </font>
@@ -33,8 +36,17 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Line endX="476.0" layoutX="136.0" layoutY="75.0" startX="-110.0" />
-            <Button fx:id="backButton" layoutX="39.0" layoutY="355.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Volver" />
+            <Line endX="680.0" layoutX="136.0" layoutY="75.0" startX="-110.0" />
+            <Button fx:id="backButton" layoutX="249.0" layoutY="517.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="141.0" text="Volver" />
+            <LineChart fx:id="lineChart" layoutX="36.0" layoutY="168.0" prefHeight="337.0" prefWidth="768.0">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" fx:id="xAxis" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis fx:id="yAxis" side="LEFT" />
+              </yAxis>
+            </LineChart>
+            <Button fx:id="buyButton" layoutX="650.0" layoutY="517.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="141.0" text="Buy" />
          </children>
     </AnchorPane>
   </children>

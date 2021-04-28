@@ -3,19 +3,18 @@ package es.deusto.deustock.client.gateways;
 import es.deusto.deustock.client.data.Stock;
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.data.help.FAQQuestion;
+import es.deusto.deustock.client.data.stocks.StockHistory;
 import es.deusto.deustock.client.log.DeuLogger;
 import es.deusto.deustock.client.net.RESTVars;
-import es.deusto.deustock.client.visual.help.FAQLine;
 
-import org.glassfish.jersey.client.ClientResponse;
-import org.json.JSONArray;
+import es.deusto.deustock.client.simulation.investment.operations.OperationType;
+import org.apache.maven.surefire.shade.booter.org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.Link;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -48,12 +47,12 @@ public class DeustockGateway {
 
         return response.readEntity(Stock.class);
     }
-    
     public List<Stock> getStockList(String listType){
         Response  response = getHostWebTarget().path("stock")
                 .path("list").path(listType).request(MediaType.APPLICATION_JSON).get();
 
-        return response.readEntity(new GenericType<List<Stock>>(){});
+        return response.readEntity(new GenericType<>() {
+        });
     }
 
     public double getTwitterSentiment(String searchQuery){
@@ -77,13 +76,18 @@ public class DeustockGateway {
         return questionList;
     }
     
-    public boolean register(String username, String password, String fullName, Date birthDate, String aboutMe, String country) throws UnsupportedEncodingException, NoSuchAlgorithmException {	
+    public boolean register(String username, String password, String fullName, String aboutMe, String country){
+
     	Response response = getHostWebTarget().path("users").path("register")
-    			.request("application/json")
-                .post(Entity.entity(
-                        new User(username, getEncrypt(password), fullName, birthDate, aboutMe, country)
-                        , MediaType.APPLICATION_JSON)
-                );
+			.request("application/json")
+            .post(Entity.entity(new User()
+                        .setUsername(username)
+                        .setPassword(getEncrypt(password))
+                        .setFullName(fullName)
+                        .setDescription(aboutMe)
+                        .setCountry(country)
+                  , MediaType.APPLICATION_JSON)
+            );
 
         return response.getStatus() == 200;
     }
@@ -139,6 +143,80 @@ public class DeustockGateway {
         Response response = getHostWebTarget().path("users").path("update")
                 .request("application/json")
                 .post(Entity.entity(new User(username, "pass",fullName,birthDate,aboutMe, country), MediaType.APPLICATION_JSON));
+    public File getReport(String acronym, String interval, String path){
+        Response response = getHostWebTarget()
+                .path("reports").path(acronym).path(interval)
+                .request("application/pdf")
+                .get();
+
+        InputStream is = response.readEntity(InputStream.class);
+        File downloadfile = new File(path + "/" +acronym + " " + Calendar.getInstance().getTime().toString() + ".pdf");
+        byte[] byteArray = new byte[0];
+        try {
+            byteArray = IOUtils.toByteArray(is);
+            FileOutputStream fos = new FileOutputStream(downloadfile);
+            fos.write(byteArray);
+            fos.flush();
+            fos.close();
+            IOUtils.closeQuietly(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return downloadfile;
+    }
+
+    public List<StockHistory> getHoldings(String username){
+        Response response = getHostWebTarget()
+                .path("user").path(username).path("holdings")
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+
+        return response.readEntity(new GenericType<>(){});
+    }
+    
+    public boolean resetHoldings(String username) {
+    	Response response = getHostWebTarget()
+    			.path("user").path(username).path("holdings").path("reset")
+    			.request().get();
+    	return response.getStatus() == 200;
+    }
+
+    public double getBalance(String username){
+        Response response = getHostWebTarget()
+                .path("holdings").path(username).path("balance")
+                .request(MediaType.TEXT_PLAIN)
+                .get();
+
+        return Double.parseDouble(response.readEntity(String.class));
+    }
+
+    public void openOperation(OperationType operationType, Stock stock, String username, double amount){
+        if(operationType == null){
+            throw new IllegalArgumentException("Invalid operation type");
+        }
+        if(amount < 0){
+            throw new IllegalArgumentException("Is not posible to set negative ammount");
+        }
+        if(amount == 0){
+            return;
+        }
+
+        Response response = getHostWebTarget()
+                .path("stock/operation/open")
+                .path(operationType.name())
+                .path(stock.getAcronym())
+                .path(username)
+                .path(String.valueOf(amount))
+                .request().get();
+    }
+
+    public void closeOperation(String stockHistoryID){
+        Response response = getHostWebTarget()
+                .path("stock/operation/close")
+                .path(stockHistoryID)
+                .request().get();
+    }
 
         System.out.println(response);
         return response.getStatus() == 200;

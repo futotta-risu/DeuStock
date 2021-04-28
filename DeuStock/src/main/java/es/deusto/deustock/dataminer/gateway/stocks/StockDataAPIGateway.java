@@ -3,7 +3,6 @@ package es.deusto.deustock.dataminer.gateway.stocks;
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +12,24 @@ import java.util.List;
  * @author Erik B. Terres
  */
 public interface StockDataAPIGateway {
-	DeuStock getStockData(StockQueryData queryData, boolean withHistoric) throws StockNotFoundException;
-	HashMap<String, DeuStock> getStocksGeneralData(List<StockQueryData> queryData);
+
+	/**
+	 * Gets the Stock information from the API, converts it to a DeuStock class and returns it.
+	 *
+	 * @param queryData Search Query Data
+	 * @return Stock queried
+	 *
+	 * @throws StockNotFoundException If the acronym was not found
+	 */
+	DeuStock getStockData(StockQueryData queryData) throws StockNotFoundException;
+
+	/**
+	 * Gets the Stocks information from the API.
+	 *
+	 * The stocks not found will be skipped
+	 *
+	 * @param stockNames Names of the stocks
+	 * @return Stock list queried
+	 */
+	HashMap<String, DeuStock> getStocksData(List<String> stockNames);
 }
