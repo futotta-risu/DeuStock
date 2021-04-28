@@ -16,7 +16,7 @@ import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import es.deusto.deustock.data.User;
 
@@ -29,7 +29,6 @@ import es.deusto.deustock.data.User;
 public class UserDAOIT extends DBTestCase{
 	
 	private final String[] COLUMNS = {"USER_ID", "COUNTRY", "DESCRIPTION", "FULLNAME", "PASSWORD", "USERNAME"};
-
   
 	public UserDAOIT(String name) {
         super(name);

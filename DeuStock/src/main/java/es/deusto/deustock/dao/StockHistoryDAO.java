@@ -23,6 +23,7 @@ public class StockHistoryDAO {
 
     private StockHistoryDAO(){
         super();
+        dbManager = DBManager.getInstance();
     }
 
     public void setDbManager(IDBManager dbManager){
