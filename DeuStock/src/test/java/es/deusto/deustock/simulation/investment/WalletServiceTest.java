@@ -152,7 +152,7 @@ class WalletServiceTest {
         walletService.setStockHistoryDAO(stockHistoryDAO);
         walletService.setWallet(wallet);
 
-        DeuStock stock = new DeuStock("BB").setPrice(200);
+        DeuStock stock = new DeuStock("BB").setPrice(2000);
 
         Operation operation = new LongOperation(stock, 4);
 
@@ -160,7 +160,7 @@ class WalletServiceTest {
 
         // Then
         assertThrows(OperationException.class, () -> walletService.openOperation(operation));
-        assertEquals(4200, wallet.getMoney());
+        assertEquals(5000, wallet.getMoney());
     }
 
     @Test
@@ -188,8 +188,7 @@ class WalletServiceTest {
         // When
 
         // Then
-        assertThrows(
-                OperationException.class,
+        assertDoesNotThrow(
                 () -> walletService.closeOperation(operation, stockHistory)
         );
         assertEquals(5200, wallet.getMoney());
