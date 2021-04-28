@@ -3,6 +3,7 @@ package es.deusto.deustock.simulation.investment;
 import es.deusto.deustock.dao.StockHistoryDAO;
 import es.deusto.deustock.dao.WalletDAO;
 import es.deusto.deustock.data.DeuStock;
+import es.deusto.deustock.data.dto.stocks.StockHistoryDTO;
 import es.deusto.deustock.data.stocks.StockHistory;
 import es.deusto.deustock.data.stocks.Wallet;
 import es.deusto.deustock.simulation.investment.exceptions.OperationException;
@@ -10,8 +11,10 @@ import es.deusto.deustock.simulation.investment.operations.LongOperation;
 import es.deusto.deustock.simulation.investment.operations.Operation;
 import es.deusto.deustock.simulation.investment.operations.OperationType;
 import org.junit.jupiter.api.Test;
+import yahoofinance.Stock;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -104,7 +107,7 @@ class WalletServiceTest {
         field.set(walletService, walletDAO);
 
         //when
-        walletService.setWallet(wallet);
+        walletService.setWallet("TestWalletID");
 
         //then
         final Field walletField = walletService.getClass().getDeclaredField("wallet");
@@ -192,6 +195,31 @@ class WalletServiceTest {
                 () -> walletService.closeOperation(operation, stockHistory)
         );
         assertEquals(5800, wallet.getMoney());
+    }
+
+    @Test
+    void testGetHoldings() {
+        // Given
+        Wallet wallet = new Wallet();
+        DeuStock stock = new DeuStock("BB").setPrice(200);
+        wallet.addHistory(
+                new StockHistory(wallet, stock, 45, 200, OperationType.LONG)
+        );
+
+        wallet.addHistory(
+                new StockHistory(wallet, stock, 40, 160, OperationType.SHORT)
+        );
+
+        WalletService walletService = new WalletService();
+        walletService.setWallet(wallet);
+
+        // When
+        List<StockHistoryDTO> stockHistory = walletService.getHoldings();
+
+        // Then
+        assertEquals(2, stockHistory.size());
+        assertNotNull(stockHistory.get(0));
+        assertNotNull(stockHistory.get(1));
     }
 
 }

@@ -15,6 +15,49 @@ import static org.junit.jupiter.api.Assertions.*;
 class OperationFactoryTest {
 
     @Test
+    void testCreateFailsOnNullStock() {
+        // Given
+        OperationFactory factory = OperationFactory.getInstance();
+
+        // When
+
+        // Then
+        assertThrows(
+                NullPointerException.class,
+                () -> factory.create(OperationType.LONG, null, 20)
+        );
+    }
+
+    @Test
+    void testCreateFailsOnZeroOrNegativeAmount() {
+        // Given
+        OperationFactory factory = OperationFactory.getInstance();
+        DeuStock stock = new DeuStock("BB").setPrice(20);
+        // When
+
+        // Then
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> factory.create(OperationType.LONG, stock, -1)
+        );
+    }
+
+    @Test
+    void createNullThrowsIllegalArgumentException() {
+        // Given
+        OperationFactory factory = OperationFactory.getInstance();
+        DeuStock stock = new DeuStock("BB").setPrice(20);
+
+        // When
+
+        // Then
+        assertThrows(
+                NullPointerException.class,
+                () -> factory.create(null, stock, 20)
+        );
+    }
+
+    @Test
     void createLONGReturnsInstanceOfLongOperation() {
         // Given
         OperationFactory factory = OperationFactory.getInstance();
@@ -40,18 +83,5 @@ class OperationFactoryTest {
         assertTrue(operation instanceof ShortOperation);
     }
 
-    @Test
-    void createNullThrowsIllegalArgumentException() {
-        // Given
-        OperationFactory factory = OperationFactory.getInstance();
-        DeuStock stock = new DeuStock("BB").setPrice(20);
 
-        // When
-
-        // Then
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> factory.create(null, stock, 20)
-        );
-    }
 }

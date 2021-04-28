@@ -23,6 +23,6 @@ public class ShortOperation extends Operation{
 
     @Override
     public OperationType getType() {
-        return null;
+        return OperationType.SHORT;
     }
 }

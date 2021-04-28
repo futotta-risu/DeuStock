@@ -18,10 +18,6 @@ public class OperationFactory {
     }
 
     public Operation create(OperationType operation, DeuStock stock, double amount){
-        if(operation == null){
-            throw new IllegalArgumentException("Invalid operationType");
-        }
-
         return switch (operation) {
             case LONG -> new LongOperation(stock, amount);
             case SHORT -> new ShortOperation(stock, amount);

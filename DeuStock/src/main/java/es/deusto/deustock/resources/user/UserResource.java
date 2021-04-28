@@ -101,7 +101,6 @@ public class UserResource {
 		}
 
 		User user = userDAO.create(userDTO);
-
 		userDAO.storeUser(user);
 
 		return Response.status(200).build();
