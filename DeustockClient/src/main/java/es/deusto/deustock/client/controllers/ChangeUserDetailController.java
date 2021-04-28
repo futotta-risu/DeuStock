@@ -94,7 +94,7 @@ public class ChangeUserDetailController implements DSGenericController{
 			System.out.println(country);
 			System.out.println("################");
 
-			if(!fullName.equals("") && birthDate != null && !aboutMe.equals("") ) {
+			if(!fullName.equals("")  && !aboutMe.equals("") ) {
 				if(dg.updateUser(username, fullName, birthDate, aboutMe, country)) {
 					MainController.getInstance().loadAndChangeScene(
 							ViewPaths.UserDetailViewPath

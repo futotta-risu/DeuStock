@@ -35,6 +35,8 @@ public class UserDetailController implements DSGenericController{
     
     @FXML
     Button editProfileButton;
+
+    @FXML
     Button resetWalletButton;
 
     public  UserDetailController(){}
@@ -46,8 +48,9 @@ public class UserDetailController implements DSGenericController{
 
     @Override
     public void setParams(HashMap<String, Object> params) {
-        if(params.containsKey("username"))
+        if(params.containsKey("username")) {
             this.username = String.valueOf(params.get("username"));
+        }
 
         initRoot();
 

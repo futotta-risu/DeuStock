@@ -146,9 +146,11 @@ public class DeustockGateway {
                 .setCountry(country)
                 .setFullName(fullName);
 
-        Response response = getHostWebTarget().path("users").path("update")
+        Response response = getHostWebTarget().path("users/details/change")
                 .request("application/json")
                 .post(Entity.entity(user, MediaType.APPLICATION_JSON));
+
+        System.out.println("STATUS : " + response.getStatus());
 
         return response.getStatus() == 200;
     }

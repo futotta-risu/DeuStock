@@ -69,7 +69,7 @@ public class UserResource {
 		}
 
 		UserDTO userDTO = userDAO.getDTO(user);
-		System.out.println(userDTO);
+
 		return Response
 				.status(Response.Status.OK)
 				.entity(userDTO)
