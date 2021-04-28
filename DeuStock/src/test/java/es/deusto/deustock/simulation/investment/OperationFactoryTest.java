@@ -51,7 +51,7 @@ class OperationFactoryTest {
         // Then
         assertThrows(
                 IllegalArgumentException.class,
-                () -> factory.create(OperationType.SHORT, stock, 20)
+                () -> factory.create(null, stock, 20)
         );
     }
 }
