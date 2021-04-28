@@ -12,6 +12,7 @@ import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
 import es.deusto.deustock.simulation.investment.WalletService;
 
+import es.deusto.deustock.simulation.investment.exceptions.OperationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -44,7 +45,7 @@ class OpenOperationResourceTest {
     }
 
     @Test
-    void openOperation() throws StockNotFoundException {
+    void openOperation() throws StockNotFoundException, OperationException {
         Wallet wallet = new Wallet();
         User user = new User("TestUser","TestPass");
         user.setWallet(wallet);
