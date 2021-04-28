@@ -1,14 +1,13 @@
 package es.deusto.deustock.dao;
 
-import es.deusto.deustock.data.DeuStock;
 import net.bytebuddy.dynamic.scaffold.MethodGraph;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import javax.ws.rs.core.Link;
+import es.deusto.deustock.data.DeuStock;
 
-import java.util.Collections;
+
 import java.util.LinkedList;
 import java.util.List;
 
