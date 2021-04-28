@@ -7,6 +7,8 @@ import yahoofinance.histquotes.HistoricalQuote;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,10 +26,9 @@ public class StockTest{
         stock.setAcronym("AC");
         stock.setDescription("Description1");
 
-        HistoricalQuote hq1 = new HistoricalQuote();
-        hq1.setClose(BigDecimal.valueOf(600));
-        HistoricalQuote hq2 = new HistoricalQuote();
-        hq2.setClose(BigDecimal.valueOf(800));
+        HistoricalQuote hq1 = new HistoricalQuote("symbol", Calendar.getInstance(), BigDecimal.valueOf(300), BigDecimal.valueOf(400), BigDecimal.valueOf(100), BigDecimal.valueOf(900), BigDecimal.valueOf(350), Long.parseLong("200"));
+        history.add(hq1);
+        HistoricalQuote hq2 = new HistoricalQuote("symbol", Calendar.getInstance(), BigDecimal.valueOf(200), BigDecimal.valueOf(300), BigDecimal.valueOf(100), BigDecimal.valueOf(1000), BigDecimal.valueOf(450), Long.parseLong("400"));
         history.add(hq2);
 
         stock.setHistory(history);
@@ -100,21 +101,13 @@ public class StockTest{
             result += Double.parseDouble(hq.getClose().toString());
         }
         result = result / this.history.size();
-        assertEquals(700, result);
-        /**TODO
-         * 700?
-         *
-         */
+        assertEquals(950, result);
     }
 
-    /**TODO
-     * test calcular SD
-     */
 
-    /*
-	public double calcularSD(){
+    @Test
+    public void testCalculateSd(){
         double result = 0.0, standardDeviation = 0.0;
-
         for(HistoricalQuote hq : this.history) {
             result += Double.parseDouble(hq.getClose().toString());
         }
@@ -123,8 +116,7 @@ public class StockTest{
             standardDeviation += Math.pow(Double.parseDouble(hq.getClose().toString()) - mean, 2);
         }
 
-        return Math.sqrt(standardDeviation/this.history.size());
+        assertEquals(50, Math.sqrt(standardDeviation/this.history.size()));
     }
-     */
 
 }

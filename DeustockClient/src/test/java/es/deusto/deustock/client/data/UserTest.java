@@ -101,8 +101,6 @@ class UserTest{
                 .setFullName("Full Name3");
 
         user.updateInfo(user3);
-        assertEquals("username3", user.getUsername());
-        assertEquals("password3", user.getPassword());
         assertEquals("Full Name3", user.getFullName());
         assertEquals("SPAIN", user.getCountry());
         assertEquals("descriptions3", user.getDescription());
@@ -111,8 +109,7 @@ class UserTest{
 
     @Test
     public void testToString() {
-        String expected =  "User [username=username, password=password, fullName=Full Name, birthDate=2012-2-1," +
-                "country=SPAIN, description=descriptions, registerDate=2016-01-24, lastActivity=2021-03-23]";
+        String expected =  "User [username=username, fullName=Full Name, country=SPAIN, description=descriptions]";
         assertEquals(expected, user.toString());
     }
 }
