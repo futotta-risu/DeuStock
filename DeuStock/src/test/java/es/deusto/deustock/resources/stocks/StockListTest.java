@@ -1,79 +1,108 @@
 package es.deusto.deustock.resources.stocks;
 
 import es.deusto.deustock.data.DeuStock;
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.test.JerseyTest;
-import org.glassfish.jersey.test.TestProperties;
-import org.junit.jupiter.api.*;
+import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
+import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
+import es.deusto.deustock.dataminer.gateway.stocks.gateways.YahooFinanceGateway;
 
-import javax.ws.rs.core.Application;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import yahoofinance.Stock;
+
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
-
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Erik B. Terres
  */
-@Tag("server-resource")
-public class StockListTest extends JerseyTest {
+public class StockListTest {
+
+
+    private HashMap<String, DeuStock> stocks;
+    private DeuStock stockBB, stockAMZN;
 
     @BeforeEach
-    @Override
-    public void setUp() throws Exception {
-        super.setUp();
-    }
+    void setUp(){
+        stockBB = new DeuStock("BB").setPrice(10);
+        stockAMZN = new DeuStock("AMZN").setPrice(789);
 
-    @AfterEach
-    @Override
-    public void tearDown() throws Exception {
-        super.tearDown();
-    }
+        stocks = new HashMap<>();
 
-    @Override
-    protected Application configure() {
-        forceSet(TestProperties.CONTAINER_PORT, "0");
-        return new ResourceConfig(StockList.class);
+        stocks.put("BB", stockBB);
+        stocks.put("AMZN", stockAMZN);
     }
 
     @Test
     @DisplayName("Test get stock list returns status 200")
     public void testGetStockListReturns200(){
-        Response response = target("stock/list")
-                .path("small")
-                .request()
-                .get();
+        // Given
+        YahooFinanceGateway stockGateway = mock(YahooFinanceGateway.class);
+        StockDataGatewayFactory factory = mock(StockDataGatewayFactory.class);
+        when(stockGateway.getStocksData(anyList())).thenReturn(stocks);
+        when(factory.create(StockDataGatewayEnum.YahooFinance)).thenReturn(stockGateway);
 
+        StockList stockList = new StockList();
+        stockList.setStockDataGatewayFactory(factory);
+
+
+        // When
+        Response response = stockList.getStock("small");
+
+        // Then
         assertEquals(200, response.getStatus());
     }
+
 
     @Test
     @DisplayName("Test get stock returns stock list")
     public void testGetStockReturnsStockList(){
-        Response response = target("stock/list")
-                .path("small")
-                .request()
-                .get();
+        // Given
+        YahooFinanceGateway stockGateway = mock(YahooFinanceGateway.class);
+        StockDataGatewayFactory factory = mock(StockDataGatewayFactory.class);
+        when(stockGateway.getStocksData(anyList())).thenReturn(stocks);
+        when(factory.create(StockDataGatewayEnum.YahooFinance)).thenReturn(stockGateway);
 
-        ArrayList<DeuStock> stocks = response.readEntity(new GenericType<>() {});
+        StockList stockListResource = new StockList();
+        stockListResource.setStockDataGatewayFactory(factory);
 
-        assertTrue(stocks.size() > 0);
+        // When
+        Response response = stockListResource.getStock("small");
+
+        ArrayList<DeuStock> stockList = (ArrayList<DeuStock>) response.getEntity();
+
+        // Then
+        assertEquals(2, stockList.size());
+        assertTrue(stockList.stream().anyMatch(item -> item.equals(stockBB)));
+        assertTrue(stockList.stream().anyMatch(item -> item.equals(stockAMZN)));
     }
 
     @Test
     @DisplayName("Test get stock returns empty list on unknown stock list")
     public void testGetStockReturnsEmptyListOnUnknownStockList(){
-        Response response = target("stock/list")
-                .path("fakeList")
-                .request()
-                .get();
+        // Given
+        YahooFinanceGateway stockGateway = mock(YahooFinanceGateway.class);
+        StockDataGatewayFactory factory = mock(StockDataGatewayFactory.class);
+        when(stockGateway.getStocksData(anyList())).thenReturn(stocks);
+        when(factory.create(StockDataGatewayEnum.YahooFinance)).thenReturn(stockGateway);
 
-        ArrayList<DeuStock> stocks = response.readEntity(new GenericType<>() {});
+        StockList stockListResource = new StockList();
+        stockListResource.setStockDataGatewayFactory(factory);
 
-        assertTrue(stocks.isEmpty());
+        // When
+        Response response = stockListResource.getStock("Unknown");
+
+        // Then
+        assertEquals(401, response.getStatus());
     }
-
-
 }

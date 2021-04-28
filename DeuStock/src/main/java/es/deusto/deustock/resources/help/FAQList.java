@@ -20,6 +20,8 @@ public class FAQList {
 
     private static final String PATH ="data/faq_list.json";
 
+    public FAQList(){}
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFAQList() {
@@ -31,7 +33,6 @@ public class FAQList {
 
         } catch (IOException | ParseException e) {
         	DeuLogger.logger.error("Could not get FAQList due to problems reading file: " + PATH);
-            e.printStackTrace();
         }
         return Response.status(401).build();
     }

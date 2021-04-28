@@ -11,6 +11,7 @@ import es.deusto.deustock.simulation.investment.operations.LongOperation;
 import es.deusto.deustock.simulation.investment.operations.Operation;
 import es.deusto.deustock.simulation.investment.operations.OperationType;
 import org.junit.jupiter.api.Test;
+import yahoofinance.Stock;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -201,9 +202,8 @@ class WalletServiceTest {
         Wallet wallet = new Wallet();
         DeuStock stock = new DeuStock("BB").setPrice(200);
         wallet.addHistory(
-                new StockHistory(wallet, stock, 45, 200, OperationType.LONG)
+                new StockHistory(wallet, stock, 45, 200, OperationType.LONG).setClosed(true)
         );
-
         wallet.addHistory(
                 new StockHistory(wallet, stock, 40, 160, OperationType.SHORT)
         );
@@ -215,9 +215,8 @@ class WalletServiceTest {
         List<StockHistoryDTO> stockHistory = walletService.getHoldings();
 
         // Then
-        assertEquals(2, stockHistory.size());
+        assertEquals(1, stockHistory.size());
         assertNotNull(stockHistory.get(0));
-        assertNotNull(stockHistory.get(1));
     }
 
 }

@@ -1,56 +1,68 @@
 package es.deusto.deustock.resources.help;
 
+import es.deusto.deustock.util.file.DSJSONUtils;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.test.JerseyTest;
-
 import org.glassfish.jersey.test.TestProperties;
 import org.json.JSONObject;
-
-import org.junit.jupiter.api.*;
+import org.json.simple.parser.ParseException;
+import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mockStatic;
 
 /**
  * @author Erik B. Terres
  */
-@Tag("server-resource")
-public class FAQListTest extends JerseyTest {
-
-    @BeforeEach
-    @Override
-    public void setUp() throws Exception {
-        super.setUp();
-    }
-
-    @AfterEach
-    @Override
-    public void tearDown() throws Exception {
-        super.tearDown();
-    }
-
-    @Override
-    protected Application configure() {
-        forceSet(TestProperties.CONTAINER_PORT, "0");
-        return new ResourceConfig(FAQList.class);
-    }
+public class FAQListTest {
 
     @Test
-    public void testFAQReturns200(){
-        Response response = target("help/faq/list").request().get();
+    public void testFAQReturns200()  {
+        // Given
+        FAQList faqList = new FAQList();
 
+        // When
+        Response response = faqList.getFAQList();
+
+        // Then
         assertEquals(200, response.getStatus());
     }
 
     @Test
     public void testFAQReturnsQuestions()  {
-        Response response = target("help/faq/list").request().get();
+        // Given
+        FAQList faqList = new FAQList();
 
-        JSONObject faq = new JSONObject(response.readEntity(String.class));
+        // When
+        Response response = faqList.getFAQList();
+        JSONObject faq = new JSONObject((String) response.getEntity());
 
+        // Then
         assertTrue(faq.getJSONArray("questions").length() > 0);
     }
 
+
+    @Test
+    public void testFAQThrowsErrorOnWrongPath() {
+        try (MockedStatic<DSJSONUtils> jsonMock= mockStatic(DSJSONUtils.class)) {
+            // Given
+            FAQList faqList = new FAQList();
+
+            jsonMock.when(() -> DSJSONUtils.readFile(anyString())).thenThrow(
+                    new IOException("Could not parse file")
+            );
+            // When
+            Response response = faqList.getFAQList();
+
+            // Then
+            assertEquals(401, response.getStatus());
+        }
+    }
 }
