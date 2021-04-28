@@ -9,40 +9,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.doNothing;
-
-
-
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.any;
 
-
-
-import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.test.JerseyTest;
-import org.glassfish.jersey.test.TestProperties;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import es.deusto.deustock.dao.StockHistoryDAO;
-import es.deusto.deustock.data.stocks.StockHistory;
-import es.deusto.deustock.data.stocks.Wallet;
 import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.dao.WalletDAO;
-import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.dto.stocks.StockHistoryDTO;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
-import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
 import es.deusto.deustock.simulation.investment.OperationFactory;
 import es.deusto.deustock.simulation.investment.WalletService;
 import es.deusto.deustock.simulation.investment.operations.Operation;
-import es.deusto.deustock.simulation.investment.operations.OperationType;
 
 /**
  * @author landersanmillan

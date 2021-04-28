@@ -22,6 +22,17 @@ import javax.ws.rs.core.Response;
 @Path("stock/detail/{query}/{interval}")
 public class StockDetail {
 
+    private StockDataAPIGateway stockGateway;
+    private StockDataGatewayFactory stockGatewayFactory;
+
+    public StockDetail() {
+    	this.stockGatewayFactory = StockDataGatewayFactory.getInstance();
+    	this.stockGateway = this.stockGatewayFactory.create(StockDataGatewayEnum.YahooFinance);
+    }
+    
+    public void setStockGateway(StockDataAPIGateway stockGateway) { this.stockGateway = stockGateway; }
+    public void setStockGatewayFactory(StockDataGatewayFactory stockGatewayFactory) { this.stockGatewayFactory = stockGatewayFactory; }
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getStock(
@@ -32,9 +43,6 @@ public class StockDetail {
             return Response.status(401).build();
         }
 
-        StockDataAPIGateway gateway = StockDataGatewayFactory
-                .getInstance().create(StockDataGatewayEnum.YahooFinance);
-
         StockQueryData.Interval tempInterval;
 
         try{
@@ -44,9 +52,10 @@ public class StockDetail {
             return Response.status(401).build();
         }
 
+        
         DeuStock stock;
         try {
-            stock = gateway.getStockData(
+            stock = stockGateway.getStockData(
                     new StockQueryData(stockName,tempInterval).setWithHistoric(true)
             );
         } catch (StockNotFoundException e) {
