@@ -36,32 +36,38 @@ import java.util.stream.Collectors;
 public class HoldingsListResources {
 
     private UserDAO userDAO;
+    private WalletDAO walletDAO;
+    private StockHistoryDAO stockHistoryDAO;
+    private StockHistoryDTO stockHistoryDTO;
     private WalletService walletService;
     private StockDataAPIGateway stockGateway;
     private OperationFactory operationFactory;
+    private Operation openOperation;
+    private Operation closeOperation;
+
 
     public HoldingsListResources(){
         userDAO = UserDAO.getInstance();
+        walletDAO = WalletDAO.getInstance();
         walletService = new WalletService();
         stockGateway = StockDataGatewayFactory.getInstance().create(StockDataGatewayEnum.YahooFinance);
         operationFactory = OperationFactory.getInstance();
+        stockHistoryDAO = StockHistoryDAO.getInstance();
+        openOperation = null;
+        closeOperation = null;
+        stockHistoryDTO = null;
     }
 
-    public void setUserDAO(UserDAO userDAO){
-        this.userDAO = userDAO;
-    }
+    public void setUserDAO(UserDAO userDAO) { this.userDAO = userDAO; }
+    public void setWalletDAO(WalletDAO walletDAO) { this.walletDAO = walletDAO; }
+    public void setWalletService(WalletService walletService) { this.walletService = walletService; }
+    public void setStockGateway(StockDataAPIGateway stockDataAPIGateway) { this.stockGateway = stockDataAPIGateway; }
+    public void setOperationFactory(OperationFactory operationFactory) { this.operationFactory = operationFactory; }
+    public void setStockHistoryDAO(StockHistoryDAO stockHisoryDAO) { this.stockHistoryDAO = stockHistoryDAO; }
+    public void setStockHistoryDTO(StockHistoryDTO stockHisoryDTO) { this.stockHistoryDTO = stockHistoryDTO; }
+    public void setOpenOperation(Operation openOperation) { this.openOperation = openOperation; }
+    public void setCloseOperation(Operation closeOperation) { this.closeOperation = closeOperation; }
 
-    public void setWalletService(WalletService walletService) {
-        this.walletService = walletService;
-    }
-
-    public void setStockGateway(StockDataAPIGateway stockDataAPIGateway){
-        this.stockGateway = stockDataAPIGateway;
-    }
-
-    public void setOperationFactory(OperationFactory operationFactory){
-        this.operationFactory = operationFactory;
-    }
 
     @Path("holdings")
     @GET
@@ -75,17 +81,17 @@ public class HoldingsListResources {
         Wallet wallet = user.getWallet();
 
         walletService.setWallet(wallet);
-        List<StockHistory> holdingsN = StockHistoryDAO.getInstance().getStockHistory(wallet.getId());
+        List<StockHistory> holdingsN = stockHistoryDAO.getStockHistory(wallet.getId());
         holdingsN = holdingsN.stream().filter(c -> !c.isClosed()).collect(Collectors.toList());
-        List<StockHistoryDTO> holdings = StockHistoryDAO.getInstance().getDTO(holdingsN);
+        List<StockHistoryDTO> holdings = stockHistoryDAO.getDTO(holdingsN);
 
         for(StockHistoryDTO stockHistoryDTO : holdings){
             DeuStock stock = new DeuStock(stockHistoryDTO.getSymbol())
                     .setPrice(stockHistoryDTO.getOpenPrice());
 
-            OperationType operation = stockHistoryDTO.getOperation();
+            OperationType opType = stockHistoryDTO.getOperation();
 
-            Operation openOperation = operationFactory.create(operation, stock, stockHistoryDTO.getAmount());
+            openOperation = operationFactory.create(opType, stock, stockHistoryDTO.getAmount());
 
             stockHistoryDTO.setOpenValue(openOperation.getOpenPrice());
 
@@ -94,7 +100,7 @@ public class HoldingsListResources {
                             .setWithHistoric(false)
             );
             // Close y Actual
-            Operation closeOperation = operationFactory.create(stockHistoryDTO.getOperation(), stock, stockHistoryDTO.getAmount());
+            closeOperation = operationFactory.create(stockHistoryDTO.getOperation(), stock, stockHistoryDTO.getAmount());
             stockHistoryDTO.setActualPrice(stock.getPrice())
                     .setActualValue(closeOperation.getClosePrice());
 
@@ -113,14 +119,14 @@ public class HoldingsListResources {
 			return Response.status(401).build();
 		}
 
-		Wallet wallet = WalletDAO.getInstance().getWallet(user.getWallet().getId());
-		List<StockHistory> shList = StockHistoryDAO.getInstance().getStockHistory(user.getWallet().getId());
+		Wallet wallet = walletDAO.getWallet(user.getWallet().getId());
+		List<StockHistory> shList = stockHistoryDAO.getStockHistory(user.getWallet().getId());
 		for (StockHistory stockHistory : shList) {
 			stockHistory.setClosed(true);
-			StockHistoryDAO.getInstance().update(stockHistory);
+			stockHistoryDAO.update(stockHistory);
 		}
 		wallet.setMoney(5000);
-		WalletDAO.getInstance().update(wallet);
+		walletDAO.update(wallet);
 
 		return Response.status(200).build();
 	}
