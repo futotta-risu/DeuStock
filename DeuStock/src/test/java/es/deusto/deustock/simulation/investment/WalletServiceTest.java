@@ -191,7 +191,7 @@ class WalletServiceTest {
         assertDoesNotThrow(
                 () -> walletService.closeOperation(operation, stockHistory)
         );
-        assertEquals(5200, wallet.getMoney());
+        assertEquals(5800, wallet.getMoney());
     }
 
 }

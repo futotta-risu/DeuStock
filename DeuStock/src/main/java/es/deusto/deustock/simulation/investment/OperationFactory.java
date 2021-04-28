@@ -2,10 +2,7 @@ package es.deusto.deustock.simulation.investment;
 
 
 import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.simulation.investment.operations.Operation;
-import es.deusto.deustock.simulation.investment.operations.OperationType;
-import es.deusto.deustock.simulation.investment.operations.LongOperation;
-import es.deusto.deustock.simulation.investment.operations.StockOperation;
+import es.deusto.deustock.simulation.investment.operations.*;
 
 public class OperationFactory {
 
@@ -21,9 +18,13 @@ public class OperationFactory {
     }
 
     public Operation create(OperationType operation, DeuStock stock, double amount){
+        if(operation == null){
+            throw new IllegalArgumentException("Invalid operationType");
+        }
+
         return switch (operation) {
             case LONG -> new LongOperation(stock, amount);
-            case SHORT -> new LongOperation(stock, amount);
+            case SHORT -> new ShortOperation(stock, amount);
         };
 
     }
