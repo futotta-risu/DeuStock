@@ -34,6 +34,9 @@ public class UserDetailController implements DSGenericController{
     Button accountDeleteButton;
     
     @FXML
+    Button editProfileButton;
+
+    @FXML
     Button resetWalletButton;
 
     public  UserDetailController(){}
@@ -45,8 +48,9 @@ public class UserDetailController implements DSGenericController{
 
     @Override
     public void setParams(HashMap<String, Object> params) {
-        if(params.containsKey("username"))
+        if(params.containsKey("username")) {
             this.username = String.valueOf(params.get("username"));
+        }
 
         initRoot();
 
@@ -68,13 +72,18 @@ public class UserDetailController implements DSGenericController{
     }
 
     private void initRoot(){
-        if(this.username==null) return;
+        if(this.username==null){
+            return;
+        }
 
-        if(this.user == null || !this.user.getUsername().equals(this.username))
+        if(this.user == null || !this.user.getUsername().equals(this.username)) {
             getUser();
+        }
 
         // Error on retrieving user
-        if(this.user==null) return;
+        if(this.user==null){
+            return;
+        }
 
         this.usernameLabel.setText(user.getUsername());
         //this.sexLabel.setText(String.valueOf(user.isSex()));
@@ -82,6 +91,14 @@ public class UserDetailController implements DSGenericController{
 
         this.accountDeleteButton.setOnMouseClicked(
                 mouseEvent -> deleteUser()
+        );
+
+        this.editProfileButton.setOnMouseClicked(
+        		moseEvent ->
+        		    MainController.getInstance().loadAndChangePaneWithParams(
+                            ViewPaths.ChangeUserDetailViewPath,
+                            new HashMap<>() {{ put("username", username ); }}
+                    )
         );
     	this.resetWalletButton.setOnMouseClicked(
     			mouseEvent -> resetAccountWallet()

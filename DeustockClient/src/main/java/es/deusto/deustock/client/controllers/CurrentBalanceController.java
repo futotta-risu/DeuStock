@@ -57,7 +57,7 @@ public class CurrentBalanceController implements DSGenericController {
     public void refreshStocks(){
     	this.stockList.getChildren().remove(0, this.stockList.getChildren().size());
         List<StockHistory> stockHistories = new DeustockGateway().getHoldings(username);
-
+        
         stockQuantityLabel.setText("You have a total of " + stockHistories.size() + " different stocks");
 
         for(StockHistory sh : stockHistories){
@@ -65,8 +65,11 @@ public class CurrentBalanceController implements DSGenericController {
             stockList.getChildren().add(stockLine);
             stockList.getChildren().add(new Separator());
         }
-        
-        if(stockHistories.size() == 0) stockList.getChildren().add(new Label("You don't have stocks"));
+
+        if(stockHistories.size() == 0){
+            stockList.getChildren().add(new Label("You don't have stocks"));
+        }
+
     }
     
 

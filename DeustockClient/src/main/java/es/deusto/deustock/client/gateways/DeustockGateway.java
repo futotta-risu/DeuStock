@@ -43,7 +43,6 @@ public class DeustockGateway {
 
         return response.readEntity(Stock.class);
     }
-
     public List<Stock> getStockList(String listType){
         Response  response = getHostWebTarget().path("stock")
                 .path("list").path(listType).request(MediaType.APPLICATION_JSON).get();
@@ -127,6 +126,31 @@ public class DeustockGateway {
         return response.getStatus() == 200;
     }
     
+    public byte[] getStockReport(String acronym, String interval) throws IOException {
+    	Response data = getHostWebTarget()
+    			.path("reports").path(acronym).path(interval)
+    			.request(MediaType.APPLICATION_OCTET_STREAM).get();
+    	
+    	return data.readEntity(byte[].class);     
+    }
+
+
+    public boolean updateUser(String username, String fullName, Date birthDate, String aboutMe, String country) {
+        User user = new User()
+                .setUsername(username)
+                .setDescription(aboutMe)
+                .setCountry(country)
+                .setFullName(fullName);
+
+        Response response = getHostWebTarget().path("users/details/change")
+                .request("application/json")
+                .post(Entity.entity(user, MediaType.APPLICATION_JSON));
+
+        System.out.println("STATUS : " + response.getStatus());
+
+        return response.getStatus() == 200;
+    }
+
     public File getReport(String acronym, String interval, String path){
         Response response = getHostWebTarget()
                 .path("reports").path(acronym).path(interval)
@@ -134,7 +158,7 @@ public class DeustockGateway {
                 .get();
 
         InputStream is = response.readEntity(InputStream.class);
-        File downloadfile = new File(path + "/" +acronym + " " + Calendar.getInstance().getTime().toString() + ".pdf");
+        File downloadfile = new File(path + "/" +acronym + "_" + Calendar.getInstance().getTimeInMillis() + ".pdf");
         byte[] byteArray = new byte[0];
         try {
             byteArray = IOUtils.toByteArray(is);
@@ -201,5 +225,6 @@ public class DeustockGateway {
                 .path(stockHistoryID)
                 .request().get();
     }
+
 
 }

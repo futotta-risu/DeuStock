@@ -1,5 +1,6 @@
 package es.deusto.deustock.data;
 
+import es.deusto.deustock.data.dto.UserDTO;
 import es.deusto.deustock.data.stocks.Wallet;
 
 import java.io.Serial;
@@ -92,6 +93,12 @@ public class User implements Serializable{
 		this.description = u.description;
 		this.registerDate = u.registerDate;
 		this.lastActivity = u.lastActivity;
+	}
+
+	public void updateInfo(UserDTO u) {
+		this.fullName = u.getFullName();
+		this.country = u.getCountry();
+		this.description = u.getDescription();
 	}
 	
 	
