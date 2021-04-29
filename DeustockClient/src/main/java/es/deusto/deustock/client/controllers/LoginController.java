@@ -1,14 +1,19 @@
 package es.deusto.deustock.client.controllers;
 
 
+
+
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import javafx.scene.control.ButtonBar.ButtonData;
 import org.mortbay.log.Log;
 
@@ -24,7 +29,14 @@ import java.lang.reflect.Method;
  * @author landersanmillan
  */
 public class LoginController {
-	
+
+
+	@FXML
+	private VBox p1;
+
+	@FXML
+	private HBox p2;
+
 	@FXML
     private TextField usernameTxt;
 	

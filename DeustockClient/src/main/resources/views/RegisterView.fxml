@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -13,41 +19,41 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.RegisterController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.RegisterController">
    <children>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
+      <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
          <children>
-            <ImageView fitHeight="400.0" fitWidth="600.0">
-               <image>
-                  <Image url="@img/back.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fitHeight="361.0" fitWidth="428.0" layoutX="155.0" layoutY="18.0" opacity="0.7">
-               <image>
-                  <Image url="@img/blanco.jpeg" />
-               </image>
-            </ImageView>
-            <Label layoutX="220.0" layoutY="43.0" prefHeight="31.0" prefWidth="303.0" text="Register your DeuStock account">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-            </Label>
-            <Label layoutX="184.0" layoutY="101.0" text="Username" />
-            <Label layoutX="386.0" layoutY="102.0" text="Password" />
-            <Label layoutX="385.0" layoutY="165.0" text="Fecha nacimiento" />
-            <Label layoutX="187.0" layoutY="298.0" text="Pais" />
-            <Label layoutX="184.0" layoutY="223.0" text="Sobre ti" />
-            <Label layoutX="186.0" layoutY="164.0" text="Nombre completo" />
-            <TextField fx:id="usernameTxt" layoutX="183.0" layoutY="123.0" />
-            <TextField fx:id="fullNameTxt" layoutX="184.0" layoutY="185.0" />
-            <TextArea fx:id="aboutMeTxt" layoutX="185.0" layoutY="240.0" prefHeight="49.0" prefWidth="360.0" />
-            <Button fx:id="cancelBtn" cancelButton="true" layoutX="467.0" layoutY="315.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" text="Cancelar" />
-            <Button fx:id="registerBtn" layoutX="374.0" layoutY="315.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" text="Registrar" />
-            <ChoiceBox fx:id="countryChoice" layoutX="185.0" layoutY="317.0" prefWidth="150.0" />
-            <DatePicker fx:id="birthDatePicker" layoutX="383.0" layoutY="185.0" prefHeight="27.0" prefWidth="161.0" />
-            <PasswordField fx:id="passwordTxt" layoutX="383.0" layoutY="123.0" />
+            <Pane style="-fx-background-color: #FFFFFF; -fx-background-radius: 25px;">
+               <children>
+                  <Label layoutX="139.0" layoutY="53.0" prefHeight="31.0" prefWidth="161.0" text="Member Register" textAlignment="CENTER" textFill="#00b2d9">
+                     <font>
+                        <Font name="Calibri Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="189.0" layoutY="-16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/person-icon.png" />
+                     </image>
+                  </ImageView>
+                  <TextField fx:id="usernameTxt" layoutX="31.0" layoutY="97.0" promptText="Username" />
+                  <TextField fx:id="fullNameTxt" layoutX="31.0" layoutY="137.0" promptText="Nombre completo" />
+                  <TextArea fx:id="aboutMeTxt" layoutX="31.0" layoutY="183.0" prefHeight="49.0" prefWidth="375.0" promptText="Sobre ti" />
+                  <PasswordField fx:id="passwordTxt" layoutX="238.0" layoutY="97.0" prefHeight="25.0" prefWidth="161.0" promptText="Password" />
+                  <DatePicker fx:id="birthDatePicker" layoutX="238.0" layoutY="136.0" prefHeight="27.0" prefWidth="161.0" promptText="Fecha nacimiento" />
+                  <ChoiceBox fx:id="countryChoice" layoutX="30.0" layoutY="250.0" prefWidth="150.0" style="-fx-background-color: #00b2d9;" />
+                  <Button fx:id="registerBtn" layoutX="211.0" layoutY="246.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" style="-fx-background-color: #00b2d9;" text="Registrar" textFill="WHITE">
+                     <font>
+                        <Font name="Calibri" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="cancelBtn" cancelButton="true" layoutX="351.0" layoutY="246.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" style="-fx-background-color: #00b2d9;" text="Cancelar" textFill="WHITE">
+                     <font>
+                        <Font name="Calibri" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
          </children>
-      </AnchorPane>
+      </HBox>
    </children>
 </VBox>
