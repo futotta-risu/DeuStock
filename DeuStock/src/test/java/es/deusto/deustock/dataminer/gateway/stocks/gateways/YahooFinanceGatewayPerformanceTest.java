@@ -19,13 +19,13 @@ public class YahooFinanceGatewayPerformanceTest {
 
     @Test
     @PerfTest(invocations = 50, threads = 5)
-    @Required(average = 1, max = 99999, percentile95=99999)
+    @Required(average = 99999, max = 99999, percentile95=99999)
     public void testGetStockListPerformanceSmall(){
         List<String> stockList = new ArrayList<>();
         stockList.add("BB");
-        stockList.add("ETH");
+        stockList.add("VIAC");
         stockList.add("AMZN");
-        stockList.add("GOG");
+        stockList.add("TSLA");
 
         YahooFinanceGateway.getInstance().getStocksData(stockList);
     }
