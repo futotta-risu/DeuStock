@@ -1,7 +1,6 @@
 package es.deusto.deustock.resources.stocks;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.any;
 
@@ -10,6 +9,7 @@ import static org.mockito.Mockito.when;
 
 import javax.ws.rs.core.Response;
 
+import es.deusto.deustock.data.DeuStock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -28,18 +28,15 @@ import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundExcep
 public class StockDetailResourceTest {
 	
 	private StockDataAPIGateway mockGateway;
-    private StockDataGatewayFactory mockGatewayFactory;
 	
 	
     @BeforeEach
     public void setUp() throws Exception {
     	mockGateway = mock(StockDataAPIGateway.class);
-    	mockGatewayFactory = mock(StockDataGatewayFactory.class);
     }
 
     
     public void setMocksToResource(StockDetail stockDetailResource){
-    	stockDetailResource.setStockGatewayFactory(mockGatewayFactory);
     	stockDetailResource.setStockGateway(mockGateway);
     }
     
@@ -72,10 +69,9 @@ public class StockDetailResourceTest {
     
     @Test
     @DisplayName("Test get stock detail throws exception")
-    public void testGetStockDetailThrowsExceptionOnUnknownStock() throws StockNotFoundException{
-    	//Given
+    public void testGetStockDetailThrowsExceptionOnUnknownStock() throws StockNotFoundException {
+        //Given
 
-        when(mockGatewayFactory.create(any())).thenReturn(mockGateway);
         when(mockGateway.getStockData(any())).thenThrow(
                 new StockNotFoundException(
                         new StockQueryData("TestStockName")
@@ -89,7 +85,48 @@ public class StockDetailResourceTest {
         Response response = stockDetailResource.getStock("TestStockName", "DAILY");
 
 
-    	// Then
+        // Then
         assertEquals(401, response.getStatus());
+    }
+
+    @Test
+    @DisplayName("Test get stock detail returns status 200")
+    public void testGetStockReturns200() throws StockNotFoundException{
+    	//Given
+        DeuStock stock = new DeuStock("BB").setPrice(20);
+
+        when(mockGateway.getStockData(any())).thenReturn(stock);
+
+
+        //When
+        StockDetail stockDetailResource = new StockDetail();
+        setMocksToResource(stockDetailResource);
+
+        Response response = stockDetailResource.getStock("BB", "DAILY");
+
+        // Then
+        assertEquals(200, response.getStatus());
+    }
+
+    @Test
+    @DisplayName("Test get stock detail returns stock")
+    public void testGetStockReturnsStock() throws StockNotFoundException{
+        //Given
+        DeuStock stock = new DeuStock("BB").setPrice(20);
+
+        when(mockGateway.getStockData(any())).thenReturn(stock);
+
+
+        //When
+        StockDetail stockDetailResource = new StockDetail();
+        setMocksToResource(stockDetailResource);
+
+        Response response = stockDetailResource.getStock("BB", "DAILY");
+        DeuStock result = (DeuStock) response.getEntity();
+
+        // Then
+        assertNotNull(result);
+        assertEquals("BB", result.getAcronym());
+        assertEquals(20, result.getPrice());
     }
 }

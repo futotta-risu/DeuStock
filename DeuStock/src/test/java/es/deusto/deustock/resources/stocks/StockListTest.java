@@ -77,7 +77,7 @@ public class StockListTest {
         stockListResource.setStockDataGatewayFactory(factory);
 
         // When
-        Response response = stockListResource.getStock("small");
+        Response response = stockListResource.getStock("big");
 
         ArrayList<DeuStock> stockList = (ArrayList<DeuStock>) response.getEntity();
 

@@ -23,16 +23,15 @@ import javax.ws.rs.core.Response;
 public class StockDetail {
 
     private StockDataAPIGateway stockGateway;
-    private StockDataGatewayFactory stockGatewayFactory;
 
     public StockDetail() {
-    	this.stockGatewayFactory = StockDataGatewayFactory.getInstance();
-    	this.stockGateway = this.stockGatewayFactory.create(StockDataGatewayEnum.YahooFinance);
+    	this.stockGateway = StockDataGatewayFactory.getInstance().create(StockDataGatewayEnum.YahooFinance);
     }
     
-    public void setStockGateway(StockDataAPIGateway stockGateway) { this.stockGateway = stockGateway; }
-    public void setStockGatewayFactory(StockDataGatewayFactory stockGatewayFactory) { this.stockGatewayFactory = stockGatewayFactory; }
-    
+    public void setStockGateway(StockDataAPIGateway stockGateway) {
+        this.stockGateway = stockGateway;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getStock(
