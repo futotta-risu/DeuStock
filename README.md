@@ -21,7 +21,8 @@ Simulador de broker.
   * Eclipse Jersey as REST framework
   * JavaFX for the client GUI.
   * JDO for database access.
-  * Jacoco, JUnit 4  for testing.
+  * Jacoco, JUnit 4 & 5, DBUnit, ContiPerf, Mockito for testing.
   * Jreddit, twitter4j, twitter4j-stream, YahooFinanceAPI for data scraping.
-  * Stanford CoreNLP for data analysis. 
+  * XChart for Chart Creation.
+  * Stanford CoreNLP for data analysis.
   
