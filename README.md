@@ -8,12 +8,12 @@ Simulador de broker.
 ## Installation 
 ### Server
 1. Initialize MySql Server
-2. Run sql statements from the 3rd line of the "create-DeustockBD.sql"
-3. mvn clean compile
+2. Run sql from "DeuStock/db/create-DeustockBD.sql"
+3. mvn clean verify
 4. mvn exec:java
 
 ### Cliente
-1. mvn clean compile
+1. mvn clean compile test
 2. mvn exec:java
 
 
