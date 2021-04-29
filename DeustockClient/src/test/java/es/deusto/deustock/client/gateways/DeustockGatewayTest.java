@@ -32,6 +32,7 @@ public class DeustockGatewayTest {
     ClientBuilder clientBuilderMock;
     WebTarget mockWebTarget;
     Invocation.Builder mockBuilder;
+    Stock stock;
 
     @BeforeEach
     public void setUp() {
@@ -40,28 +41,34 @@ public class DeustockGatewayTest {
         mockWebTarget = mock(WebTarget.class);
         mockBuilder = mock(Invocation.Builder.class);
         clientBuilderMock = mock(ClientBuilder.class);
+
+        stock = new Stock();
+        stock.setAcronym("acronymTest");
     }
 
     @Test
-    public void petitionReturnsWebTarget() {
+    public void testPetitionReturnsWebTarget() {
         when(mockClient.target(anyString())).thenReturn(mockWebTarget);
     }
 
     @Test
     public void testGetStock() {
         try (MockedStatic<ClientBuilder> clientBuilder = mockStatic(ClientBuilder.class)) {
-        Response response = Response.status(200).build();
+        Response response = mock(Response.class);
 
         clientBuilder.when(ClientBuilder::newClient).thenReturn(mockClient);
         when(mockClient.target(anyString())).thenReturn(mockWebTarget);
         when(mockWebTarget.path(anyString())).thenReturn(mockWebTarget);
-        when(mockWebTarget.request()).thenReturn(mockBuilder);
+        when(mockWebTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.get()).thenReturn(response);
+        when(response.readEntity(Stock.class)).thenReturn(stock);
+
 
        Stock result = new DeustockGateway()
                 .getStock("acronymTest", "intervalTest");
 
         assertEquals(response.readEntity(Stock.class), result);
+
         }
     }
 
@@ -114,13 +121,12 @@ public class DeustockGatewayTest {
 
             jsonObject.put("questions", array);
 
-            Response response = Response.status(200).entity(jsonObject).build();
-
             clientBuilder.when(ClientBuilder::newClient).thenReturn(mockClient);
             when(mockClient.target(anyString())).thenReturn(mockWebTarget);
             when(mockWebTarget.path(anyString())).thenReturn(mockWebTarget);
             when(mockWebTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
             when(mockBuilder.get()).thenReturn(response);
+            when();
 
             List<FAQQuestion> result = new DeustockGateway().getFAQList();
 
