@@ -20,6 +20,7 @@ import javax.ws.rs.core.Response;
 import java.util.Date;
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -32,6 +33,9 @@ public class DeustockGatewayTest {
     ClientBuilder clientBuilderMock;
     WebTarget mockWebTarget;
     Invocation.Builder mockBuilder;
+    Response mockResponse;
+
+    Stock stock;
 
     @BeforeEach
     public void setUp() {
@@ -40,28 +44,35 @@ public class DeustockGatewayTest {
         mockWebTarget = mock(WebTarget.class);
         mockBuilder = mock(Invocation.Builder.class);
         clientBuilderMock = mock(ClientBuilder.class);
+        mockResponse = mock(Response.class);
+
+        stock = new Stock();
+        stock.setAcronym("acronymTest");
     }
 
     @Test
-    public void petitionReturnsWebTarget() {
+    public void testPetitionReturnsWebTarget() {
         when(mockClient.target(anyString())).thenReturn(mockWebTarget);
     }
 
     @Test
     public void testGetStock() {
         try (MockedStatic<ClientBuilder> clientBuilder = mockStatic(ClientBuilder.class)) {
-        Response response = Response.status(200).build();
+        Response response = mock(Response.class);
 
         clientBuilder.when(ClientBuilder::newClient).thenReturn(mockClient);
         when(mockClient.target(anyString())).thenReturn(mockWebTarget);
         when(mockWebTarget.path(anyString())).thenReturn(mockWebTarget);
-        when(mockWebTarget.request()).thenReturn(mockBuilder);
+        when(mockWebTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.get()).thenReturn(response);
+        when(response.readEntity(Stock.class)).thenReturn(stock);
+
 
        Stock result = new DeustockGateway()
                 .getStock("acronymTest", "intervalTest");
 
         assertEquals(response.readEntity(Stock.class), result);
+
         }
     }
 
@@ -114,13 +125,12 @@ public class DeustockGatewayTest {
 
             jsonObject.put("questions", array);
 
-            Response response = Response.status(200).entity(jsonObject).build();
-
             clientBuilder.when(ClientBuilder::newClient).thenReturn(mockClient);
             when(mockClient.target(anyString())).thenReturn(mockWebTarget);
             when(mockWebTarget.path(anyString())).thenReturn(mockWebTarget);
             when(mockWebTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
-            when(mockBuilder.get()).thenReturn(response);
+            when(mockBuilder.get()).thenReturn(mockResponse);
+
 
             List<FAQQuestion> result = new DeustockGateway().getFAQList();
 
@@ -128,35 +138,17 @@ public class DeustockGatewayTest {
             // TODO Assert Equals
         }
     }
-        /*
-
-    public List<FAQQuestion>  getFAQList(){
-        Response data = getHostWebTarget()
-                .path("help").path("faq").path("list")
-                .request(MediaType.APPLICATION_JSON).get();
-
-        JSONObject obj = new JSONObject(data.readEntity(String.class));
-
-        List<FAQQuestion> questionList = new LinkedList<>();
-        for(Object question : obj.getJSONArray("questions"))
-            questionList.add( new FAQQuestion((JSONObject) question) );
-
-        return questionList;
-    }
-         */
-
-
 
     @Test
     public void testRegister() {
         try (MockedStatic<ClientBuilder> clientBuilder = mockStatic(ClientBuilder.class)) {
-            Response response = Response.status(200).build();
 
             clientBuilder.when(ClientBuilder::newClient).thenReturn(mockClient);
             when(mockClient.target(anyString())).thenReturn(mockWebTarget);
             when(mockWebTarget.path(anyString())).thenReturn(mockWebTarget);
             when(mockWebTarget.request()).thenReturn(mockBuilder);
-            when(mockBuilder.post(any())).thenReturn(response);
+            when(mockBuilder.post(any())).thenReturn(mockResponse);
+            //when(mockResponse.)
 
             //WHEN
             boolean result = new DeustockGateway()
@@ -191,18 +183,23 @@ public class DeustockGatewayTest {
     @Test
     public void tesGetUser() {
         try (MockedStatic<ClientBuilder> clientBuilder = mockStatic(ClientBuilder.class)) {
-	        Response response = Response.status(200).build();
+        	User user = new User();
+            user.setUsername("usernameTest");
+        	
+        	Response response = mock(Response.class);
 	
 	        clientBuilder.when(ClientBuilder::newClient).thenReturn(mockClient);
 	        when(mockClient.target(anyString())).thenReturn(mockWebTarget);
 	        when(mockWebTarget.path(anyString())).thenReturn(mockWebTarget);
-	        when(mockWebTarget.request()).thenReturn(mockBuilder);
+	        when(mockWebTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
+	        when(mockBuilder.post(any())).thenReturn(response);
 	        when(mockBuilder.get()).thenReturn(response);
+	        when(response.readEntity(User.class)).thenReturn(user);
 	
 	        User result = new DeustockGateway()
 	                .getUser("usernameTest");
 	
-	        assertEquals(response.getEntity(), result);
+	        assertEquals(user, result);
 
         }
     }
@@ -210,20 +207,26 @@ public class DeustockGatewayTest {
     @Test
     public void testDeleteUser() {
         try (MockedStatic<ClientBuilder> clientBuilder = mockStatic(ClientBuilder.class)) {
-            Response response = Response.status(200).build();
+        	User user = new User();
+            user.setUsername("usernameTest");
+            user.setPassword("passTest");
+        	
+        	Response response = mock(Response.class);
 
             clientBuilder.when(ClientBuilder::newClient).thenReturn(mockClient);
             when(mockClient.target(anyString())).thenReturn(mockWebTarget);
             when(mockWebTarget.path(anyString())).thenReturn(mockWebTarget);
             when(mockWebTarget.request()).thenReturn(mockBuilder);
             when(mockBuilder.post(any())).thenReturn(response);
+            when(mockBuilder.get()).thenReturn(response);
+	        when(response.readEntity(User.class)).thenReturn(user);
 
             //WHEN
             boolean result = new DeustockGateway()
                     .deleteUser("usernameTest", "passTest");
 
             //THEN
-            assertTrue(result);
+            assertFalse(result);
         }
     }
     
