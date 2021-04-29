@@ -11,6 +11,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -41,7 +42,7 @@ public class DeustockGatewayTest{
         stock.setAcronym("TS");
         stock.setDescription("Test Stock description");
 
-        // TODO La stockList no esta iniciada
+        stockList = new ArrayList<>();
         stockList.add(stock);
 
         sentiment = 20.0;
@@ -49,7 +50,6 @@ public class DeustockGatewayTest{
 
     @Test
     public void petitionReturnsWebTarget(){
-        //any string o objeto mockito restvars?
         when(mockClient.target(anyString())).thenReturn(mockWebTarget);
     }
 
@@ -57,7 +57,7 @@ public class DeustockGatewayTest{
     public void testGetStock(){
         when(mockClient.target(anyString())).thenReturn(mockWebTarget);
         Response res = Response.status(200).entity(stock).build();
-        when(mockWebTarget.path("stock").path("TS").path(anyString()).request(MediaType.APPLICATION_JSON).get()).thenReturn(res);
+        when(mockWebTarget.path("stock").path("detail").path(anyString()).request(MediaType.APPLICATION_JSON).get()).thenReturn(res);
         assertEquals(stock, res.readEntity(Stock.class));
     }
 

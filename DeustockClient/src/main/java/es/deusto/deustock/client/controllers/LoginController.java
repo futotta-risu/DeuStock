@@ -10,6 +10,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ButtonBar.ButtonData;
+import org.mortbay.log.Log;
+
+import java.lang.reflect.Method;
 
 /**
  * Controller para LoginView 
