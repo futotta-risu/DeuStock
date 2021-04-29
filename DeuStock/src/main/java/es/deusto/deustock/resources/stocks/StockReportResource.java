@@ -11,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import es.deusto.deustock.data.DeuStock;
+import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
@@ -23,6 +24,18 @@ import es.deusto.deustock.report.StockReport;
 
 @Path("reports")
 public class StockReportResource {
+	
+	private StockDataGatewayFactory stockGatewayFactory;
+    private YahooFinanceGateway stockGateway;
+    
+    public StockReportResource() {
+    	this.stockGatewayFactory = StockDataGatewayFactory.getInstance();
+    	this.stockGateway = (YahooFinanceGateway) this.stockGatewayFactory.create(StockDataGatewayEnum.YahooFinance);
+    }
+    
+    public void setStockGateway(YahooFinanceGateway stockGateway) { this.stockGateway = stockGateway; }
+    public void setStockGatewayFactory(StockDataGatewayFactory stockGatewayFactory) { this.stockGatewayFactory = stockGatewayFactory; }
+    
 
     @GET
     @Produces("application/pdf")

@@ -17,7 +17,9 @@ import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.stocks.Wallet;
 
-
+/**
+ * @author landersanmillan
+ */
 @Tag("server-resource")
 class BalanceResourceTest {
 	
