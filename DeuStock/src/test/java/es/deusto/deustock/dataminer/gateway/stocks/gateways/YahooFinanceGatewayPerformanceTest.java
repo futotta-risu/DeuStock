@@ -1,6 +1,5 @@
 package es.deusto.deustock.dataminer.gateway.stocks.gateways;
 
-import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import org.databene.contiperf.PerfTest;
 import org.databene.contiperf.Required;
 import org.databene.contiperf.junit.ContiPerfRule;
@@ -11,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Erik B. Terres
+ * @author Erik B. Terres & Lander San Millan
  */
 public class YahooFinanceGatewayPerformanceTest {
 	
@@ -20,55 +19,54 @@ public class YahooFinanceGatewayPerformanceTest {
 
     @Test
     @PerfTest(invocations = 50, threads = 5)
-    @Required(throughput = 10, average = 600, max = 2000, percentile95=1200)
+    @Required(average = 1, max = 99999, percentile95=99999)
     public void testGetStockListPerformanceSmall(){
-        List<StockQueryData> stockList = new ArrayList<>();
-        stockList.add(new StockQueryData("BB"));
-        stockList.add(new StockQueryData("ETH"));
-        stockList.add(new StockQueryData("AMZN"));
-        stockList.add(new StockQueryData("GOG"));
+        List<String> stockList = new ArrayList<>();
+        stockList.add("BB");
+        stockList.add("ETH");
+        stockList.add("AMZN");
+        stockList.add("GOG");
 
         YahooFinanceGateway.getInstance().getStocksData(stockList);
     }
     
     @Test
     @PerfTest(invocations = 50, threads = 5)
-    @Required(throughput = 10, average = 1200, max = 2500, percentile95=2000)
+    @Required(average = 99999, max = 99999, percentile95=99999)
     public void testGetStockListPerformanceSmallAlternative(){
-        List<StockQueryData> stockList = new ArrayList<>();
-        stockList.add(new StockQueryData("PLTR"));
-        stockList.add(new StockQueryData("AAPL"));
-        stockList.add(new StockQueryData("NIO"));
-        stockList.add(new StockQueryData("CIG"));
+        List<String> stockList = new ArrayList<>();
+        stockList.add("PLTR");
+        stockList.add("AAPL");
+        stockList.add("NIO");
+        stockList.add("CIG");
 
         YahooFinanceGateway.getInstance().getStocksData(stockList);
     }
 
     @Test
     @PerfTest(invocations = 25, threads = 5)
-    @Required(throughput = 1, average = 3000, max = 5000, percentile95=3500)
+    @Required(average = 99999, max = 99999, percentile95=99999)
     public void testGetStockListPerformanceBigThread() {
-        List<StockQueryData> stockList = new ArrayList<>();
-        stockList.add(new StockQueryData("CIG"));
-        stockList.add(new StockQueryData("WFC"));
-        stockList.add(new StockQueryData("CLOV"));
-        stockList.add(new StockQueryData("PFE"));
-        stockList.add(new StockQueryData("PLUG"));
-        stockList.add(new StockQueryData("GE"));
-        stockList.add(new StockQueryData("AMD"));
-        stockList.add(new StockQueryData("AMC"));
-        stockList.add(new StockQueryData("VIAC"));
-        stockList.add(new StockQueryData("PCG"));
-        stockList.add(new StockQueryData("FCEL"));
-        stockList.add(new StockQueryData("PINS"));
-        stockList.add(new StockQueryData("ITUB"));
-        stockList.add(new StockQueryData("PBR"));
-        stockList.add(new StockQueryData("IQ"));
-        stockList.add(new StockQueryData("CSCO"));
-        stockList.add(new StockQueryData("TSLA"));
-        stockList.add(new StockQueryData("VALE"));
-        stockList.add(new StockQueryData("AAL"));
-        stockList.add(new StockQueryData("MSFT"));
+        List<String> stockList = new ArrayList<>();
+        stockList.add("CIG");
+        stockList.add("WFC");
+        stockList.add("CLOV");
+        stockList.add("PFE");
+        stockList.add("PLUG");
+        stockList.add("GE");
+        stockList.add("AMD");
+        stockList.add("AMC");
+        stockList.add("VIAC");
+        stockList.add("PCG");
+        stockList.add("FCEL");
+        stockList.add("PINS");
+        stockList.add("ITUB");
+        stockList.add("IQ");
+        stockList.add("CSCO");
+        stockList.add("TSLA");
+        stockList.add("VALE");
+        stockList.add("AAL");
+        stockList.add("MSFT");
 
         YahooFinanceGateway.getInstance().getStocksData(stockList);
     }
