@@ -98,20 +98,12 @@ public class DeustockGatewayTest {
 
         }
     }
-<<<<<<< HEAD
-    @Test
-    public void testGetFAQList() {
-        try (MockedStatic<ClientBuilder> clientBuilder = mockStatic(ClientBuilder.class)) {
-            Response response = Response.status(200).build();
-
-=======
 
     @Test
     public void testGetFAQList() {
         try (MockedStatic<ClientBuilder> clientBuilder = mockStatic(ClientBuilder.class)) {
             Response response = Response.status(200).build();
 
->>>>>>> 5eab66bd7c969c6f4d5e45cb9c3f0db8a8040dbd
             clientBuilder.when(ClientBuilder::newClient).thenReturn(mockClient);
             when(mockClient.target(anyString())).thenReturn(mockWebTarget);
             when(mockWebTarget.path(anyString())).thenReturn(mockWebTarget);
@@ -121,7 +113,6 @@ public class DeustockGatewayTest {
             List<FAQQuestion> result = new DeustockGateway()
                     .getFAQList();
 
-<<<<<<< HEAD
             //assertEquals(response.readEntity(response.readEntity(String.class)), result);
         }
     }
@@ -142,13 +133,7 @@ public class DeustockGatewayTest {
     }
          */
 
-    @Test
-    public void testRegister() {
-        try (MockedStatic<ClientBuilder> clientBuilder = mockStatic(ClientBuilder.class)) {
-=======
-            assertEquals(response.readEntity(String.class), result);
-        }
-    }
+
 
     @Test
     public void testRegister() {
@@ -172,14 +157,13 @@ public class DeustockGatewayTest {
     @Test
     public void testLogin() {
         try(MockedStatic<ClientBuilder> clientBuilder = mockStatic(ClientBuilder.class)){
->>>>>>> 5eab66bd7c969c6f4d5e45cb9c3f0db8a8040dbd
             Response response = Response.status(200).build();
 
             clientBuilder.when(ClientBuilder::newClient).thenReturn(mockClient);
             when(mockClient.target(anyString())).thenReturn(mockWebTarget);
             when(mockWebTarget.path(anyString())).thenReturn(mockWebTarget);
             when(mockWebTarget.request()).thenReturn(mockBuilder);
-<<<<<<< HEAD
+
             when(mockBuilder.post(any())).thenReturn(response);
 
             //WHEN
@@ -188,13 +172,11 @@ public class DeustockGatewayTest {
 
             //THEN
             assertTrue(result);
-=======
             when(mockBuilder.get()).thenReturn(response);
 
             User result = new DeustockGateway().login("usernameTest", "passTest");
 
             assertEquals(response.getEntity(), result);
->>>>>>> 5eab66bd7c969c6f4d5e45cb9c3f0db8a8040dbd
         }
     }
     }
