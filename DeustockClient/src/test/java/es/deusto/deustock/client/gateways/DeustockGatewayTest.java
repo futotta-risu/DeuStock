@@ -13,14 +13,12 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -219,14 +217,14 @@ public class DeustockGatewayTest {
             when(mockWebTarget.request()).thenReturn(mockBuilder);
             when(mockBuilder.post(any())).thenReturn(response);
             when(mockBuilder.get()).thenReturn(response);
-	        when(response.readEntity(User.class)).thenReturn(user);
+	        when(response.getStatus()).thenReturn(200);
 
             //WHEN
             boolean result = new DeustockGateway()
                     .deleteUser("usernameTest", "passTest");
 
             //THEN
-            assertFalse(result);
+            assertTrue(result);
         }
     }
     
