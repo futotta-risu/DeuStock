@@ -8,26 +8,18 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doNothing;
 
-
-import java.io.IOException;
-
 import javax.ws.rs.core.Response;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import es.deusto.deustock.dao.UserDAO;
-import es.deusto.deustock.dao.WalletDAO;
-import es.deusto.deustock.data.DeuStock;
+
 import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.dto.UserDTO;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
-import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
-import es.deusto.deustock.dataminer.gateway.stocks.gateways.YahooFinanceGateway;
-import es.deusto.deustock.resources.stocks.StockReportResource;
+
 
 /**
  * @author landersanmillan
@@ -36,17 +28,14 @@ import es.deusto.deustock.resources.stocks.StockReportResource;
 class UserResourceTest {
 
 	private UserDAO mockUserDAO;
-    private WalletDAO mockWalletDAO;
     
     @BeforeEach
     public void setUp() {
     	mockUserDAO = mock(UserDAO.class);
-    	mockWalletDAO = mock(WalletDAO.class);
     }
 
     public void setMocksToResource(UserResource userResource){
     	userResource.setUserDAO(mockUserDAO);
-    	userResource.setWalletDAO(mockWalletDAO);
     }
     
     @Test

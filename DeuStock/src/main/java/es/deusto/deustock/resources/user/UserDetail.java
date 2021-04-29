@@ -17,12 +17,20 @@ import javax.ws.rs.core.Response;
  */
 @Path("user/{username}")
 public class UserDetail {
+	
+	private UserDAO userDAO;
+	
+	public UserDetail(){
+		this.userDAO = UserDAO.getInstance();
+	}
+
+	public void setUserDAO(UserDAO userDAO){
+		this.userDAO = userDAO;
+	}
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUsername(@PathParam("username") String username) {
-        UserDAO userDAO = UserDAO.getInstance();
-
         User user = userDAO.getUser(username);
 
         if(user == null){

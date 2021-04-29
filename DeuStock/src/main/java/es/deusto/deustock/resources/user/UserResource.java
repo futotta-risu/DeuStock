@@ -25,19 +25,15 @@ import es.deusto.deustock.log.DeuLogger;
 public class UserResource {
 
 	private UserDAO userDAO;
-	private WalletDAO walletDAO;
 
 	public UserResource(){
 		this.userDAO = UserDAO.getInstance();
-		this.walletDAO = WalletDAO.getInstance();
 	}
 
 	public void setUserDAO(UserDAO userDAO){
 		this.userDAO = userDAO;
 	}
-	public void setWalletDAO(WalletDAO walletDAO){
-		this.walletDAO = walletDAO;
-	}
+
 
 	/**
 	 * Metodo que permite iniciar sesion a un usuario, en el path se reciben el
