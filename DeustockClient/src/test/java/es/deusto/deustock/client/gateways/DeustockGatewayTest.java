@@ -3,6 +3,8 @@ package es.deusto.deustock.client.gateways;
 import es.deusto.deustock.client.data.Stock;
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.data.help.FAQQuestion;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
@@ -12,6 +14,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import java.util.Date;
@@ -76,8 +79,7 @@ public class DeustockGatewayTest {
             List<Stock> result = new DeustockGateway()
                     .getStockList("listTypeTest");
 
-            assertEquals(response.readEntity(new GenericType<>() {
-            }), result);
+            assertEquals(response.getEntity(), result);
 
         }
     }
@@ -85,18 +87,17 @@ public class DeustockGatewayTest {
     @Test
     public void testGetTwitterSentiment() {
         try (MockedStatic<ClientBuilder> clientBuilder = mockStatic(ClientBuilder.class)) {
-            Response response = Response.status(200).build();
+            Response response = Response.status(200).entity("0.5").build();
 
             clientBuilder.when(ClientBuilder::newClient).thenReturn(mockClient);
             when(mockClient.target(anyString())).thenReturn(mockWebTarget);
             when(mockWebTarget.path(anyString())).thenReturn(mockWebTarget);
-            when(mockWebTarget.request()).thenReturn(mockBuilder);
+            when(mockWebTarget.request(MediaType.TEXT_PLAIN)).thenReturn(mockBuilder);
             when(mockBuilder.get()).thenReturn(response);
 
-            double result = new DeustockGateway()
-                    .getTwitterSentiment("searchQueryTest");
+            double result = new DeustockGateway().getTwitterSentiment("searchQueryTest");
 
-            assertEquals(Double.parseDouble(response.readEntity(String.class)), result);
+            assertEquals(0.5, result, 0.001);
 
         }
     }
@@ -104,18 +105,27 @@ public class DeustockGatewayTest {
     @Test
     public void testGetFAQList() {
         try (MockedStatic<ClientBuilder> clientBuilder = mockStatic(ClientBuilder.class)) {
-            Response response = Response.status(200).build();
+            JSONObject jsonObject = new JSONObject();
+            JSONArray array = new JSONArray();
+            JSONObject question = new JSONObject();
+            question.put("question","TestQuestion");
+            question.put("answer","TestAnswer");
+            array.put(question);
+
+            jsonObject.put("questions", array);
+
+            Response response = Response.status(200).entity(jsonObject).build();
 
             clientBuilder.when(ClientBuilder::newClient).thenReturn(mockClient);
             when(mockClient.target(anyString())).thenReturn(mockWebTarget);
             when(mockWebTarget.path(anyString())).thenReturn(mockWebTarget);
-            when(mockWebTarget.request()).thenReturn(mockBuilder);
+            when(mockWebTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
             when(mockBuilder.get()).thenReturn(response);
 
-            List<FAQQuestion> result = new DeustockGateway()
-                    .getFAQList();
+            List<FAQQuestion> result = new DeustockGateway().getFAQList();
 
-            //assertEquals(response.readEntity(response.readEntity(String.class)), result);
+            assertTrue(result.size() > 0);
+            // TODO Assert Equals
         }
     }
         /*
@@ -159,18 +169,23 @@ public class DeustockGatewayTest {
     @Test
     public void testLogin() {
         try(MockedStatic<ClientBuilder> clientBuilder = mockStatic(ClientBuilder.class)){
-            Response response = Response.status(200).build();
+            User user = new User();
+            user.setUsername("usernameTest");
+            user.setPassword("passTest");
+
+            Response response = mock(Response.class);
 
             clientBuilder.when(ClientBuilder::newClient).thenReturn(mockClient);
             when(mockClient.target(anyString())).thenReturn(mockWebTarget);
             when(mockWebTarget.path(anyString())).thenReturn(mockWebTarget);
-            when(mockWebTarget.request()).thenReturn(mockBuilder);
+            when(mockWebTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
             when(mockBuilder.post(any())).thenReturn(response);
             when(mockBuilder.get()).thenReturn(response);
+            when(response.readEntity(User.class)).thenReturn(user);
 
             User result = new DeustockGateway().login("usernameTest", "passTest");
 
-            assertEquals(response.getEntity(), result);
+            assertEquals(user, result);
         }
     }
     @Test
@@ -234,60 +249,4 @@ public class DeustockGatewayTest {
     }
 }
 
-/*
-    public User login(String username, String password){
-    	Response response = getHostWebTarget().path("users").path("login")
-                .path(username).path(getEncrypt(password))
-                .request(MediaType.APPLICATION_JSON).get();
 
-        return response.readEntity(User.class);
-    }
-
-    private String getEncrypt(String pass) {
-        MessageDigest messageDigest = null;
-        try {
-            messageDigest = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            DeuLogger.logger.error("Could not encrypt password, algorithm is not available");
-        }
-        byte[] data = new byte[0];
-        data = pass.getBytes(StandardCharsets.UTF_8);
-        byte[] encrypted = messageDigest.digest(data);
-		return Arrays.toString(encrypted);
-    }
-
-    public User getUser(String username){
-        Response data = getHostWebTarget()
-                .path("user").path(username)
-                .request(MediaType.APPLICATION_JSON).get();
-
-        return data.readEntity(User.class);
-    }
-
-    public boolean deleteUser(String username, String password){
-        Response response = getHostWebTarget()
-                .path("users").path("delete").path(username).path(password)
-                .request().get();
-
-        return response.getStatus() == 200;
-    }
-
-    public byte[] getStockReport(String acronym, String interval) throws IOException {
-    	Response data = getHostWebTarget()
-    			.path("reports").path(acronym).path(interval)
-    			.request(MediaType.APPLICATION_OCTET_STREAM).get();
-
-    	return data.readEntity(byte[].class);
-    }
-
-
-    public boolean updateUser(String username, String fullName, Date birthDate, String aboutMe, String country) {
-        Response response = getHostWebTarget().path("users").path("update")
-                .request("application/json")
-                .post(Entity.entity(new User(username, "pass",fullName,birthDate,aboutMe, country), MediaType.APPLICATION_JSON));
-
-        System.out.println(response);
-        return response.getStatus() == 200;
-    }
-     */

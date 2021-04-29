@@ -62,7 +62,9 @@ class FAQQuestionTest{
 
     @Test
     public void testConstructorJSON(){
-        //data = new JSONObject("{1}");
+        data = new JSONObject();
+        data.put("question","TestQuestion");
+        data.put("answer","TestAnswer");
         FAQQuestion faqQuestion1 = new FAQQuestion(data);
         assertNotNull(faqQuestion1);
     }
