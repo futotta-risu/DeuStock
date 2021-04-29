@@ -4,7 +4,6 @@ import es.deusto.deustock.data.SocialNetworkMessage;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

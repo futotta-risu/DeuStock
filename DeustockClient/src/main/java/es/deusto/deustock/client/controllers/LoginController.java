@@ -1,7 +1,6 @@
 package es.deusto.deustock.client.controllers;
 
 
-import es.deusto.deustock.client.Main;
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.visual.ViewPaths;
@@ -35,11 +34,11 @@ public class LoginController {
 	@FXML
 	private Button registerBtn;
 
-	public LoginController(){};
-	 
+	public LoginController(){}
+
 	@FXML
 	private void initialize(){
-		Dialog<String> dialog = new Dialog<String>();
+		Dialog<String> dialog = new Dialog<>();
 	    dialog.setTitle("ERROR");
 	    ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
 	    dialog.getDialogPane().getButtonTypes().add(type);
@@ -71,7 +70,7 @@ public class LoginController {
 	
 	@FXML
 	private User login(){
-		Dialog<String> dialog = new Dialog<String>();
+		Dialog<String> dialog = new Dialog<>();
 	    dialog.setTitle("ERROR");
 	    ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
 	    dialog.getDialogPane().getButtonTypes().add(type);

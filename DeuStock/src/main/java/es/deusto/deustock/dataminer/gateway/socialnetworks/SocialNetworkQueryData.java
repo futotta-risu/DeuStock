@@ -1,5 +1,6 @@
 package es.deusto.deustock.dataminer.gateway.socialnetworks;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Date;
 public class SocialNetworkQueryData {
 
     private String searchQuery;
-    private Date dateFrom = new Date(2021,1,1);
+    private Date dateFrom = new Date(2021, Calendar.FEBRUARY,1);
     private int nMessages  = 20;
 
     public SocialNetworkQueryData() {}

@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Erik B. Terres
@@ -33,6 +32,9 @@ public class UserDetailController implements DSGenericController{
 
     @FXML
     Button accountDeleteButton;
+    
+    @FXML
+    Button resetWalletButton;
 
     public  UserDetailController(){}
 
@@ -77,10 +79,21 @@ public class UserDetailController implements DSGenericController{
         this.usernameLabel.setText(user.getUsername());
         //this.sexLabel.setText(String.valueOf(user.isSex()));
         this.descriptionLabel.setText(user.getDescription());
-        this.birthdayLabel.setText(user.getBirthDate().toString());
 
         this.accountDeleteButton.setOnMouseClicked(
                 mouseEvent -> deleteUser()
         );
+    	this.resetWalletButton.setOnMouseClicked(
+    			mouseEvent -> resetAccountWallet()
+    	);
+    	
+    }
+    
+    public void resetAccountWallet() {
+    	DeustockGateway gateway = new DeustockGateway();
+    	boolean succesfullyReseted = gateway.resetHoldings(this.user.getUsername());
+    	if(!succesfullyReseted) {
+    		System.out.println("No se ha podido resetear");
+    	}
     }
 }

@@ -5,9 +5,5 @@ import javafx.fxml.FXML;
 public class SobreNosotrosViewController {
 	
 	public SobreNosotrosViewController(){}
-	
-	@FXML
-    private void initialize(){
-		
-	}
+
 }

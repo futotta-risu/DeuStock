@@ -2,6 +2,7 @@ package es.deusto.deustock.dataminer.gateway.socialnetworks;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,9 +17,9 @@ class SocialNetworkQueryDataTest {
 
     @Test
     void testConstructorWithAllParameters(){
-        SocialNetworkQueryData data = new SocialNetworkQueryData("Test Data", new Date(2019,2,3),15);
+        SocialNetworkQueryData data = new SocialNetworkQueryData("Test Data", new Date(2019, Calendar.MARCH,3),15);
         assertEquals(data.getSearchQuery(),"Test Data");
-        assertEquals(data.getDateFrom(),new Date(2019,2,3));
+        assertEquals(data.getDateFrom(),new Date(2019, Calendar.MARCH,3));
         assertEquals(data.getNMessages(),15);
     }
 
@@ -26,8 +27,8 @@ class SocialNetworkQueryDataTest {
     @Test
     void setDateFrom() {
         SocialNetworkQueryData data = new SocialNetworkQueryData();
-        data.setDateFrom(new Date(2022,4,5));
-        assertEquals(data.getDateFrom(),new Date(2022,4,5));
+        data.setDateFrom(new Date(2022, Calendar.MAY,5));
+        assertEquals(data.getDateFrom(),new Date(2022, Calendar.MAY,5));
     }
 
     @Test

@@ -1,65 +1,169 @@
 package es.deusto.deustock.dao;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
-import org.junit.Test;
 
+
+import java.util.LinkedList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 /**
- * Testea los metodos de acceso a datos de stock en la BD
- * 
- * @author landersanmillan
+ * @author Erik B. Terres
  */
 public class StockDAOTest {
 
-	/**
-	 * Tests Stock creation
-	*/
-	@Test
-    public void testStockCreation() {
-      	DeuStock stock1 = new DeuStock(new StockQueryData("MSFT", StockQueryData.Interval.DAILY));
-		DeuStock stock2 = new DeuStock(new StockQueryData("GOOG", StockQueryData.Interval.DAILY));
-        StockDAO.getInstance().storeStock(stock1);
-        StockDAO.getInstance().storeStock(stock2);
-	}
+    private IDBManager dbManager;
+    private StockDAO stockDAO;
 
-	
-	/**
-	 * Tests Stock queries
-	*/
-	@SuppressWarnings("unchecked")
-	@Test
-    public void testStockQuery() {
-		DeuStock stock = StockDAO.getInstance().getStock("MSFT");
-		List<DeuStock> stocks = StockDAO.getInstance().getStocks();
-		System.out.println(stock);
-		System.out.println(stocks);
-	}
-	
+    @BeforeEach
+    public void setUp(){
+        dbManager = mock(DBManager.class);
+        stockDAO = StockDAO.getInstance();
+        stockDAO.setDbManager(dbManager);
+    }
 
-	
-//	/**
-//	 * Test Stock update
-//	 */
-//	@Test
-//	public void testStockUpdate() {
-//        Stock stockUpdate = StockDAO.getStock("MSFT");
-//        stockUpdate.setDescription("DESCRIPTION_UPDATED");
-//        StockDAO.getIntsance().updateStock(stockUpdate);
-//        System.out.println(StockDAO.getStock("MSFT");
-//	}
-//
-//	
-	/**
-	 * Tests Stock deletion
-	*/
-	@Test
-    public void testUserDeletion() {
-        StockDAO.getInstance().deleteStock("MSFT");
-        System.out.println("Deleted User from DB: MSFT");
+    @Test
+    @DisplayName("Test has function returns true on existing object")
+    public void testHasOnExistentObject(){
+        // Given
+        DeuStock stock = new DeuStock("Test");
+        when(dbManager.getObject(eq(DeuStock.class), anyString())).thenReturn(stock);
+
+        // When
+        final boolean result = stockDAO.has("Test");
+
+        // Then
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Test has function returns false on existing object")
+    public void testHasOnNonExistentObject(){
+        // Given
+        when(dbManager.getObject(eq(DeuStock.class), anyString())).thenReturn(null);
+
+        // When
+        final boolean result = stockDAO.has("Test");
+
+        // Then
+        assertFalse(result);
+    }
+
+    @Test
+    @DisplayName("Test store function does not throw error")
+    public void testStore(){
+        // Given
+        DeuStock stock = new DeuStock("TestSymbol");
+        doNothing().when(dbManager).storeObject(any());
+
+        // When
+
+        // Then
+        assertDoesNotThrow( () -> stockDAO.store(stock));
+    }
+
+    @Test
+    @DisplayName("Test get function returns true on existing object")
+    public void testGetOnExistentObject(){
+        // Given
+        DeuStock stock = new DeuStock("Test");
+        when(dbManager.getObject(eq(DeuStock.class), anyString())).thenReturn(stock);
+
+        // When
+        final DeuStock result = stockDAO.get("Test");
+
+        // Then
+        assertNotNull(result);
+    }
+
+    @Test
+    @DisplayName("Test get function returns false on existing object")
+    public void testGetOnNonExistentObject(){
+        // Given
+        when(dbManager.getObject(eq(DeuStock.class), anyString())).thenReturn(null);
+
+        // When
+        final DeuStock result = stockDAO.get("Test");
+
+        // Then
+        assertNull(result);
+    }
+
+    @Test
+    @DisplayName("Test update function does not throw error")
+    public void testUpdate(){
+        // Given
+        DeuStock stock = new DeuStock("TestSymbol");
+        doNothing().when(dbManager).updateObject(any());
+
+        // When
+
+        // Then
+        assertDoesNotThrow( () -> stockDAO.update(stock));
+    }
+
+    @Test
+    @DisplayName("Test delete function does not throw error")
+    public void testDelete(){
+        // Given
+        DeuStock stock = new DeuStock("TestSymbol");
+        doNothing().when(dbManager).deleteObject(eq(DeuStock.class), anyString());
+
+        // When
+
+        // Then
+        assertDoesNotThrow( () -> stockDAO.delete(stock));
+    }
+
+    @Test
+    @DisplayName("Test delete by acronym function does not throw error")
+    public void testDeleteByAcronym(){
+        // Given
+        doNothing().when(dbManager).deleteObject(eq(DeuStock.class), anyString());
+
+        // When
+
+        // Then
+        assertDoesNotThrow( () -> stockDAO.deleteBySymbol("Test"));
+    }
+
+    @Test
+    @DisplayName("Test getAll returns list of stocks")
+    public void testGetAllReturnsListOfStocks(){
+        // Given
+        DeuStock stock = new DeuStock("Test");
+        DeuStock stock2 = new DeuStock("Test2");
+        List<Object> stocks = new LinkedList<>();
+        stocks.add(stock);
+        stocks.add(stock2);
+
+        when(dbManager.getObjects(eq(DeuStock.class))).thenReturn(stocks);
+
+        // When
+        final List<DeuStock> result = (List<DeuStock>) stockDAO.getAll();
+
+        // Then
+        assertNotNull(result);
+        assertEquals(result.size(),2);
+    }
+    
+    @Test
+    @DisplayName("Test getOrCreateStock function returns stock")
+    public void testGetOrCreateStock(){
+        DeuStock stock = new DeuStock("Test");
+
+        when(dbManager.getObject(eq(DeuStock.class), anyString())).thenReturn(stock);
+
+        DeuStock stockObtained = stockDAO.getOrCreateStock("acronymTest");
+        
+        assertNotNull(stockObtained);
+        assertEquals(stockObtained.getAcronym(), "Test");
     }
 
 }

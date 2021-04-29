@@ -23,14 +23,14 @@ import java.util.Objects;
  */
 public class TwitterGateway implements SocialNetworkAPIGateway {
 
-    private final String path ="data/secret_keys/secret_twitter_keys.json";
+    private static final String PATH ="data/secret_keys/secret_twitter_keys.json";
 
     private final TwitterFactory twitterF;
 
     private static TwitterGateway instance = null;
 
     private TwitterGateway(){
-        JSONObject config = null;
+        JSONObject config;
         try {
             config = getConfiguration();
         } catch (IOException | ParseException e) {
@@ -49,7 +49,7 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
             configuration.put("ConsumerKey",System.getenv("twitter_consumer_key"));
             configuration.put("ConsumerSecret",System.getenv("twitter_consumer_key_secret"));
             return configuration;
-        }else return DSJSONUtils.readFile(path);
+        }else return DSJSONUtils.readFile(PATH);
 
     }
 

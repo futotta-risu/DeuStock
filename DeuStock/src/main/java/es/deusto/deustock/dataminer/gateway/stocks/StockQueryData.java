@@ -11,13 +11,18 @@ import java.util.Objects;
 public class StockQueryData {
 
     public enum Interval {
-        DAILY, WEEKLY, YEARLY
-    };
+        DAILY, WEEKLY, MONTHLY
+    }
+
+    private final int DEFAULT_INTERVAL_SIZE = 25;
 
     private String acronym;
     private Calendar from, to;
     private Interval interval  = Interval.DAILY;
     private boolean withHistoric = false;
+    private int intervalSize = DEFAULT_INTERVAL_SIZE;
+
+
 
     private StockQueryData() {}
 
@@ -66,13 +71,20 @@ public class StockQueryData {
         return this;
     }
 
+    public StockQueryData setIntervalSize(int size){
+        this.intervalSize = size;
+        setDateRangeByInterval();
+        return this;
+    }
+
+
     private void setDateRangeByInterval() {
         this.from = Calendar.getInstance();
         this.to = Calendar.getInstance();
         switch (this.interval) {
-            case DAILY -> from.add(Calendar.DAY_OF_YEAR, -25);
-            case WEEKLY -> from.add(Calendar.WEEK_OF_YEAR, -25);
-            case YEARLY -> from.add(Calendar.YEAR, -25);
+            case DAILY -> from.add(Calendar.DAY_OF_YEAR, -intervalSize);
+            case WEEKLY -> from.add(Calendar.WEEK_OF_YEAR, -intervalSize);
+            case MONTHLY -> from.add(Calendar.MONTH, -intervalSize);
         }
     }
 

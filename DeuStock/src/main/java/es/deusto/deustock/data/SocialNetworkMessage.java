@@ -23,22 +23,18 @@ public class SocialNetworkMessage {
 		this.message = message;
 	}
 
+	public String getMessage(){ return this.message; }
 	public SocialNetworkMessage setMessage(String message){
-		this.message = message;
-		return this;
+		this.message = message; return this;
 	}
-
-	public String getMessage(){
-		return this.message;
-	}
-
+	public String getAuthor() { return this.author; }
 	public SocialNetworkMessage setAuthor(String author){
-		this.author = author;
-		return this;
+		this.author = author; return this;
 	}
-
-	public void setSentiment(double sentiment){this.sentiment = sentiment;}
-	public double getSentiment(){return this.sentiment;}
+	public double getSentiment(){ return this.sentiment; }
+	public SocialNetworkMessage setSentiment(double sentiment){
+		this.sentiment = sentiment; return this;
+	}
 
 
 	@Override
