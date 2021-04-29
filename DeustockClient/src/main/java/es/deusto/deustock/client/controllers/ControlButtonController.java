@@ -49,7 +49,8 @@ public class ControlButtonController implements DSGenericController{
 
         myStocksButton.setOnMouseClicked(
                 mouseevent -> MainController.getInstance().loadAndChangePaneWithParams(
-                        ViewPaths.CurrentBalanceView, new HashMap<>() {{ put("username", username); }}
+                        ViewPaths.CurrentBalanceView,
+                        new HashMap<>() {{ put("username", username); }}
                 )
         );
     }
@@ -62,8 +63,9 @@ public class ControlButtonController implements DSGenericController{
 
     @Override
     public void setParams(HashMap<String, Object> params) {
-        if(params.containsKey("username"))
+        if(params.containsKey("username")) {
             this.username = String.valueOf(params.get("username"));
+        }
 
         profileButton.setText(username);
     }

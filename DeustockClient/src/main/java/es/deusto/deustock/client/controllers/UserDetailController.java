@@ -72,13 +72,18 @@ public class UserDetailController implements DSGenericController{
     }
 
     private void initRoot(){
-        if(this.username==null) return;
+        if(this.username==null){
+            return;
+        }
 
-        if(this.user == null || !this.user.getUsername().equals(this.username))
+        if(this.user == null || !this.user.getUsername().equals(this.username)) {
             getUser();
+        }
 
         // Error on retrieving user
-        if(this.user==null) return;
+        if(this.user==null){
+            return;
+        }
 
         this.usernameLabel.setText(user.getUsername());
         //this.sexLabel.setText(String.valueOf(user.isSex()));
@@ -87,10 +92,13 @@ public class UserDetailController implements DSGenericController{
         this.accountDeleteButton.setOnMouseClicked(
                 mouseEvent -> deleteUser()
         );
-        
-        String username = this.username;
+
         this.editProfileButton.setOnMouseClicked(
-        		moseEvent -> MainController.getInstance().loadAndChangePaneWithParams(ViewPaths.ChangeUserDetailViewPath,  new HashMap<String, Object>() {{ put("username", username ); }})
+        		moseEvent ->
+        		    MainController.getInstance().loadAndChangePaneWithParams(
+                            ViewPaths.ChangeUserDetailViewPath,
+                            new HashMap<>() {{ put("username", username ); }}
+                    )
         );
     	this.resetWalletButton.setOnMouseClicked(
     			mouseEvent -> resetAccountWallet()

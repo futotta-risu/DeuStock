@@ -144,9 +144,9 @@ public class DeustockGatewayTest {
             clientBuilder.when(ClientBuilder::newClient).thenReturn(mockClient);
             when(mockClient.target(anyString())).thenReturn(mockWebTarget);
             when(mockWebTarget.path(anyString())).thenReturn(mockWebTarget);
-            when(mockWebTarget.request()).thenReturn(mockBuilder);
+            when(mockWebTarget.request(anyString())).thenReturn(mockBuilder);
             when(mockBuilder.post(any())).thenReturn(mockResponse);
-            //when(mockResponse.)
+            when(mockResponse.getStatus()).thenReturn(200);
 
             //WHEN
             boolean result = new DeustockGateway()
@@ -154,6 +154,7 @@ public class DeustockGatewayTest {
 
             //THEN
             assertTrue(result);
+            assertEquals(200, mockResponse.getStatus());
         }
     }
     @Test
