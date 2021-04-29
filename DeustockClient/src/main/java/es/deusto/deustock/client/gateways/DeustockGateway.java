@@ -162,7 +162,7 @@ public class DeustockGateway {
                 .get();
 
         InputStream is = response.readEntity(InputStream.class);
-        File downloadfile = new File(path + "/" +acronym + " " + Calendar.getInstance().getTime().toString() + ".pdf");
+        File downloadfile = new File(path + "/" +acronym + "_" + Calendar.getInstance().getTimeInMillis() + ".pdf");
         byte[] byteArray = new byte[0];
         try {
             byteArray = IOUtils.toByteArray(is);
