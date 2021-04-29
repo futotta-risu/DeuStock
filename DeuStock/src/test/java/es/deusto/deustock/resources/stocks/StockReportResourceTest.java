@@ -34,7 +34,7 @@ class StockReportResourceTest {
     private YahooFinanceGateway mockStockGateway;
     
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp(){
     	mockStockGatewayFactory = mock(StockDataGatewayFactory.class);
     	mockStockGateway = mock(YahooFinanceGateway.class);
     }

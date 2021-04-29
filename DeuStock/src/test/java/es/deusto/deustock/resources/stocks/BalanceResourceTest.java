@@ -26,7 +26,7 @@ class BalanceResourceTest {
 	private UserDAO mockUserDAO;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
     	mockUserDAO = mock(UserDAO.class);
     }
 
