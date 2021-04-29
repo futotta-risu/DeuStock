@@ -38,12 +38,9 @@ public class HoldingsListResources {
     private UserDAO userDAO;
     private WalletDAO walletDAO;
     private StockHistoryDAO stockHistoryDAO;
-    private StockHistoryDTO stockHistoryDTO;
     private WalletService walletService;
     private StockDataAPIGateway stockGateway;
     private OperationFactory operationFactory;
-    private Operation openOperation;
-    private Operation closeOperation;
 
 
     public HoldingsListResources(){
@@ -53,21 +50,14 @@ public class HoldingsListResources {
         stockGateway = StockDataGatewayFactory.getInstance().create(StockDataGatewayEnum.YahooFinance);
         operationFactory = OperationFactory.getInstance();
         stockHistoryDAO = StockHistoryDAO.getInstance();
-        openOperation = null;
-        closeOperation = null;
-        stockHistoryDTO = null;
+
     }
 
     public void setUserDAO(UserDAO userDAO) { this.userDAO = userDAO; }
     public void setWalletDAO(WalletDAO walletDAO) { this.walletDAO = walletDAO; }
-    public void setWalletService(WalletService walletService) { this.walletService = walletService; }
     public void setStockGateway(StockDataAPIGateway stockDataAPIGateway) { this.stockGateway = stockDataAPIGateway; }
     public void setOperationFactory(OperationFactory operationFactory) { this.operationFactory = operationFactory; }
-    public void setStockHistoryDAO(StockHistoryDAO stockHisoryDAO) { this.stockHistoryDAO = stockHistoryDAO; }
-    public void setStockHistoryDTO(StockHistoryDTO stockHisoryDTO) { this.stockHistoryDTO = stockHistoryDTO; }
-    public void setOpenOperation(Operation openOperation) { this.openOperation = openOperation; }
-    public void setCloseOperation(Operation closeOperation) { this.closeOperation = closeOperation; }
-
+    public void setStockHistoryDAO(StockHistoryDAO stockHistoryDAO) { this.stockHistoryDAO = stockHistoryDAO; }
 
     @Path("holdings")
     @GET
@@ -79,11 +69,10 @@ public class HoldingsListResources {
             throw new IllegalArgumentException("Username does not exit");
         }
         Wallet wallet = user.getWallet();
-
         walletService.setWallet(wallet);
-        List<StockHistory> holdingsN = stockHistoryDAO.getStockHistory(wallet.getId());
-        holdingsN = holdingsN.stream().filter(c -> !c.isClosed()).collect(Collectors.toList());
-        List<StockHistoryDTO> holdings = stockHistoryDAO.getDTO(holdingsN);
+
+        List<StockHistoryDTO> holdings = walletService.getHoldings();
+
 
         for(StockHistoryDTO stockHistoryDTO : holdings){
             DeuStock stock = new DeuStock(stockHistoryDTO.getSymbol())
@@ -91,7 +80,7 @@ public class HoldingsListResources {
 
             OperationType opType = stockHistoryDTO.getOperation();
 
-            openOperation = operationFactory.create(opType, stock, stockHistoryDTO.getAmount());
+            Operation openOperation = operationFactory.create(opType, stock, stockHistoryDTO.getAmount());
 
             stockHistoryDTO.setOpenValue(openOperation.getOpenPrice());
 
@@ -99,8 +88,9 @@ public class HoldingsListResources {
                     new StockQueryData(stockHistoryDTO.getSymbol())
                             .setWithHistoric(false)
             );
+
             // Close y Actual
-            closeOperation = operationFactory.create(stockHistoryDTO.getOperation(), stock, stockHistoryDTO.getAmount());
+            Operation closeOperation = operationFactory.create(stockHistoryDTO.getOperation(), stock, stockHistoryDTO.getAmount());
             stockHistoryDTO.setActualPrice(stock.getPrice())
                     .setActualValue(closeOperation.getClosePrice());
 
@@ -119,8 +109,9 @@ public class HoldingsListResources {
 			return Response.status(401).build();
 		}
 
-		Wallet wallet = walletDAO.getWallet(user.getWallet().getId());
-		List<StockHistory> shList = stockHistoryDAO.getStockHistory(user.getWallet().getId());
+		Wallet wallet = user.getWallet();
+
+		List<StockHistory> shList = stockHistoryDAO.getStockHistory(wallet.getId());
 		for (StockHistory stockHistory : shList) {
 			stockHistory.setClosed(true);
 			stockHistoryDAO.update(stockHistory);

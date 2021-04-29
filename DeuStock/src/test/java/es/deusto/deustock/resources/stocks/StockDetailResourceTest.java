@@ -48,7 +48,7 @@ public class StockDetailResourceTest {
     public void testGetStockDetailWithBlankNameReturns401(){
     	StockDetail stockDetailResource = new StockDetail();
         setMocksToResource(stockDetailResource);
-        Response response = stockDetailResource.getStock("", "DAILY");
+        Response response = stockDetailResource.getStock("  ", "DAILY");
 		assertEquals(401, response.getStatus());
     }
     
@@ -57,7 +57,7 @@ public class StockDetailResourceTest {
     public void testGetStockDetailWithBlankIntervalReturns401(){
     	StockDetail stockDetailResource = new StockDetail();
         setMocksToResource(stockDetailResource);
-        Response response = stockDetailResource.getStock("BB", "");
+        Response response = stockDetailResource.getStock("BB", "   ");
 		assertEquals(401, response.getStatus());
     }
     
@@ -70,19 +70,26 @@ public class StockDetailResourceTest {
 		assertEquals(401, response.getStatus());
     }
     
-//    @Test
-//    @DisplayName("Test get stock detail throws exception")
-//    public void testGetStockDetailThrowsException() throws StockNotFoundException{
-//    	//Given
-//    	StockNotFoundException ex = new StockNotFoundException(new StockQueryData("BB"));
-//		
-//        //When
-//    	when(mockGatewayFactory.create(any())).thenReturn(mockGateway);
-//    	when(mockGateway.getStockData(any())).thenThrow(ex);
-//
-//    	StockDetail stockDetailResource = new StockDetail();
-//        setMocksToResource(stockDetailResource);
-//    	
-//    	assertThrows(ex.getClass(), () -> stockDetailResource.getStock("BB", "ThisReturns401"));
-//    }
+    @Test
+    @DisplayName("Test get stock detail throws exception")
+    public void testGetStockDetailThrowsExceptionOnUnknownStock() throws StockNotFoundException{
+    	//Given
+
+        when(mockGatewayFactory.create(any())).thenReturn(mockGateway);
+        when(mockGateway.getStockData(any())).thenThrow(
+                new StockNotFoundException(
+                        new StockQueryData("TestStockName")
+                )
+        );
+
+        StockDetail stockDetailResource = new StockDetail();
+        setMocksToResource(stockDetailResource);
+
+        //When
+        Response response = stockDetailResource.getStock("TestStockName", "DAILY");
+
+
+    	// Then
+        assertEquals(401, response.getStatus());
+    }
 }

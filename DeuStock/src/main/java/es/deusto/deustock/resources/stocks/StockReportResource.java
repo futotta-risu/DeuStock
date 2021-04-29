@@ -24,25 +24,20 @@ import es.deusto.deustock.report.StockReport;
 
 @Path("reports")
 public class StockReportResource {
-	
-	private StockDataGatewayFactory stockGatewayFactory;
-    private YahooFinanceGateway stockGateway;
+
+    private StockDataAPIGateway stockGateway;
     
     public StockReportResource() {
-    	this.stockGatewayFactory = StockDataGatewayFactory.getInstance();
-    	this.stockGateway = (YahooFinanceGateway) this.stockGatewayFactory.create(StockDataGatewayEnum.YahooFinance);
+    	this.stockGateway = StockDataGatewayFactory.getInstance().create(StockDataGatewayEnum.YahooFinance);
     }
     
-    public void setStockGateway(YahooFinanceGateway stockGateway) { this.stockGateway = stockGateway; }
-    public void setStockGatewayFactory(StockDataGatewayFactory stockGatewayFactory) { this.stockGatewayFactory = stockGatewayFactory; }
-    
+    public void setStockGateway(StockDataAPIGateway stockGateway) { this.stockGateway = stockGateway; }
+
 
     @GET
     @Produces("application/pdf")
     @Path("/{stock}/{interval}")
     public Response createSimplePdfWithChart(@PathParam("stock") String stockAcronym, @PathParam("interval") String interval) throws IOException {
-
-        YahooFinanceGateway gateway = (YahooFinanceGateway) StockDataGatewayFactory.getInstance().create(StockDataGatewayEnum.YahooFinance);
 
         StockQueryData queryData = new StockQueryData(
                 stockAcronym,
@@ -52,7 +47,7 @@ public class StockReportResource {
 
         DeuStock stock;
         try {
-            stock = gateway.getStockData(queryData);
+            stock = stockGateway.getStockData(queryData);
         } catch (StockNotFoundException e) {
             e.printStackTrace();
             return Response.status(Response.Status.UNAUTHORIZED).build();
@@ -64,11 +59,9 @@ public class StockReportResource {
 
         StockReport report = new StockReport(stock);
 
-
         File reportFile = report.generate();
 
-
-        Response.ResponseBuilder response = Response.ok((Object) reportFile);
+        Response.ResponseBuilder response = Response.ok(reportFile);
         response.header("Content-Disposition","attachment; filename=" + stockAcronym + "_report.pdf");
 
 
