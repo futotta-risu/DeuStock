@@ -1,21 +1,17 @@
-package es.deusto.deustock.client.controller;
+package es.deusto.deustock.client.controllers;
 
-import es.deusto.deustock.client.controllers.LoginController;
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.gateways.DeustockGateway;
-
-import javafx.scene.control.TextField;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
 import java.lang.reflect.Method;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-class LoginControllerTest{
+class LoginControllerTest {
 
     DeustockGateway gateway;
     User mockUser;
@@ -23,7 +19,7 @@ class LoginControllerTest{
     LoginController loginController;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         mockUser = mock(User.class);
         gateway = mock(DeustockGateway.class);
         loginController = mock(LoginController.class);
@@ -37,13 +33,13 @@ class LoginControllerTest{
     }
 
     @Test
-    public void testLoginController(){
-      //  when(loginController.)
+    public void testLoginController() {
+        //  when(loginController.)
     }
 
     @Test
-    public void loginValidDueToCorrectInput(){
-        when(gateway.login("juangomez","juan123")).thenReturn(user);
+    public void loginValidDueToCorrectInput() {
+        when(gateway.login("juangomez", "juan123")).thenReturn(user);
     }
 
     @Test

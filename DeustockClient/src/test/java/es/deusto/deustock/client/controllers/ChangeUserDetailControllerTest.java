@@ -2,9 +2,10 @@ package es.deusto.deustock.client.controllers;
 
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.gateways.DeustockGateway;
-import junit.framework.TestCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.lang.reflect.Method;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -30,4 +31,5 @@ class ChangeUserDetailControllerTest{
     public void testGetUser(){
         when(mockGateway.getUser(anyString())).thenReturn(user);
     }
+
 }

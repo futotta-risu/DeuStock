@@ -1,12 +1,16 @@
 package es.deusto.deustock.client.gateways;
 
 import es.deusto.deustock.client.data.Stock;
+import es.deusto.deustock.client.data.help.FAQQuestion;
 import es.deusto.deustock.client.net.RESTVars;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.mockito.MockedStatic;
 
 import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
@@ -15,102 +19,142 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-public class DeustockGatewayTest{
+public class DeustockGatewayTest {
 
-    Response mockResponse;
+
     Client mockClient;
+    ClientBuilder clientBuilderMock;
     WebTarget mockWebTarget;
-    RESTVars mockRest;
+    Invocation.Builder mockBuilder;
+
     Stock stock;
-    List<Stock> stockList;
-    Double sentiment;
 
     @BeforeEach
-    public void setUp(){
-        mockResponse = mock(Response.class);
+    public void setUp() {
+        //GIVEN
         mockClient = mock(Client.class);
         mockWebTarget = mock(WebTarget.class);
-        mockRest = mock(RESTVars.class);
+        mockBuilder = mock(Invocation.Builder.class);
+        clientBuilderMock = mock(ClientBuilder.class);
 
         stock = new Stock();
         stock.setPrice(600);
         stock.setFullName("TestStock");
         stock.setAcronym("TS");
         stock.setDescription("Test Stock description");
-
+/*
         stockList = new ArrayList<>();
         stockList.add(stock);
 
         sentiment = 20.0;
+        */
+
     }
 
     @Test
-    public void petitionReturnsWebTarget(){
+    public void petitionReturnsWebTarget() {
         when(mockClient.target(anyString())).thenReturn(mockWebTarget);
     }
 
     @Test
-    public void testGetStock(){
+    public void testGetStock() {
+        try (MockedStatic<ClientBuilder> clientBuilder = mockStatic(ClientBuilder.class)) {
+        Response response = Response.status(200).build();
+
+        clientBuilder.when(ClientBuilder::newClient).thenReturn(mockClient);
         when(mockClient.target(anyString())).thenReturn(mockWebTarget);
-        Response res = Response.status(200).entity(stock).build();
-        when(mockWebTarget.path("stock").path("detail").path(anyString()).request(MediaType.APPLICATION_JSON).get()).thenReturn(res);
-        assertEquals(stock, res.readEntity(Stock.class));
+        when(mockWebTarget.path(anyString())).thenReturn(mockWebTarget);
+        when(mockWebTarget.request()).thenReturn(mockBuilder);
+        when(mockBuilder.get()).thenReturn(response);
+
+       Stock result = new DeustockGateway()
+                .getStock("acronymTest", "intervalTest");
+
+        assertEquals(response.readEntity(Stock.class), result);
+        }
     }
 
     @Test
     public void tesGetStockList() {
+        try (MockedStatic<ClientBuilder> clientBuilder = mockStatic(ClientBuilder.class)) {
+        Response response = Response.status(200).build();
+
+        clientBuilder.when(ClientBuilder::newClient).thenReturn(mockClient);
         when(mockClient.target(anyString())).thenReturn(mockWebTarget);
-        Response res = Response.status(200).entity(stockList).build();
-        when(mockWebTarget.path("stock").path("list").path(anyString()).request(MediaType.APPLICATION_JSON).get()).thenReturn(res);
-        assertEquals(stockList, res.readEntity(new GenericType<List<Stock>>(){}));
+        when(mockWebTarget.path(anyString())).thenReturn(mockWebTarget);
+        when(mockWebTarget.request()).thenReturn(mockBuilder);
+        when(mockBuilder.get()).thenReturn(response);
+
+        List<Stock> result = new DeustockGateway()
+                .getStockList("listTypeTest");
+
+        assertEquals(response.readEntity(new GenericType<>() {}), result);
+
+    }
     }
 
     @Test
-    public void testGetTwitterSentiment(){
-        when(mockClient.target(anyString())).thenReturn(mockWebTarget);
-        Response res = Response.status(200).entity(sentiment).build();
-        when(mockWebTarget.path("twitter").path("sentiment").path(anyString()).request(MediaType.APPLICATION_JSON).get()).thenReturn(res);
-        assertEquals(sentiment, Double.parseDouble(res.readEntity(String.class)) );
+    public void testGetTwitterSentiment() {
+        try (MockedStatic<ClientBuilder> clientBuilder = mockStatic(ClientBuilder.class)) {
+            Response response = Response.status(200).build();
+
+            clientBuilder.when(ClientBuilder::newClient).thenReturn(mockClient);
+            when(mockClient.target(anyString())).thenReturn(mockWebTarget);
+            when(mockWebTarget.path(anyString())).thenReturn(mockWebTarget);
+            when(mockWebTarget.request()).thenReturn(mockBuilder);
+            when(mockBuilder.get()).thenReturn(response);
+
+            double result = new DeustockGateway()
+                    .getTwitterSentiment("searchQueryTest");
+
+            assertEquals(Double.parseDouble(response.readEntity(String.class)), result);
+
+        }
+
+        @Test
+        public void testGetFAQList() {
+            try (MockedStatic<ClientBuilder> clientBuilder = mockStatic(ClientBuilder.class)) {
+                Response response = Response.status(200).build();
+
+                clientBuilder.when(ClientBuilder::newClient).thenReturn(mockClient);
+                when(mockClient.target(anyString())).thenReturn(mockWebTarget);
+                when(mockWebTarget.path(anyString())).thenReturn(mockWebTarget);
+                when(mockWebTarget.request()).thenReturn(mockBuilder);
+                when(mockBuilder.get()).thenReturn(response);
+
+                List<FAQQuestion> result = new DeustockGateway()
+                        .getFAQList();
+
+                assertEquals(response.readEntity(String.class), result);
+            }
+        }
+
+        @Test
+        public void testRegister() {
+            try (MockedStatic<ClientBuilder> clientBuilder = mockStatic(ClientBuilder.class)) {
+                Response response = Response.status(200).build();
+
+                clientBuilder.when(ClientBuilder::newClient).thenReturn(mockClient);
+                when(mockClient.target(anyString())).thenReturn(mockWebTarget);
+                when(mockWebTarget.path(anyString())).thenReturn(mockWebTarget);
+                when(mockWebTarget.request()).thenReturn(mockBuilder);
+                when(mockBuilder.post(any())).thenReturn(response);
+
+                //WHEN
+                boolean result = new DeustockGateway()
+                        .register("usernameTest", "passTest", "fullNameTest", "aboutMeTeTest", "countryTest");
+
+                //THEN
+                assertTrue(result);
+            }
+        }
     }
-
-    @Test
-    public void getFAQList(){
-        when(mockClient.target(anyString())).thenReturn(mockWebTarget);
-        when(mockWebTarget.path("help").path("faq").path("list").request(MediaType.APPLICATION_JSON).get()).thenReturn(mockResponse);
-
-
-    }
-
-    /*
-    ublic List<FAQQuestion>  getFAQList(){
-        Response data = getHostWebTarget()
-                .path("help").path("faq").path("list")
-                .request(MediaType.APPLICATION_JSON).get();
-
-        JSONObject obj = new JSONObject(data.readEntity(String.class));
-
-        List<FAQQuestion> questionList = new LinkedList<>();
-        for(Object question : obj.getJSONArray("questions"))
-            questionList.add( new FAQQuestion((JSONObject) question) );
-
-        return questionList;
-    }
-
-    public boolean register(String username, String password, String fullName, Date birthDate, String aboutMe, String country) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-    	Response response = getHostWebTarget().path("users").path("register")
-    			.request("application/json")
-                .post(Entity.entity(
-                        new User(username, getEncrypt(password), fullName, birthDate, aboutMe, country)
-                        , MediaType.APPLICATION_JSON)
-                );
-
-        return response.getStatus() == 200;
-    }
-
+}
+/*
     public User login(String username, String password){
     	Response response = getHostWebTarget().path("users").path("login")
                 .path(username).path(getEncrypt(password))
@@ -167,4 +211,3 @@ public class DeustockGatewayTest{
         return response.getStatus() == 200;
     }
      */
-}
