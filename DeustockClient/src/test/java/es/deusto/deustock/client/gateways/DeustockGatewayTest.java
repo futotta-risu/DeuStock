@@ -232,13 +232,19 @@ public class DeustockGatewayTest {
     @Test
     public void testUpdateUser() {
         try (MockedStatic<ClientBuilder> clientBuilder = mockStatic(ClientBuilder.class)) {
-            Response response = Response.status(200).build();
+        	User user = new User();
+            user.setUsername("usernameTest");
+            user.setPassword("passTest");
+        	
+        	Response response = mock(Response.class);
 
             clientBuilder.when(ClientBuilder::newClient).thenReturn(mockClient);
             when(mockClient.target(anyString())).thenReturn(mockWebTarget);
             when(mockWebTarget.path(anyString())).thenReturn(mockWebTarget);
-            when(mockWebTarget.request()).thenReturn(mockBuilder);
+            when(mockWebTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
             when(mockBuilder.post(any())).thenReturn(response);
+            when(mockBuilder.get()).thenReturn(response);
+            when(response.getStatus()).thenReturn(200);
 
             //WHEN
             Date dateTest = new Date();
@@ -250,5 +256,3 @@ public class DeustockGatewayTest {
         }
     }
 }
-
-
