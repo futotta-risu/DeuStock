@@ -20,7 +20,7 @@ import static es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkG
 @Path("twitter/sentiment/{query}")
 public class TwitterSentimentResource {
 
-    private final SentimentExtractor extractor;
+    private SentimentExtractor extractor;
 
     public TwitterSentimentResource(){
         extractor = new SentimentExtractor(Twitter);
@@ -29,6 +29,8 @@ public class TwitterSentimentResource {
     public TwitterSentimentResource(SentimentExtractor extractor){
         this.extractor = extractor;
     }
+    
+    public void setSentimentExtractor(SentimentExtractor extractor) { this.extractor = extractor; }
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
