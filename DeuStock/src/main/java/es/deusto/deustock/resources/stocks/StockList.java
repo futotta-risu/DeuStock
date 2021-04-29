@@ -5,9 +5,6 @@ import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
-import es.deusto.deustock.log.DeuLogger;
-
-import org.json.JSONObject;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -16,9 +13,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.io.IOException;
+import javax.ws.rs.core.Response;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,29 +33,31 @@ public class StockList {
 
     private final List<String> smallList = Arrays.asList("INTC","TSLA") ;
     private final List<String> bigList = Arrays.asList("INTC","TSLA","ETH","BB") ;
+
+    private List<String> getStockNameList(String listName){
+        return switch(listName){
+            case "small" ->  smallList;
+            case "big" ->  bigList;
+            default ->  new LinkedList<>();
+        };
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<DeuStock> getStock( @PathParam("size") String listSize) {
+    public Response getStock( @PathParam("size") String listSize) {
+        List<String> stockList = getStockNameList(listSize);
 
-        List<String> stockList;
-        // TODO Change to new system for Stock Listing
-        switch(listSize){
-            case "small" -> stockList = smallList;
-            case "big" -> stockList = bigList;
-            default -> stockList = smallList;
-        }
+        StockDataAPIGateway gateway = StockDataGatewayFactory
+                .getInstance()
+                .create(StockDataGatewayEnum.YahooFinance);
 
-        StockDataGatewayFactory factory = StockDataGatewayFactory.getInstance();
-        StockDataAPIGateway gateway = factory.create(StockDataGatewayEnum.YahooFinance);
-
-
-        List<StockQueryData> stockDataList =
-                stockList.stream()
-                        .map( c -> new StockQueryData(c, DAILY) )
-                        .collect(Collectors.toList());
-
-        return new ArrayList<>(
-                gateway.getStocksData(stockDataList).values()
+        ArrayList<DeuStock> stocks = new ArrayList<>(
+                gateway.getStocksData(stockList).values()
         );
+
+        return Response
+                .status(Response.Status.OK)
+                .entity(stocks)
+                .build();
     }
 }

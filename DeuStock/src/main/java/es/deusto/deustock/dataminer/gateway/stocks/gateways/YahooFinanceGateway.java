@@ -8,6 +8,7 @@ import es.deusto.deustock.log.DeuLogger;
 
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
+import yahoofinance.histquotes.Interval;
 
 import java.io.IOException;
 import java.util.*;
@@ -24,6 +25,14 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
 
     private YahooFinanceGateway(){ }
 
+    private Interval adaptInterval(StockQueryData.Interval interval){
+        return switch (interval){
+            case DAILY -> Interval.DAILY;
+            case WEEKLY -> Interval.WEEKLY;
+            case MONTHLY -> Interval.MONTHLY;
+        };
+    }
+
     public static YahooFinanceGateway getInstance() {
         return instance;
     }
@@ -32,14 +41,29 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
     public DeuStock getStockData(StockQueryData queryData) throws StockNotFoundException{
         DeuStock deustock = new DeuStock(queryData);
         try {
-            Stock stock = YahooFinance.get(queryData.getAcronym());
+
+            Stock stock;
+            if(queryData.isWithHistoric()){
+                stock = YahooFinance.get(
+                        queryData.getAcronym(),
+                        queryData.getFrom(),
+                        queryData.getTo(),
+                        adaptInterval(queryData.getInterval())
+                );
+            }else{
+                stock = YahooFinance.get(
+                        queryData.getAcronym()
+                );
+            }
 
             if(stock == null){
                 throw new StockNotFoundException(queryData);
             }
 
-            deustock.setPrice(stock.getQuote(true).getPrice());
-            if(queryData.isWithHistoric()) deustock.setHistory(stock.getHistory());
+            deustock.setPrice(stock.getQuote().getPrice().doubleValue());
+            if(queryData.isWithHistoric()){
+                deustock.setHistory(stock.getHistory());
+            }
         } catch (IOException e) {
             e.printStackTrace();
             DeuLogger.logger.error("Could not get the stock data " + queryData.getAcronym());
@@ -47,71 +71,24 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
         return deustock;
     }
 
-    private static class StockExtract extends Thread{
-        StockQueryData stockData;
-        DeuStock stock;
-        boolean stockFound = false;
-
-        public DeuStock getStock(){
-            return this.stock;
-        }
-
-        public String getAcronym(){
-            return stockData.getAcronym();
-        }
-
-        public StockExtract setStockQuery(StockQueryData stockData){
-            this.stockData = stockData;
-            return this;
-        }
-
-        public boolean isStockFound() {
-            return stockFound;
-        }
-
-        @Override
-        public void run() {
-            try {
-                this.stockData.setWithHistoric(false);
-
-                this.stock = YahooFinanceGateway
-                        .getInstance()
-                        .getStockData(stockData);
-                this.stockFound = true;
-
-            } catch (StockNotFoundException e) {
-                DeuLogger.logger.error(e.getMessage());
-            }
-        }
-    }
-
     @Override
-    public HashMap<String, DeuStock> getStocksData(List<StockQueryData> queryData){
-        // We use LinkedList so that we can use the O(1) getLast in the loop
-        LinkedList<StockExtract> stockThreadList = new LinkedList<>();
+    public HashMap<String, DeuStock> getStocksData(List<String> stockNames)  {
+        HashMap<String, DeuStock> stocksAdapted = new HashMap<>();
+        try {
+            Map<String, Stock> stocks =  YahooFinance
+                    .get(stockNames.toArray(String[]::new), false );
 
-        for(StockQueryData data : queryData){
-            stockThreadList.add(new StockExtract().setStockQuery(data));
-            stockThreadList.getLast().start();
-        }
-
-        HashMap<String, DeuStock> stocks = new HashMap<>();
-
-        for(StockExtract stockThread : stockThreadList){
-            try {
-                stockThread.join();
-            } catch (InterruptedException e) {
-                DeuLogger.logger.info("The thread was stopped and stock could not be retrieved." );
-                continue;
+            for( Stock stock : stocks.values()){
+                DeuStock deustock = new DeuStock(stock.getSymbol());
+                deustock.setPrice(stock.getQuote().getPrice().doubleValue());
+                stocksAdapted.put(deustock.getAcronym(), deustock);
             }
 
-            if(stockThread.isStockFound()){
-                stocks.put(stockThread.getAcronym(),stockThread.getStock());
-            }else{
-                DeuLogger.logger.info("Skipping unknown stock " + stockThread.getAcronym() + "." );
-            }
-
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new HashMap<>();
         }
-        return stocks;
+
+        return stocksAdapted;
     }
 }

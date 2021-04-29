@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="generalBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="432.0" prefWidth="741.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.CurrentBalanceController">
+   <children>
+      <AnchorPane prefHeight="400.0" prefWidth="693.0" stylesheets="@StockListView.css" VBox.vgrow="ALWAYS">
+         <children>
+            <Label id="actBalanceLabel" fx:id="actBalanceLabel" layoutX="29.0" layoutY="14.0" prefHeight="26.0" prefWidth="543.0" text="BALANCE ACTUAL" textAlignment="CENTER">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Label id="stockCuantityLabel" fx:id="stockQuantityLabel" layoutX="226.0" layoutY="62.0" prefHeight="20.0" prefWidth="278.0" text="Tienes un total de XX stocks diferentes " textAlignment="CENTER">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <VBox fx:id="stockList" layoutX="34.0" layoutY="87.0" prefHeight="327.0" prefWidth="674.0" />
+            <Label fx:id="moneyLabel" layoutX="29.0" layoutY="40.0" prefHeight="29.0" prefWidth="194.0" text="105000 €">
+               <font>
+                  <Font size="39.0" />
+               </font></Label>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>

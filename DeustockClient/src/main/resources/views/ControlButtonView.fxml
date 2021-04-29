@@ -9,6 +9,7 @@
 <?import javafx.scene.text.Font?>
 
 <FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="800.0" style="-fx-background-color: #00b2d9;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.ControlButtonController">
+
    <children>
       <Button fx:id="homeButton" mnemonicParsing="false" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #00b2d9;" text="Home" textFill="WHITE">
          <font>
@@ -35,5 +36,6 @@
             <Font size="28.0" />
          </font>
       </Button>
+      <Button fx:id="myStocksButton" mnemonicParsing="false" prefHeight="100.0" prefWidth="144.0" text="MyStocks" />
    </children>
 </FlowPane>

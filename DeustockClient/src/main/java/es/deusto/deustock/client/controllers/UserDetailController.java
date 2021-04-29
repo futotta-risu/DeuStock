@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Erik B. Terres
@@ -33,6 +32,12 @@ public class UserDetailController implements DSGenericController{
 
     @FXML
     Button accountDeleteButton;
+    
+    @FXML
+    Button editProfileButton;
+
+    @FXML
+    Button resetWalletButton;
 
     public  UserDetailController(){}
 
@@ -43,8 +48,9 @@ public class UserDetailController implements DSGenericController{
 
     @Override
     public void setParams(HashMap<String, Object> params) {
-        if(params.containsKey("username"))
+        if(params.containsKey("username")) {
             this.username = String.valueOf(params.get("username"));
+        }
 
         initRoot();
 
@@ -77,10 +83,26 @@ public class UserDetailController implements DSGenericController{
         this.usernameLabel.setText(user.getUsername());
         //this.sexLabel.setText(String.valueOf(user.isSex()));
         this.descriptionLabel.setText(user.getDescription());
-        this.birthdayLabel.setText(user.getBirthDate().toString());
 
         this.accountDeleteButton.setOnMouseClicked(
                 mouseEvent -> deleteUser()
         );
+        
+        String username = this.username;
+        this.editProfileButton.setOnMouseClicked(
+        		moseEvent -> MainController.getInstance().loadAndChangePaneWithParams(ViewPaths.ChangeUserDetailViewPath,  new HashMap<String, Object>() {{ put("username", username ); }})
+        );
+    	this.resetWalletButton.setOnMouseClicked(
+    			mouseEvent -> resetAccountWallet()
+    	);
+    	
+    }
+    
+    public void resetAccountWallet() {
+    	DeustockGateway gateway = new DeustockGateway();
+    	boolean succesfullyReseted = gateway.resetHoldings(this.user.getUsername());
+    	if(!succesfullyReseted) {
+    		System.out.println("No se ha podido resetear");
+    	}
     }
 }

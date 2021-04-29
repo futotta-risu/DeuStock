@@ -1,12 +1,5 @@
 package es.deusto.deustock;
 
-import es.deusto.deustock.resources.HelloWorld;
-import es.deusto.deustock.resources.UserResource;
-import es.deusto.deustock.resources.help.FAQList;
-import es.deusto.deustock.resources.socialnetwork.TwitterSentiment;
-import es.deusto.deustock.resources.stocks.StockDetail;
-import es.deusto.deustock.resources.stocks.StockList;
-import es.deusto.deustock.resources.user.UserDetail;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -20,6 +13,8 @@ import java.net.URI;
  *
  */
 public class Main {
+
+    private Main(){}
 
     // Base URI the Grizzly HTTP server will listen on
     public static final String BASE_URI = "http://0.0.0.0:8080/myapp/";
@@ -47,4 +42,5 @@ public class Main {
         server.stop();
     }
 }
+
 

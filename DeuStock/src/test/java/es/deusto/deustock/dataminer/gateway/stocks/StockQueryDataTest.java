@@ -16,7 +16,7 @@ class StockQueryDataTest {
 
     @Test
     void setAcronym() {
-        StockQueryData q = new StockQueryData("GOG", StockQueryData.Interval.YEARLY);
+        StockQueryData q = new StockQueryData("GOG", StockQueryData.Interval.MONTHLY);
         assertEquals(q.getAcronym(),"GOG");
     }
 

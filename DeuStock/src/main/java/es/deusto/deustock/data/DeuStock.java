@@ -11,11 +11,11 @@ import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Unique;
 
-@PersistenceCapable
+@PersistenceCapable(detachable = "true")
 public class DeuStock {
 
     @NotPersistent
-    BigDecimal price;
+    double price;
     String fullName;
     @Unique
     String acronym;
@@ -24,6 +24,8 @@ public class DeuStock {
     @NotPersistent
     List<HistoricalQuote> history = new ArrayList<>();
 
+    // Don't erase. Compulsory for JSON
+    public  DeuStock(){}
     public DeuStock(String acronym){
         setAcronym(acronym);
     }
@@ -32,10 +34,13 @@ public class DeuStock {
         setAcronym(data.getAcronym());
     }
 
-    
-    public BigDecimal getPrice() { return price; }
-    public DeuStock setPrice(BigDecimal price) {
-        this.price = price; return this;
+
+    public double getPrice() {
+        return price;
+    }
+    public DeuStock setPrice(double price) {
+        this.price = price;
+        return this;
     }
     public String getFullName() { return fullName; }
     public DeuStock setFullName(String fullName) {

@@ -92,5 +92,6 @@
               </SplitPane>
           </children>
        </AnchorPane>
+
    </children>
 </VBox>

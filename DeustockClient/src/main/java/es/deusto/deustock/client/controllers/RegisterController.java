@@ -2,10 +2,7 @@ package es.deusto.deustock.client.controllers;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import es.deusto.deustock.client.gateways.DeustockGateway;
@@ -58,11 +55,11 @@ public class RegisterController {
 	@FXML
 	private Button cancelBtn;
 	
-	public RegisterController(){};
-	 
+	public RegisterController(){}
+
 	@FXML
 	private void initialize(){
-		List<String> countries = new ArrayList<String>();
+		List<String> countries = new ArrayList<>();
 		for (CountryEnum country : CountryEnum.values()) {
 			countries.add(country.name());
 		}
@@ -72,64 +69,40 @@ public class RegisterController {
 		
 		birthDatePicker.setValue(java.time.LocalDate.now());
 
-		
-		registerBtn.setOnMouseClicked(		
-				mouseEvent -> {
-					try {
-						register();
-					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
-						 DeuLogger.logger.error("Could not register due to unsupported encoding");
-					} catch (NoSuchAlgorithmException e) {
-						DeuLogger.logger.error("Could not register, algorithm is not available");
-						e.printStackTrace();
-					}
-				}
-		);
+		registerBtn.setOnMouseClicked( e -> register() );
 		
 		cancelBtn.setOnMouseClicked(			
 				mouseEvent -> MainController.getInstance().loadAndChangeScene(ViewPaths.LoginViewPath)
 		);
 	}
 	
-	@SuppressWarnings("deprecation")
-	private void register() throws UnsupportedEncodingException, NoSuchAlgorithmException {
-	    Dialog<String> dialog = new Dialog<String>();
-	    dialog.setTitle("ERROR");
+
+	private void register()  {
+	    Dialog<String> dialog = new Dialog<>();
+	    dialog.setTitle("Error");
 	    ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
 	    dialog.getDialogPane().getButtonTypes().add(type);
 		
 	    String username = usernameTxt.getText();
 		String password = passwordTxt.getText();
 		String fullName = fullNameTxt.getText();
-		LocalDate date = birthDatePicker.getValue();
-        Date birthDate = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
 		String aboutMe = aboutMeTxt.getText();
 
-		System.out.println("T1");
+
 		DeustockGateway dg = new DeustockGateway();
-		System.out.println("T13");
 
-		System.out.println(username);
-		System.out.println(password);
-		System.out.println(fullName);
-		System.out.println(birthDate);
-		System.out.println(aboutMe);
-
-		if(!username.equals("") && !password.equals("") && !fullName.equals("") && birthDate != null && !aboutMe.equals("") ) {
-			System.out.println("T15");
-			if(dg.register(username, password, fullName, birthDate, aboutMe, "Spain")) {
-				System.out.println("T16");
-				MainController.getInstance().loadAndChangeScene(ViewPaths.LoginViewPath);
-			}else {
-			    dialog.setContentText("REGISTRO INVALIDO");
-		        dialog.showAndWait();
-			}
-		}else {
-		    dialog.setContentText("CAMPOS NULOS");
-	        dialog.showAndWait();
+		if(username.isBlank() || password.isBlank() || fullName.isBlank()  || aboutMe.isBlank() ) {
+			dialog.setContentText("Null fields detected");
+			dialog.showAndWait();
+			return;
 		}
-		System.out.println("T18");
+
+		if(dg.register(username, password, fullName,  aboutMe, "Spain")) {
+			MainController.getInstance().loadAndChangeScene(ViewPaths.LoginViewPath);
+		}else {
+			dialog.setContentText("Invalid register");
+			dialog.showAndWait();
+		}
 	}
 
 }

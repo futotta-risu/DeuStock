@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class StockDataGatewayFactoryTest {
 
     @Test
-    void tstGetInstanceNotNull() {
+    void testGetInstanceNotNull() {
         StockDataGatewayFactory factory = StockDataGatewayFactory.getInstance();
         assertNotNull(factory);
     }
