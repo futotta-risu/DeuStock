@@ -32,6 +32,13 @@ jobs:
       with:
         java-version: 14
 
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v1
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+              
     - name: Cache Maven packages
       uses: actions/cache@v2
       with:
@@ -61,7 +68,12 @@ jobs:
 
     - name: Build with Maven (Client)
       run: mvn --file DeustockClient/pom.xml --batch-mode --update-snapshots verify
-
+      
+    - name: Build and analyze
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
     
     - name: Upload client coverage to Codecov
       uses: codecov/codecov-action@v1
