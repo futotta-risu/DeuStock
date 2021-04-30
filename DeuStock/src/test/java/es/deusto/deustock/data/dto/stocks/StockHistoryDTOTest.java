@@ -15,7 +15,7 @@ public class StockHistoryDTOTest {
 
     @Test
     @DisplayName("Test Constructor does not return null")
-    public void testConstructorDoesNotReturnNull(){
+    void testConstructorDoesNotReturnNull(){
         StockHistoryDTO stockHistoryDTO = new StockHistoryDTO();
         assertNotNull(stockHistoryDTO);
     }
@@ -23,12 +23,12 @@ public class StockHistoryDTOTest {
 
     @Test
     @DisplayName("Test Constructor does not throw error")
-    public void testConstructorDoesNotThrowError(){
+    void testConstructorDoesNotThrowError(){
         assertDoesNotThrow(StockHistoryDTO::new);
     }
     @Test
     @DisplayName("Test setID works")
-    public void testSetterID() throws NoSuchFieldException, IllegalAccessException {
+    void testSetterID() throws NoSuchFieldException, IllegalAccessException {
         //given
         final StockHistoryDTO stockHistoryDTO = new StockHistoryDTO();
 
@@ -44,7 +44,7 @@ public class StockHistoryDTOTest {
 
     @Test
     @DisplayName("Test getID works")
-    public void testGetterId() throws NoSuchFieldException, IllegalAccessException {
+    void testGetterId() throws NoSuchFieldException, IllegalAccessException {
         //given
         final StockHistoryDTO stockHistoryDTO = new StockHistoryDTO();
         final Field field = stockHistoryDTO.getClass().getDeclaredField("id");
@@ -60,7 +60,7 @@ public class StockHistoryDTOTest {
 
     @Test
     @DisplayName("Test setSymbol works")
-    public void testSetterSymbol() throws NoSuchFieldException, IllegalAccessException {
+    void testSetterSymbol() throws NoSuchFieldException, IllegalAccessException {
         //given
         final StockHistoryDTO stockHistoryDTO = new StockHistoryDTO();
 
@@ -76,7 +76,7 @@ public class StockHistoryDTOTest {
 
     @Test
     @DisplayName("Test getSymbol works")
-    public void testGetterSymbol() throws NoSuchFieldException, IllegalAccessException {
+    void testGetterSymbol() throws NoSuchFieldException, IllegalAccessException {
         //given
         final StockHistoryDTO stockHistoryDTO = new StockHistoryDTO();
         final Field field = stockHistoryDTO.getClass().getDeclaredField("symbol");
@@ -92,7 +92,7 @@ public class StockHistoryDTOTest {
 
     @Test
     @DisplayName("Test setOpenPrice works")
-    public void testSetterOpenPrice() throws NoSuchFieldException, IllegalAccessException {
+    void testSetterOpenPrice() throws NoSuchFieldException, IllegalAccessException {
         //given
         final StockHistoryDTO stockHistoryDTO = new StockHistoryDTO();
 
@@ -108,7 +108,7 @@ public class StockHistoryDTOTest {
 
     @Test
     @DisplayName("Test getOpenPrice works")
-    public void testGetterOpenPrice() throws NoSuchFieldException, IllegalAccessException {
+    void testGetterOpenPrice() throws NoSuchFieldException, IllegalAccessException {
         //given
         final StockHistoryDTO stockHistoryDTO = new StockHistoryDTO();
         final Field field = stockHistoryDTO.getClass().getDeclaredField("openPrice");
@@ -124,7 +124,7 @@ public class StockHistoryDTOTest {
 
     @Test
     @DisplayName("Test setActualPrice works")
-    public void testSetterActualPrice() throws NoSuchFieldException, IllegalAccessException {
+    void testSetterActualPrice() throws NoSuchFieldException, IllegalAccessException {
         //given
         final StockHistoryDTO stockHistoryDTO = new StockHistoryDTO();
 
@@ -140,7 +140,7 @@ public class StockHistoryDTOTest {
 
     @Test
     @DisplayName("Test getActualPrice works")
-    public void testGetterActualPrice() throws NoSuchFieldException, IllegalAccessException {
+    void testGetterActualPrice() throws NoSuchFieldException, IllegalAccessException {
         //given
         final StockHistoryDTO stockHistoryDTO = new StockHistoryDTO();
         final Field field = stockHistoryDTO.getClass().getDeclaredField("actualPrice");
@@ -156,7 +156,7 @@ public class StockHistoryDTOTest {
 
     @Test
     @DisplayName("Test setAmount works")
-    public void testSetterAmount() throws NoSuchFieldException, IllegalAccessException {
+    void testSetterAmount() throws NoSuchFieldException, IllegalAccessException {
         //given
         final StockHistoryDTO stockHistoryDTO = new StockHistoryDTO();
 
@@ -172,7 +172,7 @@ public class StockHistoryDTOTest {
 
     @Test
     @DisplayName("Test getAmount works")
-    public void testGetterAmount() throws NoSuchFieldException, IllegalAccessException {
+    void testGetterAmount() throws NoSuchFieldException, IllegalAccessException {
         //given
         final StockHistoryDTO stockHistoryDTO = new StockHistoryDTO();
         final Field field = stockHistoryDTO.getClass().getDeclaredField("amount");
@@ -188,7 +188,7 @@ public class StockHistoryDTOTest {
 
     @Test
     @DisplayName("Test setOpenValue works")
-    public void testSetterOpenValue() throws NoSuchFieldException, IllegalAccessException {
+    void testSetterOpenValue() throws NoSuchFieldException, IllegalAccessException {
         //given
         final StockHistoryDTO stockHistoryDTO = new StockHistoryDTO();
 
@@ -204,7 +204,7 @@ public class StockHistoryDTOTest {
 
     @Test
     @DisplayName("Test getOpenValue works")
-    public void testGetterOpenValue() throws NoSuchFieldException, IllegalAccessException {
+    void testGetterOpenValue() throws NoSuchFieldException, IllegalAccessException {
         //given
         final StockHistoryDTO stockHistoryDTO = new StockHistoryDTO();
         final Field field = stockHistoryDTO.getClass().getDeclaredField("openValue");
@@ -220,7 +220,7 @@ public class StockHistoryDTOTest {
 
     @Test
     @DisplayName("Test setActualValue works")
-    public void testSetterActualValue() throws NoSuchFieldException, IllegalAccessException {
+    void testSetterActualValue() throws NoSuchFieldException, IllegalAccessException {
         //given
         final StockHistoryDTO stockHistoryDTO = new StockHistoryDTO();
 
@@ -236,7 +236,7 @@ public class StockHistoryDTOTest {
 
     @Test
     @DisplayName("Test getActualValue works")
-    public void testGetterActualValue() throws NoSuchFieldException, IllegalAccessException {
+    void testGetterActualValue() throws NoSuchFieldException, IllegalAccessException {
         //given
         final StockHistoryDTO stockHistoryDTO = new StockHistoryDTO();
         final Field field = stockHistoryDTO.getClass().getDeclaredField("actualValue");
@@ -252,7 +252,7 @@ public class StockHistoryDTOTest {
 
     @Test
     @DisplayName("Test setOperation works")
-    public void testSetterOperation() throws NoSuchFieldException, IllegalAccessException {
+    void testSetterOperation() throws NoSuchFieldException, IllegalAccessException {
         //given
         final StockHistoryDTO stockHistoryDTO = new StockHistoryDTO();
 
@@ -268,7 +268,7 @@ public class StockHistoryDTOTest {
 
     @Test
     @DisplayName("Test getOperation works")
-    public void testGetterOperation() throws NoSuchFieldException, IllegalAccessException {
+    void testGetterOperation() throws NoSuchFieldException, IllegalAccessException {
         //given
         final StockHistoryDTO stockHistoryDTO = new StockHistoryDTO();
         final Field field = stockHistoryDTO.getClass().getDeclaredField("operation");

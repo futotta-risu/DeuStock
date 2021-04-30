@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class StockNotFoundExceptionTest {
 
     @Test
-    public void testCorrectMessage(){
+    void testCorrectMessage(){
         StockQueryData data = new StockQueryData("AMZN", StockQueryData.Interval.DAILY);
 
         StockNotFoundException exception = assertThrows(

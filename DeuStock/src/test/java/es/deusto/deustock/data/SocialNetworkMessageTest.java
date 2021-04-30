@@ -1,73 +1,73 @@
 package es.deusto.deustock.data;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SocialNetworkMessageTest {
 	
 	@Test
-	public void testConstructor0() {
+	void testConstructor0() {
 		SocialNetworkMessage socialNetworkMessage = new SocialNetworkMessage();
-		assertNull("Constructor1 doesn't work", socialNetworkMessage.getAuthor());
-		assertNull("Constructor1 doesn't work", socialNetworkMessage.getMessage());
+		assertNull(socialNetworkMessage.getAuthor());
+		assertNull(socialNetworkMessage.getMessage());
 	}
 	
 	@Test
-	public void testConstructor1() {
+	void testConstructor1() {
 		SocialNetworkMessage socialNetworkMessage = new SocialNetworkMessage("Gartzi", "Hola no me gusta la CocaCola");
-		assertEquals("Constructor1 doesn't work", "Gartzi", socialNetworkMessage.getAuthor());
-		assertEquals("Constructor1 doesn't work", "Hola no me gusta la CocaCola", socialNetworkMessage.getMessage());
+		assertEquals("Gartzi", socialNetworkMessage.getAuthor());
+		assertEquals("Hola no me gusta la CocaCola", socialNetworkMessage.getMessage());
 	}
 	
 	@Test
-	public void testConstructor2() {
+	void testConstructor2() {
 		SocialNetworkMessage socialNetworkMessage = new SocialNetworkMessage("Hola no me gusta la CocaCola");
-		assertEquals("Constructor2 doesn't work", "Hola no me gusta la CocaCola", socialNetworkMessage.getMessage());
+		assertEquals( "Hola no me gusta la CocaCola", socialNetworkMessage.getMessage());
 	}
 
 	@Test
-	public void testGetMessage() {
+	void testGetMessage() {
 		SocialNetworkMessage socialNetworkMessage = new SocialNetworkMessage("Gartzi", "Hola no me gusta la CocaCola");
-		assertEquals("getMessage doesn't work", "Hola no me gusta la CocaCola", socialNetworkMessage.getMessage());
+		assertEquals("Hola no me gusta la CocaCola", socialNetworkMessage.getMessage());
 	}
 	
 	@Test
-	public void testSetMessage() {
+	void testSetMessage() {
 		SocialNetworkMessage socialNetworkMessage = new SocialNetworkMessage("Gartzi", "Hola me no gusta la CocaCola");
 		socialNetworkMessage.setMessage("Hola me gusta la CocaCola");
-		assertEquals("setMessage doesn't work", "Hola me gusta la CocaCola", socialNetworkMessage.getMessage());
+		assertEquals("Hola me gusta la CocaCola", socialNetworkMessage.getMessage());
 	}
 	
 	@Test
-	public void testGetAuthor() {
+	void testGetAuthor() {
 		SocialNetworkMessage socialNetworkMessage = new SocialNetworkMessage("Gartzi", "Hola no me gusta la CocaCola");
-		assertEquals("getAuthor doesn't work", "Gartzi", socialNetworkMessage.getAuthor());
+		assertEquals( "Gartzi", socialNetworkMessage.getAuthor());
 	}
 	
 	@Test
-	public void testSetAuthor() {
+	void testSetAuthor() {
 		SocialNetworkMessage socialNetworkMessage = new SocialNetworkMessage("Gartzi", "Hola no me gusta la CocaCola");
 		socialNetworkMessage.setAuthor("DarthGartzi");
-		assertEquals("getAuthor doesn't work", "DarthGartzi", socialNetworkMessage.getAuthor());
+		assertEquals("DarthGartzi", socialNetworkMessage.getAuthor());
 	}
 	
 	@Test
-	public void testGetSentiment() {
+	void testGetSentiment() {
 		SocialNetworkMessage socialNetworkMessage = new SocialNetworkMessage();
 		socialNetworkMessage.setSentiment(12.5);
-		assertEquals("getSentiment doesn't work", 12.5, socialNetworkMessage.getSentiment(), 0.0);
+		assertEquals(12.5, socialNetworkMessage.getSentiment(), 0.01);
 	}
 	
 	@Test
-	public void testSetSentiment() {
+	void testSetSentiment() {
 		SocialNetworkMessage socialNetworkMessage = new SocialNetworkMessage();
 		socialNetworkMessage.setSentiment(12.5);
-		assertEquals("setSentiment doesn't work", 12.5, socialNetworkMessage.getSentiment(), 0.0);
+		assertEquals( 12.5, socialNetworkMessage.getSentiment(), 0.01);
 	}
 	
 	@Test
-	public void testToString() {
+	void testToString() {
 		SocialNetworkMessage socialNetworkMessage = new SocialNetworkMessage("Gartzi", "Hola no me gusta la CocaCola");
 		socialNetworkMessage.setSentiment(12.5);
 		String actuals = socialNetworkMessage.toString();
@@ -76,7 +76,7 @@ public class SocialNetworkMessageTest {
                 Hola no me gusta la CocaCola
                 Sentiment=12.5
                 """;
-		assertEquals("toString doesn't work", expected, actuals);
+		assertEquals(expected, actuals);
 	}
 
 }

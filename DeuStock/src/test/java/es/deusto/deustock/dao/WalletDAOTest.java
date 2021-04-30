@@ -23,7 +23,7 @@ class WalletDAOTest {
     private WalletDAO walletDAO;
 
     @BeforeEach
-    public void setUp(){
+    void setUp(){
         dbManager = mock(DBManager.class);
         walletDAO = WalletDAO.getInstance();
         walletDAO.setDBManager(dbManager);
@@ -32,7 +32,7 @@ class WalletDAOTest {
 
     @Test
     @DisplayName("Test get Wallet on non existent wallet")
-    public void testGetOnNonExistentWallet(){
+    void testGetOnNonExistentWallet(){
         when(dbManager.getObject(eq(Wallet.class), anyString())).thenReturn(null);
 
         final Wallet result = walletDAO.getWallet("Test");
@@ -42,7 +42,7 @@ class WalletDAOTest {
     
     @Test
     @DisplayName("Test store function does not throw error")
-    public void testStoreWallet(){
+    void testStoreWallet(){
         Wallet wallet = new Wallet();
         
         doNothing().when(dbManager).storeObject(any());
@@ -53,7 +53,7 @@ class WalletDAOTest {
     
     @Test
     @DisplayName("Test update function does not throw error")
-    public void testUpdateWallet(){
+    void testUpdateWallet(){
         Wallet wallet = new Wallet();
         wallet.changeMoney(999999);
         doNothing().when(dbManager).updateObject(any());

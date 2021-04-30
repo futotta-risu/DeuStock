@@ -34,7 +34,7 @@ class OpenOperationResourceTest {
     private UserDAO userDAO;
 
     @BeforeEach
-    public void setUp(){
+    void setUp(){
         stockHistoryDAO = mock(StockHistoryDAO.class);
         walletService =  new WalletService();
         stockDataAPIGateway = mock(StockDataAPIGateway.class);

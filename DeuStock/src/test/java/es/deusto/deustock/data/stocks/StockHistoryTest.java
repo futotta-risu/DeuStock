@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class StockHistoryTest {
 
     @Test
-    public void testConstructorDoesNotThrowException(){
+    void testConstructorDoesNotThrowException(){
         DeuStock stock = new DeuStock("AMZN");
         Wallet wallet = new Wallet();
         assertDoesNotThrow(
@@ -18,7 +18,7 @@ public class StockHistoryTest {
     }
 
     @Test
-    public void testConstructor(){
+    void testConstructor(){
         DeuStock stock = new DeuStock("AMZN");
         Wallet wallet = new Wallet();
         StockHistory stockH = new StockHistory(wallet, stock,100,  100, LONG);

@@ -31,18 +31,18 @@ public class StockDetailResourceTest {
 	
 	
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
     	mockGateway = mock(StockDataAPIGateway.class);
     }
 
     
-    public void setMocksToResource(StockDetail stockDetailResource){
+    void setMocksToResource(StockDetail stockDetailResource){
     	stockDetailResource.setStockGateway(mockGateway);
     }
     
     @Test
     @DisplayName("Test get stock detail with a blank NAME returns 401")
-    public void testGetStockDetailWithBlankNameReturns401(){
+    void testGetStockDetailWithBlankNameReturns401(){
     	StockDetail stockDetailResource = new StockDetail();
         setMocksToResource(stockDetailResource);
         Response response = stockDetailResource.getStock("  ", "DAILY");
@@ -51,7 +51,7 @@ public class StockDetailResourceTest {
     
     @Test
     @DisplayName("Test get stock detail with a blank INTERVAL returns 401")
-    public void testGetStockDetailWithBlankIntervalReturns401(){
+    void testGetStockDetailWithBlankIntervalReturns401(){
     	StockDetail stockDetailResource = new StockDetail();
         setMocksToResource(stockDetailResource);
         Response response = stockDetailResource.getStock("BB", "   ");
@@ -60,7 +60,7 @@ public class StockDetailResourceTest {
     
     @Test
     @DisplayName("Test get stock detail with a blank INTERVAL returns 401")
-    public void testGetStockDetailWithWrongIntervalReturns401(){
+    void testGetStockDetailWithWrongIntervalReturns401(){
     	StockDetail stockDetailResource = new StockDetail();
         setMocksToResource(stockDetailResource);
         Response response = stockDetailResource.getStock("BB", "ThisReturns401");
@@ -69,7 +69,7 @@ public class StockDetailResourceTest {
     
     @Test
     @DisplayName("Test get stock detail throws exception")
-    public void testGetStockDetailThrowsExceptionOnUnknownStock() throws StockNotFoundException {
+    void testGetStockDetailThrowsExceptionOnUnknownStock() throws StockNotFoundException {
         //Given
 
         when(mockGateway.getStockData(any())).thenThrow(
@@ -91,7 +91,7 @@ public class StockDetailResourceTest {
 
     @Test
     @DisplayName("Test get stock detail returns status 200")
-    public void testGetStockReturns200() throws StockNotFoundException{
+    void testGetStockReturns200() throws StockNotFoundException{
     	//Given
         DeuStock stock = new DeuStock("BB").setPrice(20);
 
@@ -110,7 +110,7 @@ public class StockDetailResourceTest {
 
     @Test
     @DisplayName("Test get stock detail returns stock")
-    public void testGetStockReturnsStock() throws StockNotFoundException{
+    void testGetStockReturnsStock() throws StockNotFoundException{
         //Given
         DeuStock stock = new DeuStock("BB").setPrice(20);
 

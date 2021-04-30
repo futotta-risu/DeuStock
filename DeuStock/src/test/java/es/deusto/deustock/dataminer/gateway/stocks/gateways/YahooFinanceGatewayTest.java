@@ -28,7 +28,7 @@ public class YahooFinanceGatewayTest {
     private Stock stock, stockFake;
 
     @BeforeEach
-    public void setUp(){
+    void setUp(){
         this.gateway = (YahooFinanceGateway) StockDataGatewayFactory
                 .getInstance()
                 .create(StockDataGatewayEnum.YahooFinance);

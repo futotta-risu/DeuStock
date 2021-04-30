@@ -16,7 +16,7 @@ public class TwitterGatewayTest {
 
     @Test
     @DisplayName("Twitter API get Tweets")
-    public void testGetMessageList() {
+    void testGetMessageList() {
         SocialNetworkQueryData queryData = new SocialNetworkQueryData();
         queryData.setSearchQuery("\"BTC\"");
         assertTrue(TwitterGateway.getInstance().getMessageList(queryData).size()>0);
@@ -24,7 +24,7 @@ public class TwitterGatewayTest {
 
     @Test
     @DisplayName("Get Json Configurations")
-    public void getConfiguration() {
+    void getConfiguration() {
         String path = "data/secret_keys/test_secret_twitter_keys.json";
         JSONObject configuration = null;
         try {
@@ -41,7 +41,7 @@ public class TwitterGatewayTest {
     }
 
     @Test
-    public void testCannotGetMessageListOnNullQueryData(){
+    void testCannotGetMessageListOnNullQueryData(){
         assertThrows(
                 NullPointerException.class,
                 () -> TwitterGateway.getInstance().getMessageList(null)

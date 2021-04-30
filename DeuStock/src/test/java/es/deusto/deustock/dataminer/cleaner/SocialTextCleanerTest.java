@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SocialTextCleanerTest {
 
     @Test
-    public void testRemoveInvalidChars() {
+    void testRemoveInvalidChars() {
         String testString = "yes, im communist ☭ yeah ☭";
         String expectedString = "yes, im communist  yeah ";
 
@@ -20,7 +20,7 @@ public class SocialTextCleanerTest {
     }
 
     @Test
-    public void testRemoveURLSHTTP() {
+    void testRemoveURLSHTTP() {
         String testString = "Test url http://www.google.com, and, https://www.facebook.com";
         String expectedString = "Test url , and, ";
 
@@ -28,7 +28,7 @@ public class SocialTextCleanerTest {
     }
 
     @Test
-    public void testRemoveURLSHTTPS() {
+    void testRemoveURLSHTTPS() {
         String testString = "Test url http://www.google.com, and, https://www.facebook.com";
         String expectedString = "Test url , and, ";
 
@@ -36,7 +36,7 @@ public class SocialTextCleanerTest {
     }
 
     @Test
-    public void testRemoveURLSNoHTTP() {
+    void testRemoveURLSNoHTTP() {
         String testString = "Test url www.google.com, and, www.facebook.com";
         String expectedString = "Test url , and, ";
 
@@ -44,7 +44,7 @@ public class SocialTextCleanerTest {
     }
 
     @Test
-    public void testRemoveHashtags(){
+    void testRemoveHashtags(){
         String testString = "I really like #BTC #ETH";
         String expectedString = "I really like BTC ETH";
 
@@ -52,7 +52,7 @@ public class SocialTextCleanerTest {
     }
 
     @Test
-    public void testRemoveUsernames(){
+    void testRemoveUsernames(){
         String testString = "Today I went with @Mike";
         String expectedString = "Today I went with Tom";
 
@@ -60,7 +60,7 @@ public class SocialTextCleanerTest {
     }
 
     @Test
-    public void testRemoveExtraSpaces(){
+    void testRemoveExtraSpaces(){
         String testString = " I  really   like spaces   ";
         String expectedString = "I really like spaces";
 
@@ -68,7 +68,7 @@ public class SocialTextCleanerTest {
     }
 
     @Test
-    public void testClean() {
+    void testClean() {
         String testString = " I  am currently holding  #BTC with @mike!! ☭☭  Buy more in http://www.binance.com! ";
         String expectedString = "I am currently holding BTC with Tom Buy more in !";
 
@@ -76,7 +76,7 @@ public class SocialTextCleanerTest {
     }
 
     @Test
-    public void testCleanList() {
+    void testCleanList() {
         List<String> messages = new ArrayList<>();
         messages.add(" I  am currently holding  #BTC with @mike!! ☭☭  Buy more in http://www.binance.com! ");
         messages.add(" I  am currently holding  #BTC with @mike!! ☭☭  Buy more in http://www.binance.com! ");
@@ -90,7 +90,7 @@ public class SocialTextCleanerTest {
     }
 
     @Test
-    public void testCleanCollectionSocialNetworkMessages() {
+    void testCleanCollectionSocialNetworkMessages() {
         String messageText = " I  am currently holding  #BTC with @mike!! ☭☭  Buy more in http://www.binance.com! ";
         String expectedString = "I am currently holding BTC with Tom Buy more in !";
 

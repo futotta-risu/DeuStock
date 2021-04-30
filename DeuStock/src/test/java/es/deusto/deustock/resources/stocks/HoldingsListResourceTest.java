@@ -48,14 +48,14 @@ class HoldingsListResourceTest{
 
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
     	mockUserDAO = mock(UserDAO.class);
     	mockWalletDAO = mock(WalletDAO.class);
     	mockStockHistoryDAO = mock(StockHistoryDAO.class);
     	mockStockGateway = mock(StockDataAPIGateway.class);
     }
     
-    public void setMocksToResource(HoldingsListResources holdingsListResource){
+    void setMocksToResource(HoldingsListResources holdingsListResource){
     	holdingsListResource.setUserDAO(mockUserDAO);
     	holdingsListResource.setWalletDAO(mockWalletDAO);
     	holdingsListResource.setStockHistoryDAO(mockStockHistoryDAO);
@@ -64,7 +64,7 @@ class HoldingsListResourceTest{
 
     @Test
     @DisplayName("Test get holdings list returns Illegal Argument Exception")
-    public void testGetHoldingsReturnsIllegalArgumentException(){
+    void testGetHoldingsReturnsIllegalArgumentException(){
     	//Given
         HoldingsListResources holdingsListResource = new HoldingsListResources();
         when(mockUserDAO.getUser(anyString())).thenReturn(null);
@@ -83,7 +83,7 @@ class HoldingsListResourceTest{
 
     @Test
     @DisplayName("Test get holdings list returns status 200")
-    public void testGetHoldingsListReturns200() throws StockNotFoundException {
+    void testGetHoldingsListReturns200() throws StockNotFoundException {
         //Given
         Wallet wallet = new Wallet();
         DeuStock stock = new DeuStock("BB").setPrice(20);
@@ -117,7 +117,7 @@ class HoldingsListResourceTest{
     
     @Test
     @DisplayName("Test reset holdings returns 401")
-    public void testResetHoldingsReturns401(){
+    void testResetHoldingsReturns401(){
     	//Given
 
         //When
@@ -133,7 +133,7 @@ class HoldingsListResourceTest{
 
     @Test
     @DisplayName("Test reset holdings returns 200")
-    public void testResetHoldingsReturns200() throws StockNotFoundException {
+    void testResetHoldingsReturns200() throws StockNotFoundException {
     	//Given
         Wallet wallet = new Wallet();
         DeuStock stock = new DeuStock("BB").setPrice(20);

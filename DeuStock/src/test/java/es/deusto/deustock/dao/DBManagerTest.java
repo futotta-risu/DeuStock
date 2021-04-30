@@ -33,7 +33,7 @@ class DBManagerTest {
 
 
     @BeforeEach
-    public void setUp(){
+    void setUp(){
     	mockPersistentManagerFactory = mock(PersistenceManagerFactory.class);
     	mockPersistentManager = mock(PersistenceManager.class);
     	mockTransaction = mock(Transaction.class);
@@ -43,7 +43,7 @@ class DBManagerTest {
     
     @Test
     @DisplayName("Test updateObject function throw error")
-    public void testUpdateThrowsError(){
+    void testUpdateThrowsError(){
     	//Given
     	RuntimeException re = new RuntimeException("Exception");
     	Object object = new Object();
@@ -60,7 +60,7 @@ class DBManagerTest {
     
     @Test
     @DisplayName("Test storeObject function throw error")
-    public void testStoreThrowsError(){
+    void testStoreThrowsError(){
     	//Given
     	RuntimeException re = new RuntimeException("Exception");
     	Object object = new Object();
@@ -78,7 +78,7 @@ class DBManagerTest {
     
     @Test
     @DisplayName("Test getObjects function throw error")
-    public void testGetObjectsThrowsError(){
+    void testGetObjectsThrowsError(){
     	//Given
     	RuntimeException re = new RuntimeException("Exception");
     	Class<Object> objectClass = Object.class;
@@ -95,7 +95,7 @@ class DBManagerTest {
     
     @Test
     @DisplayName("Test getObjects with condition function throw error")
-    public void testGetObjectsWithCondtionThrowsError(){
+    void testGetObjectsWithCondtionThrowsError(){
        	//Given
     	RuntimeException re = new RuntimeException("Exception");
     	Class<Object> objectClass = Object.class;
@@ -112,7 +112,7 @@ class DBManagerTest {
     
     @Test
     @DisplayName("Test getObject with condition function throw error")
-    public void testGetObjectWithCondtionThrowsError(){
+    void testGetObjectWithCondtionThrowsError(){
        	//Given
     	RuntimeException re = new RuntimeException("Exception");
     	Class<Object> objectClass = Object.class;
@@ -129,7 +129,7 @@ class DBManagerTest {
     
     @Test
     @DisplayName("Test deleteObject function throw error")
-    public void testDeleteObjectThrowsError(){
+    void testDeleteObjectThrowsError(){
     	//Given
     	RuntimeException re = new RuntimeException("Exception");
     	Class<Object> objectClass = Object.class;
@@ -146,7 +146,7 @@ class DBManagerTest {
     
     @Test
     @DisplayName("Test deleteObject function throw error")
-    public void testDeleteObjectWithConditionThrowsError(){
+    void testDeleteObjectWithConditionThrowsError(){
     	//Given
     	RuntimeException re = new RuntimeException("Exception");
     	Class<Object> objectClass = Object.class;
@@ -163,7 +163,7 @@ class DBManagerTest {
     
     @Test
     @DisplayName("Test deleteObject function throw error")
-    public void testDeleteObjectDoesNotThrowError(){
+    void testDeleteObjectDoesNotThrowError(){
     	//Given
     	Class<Object> objectClass = Object.class;
     	
@@ -181,7 +181,7 @@ class DBManagerTest {
     
     @Test
     @DisplayName("Test deleteObject function throw error")
-    public void testDeleteObjectWithConditionDoesNotThrowError(){
+    void testDeleteObjectWithConditionDoesNotThrowError(){
     	//Given
     	Class<Object> objectClass = Object.class;
     	

@@ -13,20 +13,20 @@ public class UserDTOTest {
 
     @Test
     @DisplayName("Test Constructor is not null")
-    public void testConstructorNotNull(){
+    void testConstructorNotNull(){
         UserDTO userDTO = new UserDTO();
         assertNotNull(userDTO);
     }
 
     @Test
     @DisplayName("Test Constructor does not throw exception")
-    public void testConstructorDoesNotThrowException(){
+    void testConstructorDoesNotThrowException(){
         assertDoesNotThrow(UserDTO::new);
     }
 
     @Test
     @DisplayName("Test Format returns correct String")
-    public void testFormatReturnsCorrectFormat(){
+    void testFormatReturnsCorrectFormat(){
         UserDTO userDTO = new UserDTO()
                 .setUsername("TestUsername")
                 .setFullName("Test Username");
@@ -36,7 +36,7 @@ public class UserDTOTest {
 
     @Test
     @DisplayName("Test Format does not throw exception on null values")
-    public void testFormatDoesNotThrowExceptionOnNullValues(){
+    void testFormatDoesNotThrowExceptionOnNullValues(){
         assertDoesNotThrow( () -> new UserDTO().format() );
     }
 

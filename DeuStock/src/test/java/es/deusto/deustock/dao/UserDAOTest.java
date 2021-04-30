@@ -22,7 +22,7 @@ public class UserDAOTest {
     private UserDAO userDAO;
 
     @BeforeEach
-    public void setUp(){
+    void setUp(){
         dbManager = mock(DBManager.class);
         userDAO = UserDAO.getInstance();
         userDAO.setDBManager(dbManager);
@@ -30,7 +30,7 @@ public class UserDAOTest {
 
     @Test
     @DisplayName("Test get User on existent user")
-    public void testGetOnExistentUser(){
+    void testGetOnExistentUser(){
         // Given
         User user = new User("TestUser" , "TestPass");
         when(dbManager.getObject(eq(User.class), anyString())).thenReturn(user);
@@ -44,7 +44,7 @@ public class UserDAOTest {
 
     @Test
     @DisplayName("Test get User on non existent user")
-    public void testGetOnNonExistentUser(){
+    void testGetOnNonExistentUser(){
         // Given
         when(dbManager.getObject(eq(User.class), anyString())).thenReturn(null);
 
@@ -57,7 +57,7 @@ public class UserDAOTest {
 
     @Test
     @DisplayName("Test store function does not throw error")
-    public void testStore(){
+    void testStore(){
         // Given
         User user = new User("TestUser" , "TestPass");
         doNothing().when(dbManager).storeObject(any());
@@ -70,7 +70,7 @@ public class UserDAOTest {
 
     @Test
     @DisplayName("Test update function does not throw error")
-    public void testUpdate(){
+    void testUpdate(){
         // Given
         User user = new User("TestUser" , "TestPass");
         doNothing().when(dbManager).updateObject(any());
@@ -83,7 +83,7 @@ public class UserDAOTest {
 
     @Test
     @DisplayName("Test delete function does not throw error")
-    public void testDelete(){
+    void testDelete(){
         // Given
         doNothing().when(dbManager).deleteObject(eq(User.class), anyString());
 
@@ -95,7 +95,7 @@ public class UserDAOTest {
 
     @Test
     @DisplayName("Test get Users on existent user")
-    public void testGeUsers(){
+    void testGeUsers(){
         // Given
         List<Object> users = new LinkedList<>();
         User user0 = new User("TestUser" , "TestPass");
@@ -117,7 +117,7 @@ public class UserDAOTest {
     
     @Test
     @DisplayName("Test create a User from UserDTO")
-    public void testCreateUserFromUserDTO() {
+    void testCreateUserFromUserDTO() {
     	UserDTO userDTO = new UserDTO();
     	userDTO.setCountry("countryTest1")
     		   .setDescription("descriptionTest1")
@@ -135,7 +135,7 @@ public class UserDAOTest {
     
     @Test
     @DisplayName("Test create a UserDTO from User")
-    public void testCreateUserDTOFromUser() {
+    void testCreateUserDTOFromUser() {
     	User user = new User("usernameTest1", "passwordTest1");
     	user.setCountry("countryTest1")
     		   .setDescription("descriptionTest1")
@@ -154,7 +154,7 @@ public class UserDAOTest {
     
     @Test
     @DisplayName("Test delete a User from DB given User Object does not throw error")
-    public void testDeleteGivenUser() {
+    void testDeleteGivenUser() {
         doNothing().when(dbManager).deleteObject(eq(User.class));
 
         assertDoesNotThrow( () -> userDAO.deleteUser(new User("test", "pass")));

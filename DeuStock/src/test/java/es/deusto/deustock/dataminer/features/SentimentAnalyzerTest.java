@@ -14,7 +14,7 @@ public class SentimentAnalyzerTest {
 
     @Test
     @DisplayName("Test Analyze String")
-    public void testAnalyzeString() {
+    void testAnalyzeString() {
         String testStringPositive = "You are pretty";
         String testStringNegative = "You are so ugly";
 
@@ -27,26 +27,26 @@ public class SentimentAnalyzerTest {
 
     @Test
     @DisplayName("Test Analyze String returns average on null")
-    public void testAnalyzeNullString(){
+    void testAnalyzeNullString(){
         assertEquals(SentimentAnalyzer.analyze((String) null),2);
     }
 
     @Test
     @DisplayName("Test Analyze String returns average on empty")
-    public void testAnalyzeEmptyString(){
+    void testAnalyzeEmptyString(){
         assertEquals(SentimentAnalyzer.analyze(""),2);
     }
 
     @Test
     @DisplayName("Test Analyze String returns average on empty")
-    public void testAnalyzeWhitespaceString(){
+    void testAnalyzeWhitespaceString(){
         assertEquals(SentimentAnalyzer.analyze("   "),2);
     }
 
 
     @Test
     @DisplayName("Test Analyze SocialNetworkMessage")
-    public void testAnalyzeSocialNetworkMessage() {
+    void testAnalyzeSocialNetworkMessage() {
         ArrayList<SocialNetworkMessage> msgs = new ArrayList<>();
         msgs.add(new SocialNetworkMessage("You are beautiful"));
         msgs.add(new SocialNetworkMessage("You are really ugly"));
@@ -59,7 +59,7 @@ public class SentimentAnalyzerTest {
 
     @Test
     @DisplayName("Test Threaded Analyze saves Sentiment")
-    public void testAnalyzeMessageThreaded() throws InterruptedException {
+    void testAnalyzeMessageThreaded() throws InterruptedException {
         ArrayList<SocialNetworkMessage> msgs = new ArrayList<>();
         msgs.add(new SocialNetworkMessage("You are beautiful"));
         msgs.add(new SocialNetworkMessage("You are really ugly"));

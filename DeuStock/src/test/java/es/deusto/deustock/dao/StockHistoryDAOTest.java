@@ -25,7 +25,7 @@ public class StockHistoryDAOTest {
     private DeuStock stock;
 
     @BeforeEach
-    public void setUp(){
+    void setUp(){
         dbManager = mock(DBManager.class);
         stockHistoryDAO = StockHistoryDAO.getInstance();
         stockHistoryDAO.setDbManager(dbManager);
@@ -36,7 +36,7 @@ public class StockHistoryDAOTest {
 
     @Test
     @DisplayName("Test store StockHistory")
-    public void testStore(){
+    void testStore(){
         // Given
         StockHistory stockHistory = new StockHistory(
             wallet, stock, 20, 30, OperationType.LONG
@@ -51,7 +51,7 @@ public class StockHistoryDAOTest {
 
     @Test
     @DisplayName("Test get on existent Object")
-    public void testGetOnExistentObject(){
+    void testGetOnExistentObject(){
         // Given
         StockHistory stockHistory = new StockHistory(
                 wallet, stock, 20, 30, OperationType.LONG
@@ -67,7 +67,7 @@ public class StockHistoryDAOTest {
 
     @Test
     @DisplayName("Test get on non existent Object")
-    public void testGetOnNonExistentObject(){
+    void testGetOnNonExistentObject(){
         // Given
         when(dbManager.getObject(eq(StockHistory.class), anyString())).thenReturn(null);
 
@@ -80,7 +80,7 @@ public class StockHistoryDAOTest {
 
     @Test
     @DisplayName("Test update function does not throw error")
-    public void testUpdate(){
+    void testUpdate(){
         // Given
         StockHistory stockHistory = new StockHistory(
                 wallet, stock, 20, 30, OperationType.LONG
@@ -95,7 +95,7 @@ public class StockHistoryDAOTest {
 
     @Test
     @DisplayName("Test getDTO returns correct DTO")
-    public void testGetDTO(){
+    void testGetDTO(){
         // Given
         StockHistory stockHistory = new StockHistory(
                 wallet, stock, 20, 30, OperationType.LONG
@@ -114,7 +114,7 @@ public class StockHistoryDAOTest {
     
     @Test
     @DisplayName("Test getList StockHistoryDTO returns correct List StockHistoryDTO")
-    public void testGetListDTO(){
+    void testGetListDTO(){
         StockHistory stockHistory1 = new StockHistory(
                 wallet, stock, 20, 30, OperationType.LONG
         );
@@ -145,7 +145,7 @@ public class StockHistoryDAOTest {
     
     @Test
     @DisplayName("Test create returns correct DTO")
-    public void testCreateStockHistory(){
+    void testCreateStockHistory(){
     	stock.setPrice(20);
     	double amount = 30;
     	OperationType operationType = OperationType.LONG;
@@ -161,7 +161,7 @@ public class StockHistoryDAOTest {
     
     @Test
     @DisplayName("Test getting StockHistoryList object from a walletID")
-    public void testGetStockHistoryFromWalletId(){
+    void testGetStockHistoryFromWalletId(){
         StockHistory stockHistory1 = new StockHistory(
                 wallet, stock, 20, 30, OperationType.LONG
         );
@@ -194,7 +194,7 @@ public class StockHistoryDAOTest {
     
     @Test
     @DisplayName("Test getting StockHistoryList object from a wallet")
-    public void testGetStockHistoryFromWallet(){
+    void testGetStockHistoryFromWallet(){
         StockHistory stockHistory1 = new StockHistory(
                 wallet, stock, 20, 30, OperationType.LONG
         );

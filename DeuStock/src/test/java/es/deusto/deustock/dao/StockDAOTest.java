@@ -22,7 +22,7 @@ public class StockDAOTest {
     private StockDAO stockDAO;
 
     @BeforeEach
-    public void setUp(){
+    void setUp(){
         dbManager = mock(DBManager.class);
         stockDAO = StockDAO.getInstance();
         stockDAO.setDbManager(dbManager);
@@ -30,7 +30,7 @@ public class StockDAOTest {
 
     @Test
     @DisplayName("Test has function returns true on existing object")
-    public void testHasOnExistentObject(){
+    void testHasOnExistentObject(){
         // Given
         DeuStock stock = new DeuStock("Test");
         when(dbManager.getObject(eq(DeuStock.class), anyString())).thenReturn(stock);
@@ -44,7 +44,7 @@ public class StockDAOTest {
 
     @Test
     @DisplayName("Test has function returns false on existing object")
-    public void testHasOnNonExistentObject(){
+    void testHasOnNonExistentObject(){
         // Given
         when(dbManager.getObject(eq(DeuStock.class), anyString())).thenReturn(null);
 
@@ -57,7 +57,7 @@ public class StockDAOTest {
 
     @Test
     @DisplayName("Test store function does not throw error")
-    public void testStore(){
+    void testStore(){
         // Given
         DeuStock stock = new DeuStock("TestSymbol");
         doNothing().when(dbManager).storeObject(any());
@@ -70,7 +70,7 @@ public class StockDAOTest {
 
     @Test
     @DisplayName("Test get function returns true on existing object")
-    public void testGetOnExistentObject(){
+    void testGetOnExistentObject(){
         // Given
         DeuStock stock = new DeuStock("Test");
         when(dbManager.getObject(eq(DeuStock.class), anyString())).thenReturn(stock);
@@ -84,7 +84,7 @@ public class StockDAOTest {
 
     @Test
     @DisplayName("Test get function returns false on existing object")
-    public void testGetOnNonExistentObject(){
+    void testGetOnNonExistentObject(){
         // Given
         when(dbManager.getObject(eq(DeuStock.class), anyString())).thenReturn(null);
 
@@ -97,7 +97,7 @@ public class StockDAOTest {
 
     @Test
     @DisplayName("Test update function does not throw error")
-    public void testUpdate(){
+    void testUpdate(){
         // Given
         DeuStock stock = new DeuStock("TestSymbol");
         doNothing().when(dbManager).updateObject(any());
@@ -110,7 +110,7 @@ public class StockDAOTest {
 
     @Test
     @DisplayName("Test delete function does not throw error")
-    public void testDelete(){
+    void testDelete(){
         // Given
         DeuStock stock = new DeuStock("TestSymbol");
         doNothing().when(dbManager).deleteObject(eq(DeuStock.class), anyString());
@@ -123,7 +123,7 @@ public class StockDAOTest {
 
     @Test
     @DisplayName("Test delete by acronym function does not throw error")
-    public void testDeleteByAcronym(){
+    void testDeleteByAcronym(){
         // Given
         doNothing().when(dbManager).deleteObject(eq(DeuStock.class), anyString());
 
@@ -135,7 +135,7 @@ public class StockDAOTest {
 
     @Test
     @DisplayName("Test getAll returns list of stocks")
-    public void testGetAllReturnsListOfStocks(){
+    void testGetAllReturnsListOfStocks(){
         // Given
         DeuStock stock = new DeuStock("Test");
         DeuStock stock2 = new DeuStock("Test2");
@@ -155,7 +155,7 @@ public class StockDAOTest {
     
     @Test
     @DisplayName("Test getOrCreateStock function returns stock")
-    public void testGetOrCreateStock(){
+    void testGetOrCreateStock(){
         DeuStock stock = new DeuStock("Test");
 
         when(dbManager.getObject(eq(DeuStock.class), anyString())).thenReturn(stock);

@@ -42,7 +42,8 @@ public class SentimentAnalyzer {
 
             i++;
         }
-        return sentiment/i;
+
+        return ( i > 0 ) ? sentiment/i : 0;
     }
 
     /**
