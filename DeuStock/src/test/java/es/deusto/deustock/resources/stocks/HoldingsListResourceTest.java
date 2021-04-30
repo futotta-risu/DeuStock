@@ -5,9 +5,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.any;
@@ -19,7 +16,7 @@ import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.stocks.StockHistory;
 import es.deusto.deustock.data.stocks.Wallet;
 import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
-import es.deusto.deustock.simulation.investment.operations.OperationType;
+import es.deusto.deustock.services.investment.operations.OperationType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -28,11 +25,9 @@ import org.junit.jupiter.api.Test;
 import es.deusto.deustock.dao.StockHistoryDAO;
 import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.dao.WalletDAO;
-import es.deusto.deustock.data.dto.stocks.StockHistoryDTO;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
-import es.deusto.deustock.simulation.investment.OperationFactory;
-import es.deusto.deustock.simulation.investment.WalletService;
-import es.deusto.deustock.simulation.investment.operations.Operation;
+
+import java.sql.SQLException;
 
 /**
  * @author landersanmillan
@@ -64,7 +59,7 @@ class HoldingsListResourceTest{
 
     @Test
     @DisplayName("Test get holdings list returns Illegal Argument Exception")
-    void testGetHoldingsReturnsIllegalArgumentException(){
+    void testGetHoldingsReturnsIllegalArgumentException() throws SQLException {
     	//Given
         HoldingsListResources holdingsListResource = new HoldingsListResources();
         when(mockUserDAO.getUser(anyString())).thenReturn(null);
@@ -83,7 +78,7 @@ class HoldingsListResourceTest{
 
     @Test
     @DisplayName("Test get holdings list returns status 200")
-    void testGetHoldingsListReturns200() throws StockNotFoundException {
+    void testGetHoldingsListReturns200() throws StockNotFoundException, SQLException {
         //Given
         Wallet wallet = new Wallet();
         DeuStock stock = new DeuStock("BB").setPrice(20);
@@ -117,7 +112,7 @@ class HoldingsListResourceTest{
     
     @Test
     @DisplayName("Test reset holdings returns 401")
-    void testResetHoldingsReturns401(){
+    void testResetHoldingsReturns401() throws SQLException {
     	//Given
 
         //When
@@ -133,7 +128,7 @@ class HoldingsListResourceTest{
 
     @Test
     @DisplayName("Test reset holdings returns 200")
-    void testResetHoldingsReturns200() throws StockNotFoundException {
+    void testResetHoldingsReturns200() throws StockNotFoundException, SQLException {
     	//Given
         Wallet wallet = new Wallet();
         DeuStock stock = new DeuStock("BB").setPrice(20);

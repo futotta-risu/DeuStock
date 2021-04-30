@@ -1,4 +1,4 @@
-package es.deusto.deustock.simulation.investment.exceptions;
+package es.deusto.deustock.services.investment.exceptions;
 
 /**
  * @author Erik B. Terres

@@ -10,14 +10,16 @@ import es.deusto.deustock.data.stocks.Wallet;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
-import es.deusto.deustock.simulation.investment.WalletService;
+import es.deusto.deustock.services.investment.WalletService;
 
-import es.deusto.deustock.simulation.investment.exceptions.OperationException;
+import es.deusto.deustock.services.investment.exceptions.OperationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.core.Response;
+
+import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -44,7 +46,7 @@ class OpenOperationResourceTest {
     }
 
     @Test
-    void openOperation() throws StockNotFoundException, OperationException {
+    void openOperation() throws StockNotFoundException, OperationException, SQLException {
         Wallet wallet = new Wallet();
         User user = new User("TestUser","TestPass");
         user.setWallet(wallet);

@@ -1,19 +1,20 @@
-package es.deusto.deustock.resources.user;
+package es.deusto.deustock.resources.auth;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import es.deusto.deustock.dao.UserDAO;
-import es.deusto.deustock.dao.WalletDAO;
 import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.dto.UserDTO;
 import es.deusto.deustock.log.DeuLogger;
+import es.deusto.deustock.services.auth.AuthService;
+import es.deusto.deustock.services.auth.exceptions.AuthException;
+import es.deusto.deustock.services.auth.exceptions.LoginException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.sql.SQLException;
 
 /**
  * Clase que contiene los metodos REST asociados a la clase Usuario
@@ -21,17 +22,25 @@ import es.deusto.deustock.log.DeuLogger;
  * @author landersanmillan 
  * @see UserDAO
  */
-@Path("/users")
+@Path("users")
 public class UserResource {
 
 	private UserDAO userDAO;
+	private AuthService loginService;
+
+	private Logger logger = LoggerFactory.getLogger(UserResource.class);
 
 	public UserResource(){
 		this.userDAO = UserDAO.getInstance();
+		loginService = new AuthService();
 	}
 
 	public void setUserDAO(UserDAO userDAO){
 		this.userDAO = userDAO;
+	}
+
+	public void setLoginService(AuthService loginService){
+		this.loginService = loginService;
 	}
 
 
@@ -47,28 +56,18 @@ public class UserResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/login/{username}/{password}")
-	public Response login(@PathParam("username") String username, @PathParam("password") String password) {
-		DeuLogger.logger.info("Login petition for User " + username);
+	public Response login(@PathParam("username") String username, @PathParam("password") String password){
+		logger.info("Login petition detected");
 
-		User user = userDAO.getUser(username);
+		UserDTO user;
 
-		if(user == null) {
-			DeuLogger.logger.warn("User not in DB");
-			return Response.status(401).build();
+		try{
+			user = loginService.login(username, password);
+		}catch (LoginException e){
+			throw new WebApplicationException(Response.Status.UNAUTHORIZED);
 		}
 
-		if(!user.checkPassword(password)) {
-			DeuLogger.logger.warn("Incorrect password for user " + username);
-			return Response.status(401).build();
-		}
-
-		UserDTO userDTO = userDAO.getDTO(user);
-
-		return Response
-				.status(Response.Status.OK)
-				.entity(userDTO)
-				.build();
-
+		return Response.ok(user).build();
 	}
 
 	/**
@@ -86,16 +85,16 @@ public class UserResource {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/register")
-	public Response register(UserDTO userDTO) {
+	public Response register(UserDTO userDTO) throws WebApplicationException {
 		DeuLogger.logger.info("Register petition for User " + userDTO.getUsername());
 
-		if ( userDAO.getUser(userDTO.getUsername()) != null) {
-			DeuLogger.logger.warn("Cannot register User. User " + userDTO.getUsername() + " alredy in DB");
-			return Response.status(401).build();
+		try{
+			loginService.register(userDTO);
+		}catch (AuthException e){
+			DeuLogger.logger.warn("Error adding user.");
+			throw new WebApplicationException(e.getMessage(), Response.Status.UNAUTHORIZED);
 		}
 
-		User user = userDAO.create(userDTO);
-		userDAO.storeUser(user);
 
 		return Response.status(200).build();
 	}
@@ -115,10 +114,13 @@ public class UserResource {
 	 */
 
 	@GET
-	@Path("/delete/{username}/{password}")
-	public Response delete(@PathParam("username") String username, @PathParam("password") String password) {
+	@Path("delete/{username}/{password}")
+	public Response delete(
+			@PathParam("username") String username,
+			@PathParam("password") String password
+	) throws SQLException {
 		DeuLogger.logger.info("User delete petition for User " + username);
-		User user = userDAO.getUser(username);
+		User user = userDAO.get(username);
 
 		if (user == null) {
 			DeuLogger.logger.warn("User " + username + " not found in DB while deleting");
@@ -130,7 +132,7 @@ public class UserResource {
 			return Response.status(401).build();
 		}
 
-		userDAO.deleteUser(username);
+		userDAO.delete(username);
 		return Response.status(200).build();
 
 	}

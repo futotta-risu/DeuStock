@@ -13,6 +13,8 @@ import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
 
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -43,7 +45,7 @@ public class UserDetailIT extends JerseyTest {
 
     @Test
     @DisplayName("Test get username returns 200")
-    public void testGetUsernameReturns200(){
+    public void testGetUsernameReturns200() throws SQLException {
         // Given
         User user = new User("TestUserReturn200", "TestPass");
         UserDAO.getInstance().storeUser(user);
@@ -62,7 +64,7 @@ public class UserDetailIT extends JerseyTest {
 
     @Test
     @DisplayName("Test get username returns correct user")
-    public void testGetUsernameReturnsUser(){
+    public void testGetUsernameReturnsUser() throws SQLException {
         // Given
         User user = new User("TestUserReturnsUser", "TestPass");
         UserDAO.getInstance().storeUser(user);

@@ -1,6 +1,6 @@
 package es.deusto.deustock.data.dto.stocks;
 
-import es.deusto.deustock.simulation.investment.operations.OperationType;
+import es.deusto.deustock.services.investment.operations.OperationType;
 
 /**
  * @author Erik B. Terres

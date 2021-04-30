@@ -1,7 +1,7 @@
 package es.deusto.deustock.data.stocks;
 
 import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.simulation.investment.operations.OperationType;
+import es.deusto.deustock.services.investment.operations.OperationType;
 
 import javax.jdo.annotations.*;
 import java.io.Serializable;

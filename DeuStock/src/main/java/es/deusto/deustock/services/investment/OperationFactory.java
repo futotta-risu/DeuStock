@@ -1,8 +1,8 @@
-package es.deusto.deustock.simulation.investment;
+package es.deusto.deustock.services.investment;
 
 
 import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.simulation.investment.operations.*;
+import es.deusto.deustock.services.investment.operations.*;
 
 public class OperationFactory {
 

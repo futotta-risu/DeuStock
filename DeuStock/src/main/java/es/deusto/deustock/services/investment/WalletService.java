@@ -1,4 +1,4 @@
-package es.deusto.deustock.simulation.investment;
+package es.deusto.deustock.services.investment;
 
 import es.deusto.deustock.dao.StockHistoryDAO;
 import es.deusto.deustock.dao.WalletDAO;
@@ -6,10 +6,11 @@ import es.deusto.deustock.data.dto.stocks.StockHistoryDTO;
 import es.deusto.deustock.data.stocks.StockHistory;
 import es.deusto.deustock.data.stocks.Wallet;
 import es.deusto.deustock.log.DeuLogger;
-import es.deusto.deustock.simulation.investment.exceptions.OperationException;
-import es.deusto.deustock.simulation.investment.operations.Operation;
+import es.deusto.deustock.services.investment.exceptions.OperationException;
+import es.deusto.deustock.services.investment.operations.Operation;
 
 import javax.validation.constraints.NotNull;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,12 +40,12 @@ public class WalletService {
         this.wallet = wallet;
     }
 
-    public void setWallet(String walletID){
+    public void setWallet(String walletID) throws SQLException {
         this.wallet = walletDAO.getWallet(walletID);
     }
 
 
-    public void openOperation(@NotNull Operation operation) throws OperationException {
+    public void openOperation(@NotNull Operation operation) throws OperationException, SQLException {
         double openPrice = operation.getOpenPrice();
         if(!wallet.hasEnoughMoney(openPrice)){
             DeuLogger.logger.error("Not enough money on wallet.");
@@ -63,7 +64,7 @@ public class WalletService {
         walletDAO.update(wallet);
     }
 
-    public void closeOperation(Operation operation, StockHistory stockHistory){
+    public void closeOperation(Operation operation, StockHistory stockHistory) throws SQLException {
         double closePrice = operation.getClosePrice();
 
         wallet.changeMoney(closePrice);

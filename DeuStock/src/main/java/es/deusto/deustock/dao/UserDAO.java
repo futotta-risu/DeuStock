@@ -1,5 +1,6 @@
 package es.deusto.deustock.dao;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import es.deusto.deustock.data.stocks.Wallet;
  *
  * @author landersanmillan
  */
-public class UserDAO {
+public class UserDAO implements IDAO<User> {
 
 	private static UserDAO instance = null;
 
@@ -52,33 +53,47 @@ public class UserDAO {
 		return user;
 	}
 
-	public User getUser(String username) {
-		String whereCondition = "username == '" + username + "'";
-		return (User) dbManager.getObject(User.class, whereCondition);
+	@Override
+	public User get(Object identity) throws SQLException {
+		String whereCondition = "username == '" + identity + "'";
+		return (User) dbManager.get(User.class, whereCondition);
 	
 	}
-	public void deleteUser(String username) {
+	public void delete(String username) throws SQLException {
 		String whereCondition = "username  == '" + username + "'";
-		dbManager.deleteObject(User.class, whereCondition);
+		dbManager.delete(User.class, whereCondition);
 	}
-	public void deleteUser(User user) {
-		dbManager.deleteObject(user);
+	public void delete(User user) {
+		dbManager.delete(user);
+	}
+
+
+
+
+	@Override
+	public boolean has(Object identity) throws SQLException {
+		try {
+			get(identity);
+		}catch (SQLException e){
+			return false;
+		}
+		return true;
+	}
+
+	public void store(User user) throws SQLException {
+		dbManager.store(user);
 	}
 	
-	public void storeUser(User user) {
-		dbManager.storeObject(user);
-	}
-	
-	public List<User> getUsers(){
+	public List<User> getAll(){
 		List<User> usersList  = new ArrayList<>();
-		for (Object users : dbManager.getObjects(User.class)) {
+		for (Object users : dbManager.getAll(User.class)) {
 			usersList.add((User) users);
 		}
 		return usersList;
 	}
 	
-	public void updateUser(User user) {
-		dbManager.updateObject(user);
+	public void update(User user) throws SQLException {
+		dbManager.update(user);
 	}
 
 	public UserDTO getDTO(User user){

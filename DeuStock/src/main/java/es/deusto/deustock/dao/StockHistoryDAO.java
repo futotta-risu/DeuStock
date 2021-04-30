@@ -4,8 +4,9 @@ import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.data.dto.stocks.StockHistoryDTO;
 import es.deusto.deustock.data.stocks.StockHistory;
 import es.deusto.deustock.data.stocks.Wallet;
-import es.deusto.deustock.simulation.investment.operations.OperationType;
+import es.deusto.deustock.services.investment.operations.OperationType;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,25 +39,21 @@ public class StockHistoryDAO {
     }
 
 
-    public void store(StockHistory stockHistory){
-        dbManager.storeObject(stockHistory);
+    public void store(StockHistory stockHistory) throws SQLException {
+        dbManager.store(stockHistory);
     }
 
-    public StockHistory get(String id){
-        return (StockHistory) dbManager.getObject(StockHistory.class, "id == "+id);
+    public StockHistory get(String id) throws SQLException {
+        return (StockHistory) dbManager.get(StockHistory.class, "id == "+id);
     }
 
-    public List<StockHistory> getStockHistory(String walletID){
+    public List<StockHistory> getStockHistory(String walletID) throws SQLException {
         String condition = "wallet.id == '" + walletID + "'";
-        return (List<StockHistory>)(List<?>) dbManager.getObjects(StockHistory.class, condition);
+        return (List<StockHistory>)(List<?>) dbManager.getList(StockHistory.class, condition);
     }
 
-    public List<StockHistory> getStock(Wallet wallet){
-        return (List<StockHistory>)(List<?>) dbManager.getObjects(StockHistory.class);
-    }
-
-    public void update(StockHistory stockHistory){
-        dbManager.updateObject(stockHistory);
+    public void update(StockHistory stockHistory) throws SQLException {
+        dbManager.update(stockHistory);
     }
 
     /**

@@ -9,16 +9,17 @@ import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
-import es.deusto.deustock.simulation.investment.OperationFactory;
-import es.deusto.deustock.simulation.investment.WalletService;
-import es.deusto.deustock.simulation.investment.exceptions.OperationException;
-import es.deusto.deustock.simulation.investment.operations.Operation;
+import es.deusto.deustock.services.investment.OperationFactory;
+import es.deusto.deustock.services.investment.WalletService;
+import es.deusto.deustock.services.investment.exceptions.OperationException;
+import es.deusto.deustock.services.investment.operations.Operation;
 import es.deusto.deustock.log.DeuLogger;
-import es.deusto.deustock.simulation.investment.operations.OperationType;
+import es.deusto.deustock.services.investment.operations.OperationType;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.sql.SQLException;
 
 /**
  * @author Erik B. Terres
@@ -68,7 +69,7 @@ public class OpenOperationResource {
             @PathParam("symbol") String symbol,
             @PathParam("username") String username,
             @PathParam("amount") double amount
-    ) throws StockNotFoundException, OperationException {
+    ) throws StockNotFoundException, OperationException, SQLException {
         DeuLogger.logger.info("Petition to open a operation from " + username);
 
         OperationType operationType = OperationType.valueOf(operationTypeString);

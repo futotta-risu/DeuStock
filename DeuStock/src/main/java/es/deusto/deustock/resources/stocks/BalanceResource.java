@@ -9,6 +9,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.sql.SQLException;
 
 
 /**
@@ -30,7 +31,7 @@ public class BalanceResource {
     @Path("{username}/balance")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public Response getBalance(@PathParam("username") String username){
+    public Response getBalance(@PathParam("username") String username) throws SQLException {
         User user = userDAO.getUser(username);
 
         if(user == null){

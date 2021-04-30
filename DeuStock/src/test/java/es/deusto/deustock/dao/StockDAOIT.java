@@ -10,7 +10,6 @@ import java.io.FileInputStream;
 import java.sql.SQLException;
 
 import org.dbunit.DBTestCase;
-import org.dbunit.DatabaseUnitException;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
@@ -74,7 +73,7 @@ public class StockDAOIT extends DBTestCase{
      * @throws Exception 
 	*/
 	@Test
-    public void testStockCreation() throws Exception {
+	public void testStockCreation() throws Exception {
 		DeuStock stock3 = new DeuStock(new StockQueryData("acronymTest3", StockQueryData.Interval.DAILY))
 							.setDescription("descriptionTest3")
 							.setFullName("fullNameTest3");
@@ -91,11 +90,11 @@ public class StockDAOIT extends DBTestCase{
 	 * Tests Stock queries
 	*/
 	@Test
-    public void testStockQueryreturnNotNull() {
+	public void testStockQueryreturnNotNull() throws SQLException {
 		assertNotNull(StockDAO.getInstance().get("acronymTest1"));
 	}
 	@Test
-    public void testStockQueryreturnNull() {
+	public void testStockQueryreturnNull() throws SQLException {
 		assertNull(StockDAO.getInstance().get("acronymNotExist"));
 	}
 	
@@ -104,7 +103,7 @@ public class StockDAOIT extends DBTestCase{
 	 * @throws Exception 
 	*/
 	@Test
-    public void testStockDeletion() throws Exception {
+	public void testStockDeletion() throws Exception {
 		DeuStock stockToDelete1 = StockDAO.getInstance().get("acronymTest1"); 
 	    StockDAO.getInstance().delete(stockToDelete1);
 	    

@@ -51,7 +51,7 @@ class DBManagerTest {
     	//When
         when(mockPersistentManager.makePersistent(any())).thenThrow(re);
         try {
-        	dbManager.updateObject(object);
+        	dbManager.update(object);
 		} catch (Exception e) {
 			//Then
 			assertEquals(e.getMessage(), re.getMessage() );
@@ -68,7 +68,7 @@ class DBManagerTest {
     	//When
     	when(mockPersistentManager.makePersistent(any())).thenThrow(re);
         try {
-        	dbManager.storeObject(object);
+        	dbManager.store(object);
 		} catch (Exception e) {
 			//Then
 			assertEquals(e.getMessage(), re.getMessage());
@@ -86,7 +86,7 @@ class DBManagerTest {
     	//When
         when(mockPersistentManager.getExtent(objectClass)).thenThrow(re);
         try {
-        	dbManager.getObjects(objectClass);
+        	dbManager.getAll(objectClass);
 		} catch (Exception e) {
 			//Then
 			assertEquals(e.getMessage(), re.getMessage());
@@ -103,7 +103,7 @@ class DBManagerTest {
     	//When
         when(mockPersistentManager.newQuery(anyString())).thenThrow(re);
         try {
-        	dbManager.getObjects(objectClass, "testConditions");
+        	dbManager.getList(objectClass, "testConditions");
 		} catch (Exception e) {
 			//Then
 			assertEquals(e.getMessage(), re.getMessage());
@@ -120,7 +120,7 @@ class DBManagerTest {
     	//When
         when(mockPersistentManager.newQuery(anyString())).thenThrow(re);
         try {
-        	dbManager.getObject(objectClass, "testConditions");
+        	dbManager.getList(objectClass, "testConditions");
 		} catch (Exception e) {
 			//Then
 			assertEquals(e.getMessage(), re.getMessage());
@@ -137,7 +137,7 @@ class DBManagerTest {
     	//When
         when(mockPersistentManager.newQuery(anyString())).thenThrow(re);    
         try {
-        	dbManager.deleteObject(objectClass);
+        	dbManager.delete(objectClass);
 		} catch (Exception e) {
 			//Then
 			assertEquals(e.getMessage(), re.getMessage());
@@ -154,7 +154,7 @@ class DBManagerTest {
     	//When
         when(mockPersistentManager.newQuery(anyString())).thenThrow(re);    
         try {
-        	dbManager.deleteObject(objectClass, "");
+        	dbManager.delete(objectClass, "");
 		} catch (Exception e) {
 			//Then
 			assertEquals(e.getMessage(), re.getMessage());
@@ -172,7 +172,7 @@ class DBManagerTest {
         doNothing().when(mockTransaction).begin();         	
         doNothing().when(mockPersistentManager).deletePersistent(objectClass);    
         doNothing().when(mockTransaction).commit();         	
-        dbManager.deleteObject(objectClass);
+        dbManager.delete(objectClass);
         
 		//Then
 		//verify(mockTransaction, times(1)).commit();
@@ -191,7 +191,7 @@ class DBManagerTest {
         doNothing().when(mockPersistentManager).deletePersistent(objectClass);    
         	
 		//Then
-		assertDoesNotThrow(() -> dbManager.deleteObject(objectClass, ""));
+		assertDoesNotThrow(() -> dbManager.delete(objectClass, ""));
     }
     
  

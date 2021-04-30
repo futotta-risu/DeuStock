@@ -9,9 +9,9 @@ import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
 import es.deusto.deustock.log.DeuLogger;
-import es.deusto.deustock.simulation.investment.OperationFactory;
-import es.deusto.deustock.simulation.investment.WalletService;
-import es.deusto.deustock.simulation.investment.operations.Operation;
+import es.deusto.deustock.services.investment.OperationFactory;
+import es.deusto.deustock.services.investment.WalletService;
+import es.deusto.deustock.services.investment.operations.Operation;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -19,6 +19,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.sql.SQLException;
 
 /**
  * @author Erik B. Terres
@@ -60,7 +61,7 @@ public class CloseOperationResource {
     @Path("/{stockHistoryID}")
     public Response closeOperation(
             @PathParam("stockHistoryID") String stockHistoryID
-    ) throws StockNotFoundException {
+    ) throws StockNotFoundException, SQLException {
         DeuLogger.logger.info("Petition to close the operation " + stockHistoryID);
 
 

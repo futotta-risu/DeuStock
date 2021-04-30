@@ -1,15 +1,19 @@
 package es.deusto.deustock.dao;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.*;
 
 import es.deusto.deustock.log.DeuLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DBManager implements IDBManager{
     private static IDBManager instance = null;
 	private final PersistenceManagerFactory pmf;
+	private final Logger logger = LoggerFactory.getLogger(DBManager.class);
 
 	private DBManager(){
 		pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
@@ -27,18 +31,18 @@ public class DBManager implements IDBManager{
 	 * 
 	 * @param object -> Objeto que se quiere almacenar en la BD
 	 */
-	public void storeObject(Object object) {
-		PersistenceManager pm = pmf.getPersistenceManager();
+	public void store(Object object) throws SQLException {
+		var pm = pmf.getPersistenceManager();
 		pm.getFetchPlan().setMaxFetchDepth(-1);
 		Transaction tx = pm.currentTransaction();
 		
 		try {
 			tx.begin();
-			DeuLogger.logger.info("Storing object");
+			logger.info("Storing object");
 			pm.makePersistent(object); //object?
 			tx.commit();
 		} catch (Exception e) {
-			DeuLogger.logger.error("Could not store object: " + object + ". " + e.getMessage());
+			logger.error("Could not store object: " + object + ". " + e.getMessage());
 		}finally {
 			if(tx.isActive()) {
 				tx.rollback();
@@ -54,9 +58,9 @@ public class DBManager implements IDBManager{
 	 *         almacenados en la BD
 	 */
 	
-	public List<Object> getObjects(Class entityClass) {
+	public List<Object> getAll(Class entityClass) {
 		
-			PersistenceManager pm = pmf.getPersistenceManager();
+			var pm = pmf.getPersistenceManager();
 			pm.getFetchPlan().setMaxFetchDepth(-1);
 
 			Transaction tx = pm.currentTransaction();
@@ -75,7 +79,7 @@ public class DBManager implements IDBManager{
 				tx.commit();
 			} catch (Exception ex) {
 				System.out.println("   $ Error Getting objects: " + ex.getMessage());
-				DeuLogger.logger.error("Error getting objects");
+				logger.error("Error getting objects");
 			} finally {
 				if (tx != null && tx.isActive())
 					tx.rollback();
@@ -85,7 +89,7 @@ public class DBManager implements IDBManager{
 	}
 
 	@Override
-	public List<Object> getObjects(Class entityClass, String conditions) {
+	public List<Object> getList(Class entityClass, String conditions) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		pm.getFetchPlan().setMaxFetchDepth(-1);
 		Transaction tx = pm.currentTransaction();
@@ -102,7 +106,7 @@ public class DBManager implements IDBManager{
 
 		} catch (Exception ex) {
 			System.out.println("   $ Error Getting Object: " + ex.getMessage());
-			DeuLogger.logger.error("Error getting Object: " + conditions);
+			logger.error("Error getting Object: " + conditions);
 		} finally {
 
 			if (tx != null && tx.isActive()) {
@@ -114,7 +118,7 @@ public class DBManager implements IDBManager{
 		return object;
 	}
 
-	public Object getObject(Class entityClass, String conditions) {
+	public Object get(Class entityClass, String conditions) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		pm.getFetchPlan().setMaxFetchDepth(-1);
 		Transaction tx = pm.currentTransaction();
@@ -131,7 +135,7 @@ public class DBManager implements IDBManager{
 
 		} catch (Exception ex) {
 			System.out.println("   $ Error Getting Object: " + ex.getMessage());
-			DeuLogger.logger.error("Error getting Object: " + conditions);
+			logger.error("Error getting Object: " + conditions);
 		} finally {
 
 			if (tx != null && tx.isActive()) {
@@ -143,7 +147,7 @@ public class DBManager implements IDBManager{
 		return object;
 	}
 
-	public void updateObject(Object object) {
+	public void update(Object object) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
@@ -161,7 +165,7 @@ public class DBManager implements IDBManager{
 	}
 	
 	@Override
-	public void deleteObject(Class entityClass, String conditions) {
+	public void delete(Class entityClass, String conditions) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		pm.getFetchPlan().setMaxFetchDepth(-1);
 		Transaction tx = pm.currentTransaction();
@@ -177,7 +181,7 @@ public class DBManager implements IDBManager{
 
 		} catch (Exception ex) {
 			System.out.println("   $ Error Getting Object: " + ex.getMessage());
-			DeuLogger.logger.error("Error getting object for deleting: ");
+			logger.error("Error getting object for deleting: ");
 		} finally {
 
 			if (tx != null && tx.isActive()) {
@@ -189,7 +193,7 @@ public class DBManager implements IDBManager{
 	}	
 	
 	@Override
-	public void deleteObject(Object object) {
+	public void delete(Object object) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
@@ -197,7 +201,7 @@ public class DBManager implements IDBManager{
 			pm.deletePersistent(object);
 			tx.commit();
 		} catch (Exception ex) {
-			System.out.println("   $ Error retreiving an extent: " + ex.getMessage());
+			logger.error("   $ Error retreiving an extent: " + ex.getMessage());
 		} finally {
 			if (tx != null && tx.isActive()) {
 				tx.rollback();

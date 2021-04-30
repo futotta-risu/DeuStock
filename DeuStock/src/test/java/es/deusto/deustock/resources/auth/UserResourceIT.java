@@ -1,4 +1,4 @@
-package es.deusto.deustock.resources.user;
+package es.deusto.deustock.resources.auth;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
@@ -9,6 +9,7 @@ import es.deusto.deustock.data.User;
 import es.deusto.deustock.dao.UserDAO;
 
 import es.deusto.deustock.data.dto.UserDTO;
+import es.deusto.deustock.resources.auth.UserResource;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 
@@ -16,6 +17,8 @@ import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
 import org.junit.jupiter.api.*;
 
+
+import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,7 +50,7 @@ public class UserResourceIT extends JerseyTest{
 
 	@Test
 	@DisplayName("Test Register returns 200")
-	public void testRegisterReturns200(){
+	public void testRegisterReturns200() throws SQLException {
 		// Given
 		User user = new User("ResourceRegisterReturns200", "TestPass");
 
@@ -65,7 +68,7 @@ public class UserResourceIT extends JerseyTest{
 
 	@Test
 	@DisplayName("Test Register saves user")
-	public void testRegisterSavesUser(){
+	public void testRegisterSavesUser() throws SQLException {
 		// Given
 		User user = new User("ResourceRegisterSavesUser", "TestPass");
 
@@ -83,7 +86,7 @@ public class UserResourceIT extends JerseyTest{
 
 	@Test
 	@DisplayName("Test Register doesn't save duplicated User")
-	public void testRegisterCannotSaveDuplicatedUser() {
+	public void testRegisterCannotSaveDuplicatedUser() throws SQLException {
 		//Given
 		User user = new User("ResourceRegisterDoesNotSaveDuplicated", "TestPass");
 		UserDAO.getInstance().storeUser(user);
@@ -102,7 +105,7 @@ public class UserResourceIT extends JerseyTest{
 
     @Test
 	@DisplayName("Test Login returns 200 on success")
-	public void testLoginReturns200OnSuccess() {
+	public void testLoginReturns200OnSuccess() throws SQLException {
 		// Given
 		User user = new User("ResourceLoginReturns200", "TestPass");
 		UserDAO.getInstance().storeUser(user);
@@ -124,7 +127,7 @@ public class UserResourceIT extends JerseyTest{
 
 	@Test
 	@DisplayName("Test Login returns 401 with incorrect pass")
-	public void testLoginReturns401WithIncorrectPass() {
+	public void testLoginReturns401WithIncorrectPass() throws SQLException {
 		// Given
 		User user = new User("ResourceLoginReturns401WithIncorrectPass", "TestPass");
 		UserDAO.getInstance().storeUser(user);
@@ -159,7 +162,7 @@ public class UserResourceIT extends JerseyTest{
 
     @Test
 	@DisplayName("Test Delete user returns 200")
-	public void testDeleteReturns200() {
+	public void testDeleteReturns200() throws SQLException {
 		// Given
 		User user = new User("ResourceDelete200", "TestPass");
 		UserDAO.getInstance().storeUser(user);
@@ -191,7 +194,7 @@ public class UserResourceIT extends JerseyTest{
 
 	@Test
 	@DisplayName("Test Delete returns 401 on incorrect Pass")
-	public void testDeleteReturns401WithIncorrectPass(){
+	public void testDeleteReturns401WithIncorrectPass() throws SQLException {
 		// Given
 		User user = new User("ResourceDelete401IncorrectPass", "TestPass");
 		UserDAO.getInstance().storeUser(user);

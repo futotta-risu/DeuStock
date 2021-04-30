@@ -17,6 +17,8 @@ import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.stocks.Wallet;
 
+import java.sql.SQLException;
+
 /**
  * @author landersanmillan
  */
@@ -37,7 +39,7 @@ class BalanceResourceTest {
     
     @Test
     @DisplayName("Test get balance with null user throws 401")
-    public void testGetBalanceWithNullUserReturns401(){
+    public void testGetBalanceWithNullUserReturns401() throws SQLException {
     	//Given
 		
         //When
@@ -52,7 +54,7 @@ class BalanceResourceTest {
     
     @Test
     @DisplayName("Test get balance returns 200")
-    public void testGetBalanceWReturns200(){
+    public void testGetBalanceWReturns200() throws SQLException {
     	//Given
 		User user = new User("Test", "Pass");
 		user.setWallet(new Wallet());

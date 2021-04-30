@@ -8,10 +8,10 @@ import es.deusto.deustock.data.stocks.Wallet;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
-import es.deusto.deustock.simulation.investment.OperationFactory;
-import es.deusto.deustock.simulation.investment.WalletService;
-import es.deusto.deustock.simulation.investment.operations.LongOperation;
-import es.deusto.deustock.simulation.investment.operations.Operation;
+import es.deusto.deustock.services.investment.OperationFactory;
+import es.deusto.deustock.services.investment.WalletService;
+import es.deusto.deustock.services.investment.operations.LongOperation;
+import es.deusto.deustock.services.investment.operations.Operation;
 
 
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +20,9 @@ import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.core.Response;
 
-import static es.deusto.deustock.simulation.investment.operations.OperationType.LONG;
+import java.sql.SQLException;
+
+import static es.deusto.deustock.services.investment.operations.OperationType.LONG;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -50,7 +52,7 @@ class CloseOperationResourceTest {
     }
 
     @Test
-    void closeOperationWorksWithValidData() throws StockNotFoundException {
+    void closeOperationWorksWithValidData() throws StockNotFoundException, SQLException {
         int stockAmount = 30;
         Wallet wallet = new Wallet();
         DeuStock stock = new DeuStock("BB").setPrice(22);
@@ -80,7 +82,7 @@ class CloseOperationResourceTest {
     }
 
     @Test
-    void closeOperationThrowsErrorOnInvalidID() throws StockNotFoundException {
+    void closeOperationThrowsErrorOnInvalidID() throws StockNotFoundException, SQLException {
         int stockAmount = 30;
         Wallet wallet = new Wallet();
         DeuStock stock = new DeuStock("BB").setPrice(22);

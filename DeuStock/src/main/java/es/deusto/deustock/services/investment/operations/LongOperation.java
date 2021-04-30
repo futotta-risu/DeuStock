@@ -1,4 +1,4 @@
-package es.deusto.deustock.simulation.investment.operations;
+package es.deusto.deustock.services.investment.operations;
 
 import es.deusto.deustock.data.DeuStock;
 

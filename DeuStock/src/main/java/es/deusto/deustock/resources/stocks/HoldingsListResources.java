@@ -14,10 +14,10 @@ import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
 import es.deusto.deustock.log.DeuLogger;
-import es.deusto.deustock.simulation.investment.OperationFactory;
-import es.deusto.deustock.simulation.investment.WalletService;
-import es.deusto.deustock.simulation.investment.operations.Operation;
-import es.deusto.deustock.simulation.investment.operations.OperationType;
+import es.deusto.deustock.services.investment.OperationFactory;
+import es.deusto.deustock.services.investment.WalletService;
+import es.deusto.deustock.services.investment.operations.Operation;
+import es.deusto.deustock.services.investment.operations.OperationType;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -26,8 +26,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import java.sql.SQLException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Erik B. Terres
@@ -62,7 +62,7 @@ public class HoldingsListResources {
     @Path("holdings")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getHoldings(@PathParam("username") String username) throws StockNotFoundException {
+    public Response getHoldings(@PathParam("username") String username) throws StockNotFoundException, SQLException {
         User user = userDAO.getUser(username);
 
         if(user == null){
@@ -100,7 +100,7 @@ public class HoldingsListResources {
     
     @GET
 	@Path("/holdings/reset")
-	public Response resetHoldings(@PathParam("username") String username) {
+	public Response resetHoldings(@PathParam("username") String username) throws SQLException {
 		DeuLogger.logger.info("User delete petition for User " + username);
 		User user = userDAO.getUser(username);
 

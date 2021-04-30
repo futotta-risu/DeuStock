@@ -92,11 +92,11 @@ public class UserDAOIT extends DBTestCase{
 	 * Tests User queries
 	*/
 	@Test
-    public void testUserQueryReturnsNotNull() {
+    public void testUserQueryReturnsNotNull() throws SQLException {
 		assertNotNull(UserDAO.getInstance().getUser("usernameTest1"));
 	}
 	@Test
-    public void testUserQueryReturnsNull() {
+    public void testUserQueryReturnsNull() throws SQLException {
 		assertNull(UserDAO.getInstance().getUser("usernameNotExist"));
 	}
 	

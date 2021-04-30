@@ -3,11 +3,12 @@ package es.deusto.deustock.dao;
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.data.stocks.StockHistory;
 import es.deusto.deustock.data.stocks.Wallet;
-import es.deusto.deustock.simulation.investment.operations.OperationType;
+import es.deusto.deustock.services.investment.operations.OperationType;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class StockHistoryDAOIT {
 
     @Test
-    void store() {
+    void store() throws SQLException {
         Wallet wallet = new Wallet();
 
 
@@ -32,7 +33,7 @@ class StockHistoryDAOIT {
     }
 
     @Test
-    void getList() {
+    void getList() throws SQLException {
         Wallet wallet = new Wallet();
         DeuStock stock = StockDAO.getInstance().getOrCreateStock("BB").setPrice(22);
         StockHistory stockHistory = StockHistoryDAO.getInstance().create(
@@ -43,7 +44,7 @@ class StockHistoryDAOIT {
         );
 
         StockHistoryDAO.getInstance().store(stockHistory);
-        List<StockHistory> stockHistoryGetList = StockHistoryDAO.getInstance().getStock(wallet);
+        List<StockHistory> stockHistoryGetList = StockHistoryDAO.getInstance().getStockHistory(wallet.getId());
         assertFalse(stockHistoryGetList.isEmpty());
 
         StockHistory stockHistoryGet = stockHistoryGetList.get(0);
@@ -53,7 +54,7 @@ class StockHistoryDAOIT {
     }
 
     @Test
-    public void testGet(){
+    public void testGet() throws SQLException {
         Wallet wallet = new Wallet();
         DeuStock stock = StockDAO.getInstance().getOrCreateStock("BB").setPrice(22);
         StockHistory stockHistory = StockHistoryDAO.getInstance().create(

@@ -66,8 +66,8 @@ public class DBManagerIT extends DBTestCase{
    
     @Test
     public void testGetObjectsReturnsNotNull() {
-    	assertNotNull(DBManager.getInstance().getObjects(Object.class));
-    	assertEquals(2, DBManager.getInstance().getObjects(User.class).size());  	
+    	assertNotNull(DBManager.getInstance().getAll(Object.class));
+    	assertEquals(2, DBManager.getInstance().getAll(User.class).size());
     }
    
     @Test
@@ -75,7 +75,7 @@ public class DBManagerIT extends DBTestCase{
     	Object objectToUpdate = UserDAO.getInstance().getUser("usernameTest2");
 		((User) objectToUpdate).setFullName("fullNameUpdated2");
 		
-	    DBManager.getInstance().updateObject(objectToUpdate);
+	    DBManager.getInstance().update(objectToUpdate);
 	    ITable filteredActualTable = getFilteredTable("USER", COLUMNS_USER);
         assertEquals("There are not the two rows" , 2, filteredActualTable.getRowCount());
 

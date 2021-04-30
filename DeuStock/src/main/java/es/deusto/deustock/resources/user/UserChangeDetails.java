@@ -9,6 +9,7 @@ import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.sql.SQLException;
 
 /**
  * @author Erik B. Terres
@@ -28,7 +29,7 @@ public class UserChangeDetails {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response changeDetails(UserDTO userDTO){
+    public Response changeDetails(UserDTO userDTO) throws SQLException {
         User user = userDAO.getUser(userDTO.getUsername());
 
         if(user==null){

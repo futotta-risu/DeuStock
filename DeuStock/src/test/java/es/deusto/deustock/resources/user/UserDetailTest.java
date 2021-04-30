@@ -17,6 +17,8 @@ import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.dto.UserDTO;
 
+import java.sql.SQLException;
+
 /**
  * @author landersanmillan
  */
@@ -35,7 +37,7 @@ class UserDetailTest {
     
     @Test
     @DisplayName("Test getUsername returns 200")
-    public void testGetUsernameReturns200(){
+    public void testGetUsernameReturns200() throws SQLException {
     	//Given
     	User user = new User("Test", "Pass");
     	UserDTO userDTO = new UserDTO().setUsername("Test").setPassword("Pass");
@@ -54,7 +56,7 @@ class UserDetailTest {
     
     @Test
     @DisplayName("Test getUsername returns 401")
-    public void testGetUsernameReturns401(){
+    public void testGetUsernameReturns401() throws SQLException {
     	//Given
     	
     	//When

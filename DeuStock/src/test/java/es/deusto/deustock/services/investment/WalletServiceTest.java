@@ -1,4 +1,4 @@
-package es.deusto.deustock.simulation.investment;
+package es.deusto.deustock.services.investment;
 
 import es.deusto.deustock.dao.StockHistoryDAO;
 import es.deusto.deustock.dao.WalletDAO;
@@ -6,14 +6,14 @@ import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.data.dto.stocks.StockHistoryDTO;
 import es.deusto.deustock.data.stocks.StockHistory;
 import es.deusto.deustock.data.stocks.Wallet;
-import es.deusto.deustock.simulation.investment.exceptions.OperationException;
-import es.deusto.deustock.simulation.investment.operations.LongOperation;
-import es.deusto.deustock.simulation.investment.operations.Operation;
-import es.deusto.deustock.simulation.investment.operations.OperationType;
+import es.deusto.deustock.services.investment.exceptions.OperationException;
+import es.deusto.deustock.services.investment.operations.LongOperation;
+import es.deusto.deustock.services.investment.operations.Operation;
+import es.deusto.deustock.services.investment.operations.OperationType;
 import org.junit.jupiter.api.Test;
-import yahoofinance.Stock;
 
 import java.lang.reflect.Field;
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -94,7 +94,7 @@ class WalletServiceTest {
     }
 
     @Test
-    void testSetWalletByWalletID() throws NoSuchFieldException, IllegalAccessException {
+    void testSetWalletByWalletID() throws NoSuchFieldException, IllegalAccessException, SQLException {
         //given
         final WalletService walletService = new WalletService();
         WalletDAO walletDAO = mock(WalletDAO.class);
@@ -116,7 +116,7 @@ class WalletServiceTest {
     }
 
     @Test
-    void openOperationWithEnoughMoney() {
+    void openOperationWithEnoughMoney() throws SQLException {
         // Given
         StockHistoryDAO stockHistoryDAO = mock(StockHistoryDAO.class);
         WalletDAO walletDAO = mock(WalletDAO.class);
@@ -141,7 +141,7 @@ class WalletServiceTest {
     }
 
     @Test
-    void openOperationWithoutEnoughMoney() {
+    void openOperationWithoutEnoughMoney() throws SQLException {
         // Given
         StockHistoryDAO stockHistoryDAO = mock(StockHistoryDAO.class);
         WalletDAO walletDAO = mock(WalletDAO.class);
@@ -166,7 +166,7 @@ class WalletServiceTest {
     }
 
     @Test
-    void closeOperation() {
+    void closeOperation() throws SQLException {
         // Given
         StockHistoryDAO stockHistoryDAO = mock(StockHistoryDAO.class);
         WalletDAO walletDAO = mock(WalletDAO.class);
