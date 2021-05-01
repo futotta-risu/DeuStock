@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.jdo.*;
 
-import es.deusto.deustock.log.DeuLogger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * 
  * @author landersanmillan
  */
-@Tag("server-resource")
+@Tag("server-user-resource")
 public class UserResourceIT extends JerseyTest{
 
 	@BeforeEach
@@ -55,12 +55,10 @@ public class UserResourceIT extends JerseyTest{
 		UserDTO user = new UserDTO();
 		user.setUsername("ResourceRegisterReturns200");
 		user.setPassword("TestPass");
-		user.setCountry("");
-		user.setDescription("User description");
-		user.setFullName("Test Username");
 
 		// When
-		Response response = this.target("users/register")
+		Response response = this.target()
+				.path("users/register")
 				.request("application/json")
 				.post(Entity.json(user));
 
@@ -78,10 +76,6 @@ public class UserResourceIT extends JerseyTest{
 		UserDTO user = new UserDTO();
 		user.setUsername("ResourceRegisterSavesUser");
 		user.setPassword("TestPass");
-		user.setCountry("");
-		user.setDescription("User description");
-		user.setFullName("Test Username");
-
 		// When
 		this.target("users/register")
 				.request("application/json")
@@ -110,7 +104,7 @@ public class UserResourceIT extends JerseyTest{
 				.post(Entity.json(user));
 
 		// Then
-		assertEquals(500, response.getStatus());
+		assertEquals(401, response.getStatus());
 
 		// After
 		UserDAO.getInstance().delete(user.getUsername());
@@ -133,7 +127,7 @@ public class UserResourceIT extends JerseyTest{
 				.path("TestPass")
 				.request(MediaType.APPLICATION_JSON).get();
 
-		UserDTO userLogin = (UserDTO) response.getEntity();
+		UserDTO userLogin = response.readEntity(UserDTO.class);
 
 		// Then
         assertEquals("ResourceLoginReturns200", userLogin.getUsername());
@@ -159,7 +153,7 @@ public class UserResourceIT extends JerseyTest{
 				.request(MediaType.APPLICATION_JSON).get();
 
 		// Then
-		assertEquals(500, response.getStatus());
+		assertEquals(401, response.getStatus());
 
 		// After
 		UserDAO.getInstance().delete(user.getUsername());
@@ -177,7 +171,7 @@ public class UserResourceIT extends JerseyTest{
 				.request(MediaType.APPLICATION_JSON).get();
 
 		// Then
-		assertEquals(500, response.getStatus());
+		assertEquals(401, response.getStatus());
 	}
 
     @Test

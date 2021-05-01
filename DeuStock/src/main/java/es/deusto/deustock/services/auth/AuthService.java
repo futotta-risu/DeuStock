@@ -15,7 +15,11 @@ import java.sql.SQLException;
 public class AuthService {
 
     private UserDAO userDAO;
-    private Logger logger = LoggerFactory.getLogger(AuthService.class);
+    private final Logger logger = LoggerFactory.getLogger(AuthService.class);
+
+    public AuthService(){
+        userDAO = UserDAO.getInstance();
+    }
 
     public void setUserDAO(UserDAO userDAO){
         this.userDAO = userDAO;
@@ -25,6 +29,9 @@ public class AuthService {
         User user;
 
         try{
+            if(!userDAO.has(username)){
+                throw new LoginException("User not in DB");
+            }
             user = userDAO.get(username);
         }catch (SQLException e){
             throw new LoginException("User not in DB");
@@ -43,10 +50,8 @@ public class AuthService {
             if(userDAO.has(userDTO.getUsername())){
                 throw new RegisterException("User already registered");
             }
-
             User user = userDAO.create(userDTO);
             userDAO.store(user);
-
         }catch (SQLException e){
             throw new RegisterException("Error adding user");
         }

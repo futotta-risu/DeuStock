@@ -72,12 +72,7 @@ public class UserDAO implements IDAO<User> {
 
 	@Override
 	public boolean has(Object identity) throws SQLException {
-		try {
-			get(identity);
-		}catch (SQLException e){
-			return false;
-		}
-		return true;
+		return get(identity) != null;
 	}
 
 	public void store(User user) throws SQLException {
