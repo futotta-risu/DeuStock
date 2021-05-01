@@ -37,7 +37,7 @@ public class UserDAOTest {
         when(dbManager.get(eq(User.class), anyString())).thenReturn(user);
 
         // When
-        final User result = userDAO.getUser("Test");
+        final User result = userDAO.get("Test");
 
         // Then
         assertNotNull(result);
@@ -50,7 +50,7 @@ public class UserDAOTest {
         when(dbManager.get(eq(User.class), anyString())).thenReturn(null);
 
         // When
-        final User result = userDAO.getUser("Test");
+        final User result = userDAO.get("Test");
 
         // Then
         assertNull(result);
@@ -66,7 +66,7 @@ public class UserDAOTest {
         // When
 
         // Then
-        assertDoesNotThrow( () -> userDAO.storeUser(user));
+        assertDoesNotThrow( () -> userDAO.store(user));
     }
 
     @Test
@@ -79,7 +79,7 @@ public class UserDAOTest {
         // When
 
         // Then
-        assertDoesNotThrow( () -> userDAO.updateUser(user));
+        assertDoesNotThrow( () -> userDAO.update(user));
     }
 
     @Test
@@ -91,7 +91,7 @@ public class UserDAOTest {
         // When
 
         // Then
-        assertDoesNotThrow( () -> userDAO.deleteUser("TestUser"));
+        assertDoesNotThrow( () -> userDAO.delete("TestUser"));
     }
 
     @Test
@@ -107,7 +107,7 @@ public class UserDAOTest {
         when(dbManager.getAll(eq(User.class))).thenReturn(users);
 
         // When
-        final List<User> result = userDAO.getUsers();
+        final List<User> result = userDAO.getAll();
 
         // Then
         assertNotNull(result);
@@ -158,7 +158,7 @@ public class UserDAOTest {
     void testDeleteGivenUser() {
         doNothing().when(dbManager).delete(eq(User.class));
 
-        assertDoesNotThrow( () -> userDAO.deleteUser(new User("test", "pass")));
+        assertDoesNotThrow( () -> userDAO.delete(new User("test", "pass")));
     }
 
 }

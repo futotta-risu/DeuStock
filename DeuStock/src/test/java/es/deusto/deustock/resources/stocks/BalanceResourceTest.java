@@ -43,7 +43,7 @@ class BalanceResourceTest {
     	//Given
 		
         //When
-  	    when(mockUserDAO.getUser(anyString())).thenReturn(null);
+  	    when(mockUserDAO.get(anyString())).thenReturn(null);
   	    BalanceResource balanceResource = new BalanceResource();
         setMocksToResource(balanceResource);
         Response response = balanceResource.getBalance("");
@@ -60,7 +60,7 @@ class BalanceResourceTest {
 		user.setWallet(new Wallet());
         
 		//When
-  	    when(mockUserDAO.getUser(anyString())).thenReturn(user);
+  	    when(mockUserDAO.get(anyString())).thenReturn(user);
   	    BalanceResource balanceResource = new BalanceResource();
         setMocksToResource(balanceResource);
         Response response = balanceResource.getBalance("");

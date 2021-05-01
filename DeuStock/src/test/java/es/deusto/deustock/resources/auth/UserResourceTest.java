@@ -53,12 +53,12 @@ class UserResourceTest {
         AuthService service = new AuthService();
         service.setUserDAO(mockUserDAO);
     	//When
-		when(mockUserDAO.getUser(anyString())).thenReturn(user);
+		when(mockUserDAO.get(anyString())).thenReturn(user);
     	when(mockUserDAO.getDTO(any())).thenReturn(userDTO);
   	    
     	UserResource userResource = new UserResource();
         setMocksToResource(userResource);
-        userResource.setLoginService(service);
+        userResource.setAuthService(service);
         Response response = userResource.login("Test", "Pass");
   	    
         //Then
@@ -73,12 +73,12 @@ class UserResourceTest {
         service.setUserDAO(mockUserDAO);
 
     	//When
-		when(mockUserDAO.getUser(anyString())).thenThrow(new LoginException("Login error"));
+		when(mockUserDAO.get(anyString())).thenThrow(new LoginException("Login error"));
     	when(mockUserDAO.getDTO(any())).thenReturn(null);
   	    
     	UserResource userResource = new UserResource();
         setMocksToResource(userResource);
-        userResource.setLoginService(service);
+        userResource.setAuthService(service);
   	    
         //Then
         assertThrows(
@@ -99,12 +99,12 @@ class UserResourceTest {
         service.setUserDAO(mockUserDAO);
 
     	//When
-		when(mockUserDAO.getUser(anyString())).thenReturn(user);
+		when(mockUserDAO.get(anyString())).thenReturn(user);
     	when(mockUserDAO.getDTO(any())).thenReturn(userDTO);
   	    
     	UserResource userResource = new UserResource();
         setMocksToResource(userResource);
-        userResource.setLoginService(service);
+        userResource.setAuthService(service);
 
         //Then
         assertThrows(
@@ -120,14 +120,17 @@ class UserResourceTest {
     	//Given
     	User user = new User("Test", "Pass");
     	UserDTO userDTO = new UserDTO().setUsername("Test").setPassword("Pass");
-	
+        AuthService service = new AuthService();
+        service.setUserDAO(mockUserDAO);
+
     	//When
-		when(mockUserDAO.getUser(anyString())).thenReturn(null);
+		when(mockUserDAO.get(anyString())).thenThrow(new SQLException("User not in DB"));
     	when(mockUserDAO.create(any())).thenReturn(user);
-    	doNothing().when(mockUserDAO).storeUser(user);
+    	doNothing().when(mockUserDAO).store(user);
   	    
     	UserResource userResource = new UserResource();
         setMocksToResource(userResource);
+        userResource.setAuthService(service);
         Response response = userResource.register(userDTO);
   	    
         //Then
@@ -140,16 +143,22 @@ class UserResourceTest {
     	//Given
     	User user = new User("Test", "Pass");
     	UserDTO userDTO = new UserDTO().setUsername("Test").setPassword("Pass");
+        AuthService service = new AuthService();
+        service.setUserDAO(mockUserDAO);
 
     	//When
-		when(mockUserDAO.getUser(anyString())).thenReturn(user);
- 	    
+		when(mockUserDAO.get(any())).thenReturn(user);
+        when(mockUserDAO.has(any())).thenReturn(true);
+
     	UserResource userResource = new UserResource();
         setMocksToResource(userResource);
-        Response response = userResource.register(userDTO);
-  	    
+        userResource.setAuthService(service);
+        
         //Then
-		assertEquals(401, response.getStatus());
+		assertThrows(
+		        WebApplicationException.class,
+                () -> userResource.register(userDTO)
+        );
     }
     
     @Test
@@ -159,8 +168,8 @@ class UserResourceTest {
     	User user = new User("Test", "Pass");
 
     	//When
-		when(mockUserDAO.getUser(anyString())).thenReturn(user);
-    	doNothing().when(mockUserDAO).deleteUser(user);
+		when(mockUserDAO.get(anyString())).thenReturn(user);
+    	doNothing().when(mockUserDAO).delete(user);
   	    
     	UserResource userResource = new UserResource();
         setMocksToResource(userResource);
@@ -177,8 +186,8 @@ class UserResourceTest {
     	User user = new User("Test", "Pass");
     	
     	//When
-		when(mockUserDAO.getUser(anyString())).thenReturn(user);
-    	doNothing().when(mockUserDAO).deleteUser(user);
+		when(mockUserDAO.get(anyString())).thenReturn(user);
+    	doNothing().when(mockUserDAO).delete(user);
   	    
     	UserResource userResource = new UserResource();
         setMocksToResource(userResource);
@@ -194,7 +203,7 @@ class UserResourceTest {
     	//Given
     	
     	//When
-		when(mockUserDAO.getUser(anyString())).thenReturn(null);
+		when(mockUserDAO.get(anyString())).thenReturn(null);
   	    
     	UserResource userResource = new UserResource();
         setMocksToResource(userResource);

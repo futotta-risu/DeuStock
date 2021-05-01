@@ -34,7 +34,7 @@ public class DBManager implements IDBManager{
 	public void store(Object object) throws SQLException {
 		var pm = pmf.getPersistenceManager();
 		pm.getFetchPlan().setMaxFetchDepth(-1);
-		Transaction tx = pm.currentTransaction();
+		var tx = pm.currentTransaction();
 		
 		try {
 			tx.begin();
@@ -63,23 +63,22 @@ public class DBManager implements IDBManager{
 			var pm = pmf.getPersistenceManager();
 			pm.getFetchPlan().setMaxFetchDepth(-1);
 
-			Transaction tx = pm.currentTransaction();
+			var tx = pm.currentTransaction();
 			ArrayList<Object> objects = new ArrayList<>();
 
 			try {
 				System.out.println("   * Retrieving an Extent for Objects.");
 
 				tx.begin();
-	
-				Extent<Object> extent = pm.getExtent(entityClass, true);
+
+				var extent = pm.getExtent(entityClass, true);
 
 				for (Object s : extent) {
 					objects.add(pm.detachCopy(s));
 				}
 				tx.commit();
 			} catch (Exception ex) {
-				System.out.println("   $ Error Getting objects: " + ex.getMessage());
-				logger.error("Error getting objects");
+				logger.error("Error getting objects from class " + entityClass.getName() );
 			} finally {
 				if (tx != null && tx.isActive())
 					tx.rollback();
@@ -90,16 +89,16 @@ public class DBManager implements IDBManager{
 
 	@Override
 	public List<Object> getList(Class entityClass, String conditions) {
-		PersistenceManager pm = pmf.getPersistenceManager();
+		var pm = pmf.getPersistenceManager();
 		pm.getFetchPlan().setMaxFetchDepth(-1);
-		Transaction tx = pm.currentTransaction();
+		var tx = pm.currentTransaction();
 		pm.setDetachAllOnCommit(true);
 		List<Object> object = null;
 		try {
 			System.out.println("   * Querying a Object, conditions: " + conditions);
 
 			tx.begin();
-			Query query = pm.newQuery("SELECT FROM " + entityClass.getName() + " WHERE " + conditions);
+			var query = pm.newQuery("SELECT FROM " + entityClass.getName() + " WHERE " + conditions);
 			query.setUnique(false);
 			object = (List<Object>) query.execute();
 			tx.commit();
@@ -119,23 +118,22 @@ public class DBManager implements IDBManager{
 	}
 
 	public Object get(Class entityClass, String conditions) {
-		PersistenceManager pm = pmf.getPersistenceManager();
+		var pm = pmf.getPersistenceManager();
 		pm.getFetchPlan().setMaxFetchDepth(-1);
-		Transaction tx = pm.currentTransaction();
+		var tx = pm.currentTransaction();
 		pm.setDetachAllOnCommit(true);
 		Object object = null;
 		try {
 			System.out.println("   * Querying a Object, conditions: " + conditions);
 
 			tx.begin();
-			Query query = pm.newQuery("SELECT FROM " + entityClass.getName() + " WHERE " + conditions);
+			var query = pm.newQuery("SELECT FROM " + entityClass.getName() + " WHERE " + conditions);
 			query.setUnique(true);
 			object = pm.detachCopy(query.execute());
 			tx.commit();
 
 		} catch (Exception ex) {
-			System.out.println("   $ Error Getting Object: " + ex.getMessage());
-			logger.error("Error getting Object: " + conditions);
+			logger.error("Error getting Object from class " +  entityClass.getName());
 		} finally {
 
 			if (tx != null && tx.isActive()) {
@@ -148,14 +146,14 @@ public class DBManager implements IDBManager{
 	}
 
 	public void update(Object object) {
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
+		var pm = pmf.getPersistenceManager();
+		var tx = pm.currentTransaction();
 		try {
 			tx.begin();
 			pm.makePersistent(object);
 			tx.commit();
 		} catch (Exception ex) {
-			System.out.println("   $ Error retreiving an extent: " + ex.getMessage());
+			logger.error("   $ Error retreiving an extent: " + ex.getMessage());
 		} finally {
 			if (tx != null && tx.isActive()) {
 				tx.rollback();
@@ -166,22 +164,21 @@ public class DBManager implements IDBManager{
 	
 	@Override
 	public void delete(Class entityClass, String conditions) {
-		PersistenceManager pm = pmf.getPersistenceManager();
+		var pm = pmf.getPersistenceManager();
 		pm.getFetchPlan().setMaxFetchDepth(-1);
-		Transaction tx = pm.currentTransaction();
+		var tx = pm.currentTransaction();
 		pm.setDetachAllOnCommit(true);
 		try {
 			System.out.println("   * Querying a Object, conditions:" + conditions);
 
 			tx.begin();
-			Query query = pm.newQuery("SELECT FROM " + entityClass.getName() + " WHERE " + conditions);
+			var query = pm.newQuery("SELECT FROM " + entityClass.getName() + " WHERE " + conditions);
 			query.setUnique(true);
 			query.deletePersistentAll();
 			tx.commit();
 
 		} catch (Exception ex) {
-			System.out.println("   $ Error Getting Object: " + ex.getMessage());
-			logger.error("Error getting object for deleting: ");
+			logger.error("Error getting object for deleting: " + ex.getMessage());
 		} finally {
 
 			if (tx != null && tx.isActive()) {
@@ -194,7 +191,7 @@ public class DBManager implements IDBManager{
 	
 	@Override
 	public void delete(Object object) {
-		PersistenceManager pm = pmf.getPersistenceManager();
+		var pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
 			tx.begin();

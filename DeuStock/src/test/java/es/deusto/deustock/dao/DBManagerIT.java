@@ -72,14 +72,14 @@ public class DBManagerIT extends DBTestCase{
    
     @Test
     public void testUpdateObject() throws Exception {
-    	Object objectToUpdate = UserDAO.getInstance().getUser("usernameTest2");
+    	Object objectToUpdate = UserDAO.getInstance().get("usernameTest2");
 		((User) objectToUpdate).setFullName("fullNameUpdated2");
 		
 	    DBManager.getInstance().update(objectToUpdate);
 	    ITable filteredActualTable = getFilteredTable("USER", COLUMNS_USER);
         assertEquals("There are not the two rows" , 2, filteredActualTable.getRowCount());
 
-        Object userUpdated = UserDAO.getInstance().getUser("usernameTest2");
+        Object userUpdated = UserDAO.getInstance().get("usernameTest2");
 		
 	    assertEquals("There are not two rows" , 2, filteredActualTable.getRowCount());
 	    assertNotNull(userUpdated);

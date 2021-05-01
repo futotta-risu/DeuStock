@@ -26,21 +26,21 @@ import java.sql.SQLException;
 public class UserResource {
 
 	private UserDAO userDAO;
-	private AuthService loginService;
+	private AuthService authService;
 
 	private Logger logger = LoggerFactory.getLogger(UserResource.class);
 
 	public UserResource(){
 		this.userDAO = UserDAO.getInstance();
-		loginService = new AuthService();
+		authService = new AuthService();
 	}
 
 	public void setUserDAO(UserDAO userDAO){
 		this.userDAO = userDAO;
 	}
 
-	public void setLoginService(AuthService loginService){
-		this.loginService = loginService;
+	public void setAuthService(AuthService authService){
+		this.authService = authService;
 	}
 
 
@@ -62,7 +62,7 @@ public class UserResource {
 		UserDTO user;
 
 		try{
-			user = loginService.login(username, password);
+			user = authService.login(username, password);
 		}catch (LoginException e){
 			throw new WebApplicationException(Response.Status.UNAUTHORIZED);
 		}
@@ -89,7 +89,7 @@ public class UserResource {
 		DeuLogger.logger.info("Register petition for User " + userDTO.getUsername());
 
 		try{
-			loginService.register(userDTO);
+			authService.register(userDTO);
 		}catch (AuthException e){
 			DeuLogger.logger.warn("Error adding user.");
 			throw new WebApplicationException(e.getMessage(), Response.Status.UNAUTHORIZED);

@@ -62,7 +62,7 @@ class HoldingsListResourceTest{
     void testGetHoldingsReturnsIllegalArgumentException() throws SQLException {
     	//Given
         HoldingsListResources holdingsListResource = new HoldingsListResources();
-        when(mockUserDAO.getUser(anyString())).thenReturn(null);
+        when(mockUserDAO.get(anyString())).thenReturn(null);
         setMocksToResource(holdingsListResource);
 
         //When
@@ -92,7 +92,7 @@ class HoldingsListResourceTest{
         User user = new User("Test", "Pass");
         user.setWallet(wallet);
 
-        when(mockUserDAO.getUser(anyString())).thenReturn(user);
+        when(mockUserDAO.get(anyString())).thenReturn(user);
         when(mockStockGateway.getStockData(any())).thenReturn(stock);
 
 
@@ -100,7 +100,7 @@ class HoldingsListResourceTest{
         setMocksToResource(holdingsListResource);
 
         //When
-        when(mockUserDAO.getUser(anyString())).thenReturn(user);;
+        when(mockUserDAO.get(anyString())).thenReturn(user);;
 
         setMocksToResource(holdingsListResource);
         Response response = holdingsListResource.getHoldings("Test");
@@ -116,7 +116,7 @@ class HoldingsListResourceTest{
     	//Given
 
         //When
-        when(mockUserDAO.getUser(anyString())).thenReturn(null);
+        when(mockUserDAO.get(anyString())).thenReturn(null);
     	
         HoldingsListResources holdingsListResource = new HoldingsListResources();
         setMocksToResource(holdingsListResource);
@@ -142,7 +142,7 @@ class HoldingsListResourceTest{
         User user = new User("Test", "Pass");
     	user.setWallet(wallet);
 
-        when(mockUserDAO.getUser(anyString())).thenReturn(user);
+        when(mockUserDAO.get(anyString())).thenReturn(user);
         doNothing().when(mockWalletDAO).update(any());
         when(mockStockHistoryDAO.getStockHistory(anyString())).thenReturn(wallet.getHistory());
         doNothing().when(mockStockHistoryDAO).update(any());

@@ -43,7 +43,7 @@ class UserDetailTest {
     	UserDTO userDTO = new UserDTO().setUsername("Test").setPassword("Pass");
     	
     	//When
-		when(mockUserDAO.getUser(anyString())).thenReturn(user);
+		when(mockUserDAO.get(anyString())).thenReturn(user);
     	when(mockUserDAO.getDTO(any())).thenReturn(userDTO);
   	    
     	UserDetail userDetailResource = new UserDetail();
@@ -60,7 +60,7 @@ class UserDetailTest {
     	//Given
     	
     	//When
-		when(mockUserDAO.getUser(anyString())).thenReturn(null);
+		when(mockUserDAO.get(anyString())).thenReturn(null);
   	    
     	UserDetail userDetailResource = new UserDetail();
         setMocksToResource(userDetailResource);

@@ -61,7 +61,7 @@ class OpenOperationResourceTest {
         when(stockDAO.has(anyString())).thenReturn(true);
         when(stockDAO.get(anyString())).thenReturn(stock);
 
-        when(userDAO.getUser(anyString())).thenReturn(user);
+        when(userDAO.get(anyString())).thenReturn(user);
 
         when(stockDataAPIGateway.getStockData(any(StockQueryData.class))).thenReturn(stock);
 

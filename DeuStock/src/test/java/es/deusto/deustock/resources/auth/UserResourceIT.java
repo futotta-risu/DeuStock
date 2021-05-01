@@ -63,7 +63,7 @@ public class UserResourceIT extends JerseyTest{
 		assertEquals(200, response.getStatus());
 
 		// After
-		UserDAO.getInstance().deleteUser(user.getUsername());
+		UserDAO.getInstance().delete(user.getUsername());
 	}
 
 	@Test
@@ -78,10 +78,10 @@ public class UserResourceIT extends JerseyTest{
 				.post(Entity.json(user));
 
 		// Then
-		assertNotNull(UserDAO.getInstance().getUser(user.getUsername()));
+		assertNotNull(UserDAO.getInstance().get(user.getUsername()));
 
 		// After
-		UserDAO.getInstance().deleteUser(user.getUsername());
+		UserDAO.getInstance().delete(user.getUsername());
 	}
 
 	@Test
@@ -89,7 +89,7 @@ public class UserResourceIT extends JerseyTest{
 	public void testRegisterCannotSaveDuplicatedUser() throws SQLException {
 		//Given
 		User user = new User("ResourceRegisterDoesNotSaveDuplicated", "TestPass");
-		UserDAO.getInstance().storeUser(user);
+		UserDAO.getInstance().store(user);
 
 		// When
 		Response response = this.target("users/register")
@@ -100,7 +100,7 @@ public class UserResourceIT extends JerseyTest{
 		assertEquals(401, response.getStatus());
 
 		// After
-		UserDAO.getInstance().deleteUser(user.getUsername());
+		UserDAO.getInstance().delete(user.getUsername());
 	}
 
     @Test
@@ -108,7 +108,7 @@ public class UserResourceIT extends JerseyTest{
 	public void testLoginReturns200OnSuccess() throws SQLException {
 		// Given
 		User user = new User("ResourceLoginReturns200", "TestPass");
-		UserDAO.getInstance().storeUser(user);
+		UserDAO.getInstance().store(user);
 
 		// When
 		Response response = target("users/login")
@@ -122,7 +122,7 @@ public class UserResourceIT extends JerseyTest{
         assertEquals("ResourceLoginReturns200", userLogin.getUsername());
 
         // After
-		UserDAO.getInstance().deleteUser(user.getUsername());
+		UserDAO.getInstance().delete(user.getUsername());
 	}
 
 	@Test
@@ -130,7 +130,7 @@ public class UserResourceIT extends JerseyTest{
 	public void testLoginReturns401WithIncorrectPass() throws SQLException {
 		// Given
 		User user = new User("ResourceLoginReturns401WithIncorrectPass", "TestPass");
-		UserDAO.getInstance().storeUser(user);
+		UserDAO.getInstance().store(user);
 
 		// When
 		Response response = target("users/login")
@@ -142,7 +142,7 @@ public class UserResourceIT extends JerseyTest{
 		assertEquals(401, response.getStatus());
 
 		// After
-		UserDAO.getInstance().deleteUser(user.getUsername());
+		UserDAO.getInstance().delete(user.getUsername());
 	}
 
 	@Test
@@ -165,7 +165,7 @@ public class UserResourceIT extends JerseyTest{
 	public void testDeleteReturns200() throws SQLException {
 		// Given
 		User user = new User("ResourceDelete200", "TestPass");
-		UserDAO.getInstance().storeUser(user);
+		UserDAO.getInstance().store(user);
 
 		// When
 		Response response = target("users")
@@ -197,7 +197,7 @@ public class UserResourceIT extends JerseyTest{
 	public void testDeleteReturns401WithIncorrectPass() throws SQLException {
 		// Given
 		User user = new User("ResourceDelete401IncorrectPass", "TestPass");
-		UserDAO.getInstance().storeUser(user);
+		UserDAO.getInstance().store(user);
 
 		// When
 		Response response = target("users")
@@ -209,7 +209,7 @@ public class UserResourceIT extends JerseyTest{
 		assertEquals(401, response.getStatus());
 
 		// After
-		UserDAO.getInstance().deleteUser(user.getUsername());
+		UserDAO.getInstance().delete(user.getUsername());
 	}
 
 }

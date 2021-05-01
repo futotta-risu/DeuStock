@@ -48,7 +48,7 @@ public class UserDetailIT extends JerseyTest {
     public void testGetUsernameReturns200() throws SQLException {
         // Given
         User user = new User("TestUserReturn200", "TestPass");
-        UserDAO.getInstance().storeUser(user);
+        UserDAO.getInstance().store(user);
 
         // When
         Response response = target("user")
@@ -59,7 +59,7 @@ public class UserDetailIT extends JerseyTest {
         assertEquals(200, response.getStatus());
 
         // After
-        UserDAO.getInstance().deleteUser(user.getUsername());
+        UserDAO.getInstance().delete(user.getUsername());
     }
 
     @Test
@@ -67,7 +67,7 @@ public class UserDetailIT extends JerseyTest {
     public void testGetUsernameReturnsUser() throws SQLException {
         // Given
         User user = new User("TestUserReturnsUser", "TestPass");
-        UserDAO.getInstance().storeUser(user);
+        UserDAO.getInstance().store(user);
 
         // When
         Response response = this.target("user")
@@ -81,7 +81,7 @@ public class UserDetailIT extends JerseyTest {
         assertEquals(user.getUsername(), returnUser.getUsername());
 
         // After
-        UserDAO.getInstance().deleteUser(user.getUsername());
+        UserDAO.getInstance().delete(user.getUsername());
     }
 
     @Test

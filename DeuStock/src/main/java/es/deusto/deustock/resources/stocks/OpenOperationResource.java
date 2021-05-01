@@ -87,7 +87,7 @@ public class OpenOperationResource {
         stock.setPrice(stockData.getPrice());
 
         Operation operation = operationFactory.create(operationType, stock, amount);
-        User user = userDAO.getUser(username);
+        User user = userDAO.get(username);
 
         walletService.setWallet(user.getWallet());
         walletService.openOperation(operation);

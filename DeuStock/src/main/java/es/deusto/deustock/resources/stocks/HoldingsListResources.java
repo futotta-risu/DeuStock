@@ -63,7 +63,7 @@ public class HoldingsListResources {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getHoldings(@PathParam("username") String username) throws StockNotFoundException, SQLException {
-        User user = userDAO.getUser(username);
+        User user = userDAO.get(username);
 
         if(user == null){
             throw new IllegalArgumentException("Username does not exit");
@@ -102,7 +102,7 @@ public class HoldingsListResources {
 	@Path("/holdings/reset")
 	public Response resetHoldings(@PathParam("username") String username) throws SQLException {
 		DeuLogger.logger.info("User delete petition for User " + username);
-		User user = userDAO.getUser(username);
+		User user = userDAO.get(username);
 
 		if (user == null) {
 			DeuLogger.logger.warn("User " + username + " not found in DB while deleting");
