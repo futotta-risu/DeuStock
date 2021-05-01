@@ -54,6 +54,7 @@ class UserResourceTest {
         service.setUserDAO(mockUserDAO);
     	//When
 		when(mockUserDAO.get(anyString())).thenReturn(user);
+        when(mockUserDAO.has(any())).thenReturn(true);
     	when(mockUserDAO.getDTO(any())).thenReturn(userDTO);
   	    
     	UserResource userResource = new UserResource();
