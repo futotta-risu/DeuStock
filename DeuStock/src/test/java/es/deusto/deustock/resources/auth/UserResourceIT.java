@@ -55,6 +55,9 @@ public class UserResourceIT extends JerseyTest{
 		UserDTO user = new UserDTO();
 		user.setUsername("ResourceRegisterReturns200");
 		user.setPassword("TestPass");
+		user.setCountry("");
+		user.setDescription("User description");
+		user.setFullName("Test Username");
 
 		// When
 		Response response = this.target("users/register")
@@ -75,6 +78,10 @@ public class UserResourceIT extends JerseyTest{
 		UserDTO user = new UserDTO();
 		user.setUsername("ResourceRegisterSavesUser");
 		user.setPassword("TestPass");
+		user.setCountry("");
+		user.setDescription("User description");
+		user.setFullName("Test Username");
+
 		// When
 		this.target("users/register")
 				.request("application/json")
@@ -126,7 +133,7 @@ public class UserResourceIT extends JerseyTest{
 				.path("TestPass")
 				.request(MediaType.APPLICATION_JSON).get();
 
-		UserDTO userLogin = response.readEntity(UserDTO.class);
+		UserDTO userLogin = (UserDTO) response.getEntity();
 
 		// Then
         assertEquals("ResourceLoginReturns200", userLogin.getUsername());
