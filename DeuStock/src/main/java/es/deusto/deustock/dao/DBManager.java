@@ -2,6 +2,7 @@ package es.deusto.deustock.dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.jdo.*;
@@ -41,7 +42,7 @@ public class DBManager implements IDBManager{
 			pm.makePersistent(object); //object?
 			tx.commit();
 		} catch (Exception e) {
-			logger.error("Could not store object: " + object + ". " + e.getMessage());
+			logger.error("Could not store object: " + e.getMessage());
 		}finally {
 			if(tx.isActive()) {
 				tx.rollback();
@@ -87,24 +88,29 @@ public class DBManager implements IDBManager{
 	}
 
 	@Override
-	public List<Object> getList(Class entityClass, String conditions) {
+	public List<Object> getList(Class entityClass, List<String> filters) {
 		var pm = pmf.getPersistenceManager();
 		pm.getFetchPlan().setMaxFetchDepth(-1);
 		var tx = pm.currentTransaction();
 		pm.setDetachAllOnCommit(true);
 		List<Object> object = null;
 		try {
-			System.out.println("   * Querying a Object, conditions: " + conditions);
+			logger.info("   * Querying a Object of the class " + entityClass);
 
 			tx.begin();
-			var query = pm.newQuery("SELECT FROM " + entityClass.getName() + " WHERE " + conditions);
+			var query = pm.newQuery(entityClass);
+
+			for(String filter : filters){
+				query.setFilter(filter);
+			}
+
 			query.setUnique(false);
+
 			object = (List<Object>) query.execute();
 			tx.commit();
 
 		} catch (Exception ex) {
-			System.out.println("   $ Error Getting Object: " + ex.getMessage());
-			logger.error("Error getting Object: " + conditions);
+			logger.error("Error getting Object");
 		} finally {
 
 			if (tx != null && tx.isActive()) {
@@ -116,17 +122,20 @@ public class DBManager implements IDBManager{
 		return object;
 	}
 
-	public Object get(Class entityClass, String conditions) {
+	public Object get(Class entityClass, List<String> filters) {
 		var pm = pmf.getPersistenceManager();
 		pm.getFetchPlan().setMaxFetchDepth(-1);
 		var tx = pm.currentTransaction();
 		pm.setDetachAllOnCommit(true);
 		Object object = null;
 		try {
-			System.out.println("   * Querying a Object, conditions: " + conditions);
-
 			tx.begin();
-			var query = pm.newQuery("SELECT FROM " + entityClass.getName() + " WHERE " + conditions);
+			var query = pm.newQuery(entityClass);
+
+			for(String filter : filters){
+				query.setFilter(filter);
+			}
+
 			query.setUnique(true);
 			object = pm.detachCopy(query.execute());
 			tx.commit();
@@ -141,6 +150,23 @@ public class DBManager implements IDBManager{
 
 			pm.close();
 		}
+		return object;
+	}
+
+	@Override
+	public Object getByID(Class entityClass, String id) throws SQLException {
+
+		var pm = pmf.getPersistenceManager();
+
+		pm.getFetchPlan().setMaxFetchDepth(-1);
+		pm.setDetachAllOnCommit(true);
+
+		Object object = pm.getObjectById(entityClass, id);
+
+		if(object == null){
+			throw new SQLException("Object not found");
+		}
+
 		return object;
 	}
 
@@ -162,17 +188,22 @@ public class DBManager implements IDBManager{
 	}
 	
 	@Override
-	public void delete(Class entityClass, String conditions) {
+	public void delete(Class entityClass, List<String> filters) {
 		var pm = pmf.getPersistenceManager();
 		pm.getFetchPlan().setMaxFetchDepth(-1);
 		var tx = pm.currentTransaction();
 		pm.setDetachAllOnCommit(true);
 		try {
-			System.out.println("   * Querying a Object, conditions:" + conditions);
+			System.out.println("   * Querying a Object" );
 
 			tx.begin();
-			var query = pm.newQuery("SELECT FROM " + entityClass.getName() + " WHERE " + conditions);
+			var query = pm.newQuery(entityClass);
+			for(String filter : filters){
+				query.setFilter(filter);
+			}
+
 			query.setUnique(true);
+
 			query.deletePersistentAll();
 			tx.commit();
 

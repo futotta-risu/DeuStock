@@ -38,8 +38,7 @@ public class WalletDAO {
 
 
     public Wallet getWallet(String walletID) throws SQLException {
-        String condition = "id == '" + walletID + "'";
-        return (Wallet) dbManager.get(Wallet.class, condition);
+        return (Wallet) dbManager.getByID(Wallet.class, walletID);
     }
 
 

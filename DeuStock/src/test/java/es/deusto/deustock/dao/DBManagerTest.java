@@ -20,6 +20,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedList;
+
 /**
  * @author landersanmillan
  */
@@ -103,7 +105,7 @@ class DBManagerTest {
     	//When
         when(mockPersistentManager.newQuery(anyString())).thenThrow(re);
         try {
-        	dbManager.getList(objectClass, "testConditions");
+        	dbManager.getList(objectClass, new LinkedList<>());
 		} catch (Exception e) {
 			//Then
 			assertEquals(e.getMessage(), re.getMessage());
@@ -120,7 +122,7 @@ class DBManagerTest {
     	//When
         when(mockPersistentManager.newQuery(anyString())).thenThrow(re);
         try {
-        	dbManager.getList(objectClass, "testConditions");
+        	dbManager.getList(objectClass, new LinkedList<>());
 		} catch (Exception e) {
 			//Then
 			assertEquals(e.getMessage(), re.getMessage());
@@ -154,7 +156,7 @@ class DBManagerTest {
     	//When
         when(mockPersistentManager.newQuery(anyString())).thenThrow(re);    
         try {
-        	dbManager.delete(objectClass, "");
+        	dbManager.delete(objectClass, new LinkedList<>());
 		} catch (Exception e) {
 			//Then
 			assertEquals(e.getMessage(), re.getMessage());
@@ -191,7 +193,7 @@ class DBManagerTest {
         doNothing().when(mockPersistentManager).deletePersistent(objectClass);    
         	
 		//Then
-		assertDoesNotThrow(() -> dbManager.delete(objectClass, ""));
+		assertDoesNotThrow(() -> dbManager.delete(objectClass, new LinkedList<>()));
     }
     
  

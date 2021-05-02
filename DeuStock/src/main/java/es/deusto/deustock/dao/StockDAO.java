@@ -2,6 +2,8 @@ package es.deusto.deustock.dao;
 
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import es.deusto.deustock.data.DeuStock;
@@ -72,8 +74,10 @@ public class StockDAO implements IDAO<DeuStock>{
 	 */
 	@Override
 	public DeuStock get(Object identity) throws SQLException {
-		String whereCondition = "acronym  == '" + identity + "'";
-		return (DeuStock) dbManager.get(DeuStock.class, whereCondition);
+		List<String> filters = new LinkedList<>();
+		filters.add("acronym  == '" + identity + "'");
+
+		return (DeuStock) dbManager.get(DeuStock.class, filters);
 	}
 
 	@Override
@@ -92,8 +96,10 @@ public class StockDAO implements IDAO<DeuStock>{
 	}
 
 	public void deleteBySymbol(String symbol) throws SQLException {
-		String whereCondition = "acronym  == '" + symbol + "'";
-		dbManager.delete(Stock.class, whereCondition);
+		List<String> filters = new LinkedList<>();
+		filters.add("acronym  == '" + symbol + "'");
+
+		dbManager.delete(Stock.class, filters);
 	}
 
 	@Override

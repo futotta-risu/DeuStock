@@ -7,9 +7,10 @@ public interface IDBManager {
 
 	void store(Object object) throws SQLException;
 	List<Object> getAll(Class entityClass);
-	List<Object> getList(Class entityClass, String conditions) throws SQLException;
-	Object get(Class entityClass, String conditions) throws SQLException;
-	void delete(Class entityClass, String conditions) throws SQLException;
+	List<Object> getList(Class entityClass, List<String> filters) throws SQLException;
+	Object get(Class entityClass, List<String> filters) throws SQLException;
+	Object getByID(Class entityClass, String id) throws SQLException;
+	void delete(Class entityClass, List<String> filters) throws SQLException;
 	void delete(Object object);
 	void update(Object object) throws SQLException;
 }
