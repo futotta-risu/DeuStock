@@ -35,7 +35,7 @@ class WalletDAOTest {
     @Test
     @DisplayName("Test get Wallet on non existent wallet")
     void testGetOnNonExistentWallet() throws SQLException {
-        when(dbManager.get(eq(Wallet.class), anyString())).thenReturn(null);
+        when(dbManager.get(eq(Wallet.class), anyString(), any())).thenReturn(null);
 
         final Wallet result = walletDAO.getWallet("Test");
 

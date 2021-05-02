@@ -57,7 +57,7 @@ public class StockHistoryDAOTest {
         StockHistory stockHistory = new StockHistory(
                 wallet, stock, 20, 30, OperationType.LONG
         );
-        when(dbManager.get(eq(StockHistory.class), anyString())).thenReturn(stockHistory);
+        when(dbManager.get(eq(StockHistory.class), anyString(),any())).thenReturn(stockHistory);
 
         // When
         final StockHistory result = stockHistoryDAO.get("TestID");
@@ -70,7 +70,7 @@ public class StockHistoryDAOTest {
     @DisplayName("Test get on non existent Object")
     void testGetOnNonExistentObject() throws SQLException {
         // Given
-        when(dbManager.get(eq(StockHistory.class), anyString())).thenReturn(null);
+        when(dbManager.get(eq(StockHistory.class), anyString(),any())).thenReturn(null);
 
         // When
         final StockHistory result = stockHistoryDAO.get("TestID");
@@ -173,7 +173,7 @@ public class StockHistoryDAOTest {
         stockHistoryList.add(stockHistory1);
         stockHistoryList.add(stockHistory2);
        
-        when(dbManager.getList(eq(StockHistory.class), anyString())).thenReturn(stockHistoryList);
+        when(dbManager.getList(eq(StockHistory.class), anyString(),any())).thenReturn(stockHistoryList);
 
         List<StockHistory> stockHistoryListActual  = stockHistoryDAO.getStockHistory("Test");
 
@@ -206,7 +206,7 @@ public class StockHistoryDAOTest {
         stockHistoryList.add(stockHistory1);
         stockHistoryList.add(stockHistory2);
        
-        when(dbManager.getList(eq(StockHistory.class), anyString())).thenReturn(stockHistoryList);
+        when(dbManager.getList(eq(StockHistory.class), anyString(), any())).thenReturn(stockHistoryList);
 
         List<StockHistory> stockHistoryListActual  = stockHistoryDAO.getStockHistory(wallet.getId());
 

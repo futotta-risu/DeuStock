@@ -2,6 +2,7 @@ package es.deusto.deustock.dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.jdo.*;
@@ -87,7 +88,7 @@ public class DBManager implements IDBManager{
 	}
 
 	@Override
-	public List<Object> getList(Class entityClass, String conditions) {
+	public List<Object> getList(Class entityClass, String conditions, HashMap<String, String> params) {
 		var pm = pmf.getPersistenceManager();
 		pm.getFetchPlan().setMaxFetchDepth(-1);
 		var tx = pm.currentTransaction();
@@ -97,9 +98,12 @@ public class DBManager implements IDBManager{
 			System.out.println("   * Querying a Object, conditions: " + conditions);
 
 			tx.begin();
-			var query = pm.newQuery("SELECT FROM " + entityClass.getName() + " WHERE " + conditions);
+			var query = pm.newQuery(
+					"javax.jdo.query.SQL",
+					"SELECT FROM " + entityClass.getName() + " WHERE " + conditions
+			);
 			query.setUnique(false);
-			object = (List<Object>) query.execute();
+			object = (List<Object>) query.execute(params);
 			tx.commit();
 
 		} catch (Exception ex) {
@@ -116,7 +120,7 @@ public class DBManager implements IDBManager{
 		return object;
 	}
 
-	public Object get(Class entityClass, String conditions) {
+	public Object get(Class entityClass, String conditions, HashMap<String, String> params) {
 		var pm = pmf.getPersistenceManager();
 		pm.getFetchPlan().setMaxFetchDepth(-1);
 		var tx = pm.currentTransaction();
@@ -126,9 +130,13 @@ public class DBManager implements IDBManager{
 			System.out.println("   * Querying a Object, conditions: " + conditions);
 
 			tx.begin();
-			var query = pm.newQuery("SELECT FROM " + entityClass.getName() + " WHERE " + conditions);
+			var query = pm.newQuery(
+					"javax.jdo.query.SQL",
+					"SELECT FROM " + entityClass.getName() + " WHERE " + conditions
+			);
+
 			query.setUnique(true);
-			object = pm.detachCopy(query.execute());
+			object = pm.detachCopy(query.execute(params));
 			tx.commit();
 
 		} catch (Exception ex) {
@@ -162,7 +170,7 @@ public class DBManager implements IDBManager{
 	}
 	
 	@Override
-	public void delete(Class entityClass, String conditions) {
+	public void delete(Class entityClass, String conditions, HashMap<String, String> params) {
 		var pm = pmf.getPersistenceManager();
 		pm.getFetchPlan().setMaxFetchDepth(-1);
 		var tx = pm.currentTransaction();
@@ -171,9 +179,13 @@ public class DBManager implements IDBManager{
 			System.out.println("   * Querying a Object, conditions:" + conditions);
 
 			tx.begin();
-			var query = pm.newQuery("SELECT FROM " + entityClass.getName() + " WHERE " + conditions);
+			var query = pm.newQuery(
+					"javax.jdo.query.SQL",
+					"SELECT FROM " + entityClass.getName() + " WHERE " + conditions
+			);
+
 			query.setUnique(true);
-			query.deletePersistentAll();
+			query.deletePersistentAll(params);
 			tx.commit();
 
 		} catch (Exception ex) {

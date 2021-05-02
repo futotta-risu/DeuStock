@@ -2,6 +2,7 @@ package es.deusto.deustock.dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import es.deusto.deustock.data.User;
@@ -55,13 +56,17 @@ public class UserDAO implements IDAO<User> {
 
 	@Override
 	public User get(Object identity) throws SQLException {
-		String whereCondition = "username == '" + identity + "'";
-		return (User) dbManager.get(User.class, whereCondition);
+		String whereCondition = "username == :username";
+		HashMap<String,String> params = new HashMap<>();
+		params.put("username", (String) identity);
+		return (User) dbManager.get(User.class, whereCondition, params);
 	
 	}
 	public void delete(String username) throws SQLException {
-		String whereCondition = "username  == '" + username + "'";
-		dbManager.delete(User.class, whereCondition);
+		String whereCondition = "username == :username";
+		HashMap<String,String> params = new HashMap<>();
+		params.put("username", username);
+		dbManager.delete(User.class, whereCondition, params);
 	}
 	public void delete(User user) {
 		dbManager.delete(user);

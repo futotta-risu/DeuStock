@@ -2,6 +2,7 @@ package es.deusto.deustock.dao;
 
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 import es.deusto.deustock.data.DeuStock;
@@ -72,8 +73,10 @@ public class StockDAO implements IDAO<DeuStock>{
 	 */
 	@Override
 	public DeuStock get(Object identity) throws SQLException {
-		String whereCondition = "acronym  == '" + identity + "'";
-		return (DeuStock) dbManager.get(DeuStock.class, whereCondition);
+		String whereCondition = "acronym  == :acronym";
+		HashMap<String,String> params = new HashMap<>();
+		params.put("acronym", (String) identity);
+		return (DeuStock) dbManager.get(DeuStock.class, whereCondition, params);
 	}
 
 	@Override
@@ -92,8 +95,11 @@ public class StockDAO implements IDAO<DeuStock>{
 	}
 
 	public void deleteBySymbol(String symbol) throws SQLException {
-		String whereCondition = "acronym  == '" + symbol + "'";
-		dbManager.delete(Stock.class, whereCondition);
+		String whereCondition = "acronym  == :acronym";
+		HashMap<String,String> params = new HashMap<>();
+		params.put("acronym", symbol);
+
+		dbManager.delete(Stock.class, whereCondition, params);
 	}
 
 	@Override

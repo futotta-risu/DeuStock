@@ -3,6 +3,7 @@ package es.deusto.deustock.dao;
 import es.deusto.deustock.data.stocks.Wallet;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 
 /**
  * @author Erik B. Terres
@@ -38,8 +39,10 @@ public class WalletDAO {
 
 
     public Wallet getWallet(String walletID) throws SQLException {
-        String condition = "id == '" + walletID + "'";
-        return (Wallet) dbManager.get(Wallet.class, condition);
+        String whereCondition = "id == :walletID";
+        HashMap<String,String> params = new HashMap<>();
+        params.put("walletID", walletID);
+        return (Wallet) dbManager.get(Wallet.class, whereCondition, params);
     }
 
 
