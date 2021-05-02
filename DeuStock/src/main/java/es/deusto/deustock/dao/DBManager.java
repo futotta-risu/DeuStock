@@ -103,7 +103,7 @@ public class DBManager implements IDBManager{
 					"SELECT FROM " + entityClass.getName() + " WHERE " + conditions
 			);
 			query.setUnique(false);
-			object = (List<Object>) query.execute(params);
+			object = (List<Object>) query.executeWithMap(params);
 			tx.commit();
 
 		} catch (Exception ex) {
@@ -136,7 +136,7 @@ public class DBManager implements IDBManager{
 			);
 
 			query.setUnique(true);
-			object = pm.detachCopy(query.execute(params));
+			object = pm.detachCopy(query.executeWithMap(params));
 			tx.commit();
 
 		} catch (Exception ex) {
