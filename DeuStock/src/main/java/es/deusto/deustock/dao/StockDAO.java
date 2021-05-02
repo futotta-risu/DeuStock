@@ -73,7 +73,7 @@ public class StockDAO implements IDAO<DeuStock>{
 	 */
 	@Override
 	public DeuStock get(Object identity) throws SQLException {
-		String whereCondition = "acronym  == ':acronym'";
+		String whereCondition = "acronym  == :acronym";
 		HashMap<String,String> params = new HashMap<>();
 		params.put("acronym", (String) identity);
 		return (DeuStock) dbManager.get(DeuStock.class, whereCondition, params);
@@ -95,7 +95,7 @@ public class StockDAO implements IDAO<DeuStock>{
 	}
 
 	public void deleteBySymbol(String symbol) throws SQLException {
-		String whereCondition = "acronym  == ':acronym'";
+		String whereCondition = "acronym  == :acronym";
 		HashMap<String,String> params = new HashMap<>();
 		params.put("acronym", symbol);
 
