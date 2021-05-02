@@ -99,7 +99,7 @@ public class DBManager implements IDBManager{
 
 			tx.begin();
 			var query = pm.newQuery(
-					"javax.jdo.query.SQL",
+					"javax.jdo.query.JDOQL",
 					"SELECT FROM " + entityClass.getName() + " WHERE " + conditions
 			);
 			query.setUnique(false);
@@ -131,10 +131,10 @@ public class DBManager implements IDBManager{
 
 			tx.begin();
 			var query = pm.newQuery(
-					"javax.jdo.query.SQL",
+					"javax.jdo.query.JDOQL",
 					"SELECT FROM " + entityClass.getName() + " WHERE " + conditions
 			);
-
+			query.compile();
 			query.setUnique(true);
 			object = pm.detachCopy(query.executeWithMap(params));
 			tx.commit();
@@ -180,7 +180,7 @@ public class DBManager implements IDBManager{
 
 			tx.begin();
 			var query = pm.newQuery(
-					"javax.jdo.query.SQL",
+					"javax.jdo.query.JDOQL",
 					"SELECT FROM " + entityClass.getName() + " WHERE " + conditions
 			);
 
