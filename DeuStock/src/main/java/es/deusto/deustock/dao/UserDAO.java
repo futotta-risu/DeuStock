@@ -56,14 +56,14 @@ public class UserDAO implements IDAO<User> {
 
 	@Override
 	public User get(Object identity) throws SQLException {
-		String whereCondition = "username == :username";
+		String whereCondition = "username == ':username'";
 		HashMap<String,String> params = new HashMap<>();
 		params.put("username", (String) identity);
 		return (User) dbManager.get(User.class, whereCondition, params);
 	
 	}
 	public void delete(String username) throws SQLException {
-		String whereCondition = "username == :username";
+		String whereCondition = "username == ':username'";
 		HashMap<String,String> params = new HashMap<>();
 		params.put("username", username);
 		dbManager.delete(User.class, whereCondition, params);

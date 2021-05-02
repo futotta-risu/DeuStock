@@ -45,7 +45,7 @@ public class StockHistoryDAO {
     }
 
     public StockHistory get(String id) throws SQLException {
-        String whereCondition = "id == :id";
+        String whereCondition = "id == ':id'";
         HashMap<String,String> params = new HashMap<>();
         params.put("id", id);
 
@@ -53,7 +53,7 @@ public class StockHistoryDAO {
     }
 
     public List<StockHistory> getStockHistory(String walletID) throws SQLException {
-        String whereCondition = "wallet.id == :id";
+        String whereCondition = "wallet.id == ':id'";
         HashMap<String,String> params = new HashMap<>();
         params.put("id", walletID);
         return (List<StockHistory>)(List<?>) dbManager.getList(StockHistory.class, whereCondition, params);
