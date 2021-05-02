@@ -7,7 +7,6 @@ import es.deusto.deustock.data.stocks.Wallet;
 import es.deusto.deustock.services.investment.operations.OperationType;
 
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,14 +44,12 @@ public class StockHistoryDAO {
     }
 
     public StockHistory get(String id) throws SQLException {
-        return (StockHistory) dbManager.getByID(StockHistory.class, id);
+        return (StockHistory) dbManager.get(StockHistory.class, "id == "+id);
     }
 
     public List<StockHistory> getStockHistory(String walletID) throws SQLException {
-        List<String> filters = new LinkedList<>();
-        filters.add("wallet.id == '" + walletID + "'");
-
-        return (List<StockHistory>)(List<?>) dbManager.getList(StockHistory.class, filters);
+        String condition = "wallet.id == '" + walletID + "'";
+        return (List<StockHistory>)(List<?>) dbManager.getList(StockHistory.class, condition);
     }
 
     public void update(StockHistory stockHistory) throws SQLException {

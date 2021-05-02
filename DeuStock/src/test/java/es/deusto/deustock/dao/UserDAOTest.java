@@ -34,7 +34,7 @@ public class UserDAOTest {
     void testGetOnExistentUser() throws SQLException {
         // Given
         User user = new User("TestUser" , "TestPass");
-        when(dbManager.get(eq(User.class), anyList())).thenReturn(user);
+        when(dbManager.get(eq(User.class), anyString())).thenReturn(user);
 
         // When
         final User result = userDAO.get("Test");
@@ -47,7 +47,7 @@ public class UserDAOTest {
     @DisplayName("Test get User on non existent user")
     void testGetOnNonExistentUser() throws SQLException {
         // Given
-        when(dbManager.get(eq(User.class), anyList())).thenReturn(null);
+        when(dbManager.get(eq(User.class), anyString())).thenReturn(null);
 
         // When
         final User result = userDAO.get("Test");
@@ -86,7 +86,7 @@ public class UserDAOTest {
     @DisplayName("Test delete function does not throw error")
     void testDelete() throws SQLException {
         // Given
-        doNothing().when(dbManager).delete(eq(User.class), anyList());
+        doNothing().when(dbManager).delete(eq(User.class), anyString());
 
         // When
 
