@@ -11,9 +11,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DBManager implements IDBManager{
+
+	private static final String SQL_TYPE = "javax.jdo.query.JDOQL";
+
     private static IDBManager instance = null;
 	private final PersistenceManagerFactory pmf;
+
 	private final Logger logger = LoggerFactory.getLogger(DBManager.class);
+
+
 
 	private DBManager(){
 		pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
@@ -67,7 +73,7 @@ public class DBManager implements IDBManager{
 			ArrayList<Object> objects = new ArrayList<>();
 
 			try {
-				System.out.println("   * Retrieving an Extent for Objects.");
+				logger.info("   * Retrieving an Extent for Objects.");
 
 				tx.begin();
 
@@ -95,11 +101,11 @@ public class DBManager implements IDBManager{
 		pm.setDetachAllOnCommit(true);
 		List<Object> object = null;
 		try {
-			System.out.println("   * Querying a Object, conditions: " + conditions);
+			logger.info("Querying list of " + entityClass);
 
 			tx.begin();
 			var query = pm.newQuery(
-					"javax.jdo.query.JDOQL",
+					SQL_TYPE,
 					"SELECT FROM " + entityClass.getName() + " WHERE " + conditions
 			);
 			query.setUnique(false);
@@ -107,8 +113,7 @@ public class DBManager implements IDBManager{
 			tx.commit();
 
 		} catch (Exception ex) {
-			System.out.println("   $ Error Getting Object: " + ex.getMessage());
-			logger.error("Error getting Object: " + conditions);
+			logger.error("Error getting Object: " + ex.getMessage());
 		} finally {
 
 			if (tx != null && tx.isActive()) {
@@ -127,11 +132,9 @@ public class DBManager implements IDBManager{
 		pm.setDetachAllOnCommit(true);
 		Object object = null;
 		try {
-			System.out.println("   * Querying a Object, conditions: " + conditions);
-
 			tx.begin();
 			var query = pm.newQuery(
-					"javax.jdo.query.JDOQL",
+					SQL_TYPE,
 					"SELECT FROM " + entityClass.getName() + " WHERE " + conditions
 			);
 			query.compile();
@@ -176,11 +179,10 @@ public class DBManager implements IDBManager{
 		var tx = pm.currentTransaction();
 		pm.setDetachAllOnCommit(true);
 		try {
-			System.out.println("   * Querying a Object, conditions:" + conditions);
 
 			tx.begin();
 			var query = pm.newQuery(
-					"javax.jdo.query.JDOQL",
+					SQL_TYPE,
 					"SELECT FROM " + entityClass.getName() + " WHERE " + conditions
 			);
 

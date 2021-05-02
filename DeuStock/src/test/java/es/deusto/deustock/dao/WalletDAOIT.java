@@ -13,8 +13,15 @@ class WalletDAOIT {
 
     @Test
     void store() throws SQLException {
+        // Given
         Wallet wallet = new Wallet();
+        String id = wallet.getId();
+
+        // When
         WalletDAO.getInstance().store(wallet);
+
+        // Then
+        assertDoesNotThrow( () -> WalletDAO.getInstance().getWallet(id));
     }
 
     @Test

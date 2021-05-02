@@ -18,8 +18,8 @@ class StockHistoryDAOIT {
 
     @Test
     void store() throws SQLException {
+        // Given
         Wallet wallet = new Wallet();
-
 
         DeuStock stock = StockDAO.getInstance().getOrCreateStock("BB").setPrice(22);
         StockHistory stockHistory = StockHistoryDAO.getInstance().create(
@@ -28,8 +28,14 @@ class StockHistoryDAOIT {
                 23,
                 OperationType.LONG
         );
+        long id = stockHistory.getId();
 
+        // When
         StockHistoryDAO.getInstance().store(stockHistory);
+
+        // Then
+        assertDoesNotThrow(() -> StockHistoryDAO.getInstance().get(String.valueOf(id)));
+
     }
 
     @Test
@@ -63,9 +69,11 @@ class StockHistoryDAOIT {
                 23,
                 OperationType.LONG
         );
+        long id = stockHistory.getId();
 
         StockHistoryDAO.getInstance().store(stockHistory);
-        stockHistory = StockHistoryDAO.getInstance().get("1");
+
+        assertDoesNotThrow( () -> StockHistoryDAO.getInstance().get(String.valueOf(id)));
     }
 
 }

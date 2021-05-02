@@ -37,7 +37,7 @@ public class UserDetail {
         User user = userDAO.get(username);
 
         if(user == null){
-            logger.error("Cannot get '" + username + "' user  information");
+            logger.error("Cannot get user  information");
             return Response.status(401).build();
         }
 

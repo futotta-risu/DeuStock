@@ -119,16 +119,16 @@ public class UserResource {
 			@PathParam("username") String username,
 			@PathParam("password") String password
 	) throws SQLException {
-		DeuLogger.logger.info("User delete petition for User " + username);
+		logger.info("User delete petition");
 		User user = userDAO.get(username);
 
 		if (user == null) {
-			DeuLogger.logger.warn("User " + username + " not found in DB while deleting");
+			logger.warn("User not found in DB while deleting");
 			return Response.status(401).build();
 		}
 
 		if(!user.checkPassword(password)) {
-			DeuLogger.logger.warn("Wrong user/pass combination for " + username + "  while deleting");
+			logger.warn("Wrong user/pass combination for  while deleting");
 			return Response.status(401).build();
 		}
 
