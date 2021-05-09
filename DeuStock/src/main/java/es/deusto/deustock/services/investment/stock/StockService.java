@@ -23,7 +23,7 @@ public class StockService {
     private final List<String> smallList = Arrays.asList("INTC","TSLA") ;
     private final List<String> bigList = Arrays.asList("INTC","TSLA","ETH","BB") ;
 
-    private Logger logger = LoggerFactory.getLogger(StockService.class);
+    private final Logger logger = LoggerFactory.getLogger(StockService.class);
 
     StockDataAPIGateway gateway;
 
@@ -32,6 +32,9 @@ public class StockService {
         gateway = StockDataGatewayFactory.getInstance().create(StockDataGatewayEnum.YahooFinance);
     }
 
+    public void setStockDataAPIGateway(StockDataAPIGateway gateway){
+        this.gateway = gateway;
+    }
 
     public DeuStock getStockDetailData(String symbol, String intervalString) throws InvalidStockQueryDataException {
         if( symbol.isBlank() || intervalString.isBlank() ){

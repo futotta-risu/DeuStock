@@ -54,6 +54,7 @@ public class AuthServiceTest {
         assertThrows(LoginException.class, () -> service.login("TestUser", "TestPass") );
     }
 
+
     @Test
     public void testLoginThrowsLoginExceptionWithIncorrectPassword() throws SQLException {
         User u = new User("TestUser", "TestPass");
