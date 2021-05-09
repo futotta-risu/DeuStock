@@ -4,7 +4,7 @@ import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.data.dto.stocks.StockHistoryDTO;
 import es.deusto.deustock.data.stocks.StockHistory;
 import es.deusto.deustock.data.stocks.Wallet;
-import es.deusto.deustock.services.investment.operations.OperationType;
+import es.deusto.deustock.services.investment.operation.type.OperationType;
 
 import java.sql.SQLException;
 import java.util.HashMap;

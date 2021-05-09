@@ -3,7 +3,7 @@ package es.deusto.deustock.dao;
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.data.stocks.StockHistory;
 import es.deusto.deustock.data.stocks.Wallet;
-import es.deusto.deustock.services.investment.operations.OperationType;
+import es.deusto.deustock.services.investment.operation.type.OperationType;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 

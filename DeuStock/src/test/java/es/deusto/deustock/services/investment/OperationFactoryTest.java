@@ -1,10 +1,11 @@
 package es.deusto.deustock.services.investment;
 
 import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.services.investment.operations.LongOperation;
-import es.deusto.deustock.services.investment.operations.Operation;
-import es.deusto.deustock.services.investment.operations.OperationType;
-import es.deusto.deustock.services.investment.operations.ShortOperation;
+import es.deusto.deustock.services.investment.operation.OperationFactory;
+import es.deusto.deustock.services.investment.operation.type.LongOperation;
+import es.deusto.deustock.services.investment.operation.type.Operation;
+import es.deusto.deustock.services.investment.operation.type.OperationType;
+import es.deusto.deustock.services.investment.operation.type.ShortOperation;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

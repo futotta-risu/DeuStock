@@ -2,7 +2,7 @@ package es.deusto.deustock.data.stocks;
 
 import es.deusto.deustock.data.DeuStock;
 
-import es.deusto.deustock.services.investment.operations.OperationType;
+import es.deusto.deustock.services.investment.operation.type.OperationType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 

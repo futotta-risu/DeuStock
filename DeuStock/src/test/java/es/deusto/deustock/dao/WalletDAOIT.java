@@ -1,5 +1,6 @@
 package es.deusto.deustock.dao;
 
+import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.stocks.Wallet;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -24,13 +25,5 @@ class WalletDAOIT {
         assertDoesNotThrow( () -> WalletDAO.getInstance().getWallet(id));
     }
 
-    @Test
-    void getWallet() throws SQLException {
-
-        Wallet wallet = new Wallet();
-        String id = wallet.getId();
-        WalletDAO.getInstance().store(wallet);
-        wallet = WalletDAO.getInstance().getWallet(id);
-        assertNotNull(wallet);
-    }
+   
 }

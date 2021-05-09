@@ -1,27 +1,45 @@
 # List of API functions
 
+## Auth
+
+- auth
+  - login/{username}/{password}
+  - register
+
+## Investment
+
+//- twitter/sentiment/{query}
+
+Wallet
+- holdings/{username}/
+    - balance
+  - holdings
+  - holdings/reset
+
+Operation
+- stock
+  - operation/open/{operation}/{symbol}/{username}/{amount}
+  - operation/close/{stockHistoryID} 
+
+Stock
+- stock
+  - detail/{query}/{interval}
+  - list/{size}
+
+- reports/{stock}/{interval}
+
+## Users
 
 - users
-    - login/{username}/{password}
-    - register
-    - delete/{username}/{password}
-    
-- users
-    - details/change
-    
+  - details/change
+  - delete/{username}/{password}
+
 - user
-    - {username}
-    - {username}/holdings
-    - {username}/holdings/reset
+  - {username}
+  - {username}/holdings
+  - {username}/holdings/reset
+  
+## Help
 
 - help/faq/list
-- twitter/sentiment/{query}
-- holdings/{username}/balance
-- stock/operation/close/{stockHistoryID}
-- stock
-    - operation/open/{operation}/{symbol}/{username}/{amount}
-    - detail/{query}/{interval}
-    - list/{size}
-    
-- reports/{stock}/{interval}
 - helloworld
