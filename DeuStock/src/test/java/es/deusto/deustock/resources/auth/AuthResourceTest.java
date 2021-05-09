@@ -3,16 +3,14 @@ package es.deusto.deustock.resources.auth;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.*;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
 import es.deusto.deustock.services.auth.AuthService;
 import es.deusto.deustock.services.auth.exceptions.LoginException;
+import es.deusto.deustock.services.auth.exceptions.RegisterException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -33,10 +31,12 @@ import java.sql.SQLException;
 class AuthResourceTest {
 
 	private UserDAO mockUserDAO;
+	private AuthService mockAuthService;
     
     @BeforeEach
     public void setUp() {
     	mockUserDAO = mock(UserDAO.class);
+        mockAuthService = mock(AuthService.class);
     }
 
     public void setMocksToResource(AuthResource userResource){
@@ -47,72 +47,36 @@ class AuthResourceTest {
     @DisplayName("Test login returns 200")
     public void testLoginReturns200() throws SQLException {
     	//Given
-    	User user = new User("Test", "Pass");
     	UserDTO userDTO = new UserDTO().setUsername("Test").setPassword("Pass");
+        when(mockAuthService.login(anyString(),anyString())).thenReturn(userDTO);
 
-        AuthService service = new AuthService();
+        AuthResource userResource = new AuthResource();
+        userResource.setAuthService(mockAuthService);
 
     	//When
-		when(mockUserDAO.get(anyString())).thenReturn(user);
-        when(mockUserDAO.has(any())).thenReturn(true);
-    	when(mockUserDAO.getDTO(any())).thenReturn(userDTO);
-
-        service.setUserDAO(mockUserDAO);
-
-    	AuthResource userResource = new AuthResource();
-        userResource.setUserDAO(mockUserDAO);
-        userResource.setAuthService(service);
         Response response = userResource.login("Test", "Pass");
   	    
         //Then
 		assertEquals(200, response.getStatus());
     }
-    
-    @Test
-    @DisplayName("Test login returns 401")
-    public void testLoginWithNonExistentUserReturns401() throws SQLException {
-    	//Given
-        AuthService service = new AuthService();
-        service.setUserDAO(mockUserDAO);
 
-    	//When
-		when(mockUserDAO.get(anyString())).thenThrow(new LoginException("Login error"));
-    	when(mockUserDAO.getDTO(any())).thenReturn(null);
-  	    
-    	AuthResource userResource = new AuthResource();
-        setMocksToResource(userResource);
-        userResource.setAuthService(service);
-  	    
+    @Test
+    @DisplayName("Test login throws WebApplicationException with AuthService exception")
+    public void testLoginThrowsWebApplicationExceptionWithServiceException() throws SQLException {
+        //Given
+        when(mockAuthService.login(anyString(),anyString())).thenThrow(
+                new LoginException("Exception")
+        );
+
+        AuthResource userResource = new AuthResource();
+        userResource.setAuthService(mockAuthService);
+
+        //When
+
         //Then
         assertThrows(
                 WebApplicationException.class,
                 () -> userResource.login("Test", "Pass")
-        );
-    }
-    
-
-    @Test
-    @DisplayName("Test login wrong pass returns 401")
-    public void testLoginWrongPassReturns401() throws SQLException {
-    	//Given
-    	User user = new User("Test", "Pass");
-    	UserDTO userDTO = new UserDTO().setUsername("Test").setPassword("Pass");
-
-        AuthService service = new AuthService();
-        service.setUserDAO(mockUserDAO);
-
-    	//When
-		when(mockUserDAO.get(anyString())).thenReturn(user);
-    	when(mockUserDAO.getDTO(any())).thenReturn(userDTO);
-  	    
-    	AuthResource userResource = new AuthResource();
-        setMocksToResource(userResource);
-        userResource.setAuthService(service);
-
-        //Then
-        assertThrows(
-                WebApplicationException.class,
-                () -> userResource.login("Test", "WrongPassword")
         );
 
     }
@@ -120,46 +84,42 @@ class AuthResourceTest {
     @Test
     @DisplayName("Test register returns 200")
     public void testRegisterReturns200() throws SQLException {
-    	//Given
-    	User user = new User("Test", "Pass");
-    	UserDTO userDTO = new UserDTO().setUsername("Test").setPassword("Pass");
-        AuthService service = new AuthService();
-        service.setUserDAO(mockUserDAO);
+        //Given
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername("userDTO");
+        userDTO.setPassword("password");
 
-    	//When
-		when(mockUserDAO.get(anyString())).thenThrow(new SQLException("User not in DB"));
-    	when(mockUserDAO.create(any())).thenReturn(user);
-    	doNothing().when(mockUserDAO).store(user);
-  	    
-    	AuthResource userResource = new AuthResource();
-        setMocksToResource(userResource);
-        userResource.setAuthService(service);
-        Response response = userResource.register(userDTO);
-  	    
+        doNothing().when(mockAuthService).register(any());
+
+        AuthResource userResource = new AuthResource();
+        userResource.setAuthService(mockAuthService);
+
+        //When
+        Response response =  userResource.register(userDTO);
+
         //Then
-		assertEquals(200, response.getStatus());
+        assertEquals(200, response.getStatus());
+
     }
     
     @Test
-    @DisplayName("Test register already existing user returns 401")
-    public void testRegisterExistingUserReturns401() throws SQLException {
-    	//Given
-    	User user = new User("Test", "Pass");
-    	UserDTO userDTO = new UserDTO().setUsername("Test").setPassword("Pass");
-        AuthService service = new AuthService();
-        service.setUserDAO(mockUserDAO);
+    @DisplayName("Test register already existing user throws WebApplicationException")
+    public void testRegisterThrowsWebApplicationExceptionWithServiceException(){
+        //Given
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername("userDTO");
+        userDTO.setPassword("password");
 
-    	//When
-		when(mockUserDAO.get(any())).thenReturn(user);
-        when(mockUserDAO.has(any())).thenReturn(true);
+        doThrow(new RegisterException("AuthException")).when(mockAuthService).register(any());
 
-    	AuthResource userResource = new AuthResource();
-        setMocksToResource(userResource);
-        userResource.setAuthService(service);
-        
+        AuthResource userResource = new AuthResource();
+        userResource.setAuthService(mockAuthService);
+
+        //When
+
         //Then
-		assertThrows(
-		        WebApplicationException.class,
+        assertThrows(
+                WebApplicationException.class,
                 () -> userResource.register(userDTO)
         );
     }

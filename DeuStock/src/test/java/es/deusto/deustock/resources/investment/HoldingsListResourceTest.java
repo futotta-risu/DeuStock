@@ -50,16 +50,12 @@ class HoldingsListResourceTest{
 
     @Test
     @DisplayName("Test get holdings list returns Illegal Argument Exception")
-    void testHoldingListReturns200() {
+    void testHoldingListReturns200() throws SQLException, StockNotFoundException {
     	//Given
-        try {
-            when(walletService.getHoldings(anyString())).thenReturn(new LinkedList<>());
-        } catch (StockNotFoundException | SQLException e) {
-            fail();
-        }
+        when(walletService.getHoldings(anyString())).thenReturn(new LinkedList<>());
 
         HoldingsListResources holdingsListResource = new HoldingsListResources();
-        setMocksToResource(holdingsListResource);
+        holdingsListResource.setWalletService(walletService);
 
         //When
 

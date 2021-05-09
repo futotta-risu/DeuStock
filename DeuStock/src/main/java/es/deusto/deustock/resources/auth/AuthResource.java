@@ -7,7 +7,6 @@ import javax.ws.rs.core.Response;
 import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.dto.UserDTO;
-import es.deusto.deustock.log.DeuLogger;
 import es.deusto.deustock.services.auth.AuthService;
 import es.deusto.deustock.services.auth.exceptions.AuthException;
 import es.deusto.deustock.services.auth.exceptions.LoginException;
@@ -65,7 +64,7 @@ public class AuthResource {
 		try{
 			user = authService.login(username, password);
 		}catch (LoginException e){
-			throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+			throw new WebApplicationException(e.getMessage(), Response.Status.UNAUTHORIZED);
 		}
 
 		return Response.ok(user).build();
@@ -87,12 +86,12 @@ public class AuthResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/register")
 	public Response register(UserDTO userDTO) throws WebApplicationException {
-		DeuLogger.logger.info("Register petition for User " + userDTO.getUsername());
+		logger.info("Register petition for User {}", userDTO.getUsername());
 
 		try{
 			authService.register(userDTO);
 		}catch (AuthException e){
-			DeuLogger.logger.warn("Error adding user.");
+			logger.warn("Error adding user.");
 			throw new WebApplicationException(e.getMessage(), Response.Status.UNAUTHORIZED);
 		}
 

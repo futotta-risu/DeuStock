@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * 
  * @author landersanmillan
  */
-@Tag("server-user-resource")
+@Tag("server-resource")
 public class AuthResourceIT extends JerseyTest{
 
 	@BeforeEach

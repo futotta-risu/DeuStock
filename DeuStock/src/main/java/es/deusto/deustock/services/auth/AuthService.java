@@ -26,8 +26,11 @@ public class AuthService {
     }
 
     public UserDTO login(String username, String password) throws AuthException {
-        User user;
+        if(username.isBlank()){
+            throw new LoginException("Blank user");
+        }
 
+        User user;
         try{
             if(!userDAO.has(username)){
                 throw new LoginException("User not in DB");
@@ -46,6 +49,10 @@ public class AuthService {
     }
 
     public void register(UserDTO userDTO) throws AuthException{
+        if(userDTO.getUsername().isBlank()){
+            throw new RegisterException("Blank user");
+        }
+
         try{
             if(userDAO.has(userDTO.getUsername())){
                 throw new RegisterException("User already registered");
