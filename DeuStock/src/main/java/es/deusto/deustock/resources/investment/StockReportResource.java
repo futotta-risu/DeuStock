@@ -48,7 +48,6 @@ public class StockReportResource {
         try {
             stock = stockGateway.getStockData(queryData);
         } catch (StockNotFoundException e) {
-            e.printStackTrace();
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 

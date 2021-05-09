@@ -63,7 +63,7 @@ public class UserDAO implements IDAO<User> {
 	
 	}
 	public void delete(String username) throws SQLException {
-		String whereCondition = "username == :username";
+		var whereCondition = "username == :username";
 		HashMap<String,String> params = new HashMap<>();
 		params.put("username", username);
 		dbManager.delete(User.class, whereCondition, params);

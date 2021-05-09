@@ -25,5 +25,5 @@ class WalletDAOIT {
         assertDoesNotThrow( () -> WalletDAO.getInstance().getWallet(id));
     }
 
-   
+
 }

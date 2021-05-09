@@ -48,7 +48,7 @@ public class DBManager implements IDBManager{
 			pm.makePersistent(object); //object?
 			tx.commit();
 		} catch (Exception e) {
-			logger.error("Could not store object: " + object + ". " + e.getMessage());
+			logger.error("Could not store object: {}. {}", object, e.getMessage());
 		}finally {
 			if(tx.isActive()) {
 				tx.rollback();
@@ -84,7 +84,7 @@ public class DBManager implements IDBManager{
 				}
 				tx.commit();
 			} catch (Exception ex) {
-				logger.error("Error getting objects from class " + entityClass.getName() );
+				logger.error("Error getting objects from class {}", entityClass.getName() );
 			} finally {
 				if (tx != null && tx.isActive())
 					tx.rollback();
@@ -101,7 +101,7 @@ public class DBManager implements IDBManager{
 		pm.setDetachAllOnCommit(true);
 		List<Object> object = null;
 		try {
-			logger.info("Querying list of " + entityClass);
+			logger.info("Querying list of {}", entityClass);
 
 			tx.begin();
 			var query = pm.newQuery(
@@ -143,7 +143,7 @@ public class DBManager implements IDBManager{
 			tx.commit();
 
 		} catch (Exception ex) {
-			logger.error("Error getting Object from class " +  entityClass.getName());
+			logger.error("Error getting Object from class {}", entityClass.getName());
 		} finally {
 
 			if (tx != null && tx.isActive()) {
@@ -163,7 +163,7 @@ public class DBManager implements IDBManager{
 			pm.makePersistent(object);
 			tx.commit();
 		} catch (Exception ex) {
-			logger.error("   $ Error retreiving an extent: " + ex.getMessage());
+			logger.error("   $ Error retreiving an extent: {}", ex.getMessage());
 		} finally {
 			if (tx != null && tx.isActive()) {
 				tx.rollback();
@@ -191,7 +191,7 @@ public class DBManager implements IDBManager{
 			tx.commit();
 
 		} catch (Exception ex) {
-			logger.error("Error getting object for deleting: " + ex.getMessage());
+			logger.error("Error getting object for deleting: {}", ex.getMessage());
 		} finally {
 
 			if (tx != null && tx.isActive()) {
@@ -211,7 +211,7 @@ public class DBManager implements IDBManager{
 			pm.deletePersistent(object);
 			tx.commit();
 		} catch (Exception ex) {
-			logger.error("   $ Error retreiving an extent: " + ex.getMessage());
+			logger.error("   $ Error retreiving an extent: {}", ex.getMessage());
 		} finally {
 			if (tx != null && tx.isActive()) {
 				tx.rollback();

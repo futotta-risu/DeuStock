@@ -37,7 +37,7 @@ public class OpenOperationResource {
             @PathParam("username") String username,
             @PathParam("amount") double amount
     ) throws WebApplicationException {
-        DeuLogger.logger.info("Petition to open a operation from " + username);
+        DeuLogger.logger.info("Petition to open a operation");
 
         OperationType operationType = OperationType.valueOf(operationTypeString);
 

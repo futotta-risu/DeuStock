@@ -31,7 +31,7 @@ public class CloseOperationResource {
     public Response closeOperation(
             @PathParam("stockHistoryID") String stockHistoryID
     ) throws WebApplicationException {
-        DeuLogger.logger.info("Petition to close the operation " + stockHistoryID);
+        DeuLogger.logger.info("Petition to close the operation");
 
         try {
             operationService.closeOperation(stockHistoryID);
