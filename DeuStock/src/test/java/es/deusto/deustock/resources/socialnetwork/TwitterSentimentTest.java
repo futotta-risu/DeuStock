@@ -1,9 +1,6 @@
 package es.deusto.deustock.resources.socialnetwork;
 
-import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.dataminer.features.SentimentExtractor;
-import es.deusto.deustock.resources.stocks.BalanceResource;
-import es.deusto.deustock.resources.stocks.HoldingsListResources;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

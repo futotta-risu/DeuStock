@@ -2,6 +2,9 @@ package es.deusto.deustock.dao;
 
 import es.deusto.deustock.data.stocks.Wallet;
 
+import java.sql.SQLException;
+import java.util.HashMap;
+
 /**
  * @author Erik B. Terres
  */
@@ -26,18 +29,20 @@ public class WalletDAO {
         return instance;
     }
 
-    public void store(Wallet wallet){
-        dbManager.storeObject(wallet);
+    public void store(Wallet wallet) throws SQLException {
+        dbManager.store(wallet);
     }
 
-    public void update(Wallet wallet){
-        dbManager.updateObject(wallet);
+    public void update(Wallet wallet) throws SQLException {
+        dbManager.update(wallet);
     }
 
 
-    public Wallet getWallet(String walletID) {
-        String condition = "id == '" + walletID + "'";
-        return (Wallet) dbManager.getObject(Wallet.class, condition);
+    public Wallet getWallet(String walletID) throws SQLException {
+        var whereCondition = "id == :walletID";
+        HashMap<String,String> params = new HashMap<>();
+        params.put("walletID", walletID);
+        return (Wallet) dbManager.get(Wallet.class, whereCondition, params);
     }
 
 

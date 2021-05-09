@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,13 +31,13 @@ public class UserDAOTest {
 
     @Test
     @DisplayName("Test get User on existent user")
-    void testGetOnExistentUser(){
+    void testGetOnExistentUser() throws SQLException {
         // Given
         User user = new User("TestUser" , "TestPass");
-        when(dbManager.getObject(eq(User.class), anyString())).thenReturn(user);
+        when(dbManager.get(eq(User.class), anyString(),any())).thenReturn(user);
 
         // When
-        final User result = userDAO.getUser("Test");
+        final User result = userDAO.get("Test");
 
         // Then
         assertNotNull(result);
@@ -44,12 +45,12 @@ public class UserDAOTest {
 
     @Test
     @DisplayName("Test get User on non existent user")
-    void testGetOnNonExistentUser(){
+    void testGetOnNonExistentUser() throws SQLException {
         // Given
-        when(dbManager.getObject(eq(User.class), anyString())).thenReturn(null);
+        when(dbManager.get(eq(User.class), anyString(),any())).thenReturn(null);
 
         // When
-        final User result = userDAO.getUser("Test");
+        final User result = userDAO.get("Test");
 
         // Then
         assertNull(result);
@@ -57,40 +58,40 @@ public class UserDAOTest {
 
     @Test
     @DisplayName("Test store function does not throw error")
-    void testStore(){
+    void testStore() throws SQLException {
         // Given
         User user = new User("TestUser" , "TestPass");
-        doNothing().when(dbManager).storeObject(any());
+        doNothing().when(dbManager).store(any());
 
         // When
 
         // Then
-        assertDoesNotThrow( () -> userDAO.storeUser(user));
+        assertDoesNotThrow( () -> userDAO.store(user));
     }
 
     @Test
     @DisplayName("Test update function does not throw error")
-    void testUpdate(){
+    void testUpdate() throws SQLException {
         // Given
         User user = new User("TestUser" , "TestPass");
-        doNothing().when(dbManager).updateObject(any());
+        doNothing().when(dbManager).update(any());
 
         // When
 
         // Then
-        assertDoesNotThrow( () -> userDAO.updateUser(user));
+        assertDoesNotThrow( () -> userDAO.update(user));
     }
 
     @Test
     @DisplayName("Test delete function does not throw error")
-    void testDelete(){
+    void testDelete() throws SQLException {
         // Given
-        doNothing().when(dbManager).deleteObject(eq(User.class), anyString());
+        doNothing().when(dbManager).delete(eq(User.class), anyString(),any());
 
         // When
 
         // Then
-        assertDoesNotThrow( () -> userDAO.deleteUser("TestUser"));
+        assertDoesNotThrow( () -> userDAO.delete("TestUser"));
     }
 
     @Test
@@ -103,10 +104,10 @@ public class UserDAOTest {
         users.add(user0);
         users.add(user1);
 
-        when(dbManager.getObjects(eq(User.class))).thenReturn(users);
+        when(dbManager.getAll(eq(User.class))).thenReturn(users);
 
         // When
-        final List<User> result = userDAO.getUsers();
+        final List<User> result = userDAO.getAll();
 
         // Then
         assertNotNull(result);
@@ -155,9 +156,9 @@ public class UserDAOTest {
     @Test
     @DisplayName("Test delete a User from DB given User Object does not throw error")
     void testDeleteGivenUser() {
-        doNothing().when(dbManager).deleteObject(eq(User.class));
+        doNothing().when(dbManager).delete(eq(User.class));
 
-        assertDoesNotThrow( () -> userDAO.deleteUser(new User("test", "pass")));
+        assertDoesNotThrow( () -> userDAO.delete(new User("test", "pass")));
     }
 
 }

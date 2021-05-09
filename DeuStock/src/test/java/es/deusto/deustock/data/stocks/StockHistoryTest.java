@@ -3,7 +3,7 @@ package es.deusto.deustock.data.stocks;
 import es.deusto.deustock.data.DeuStock;
 import org.junit.jupiter.api.Test;
 
-import static es.deusto.deustock.simulation.investment.operations.OperationType.LONG;
+import static es.deusto.deustock.services.investment.operation.type.OperationType.LONG;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StockHistoryTest {

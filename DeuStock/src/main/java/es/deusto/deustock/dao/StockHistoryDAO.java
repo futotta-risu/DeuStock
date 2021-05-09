@@ -4,8 +4,10 @@ import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.data.dto.stocks.StockHistoryDTO;
 import es.deusto.deustock.data.stocks.StockHistory;
 import es.deusto.deustock.data.stocks.Wallet;
-import es.deusto.deustock.simulation.investment.operations.OperationType;
+import es.deusto.deustock.services.investment.operation.type.OperationType;
 
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,25 +40,27 @@ public class StockHistoryDAO {
     }
 
 
-    public void store(StockHistory stockHistory){
-        dbManager.storeObject(stockHistory);
+    public void store(StockHistory stockHistory) throws SQLException {
+        dbManager.store(stockHistory);
     }
 
-    public StockHistory get(String id){
-        return (StockHistory) dbManager.getObject(StockHistory.class, "id == "+id);
+    public StockHistory get(String id) throws SQLException {
+        var whereCondition = "id == :id";
+        HashMap<String,String> params = new HashMap<>();
+        params.put("id", id);
+
+        return (StockHistory) dbManager.get(StockHistory.class, whereCondition , params);
     }
 
-    public List<StockHistory> getStockHistory(String walletID){
-        String condition = "wallet.id == '" + walletID + "'";
-        return (List<StockHistory>)(List<?>) dbManager.getObjects(StockHistory.class, condition);
+    public List<StockHistory> getStockHistory(String walletID) throws SQLException {
+        var whereCondition = "wallet.id == :id";
+        HashMap<String,String> params = new HashMap<>();
+        params.put("id", walletID);
+        return (List<StockHistory>)(List<?>) dbManager.getList(StockHistory.class, whereCondition, params);
     }
 
-    public List<StockHistory> getStock(Wallet wallet){
-        return (List<StockHistory>)(List<?>) dbManager.getObjects(StockHistory.class);
-    }
-
-    public void update(StockHistory stockHistory){
-        dbManager.updateObject(stockHistory);
+    public void update(StockHistory stockHistory) throws SQLException {
+        dbManager.update(stockHistory);
     }
 
     /**

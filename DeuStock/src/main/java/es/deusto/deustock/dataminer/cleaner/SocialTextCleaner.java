@@ -12,35 +12,35 @@ import java.util.List;
  */
 public class SocialTextCleaner {
 
-    private final static String charFilter      = "[^\\p{L}\\p{M}\\p{N}\\p{P}\\p{Z}\\p{Cf}\\p{Cs}\\s]";
-    private final static String urlFilter       = "(https?://)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)";
-    private final static String usernameFilter  = "@[\\S]+";
-    private final static String hashtagFilter   = "#";
-    private final static String spaceFilter     = "[\\s]+";
+    private final static String CHAR_FILTER      = "[^\\p{L}\\p{M}\\p{N}\\p{P}\\p{Z}\\p{Cf}\\p{Cs}\\s]";
+    private final static String URL_FILTER = "(https?://)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)";
+    private final static String USERNAME_FILTER = "@[\\S]+";
+    private final static String HASHTAG_FILTER = "#";
+    private final static String SPACE_FILTER = "[\\s]+";
 
     private SocialTextCleaner(){}
 
     public static String removeInvalidChars(String txt) {
-        return txt.replaceAll(charFilter, "");
+        return txt.replaceAll(CHAR_FILTER, "");
     }
 
     public static String removeURLS(String txt) {
-        return txt.replaceAll(urlFilter, "");
+        return txt.replaceAll(URL_FILTER, "");
     }
 
     public static String removeHashtags(String txt) {
-        return txt.replaceAll(hashtagFilter, "");
+        return txt.replaceAll(HASHTAG_FILTER, "");
     }
 
     /**
      * Changes usernames based on the format "@[^\\s]+" to generic "Tom"
      */
     public static String removeUsernames(String txt) {
-        return txt.replaceAll(usernameFilter, "Tom");
+        return txt.replaceAll(USERNAME_FILTER, "Tom");
     }
 
     public static String removeExtraSpaces(String txt) {
-        return txt.trim().replaceAll(spaceFilter, " ");
+        return txt.trim().replaceAll(SPACE_FILTER, " ");
     }
 
     /**

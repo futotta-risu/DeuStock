@@ -4,13 +4,14 @@ import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.data.dto.stocks.StockHistoryDTO;
 import es.deusto.deustock.data.stocks.StockHistory;
 import es.deusto.deustock.data.stocks.Wallet;
-import es.deusto.deustock.simulation.investment.operations.OperationType;
+import es.deusto.deustock.services.investment.operation.type.OperationType;
 
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,12 +37,12 @@ public class StockHistoryDAOTest {
 
     @Test
     @DisplayName("Test store StockHistory")
-    void testStore(){
+    void testStore() throws SQLException {
         // Given
         StockHistory stockHistory = new StockHistory(
             wallet, stock, 20, 30, OperationType.LONG
         );
-        doNothing().when(dbManager).storeObject(any());
+        doNothing().when(dbManager).store(any());
 
         // When
 
@@ -51,12 +52,12 @@ public class StockHistoryDAOTest {
 
     @Test
     @DisplayName("Test get on existent Object")
-    void testGetOnExistentObject(){
+    void testGetOnExistentObject() throws SQLException {
         // Given
         StockHistory stockHistory = new StockHistory(
                 wallet, stock, 20, 30, OperationType.LONG
         );
-        when(dbManager.getObject(eq(StockHistory.class), anyString())).thenReturn(stockHistory);
+        when(dbManager.get(eq(StockHistory.class), anyString(),any())).thenReturn(stockHistory);
 
         // When
         final StockHistory result = stockHistoryDAO.get("TestID");
@@ -67,9 +68,9 @@ public class StockHistoryDAOTest {
 
     @Test
     @DisplayName("Test get on non existent Object")
-    void testGetOnNonExistentObject(){
+    void testGetOnNonExistentObject() throws SQLException {
         // Given
-        when(dbManager.getObject(eq(StockHistory.class), anyString())).thenReturn(null);
+        when(dbManager.get(eq(StockHistory.class), anyString(),any())).thenReturn(null);
 
         // When
         final StockHistory result = stockHistoryDAO.get("TestID");
@@ -80,12 +81,12 @@ public class StockHistoryDAOTest {
 
     @Test
     @DisplayName("Test update function does not throw error")
-    void testUpdate(){
+    void testUpdate() throws SQLException {
         // Given
         StockHistory stockHistory = new StockHistory(
                 wallet, stock, 20, 30, OperationType.LONG
         );
-        doNothing().when(dbManager).updateObject(any());
+        doNothing().when(dbManager).update(any());
 
         // When
 
@@ -161,7 +162,7 @@ public class StockHistoryDAOTest {
     
     @Test
     @DisplayName("Test getting StockHistoryList object from a walletID")
-    void testGetStockHistoryFromWalletId(){
+    void testGetStockHistoryFromWalletId() throws SQLException {
         StockHistory stockHistory1 = new StockHistory(
                 wallet, stock, 20, 30, OperationType.LONG
         );
@@ -172,7 +173,7 @@ public class StockHistoryDAOTest {
         stockHistoryList.add(stockHistory1);
         stockHistoryList.add(stockHistory2);
        
-        when(dbManager.getObjects(eq(StockHistory.class), anyString())).thenReturn(stockHistoryList);
+        when(dbManager.getList(eq(StockHistory.class), anyString(),any())).thenReturn(stockHistoryList);
 
         List<StockHistory> stockHistoryListActual  = stockHistoryDAO.getStockHistory("Test");
 
@@ -194,7 +195,7 @@ public class StockHistoryDAOTest {
     
     @Test
     @DisplayName("Test getting StockHistoryList object from a wallet")
-    void testGetStockHistoryFromWallet(){
+    void testGetStockHistoryFromWallet() throws SQLException {
         StockHistory stockHistory1 = new StockHistory(
                 wallet, stock, 20, 30, OperationType.LONG
         );
@@ -205,9 +206,9 @@ public class StockHistoryDAOTest {
         stockHistoryList.add(stockHistory1);
         stockHistoryList.add(stockHistory2);
        
-        when(dbManager.getObjects(eq(StockHistory.class))).thenReturn(stockHistoryList);
+        when(dbManager.getList(eq(StockHistory.class), anyString(), any())).thenReturn(stockHistoryList);
 
-        List<StockHistory> stockHistoryListActual  = stockHistoryDAO.getStock(wallet);
+        List<StockHistory> stockHistoryListActual  = stockHistoryDAO.getStockHistory(wallet.getId());
 
         assertEquals(stockHistory1.getId(), stockHistoryListActual.get(0).getId());
         assertEquals(stockHistory2.getId(), stockHistoryListActual.get(1).getId());

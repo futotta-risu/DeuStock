@@ -80,24 +80,24 @@ public class UserDAOIT extends DBTestCase{
 				 .setCountry("SPAIN")
 				 .setDescription("descriptionTest3");
 		
-		UserDAO.getInstance().storeUser(user3);
+		UserDAO.getInstance().store(user3);
 		
 		ITable filteredActualTable = getFilteredTable(COLUMNS);
 		
 	    assertEquals(3, filteredActualTable.getRowCount());
-	    assertNotNull(UserDAO.getInstance().getUser("usernameTest3"));
+	    assertNotNull(UserDAO.getInstance().get("usernameTest3"));
 	}
 	
 	/**
 	 * Tests User queries
 	*/
 	@Test
-    public void testUserQueryReturnsNotNull() {
-		assertNotNull(UserDAO.getInstance().getUser("usernameTest1"));
+    public void testUserQueryReturnsNotNull() throws SQLException {
+		assertNotNull(UserDAO.getInstance().get("usernameTest1"));
 	}
 	@Test
-    public void testUserQueryReturnsNull() {
-		assertNull(UserDAO.getInstance().getUser("usernameNotExist"));
+    public void testUserQueryReturnsNull() throws SQLException {
+		assertNull(UserDAO.getInstance().get("usernameNotExist"));
 	}
 	
 	/**
@@ -106,17 +106,17 @@ public class UserDAOIT extends DBTestCase{
 	*/
 	@Test
     public void testUserDeletion() throws Exception {	
-		User userToDelete1 = UserDAO.getInstance().getUser("usernameTest1");
-		UserDAO.getInstance().deleteUser(userToDelete1);
+		User userToDelete1 = UserDAO.getInstance().get("usernameTest1");
+		UserDAO.getInstance().delete(userToDelete1);
 		
-		User userToDelete2 = UserDAO.getInstance().getUser("usernameTest2");
-		UserDAO.getInstance().deleteUser(userToDelete2);
+		User userToDelete2 = UserDAO.getInstance().get("usernameTest2");
+		UserDAO.getInstance().delete(userToDelete2);
 		
 	    ITable filteredActualTable = getFilteredTable(COLUMNS);
 
 	    assertEquals(0, filteredActualTable.getRowCount());
-	    assertNull(UserDAO.getInstance().getUser("usernameTest1"));
-	    assertNull(UserDAO.getInstance().getUser("usernameTest2"));
+	    assertNull(UserDAO.getInstance().get("usernameTest1"));
+	    assertNull(UserDAO.getInstance().get("usernameTest2"));
     }
 	
 	/**
@@ -125,13 +125,13 @@ public class UserDAOIT extends DBTestCase{
 	*/
 	@Test
 	public void testUserUpdate() throws Exception {	
-		User userToUpdate = UserDAO.getInstance().getUser("usernameTest1");
+		User userToUpdate = UserDAO.getInstance().get("usernameTest1");
 		userToUpdate.setFullName("fullNameUpdated1");
 		
-		UserDAO.getInstance().updateUser(userToUpdate);
+		UserDAO.getInstance().update(userToUpdate);
 	    ITable filteredActualTable = getFilteredTable(COLUMNS);
 	    
-	    User userUpdated = UserDAO.getInstance().getUser("usernameTest1");
+	    User userUpdated = UserDAO.getInstance().get("usernameTest1");
 	    
 	    assertEquals(2, filteredActualTable.getRowCount());
 	    assertNotNull(userUpdated);

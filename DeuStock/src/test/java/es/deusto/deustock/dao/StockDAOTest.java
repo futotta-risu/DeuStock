@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import es.deusto.deustock.data.DeuStock;
 
 
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,10 +31,10 @@ public class StockDAOTest {
 
     @Test
     @DisplayName("Test has function returns true on existing object")
-    void testHasOnExistentObject(){
+    void testHasOnExistentObject() throws SQLException {
         // Given
         DeuStock stock = new DeuStock("Test");
-        when(dbManager.getObject(eq(DeuStock.class), anyString())).thenReturn(stock);
+        when(dbManager.get(eq(DeuStock.class), anyString(),any())).thenReturn(stock);
 
         // When
         final boolean result = stockDAO.has("Test");
@@ -44,9 +45,9 @@ public class StockDAOTest {
 
     @Test
     @DisplayName("Test has function returns false on existing object")
-    void testHasOnNonExistentObject(){
+    void testHasOnNonExistentObject() throws SQLException {
         // Given
-        when(dbManager.getObject(eq(DeuStock.class), anyString())).thenReturn(null);
+        when(dbManager.get(eq(DeuStock.class), anyString(),any())).thenReturn(null);
 
         // When
         final boolean result = stockDAO.has("Test");
@@ -57,10 +58,10 @@ public class StockDAOTest {
 
     @Test
     @DisplayName("Test store function does not throw error")
-    void testStore(){
+    void testStore() throws SQLException {
         // Given
         DeuStock stock = new DeuStock("TestSymbol");
-        doNothing().when(dbManager).storeObject(any());
+        doNothing().when(dbManager).store(any());
 
         // When
 
@@ -70,10 +71,10 @@ public class StockDAOTest {
 
     @Test
     @DisplayName("Test get function returns true on existing object")
-    void testGetOnExistentObject(){
+    void testGetOnExistentObject() throws SQLException {
         // Given
         DeuStock stock = new DeuStock("Test");
-        when(dbManager.getObject(eq(DeuStock.class), anyString())).thenReturn(stock);
+        when(dbManager.get(eq(DeuStock.class), anyString(),any())).thenReturn(stock);
 
         // When
         final DeuStock result = stockDAO.get("Test");
@@ -84,9 +85,9 @@ public class StockDAOTest {
 
     @Test
     @DisplayName("Test get function returns false on existing object")
-    void testGetOnNonExistentObject(){
+    void testGetOnNonExistentObject() throws SQLException {
         // Given
-        when(dbManager.getObject(eq(DeuStock.class), anyString())).thenReturn(null);
+        when(dbManager.get(eq(DeuStock.class), anyString(),any())).thenReturn(null);
 
         // When
         final DeuStock result = stockDAO.get("Test");
@@ -97,10 +98,10 @@ public class StockDAOTest {
 
     @Test
     @DisplayName("Test update function does not throw error")
-    void testUpdate(){
+    void testUpdate() throws SQLException {
         // Given
         DeuStock stock = new DeuStock("TestSymbol");
-        doNothing().when(dbManager).updateObject(any());
+        doNothing().when(dbManager).update(any());
 
         // When
 
@@ -110,10 +111,10 @@ public class StockDAOTest {
 
     @Test
     @DisplayName("Test delete function does not throw error")
-    void testDelete(){
+    void testDelete() throws SQLException {
         // Given
         DeuStock stock = new DeuStock("TestSymbol");
-        doNothing().when(dbManager).deleteObject(eq(DeuStock.class), anyString());
+        doNothing().when(dbManager).delete(eq(DeuStock.class), anyString(), any());
 
         // When
 
@@ -123,9 +124,9 @@ public class StockDAOTest {
 
     @Test
     @DisplayName("Test delete by acronym function does not throw error")
-    void testDeleteByAcronym(){
+    void testDeleteByAcronym() throws SQLException {
         // Given
-        doNothing().when(dbManager).deleteObject(eq(DeuStock.class), anyString());
+        doNothing().when(dbManager).delete(eq(DeuStock.class), anyString(), any());
 
         // When
 
@@ -143,7 +144,7 @@ public class StockDAOTest {
         stocks.add(stock);
         stocks.add(stock2);
 
-        when(dbManager.getObjects(eq(DeuStock.class))).thenReturn(stocks);
+        when(dbManager.getAll(eq(DeuStock.class))).thenReturn(stocks);
 
         // When
         final List<DeuStock> result = (List<DeuStock>) stockDAO.getAll();
@@ -155,10 +156,10 @@ public class StockDAOTest {
     
     @Test
     @DisplayName("Test getOrCreateStock function returns stock")
-    void testGetOrCreateStock(){
+    void testGetOrCreateStock() throws SQLException {
         DeuStock stock = new DeuStock("Test");
 
-        when(dbManager.getObject(eq(DeuStock.class), anyString())).thenReturn(stock);
+        when(dbManager.get(eq(DeuStock.class), anyString(),any())).thenReturn(stock);
 
         DeuStock stockObtained = stockDAO.getOrCreateStock("acronymTest");
         

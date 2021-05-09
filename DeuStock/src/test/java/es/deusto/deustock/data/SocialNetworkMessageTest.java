@@ -70,13 +70,9 @@ public class SocialNetworkMessageTest {
 	void testToString() {
 		SocialNetworkMessage socialNetworkMessage = new SocialNetworkMessage("Gartzi", "Hola no me gusta la CocaCola");
 		socialNetworkMessage.setSentiment(12.5);
-		String actuals = socialNetworkMessage.toString();
-		String expected = """
-                Gartzi:
-                Hola no me gusta la CocaCola
-                Sentiment=12.5
-                """;
-		assertEquals(expected, actuals);
+		String actual = socialNetworkMessage.toString();
+		String expected = "Gartzi:\nHola no me gusta la CocaCola\nSentiment=12.5\n";
+		assertEquals(expected, actual);
 	}
 
 }

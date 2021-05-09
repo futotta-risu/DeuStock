@@ -3,7 +3,8 @@ package es.deusto.deustock.resources.user;
 import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.dto.UserDTO;
-import es.deusto.deustock.log.DeuLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -11,6 +12,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.sql.SQLException;
 
 /**
  * @author Erik B. Terres
@@ -19,6 +21,7 @@ import javax.ws.rs.core.Response;
 public class UserDetail {
 	
 	private UserDAO userDAO;
+	private final Logger logger = LoggerFactory.getLogger(UserDetail.class);
 	
 	public UserDetail(){
 		this.userDAO = UserDAO.getInstance();
@@ -30,11 +33,11 @@ public class UserDetail {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUsername(@PathParam("username") String username) {
-        User user = userDAO.getUser(username);
+    public Response getUsername(@PathParam("username") String username) throws SQLException {
+        User user = userDAO.get(username);
 
         if(user == null){
-            DeuLogger.logger.error("Cannot get '" + username + "' user  information");
+            logger.error("Cannot get user  information");
             return Response.status(401).build();
         }
 

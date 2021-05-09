@@ -13,6 +13,8 @@ import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
 
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -43,10 +45,10 @@ public class UserDetailIT extends JerseyTest {
 
     @Test
     @DisplayName("Test get username returns 200")
-    public void testGetUsernameReturns200(){
+    public void testGetUsernameReturns200() throws SQLException {
         // Given
         User user = new User("TestUserReturn200", "TestPass");
-        UserDAO.getInstance().storeUser(user);
+        UserDAO.getInstance().store(user);
 
         // When
         Response response = target("user")
@@ -57,15 +59,15 @@ public class UserDetailIT extends JerseyTest {
         assertEquals(200, response.getStatus());
 
         // After
-        UserDAO.getInstance().deleteUser(user.getUsername());
+        UserDAO.getInstance().delete(user.getUsername());
     }
 
     @Test
     @DisplayName("Test get username returns correct user")
-    public void testGetUsernameReturnsUser(){
+    public void testGetUsernameReturnsUser() throws SQLException {
         // Given
         User user = new User("TestUserReturnsUser", "TestPass");
-        UserDAO.getInstance().storeUser(user);
+        UserDAO.getInstance().store(user);
 
         // When
         Response response = this.target("user")
@@ -79,7 +81,7 @@ public class UserDetailIT extends JerseyTest {
         assertEquals(user.getUsername(), returnUser.getUsername());
 
         // After
-        UserDAO.getInstance().deleteUser(user.getUsername());
+        UserDAO.getInstance().delete(user.getUsername());
     }
 
     @Test

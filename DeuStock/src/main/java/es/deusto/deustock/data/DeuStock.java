@@ -23,8 +23,10 @@ public class DeuStock {
     @NotPersistent
     List<HistoricalQuote> history = new ArrayList<>();
 
-    // Don't erase. Compulsory for JSON
-    public  DeuStock(){}
+
+    public  DeuStock(){
+        // Don't erase. Compulsory for JSON
+    }
     public DeuStock(String acronym){
         setAcronym(acronym);
     }

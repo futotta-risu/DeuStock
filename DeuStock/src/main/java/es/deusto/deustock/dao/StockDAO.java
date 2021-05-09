@@ -1,6 +1,8 @@
 package es.deusto.deustock.dao;
 
+import java.sql.SQLException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 import es.deusto.deustock.data.DeuStock;
@@ -43,7 +45,7 @@ public class StockDAO implements IDAO<DeuStock>{
 	}
 
 
-	public DeuStock getOrCreateStock(String acronym){
+	public DeuStock getOrCreateStock(String acronym) throws SQLException {
 		if(!has(acronym)){
 			store(new DeuStock(acronym));
 		}
@@ -55,13 +57,13 @@ public class StockDAO implements IDAO<DeuStock>{
 	 * @param identity Symbol of the Stock
 	 */
 	@Override
-	public boolean has(Object identity) {
+	public boolean has(Object identity) throws SQLException {
 		return get(identity) != null;
 	}
 
 	@Override
-	public void store(DeuStock object) {
-		dbManager.storeObject(object);
+	public void store(DeuStock object) throws SQLException {
+		dbManager.store(object);
 	}
 
 	/**
@@ -70,15 +72,17 @@ public class StockDAO implements IDAO<DeuStock>{
 	 * @param identity Symbol of the Stock
 	 */
 	@Override
-	public DeuStock get(Object identity) {
-		String whereCondition = "acronym  == '" + identity + "'";
-		return (DeuStock) dbManager.getObject(DeuStock.class, whereCondition);
+	public DeuStock get(Object identity) throws SQLException {
+		var whereCondition = "acronym  == :acronym";
+		HashMap<String,String> params = new HashMap<>();
+		params.put("acronym", (String) identity);
+		return (DeuStock) dbManager.get(DeuStock.class, whereCondition, params);
 	}
 
 	@Override
 	public Collection<DeuStock> getAll() {
 		return dbManager
-				.getObjects(DeuStock.class).stream()
+				.getAll(DeuStock.class).stream()
 				.filter(DeuStock.class::isInstance)
 				.map(DeuStock.class::cast)
 				.collect(Collectors.toList());
@@ -86,18 +90,21 @@ public class StockDAO implements IDAO<DeuStock>{
 	}
 
 	@Override
-	public void update(DeuStock object) {
-		DBManager.getInstance().updateObject(object);
+	public void update(DeuStock object) throws SQLException {
+		dbManager.update(object);
 	}
 
-	public void deleteBySymbol(String symbol){
-		String whereCondition = "acronym  == '" + symbol + "'";
-		dbManager.deleteObject(Stock.class, whereCondition);
+	public void deleteBySymbol(String symbol) throws SQLException {
+		var whereCondition = "acronym  == :acronym";
+		HashMap<String,String> params = new HashMap<>();
+		params.put("acronym", symbol);
+
+		dbManager.delete(Stock.class, whereCondition, params);
 	}
 
 	@Override
 	public void delete(DeuStock stock) {
-		dbManager.deleteObject(stock);
+		dbManager.delete(stock);
 	}
 }
 

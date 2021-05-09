@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Test;
 
 import es.deusto.deustock.data.stocks.Wallet;
 
+import java.sql.SQLException;
+
 
 /**
  * @author landersanmillan
@@ -32,8 +34,8 @@ class WalletDAOTest {
 
     @Test
     @DisplayName("Test get Wallet on non existent wallet")
-    void testGetOnNonExistentWallet(){
-        when(dbManager.getObject(eq(Wallet.class), anyString())).thenReturn(null);
+    void testGetOnNonExistentWallet() throws SQLException {
+        when(dbManager.get(eq(Wallet.class), anyString(), any())).thenReturn(null);
 
         final Wallet result = walletDAO.getWallet("Test");
 
@@ -42,10 +44,10 @@ class WalletDAOTest {
     
     @Test
     @DisplayName("Test store function does not throw error")
-    void testStoreWallet(){
+    void testStoreWallet() throws SQLException {
         Wallet wallet = new Wallet();
         
-        doNothing().when(dbManager).storeObject(any());
+        doNothing().when(dbManager).store(any());
 
         assertDoesNotThrow( () -> walletDAO.store(wallet));
     }
@@ -53,10 +55,10 @@ class WalletDAOTest {
     
     @Test
     @DisplayName("Test update function does not throw error")
-    void testUpdateWallet(){
+    void testUpdateWallet() throws SQLException {
         Wallet wallet = new Wallet();
         wallet.changeMoney(999999);
-        doNothing().when(dbManager).updateObject(any());
+        doNothing().when(dbManager).update(any());
 
         assertDoesNotThrow( () -> walletDAO.update(wallet));
     }
