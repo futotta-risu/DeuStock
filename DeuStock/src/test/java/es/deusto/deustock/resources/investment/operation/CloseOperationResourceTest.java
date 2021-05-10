@@ -17,8 +17,6 @@ import org.junit.jupiter.api.Test;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
-import java.sql.SQLException;
-
 import static es.deusto.deustock.services.investment.operation.type.OperationType.LONG;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

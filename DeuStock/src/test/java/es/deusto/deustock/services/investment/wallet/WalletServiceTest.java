@@ -11,15 +11,12 @@ import es.deusto.deustock.data.stocks.Wallet;
 import es.deusto.deustock.services.investment.operation.type.OperationType;
 import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.Test;
-import yahoofinance.Stock;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @Tag("service")
@@ -145,7 +142,7 @@ public class WalletServiceTest {
     }
 
     @Test
-    void testGetHoldingsThrowsExceptionOnSQLException() throws WalletException, SQLException {
+    void testGetHoldingsThrowsExceptionOnSQLException() throws SQLException {
         // Given
         User u = new User("TestUsername", "TestPass");
         Wallet wallet = new Wallet();
@@ -195,7 +192,7 @@ public class WalletServiceTest {
     }
 
     @Test
-    void testUpdateMoneyThrowsExceptionOnSQLException() throws SQLException, WalletException {
+    void testUpdateMoneyThrowsExceptionOnSQLException() throws SQLException {
         User u = new User("TestUsername", "TestPass");
         Wallet wallet = new Wallet();
         u.setWallet(wallet);
@@ -331,7 +328,7 @@ public class WalletServiceTest {
     }
 
     @Test
-    void testAddToHoldingsThrowsOnSQLException() throws SQLException, WalletException {
+    void testAddToHoldingsThrowsOnSQLException() throws SQLException {
         User u = new User("TestUsername", "TestPass");
         Wallet wallet = new Wallet();
         u.setWallet(wallet);
@@ -380,7 +377,7 @@ public class WalletServiceTest {
     }
 
     @Test
-    void testGetStockHistoryThrowsWalletExceptionOnSQLException() throws SQLException, WalletException {
+    void testGetStockHistoryThrowsWalletExceptionOnSQLException() throws SQLException {
         User u = new User("TestUsername", "TestPass");
         Wallet wallet = new Wallet();
         u.setWallet(wallet);
@@ -425,7 +422,7 @@ public class WalletServiceTest {
     }
 
     @Test
-    void testCloseHistoryThrowsWalletExceptionOnSQLException() throws SQLException, WalletException {
+    void testCloseHistoryThrowsWalletExceptionOnSQLException() throws SQLException {
         User u = new User("TestUsername", "TestPass");
         Wallet wallet = new Wallet();
         u.setWallet(wallet);

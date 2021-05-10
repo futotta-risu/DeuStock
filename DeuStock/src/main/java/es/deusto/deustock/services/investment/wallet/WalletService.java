@@ -1,6 +1,5 @@
 package es.deusto.deustock.services.investment.wallet;
 
-import com.thoughtworks.qdox.model.expression.Not;
 import es.deusto.deustock.dao.StockHistoryDAO;
 import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.dao.WalletDAO;
@@ -30,7 +29,7 @@ public class WalletService {
     private WalletDAO walletDAO;
     private UserDAO userDAO;
 
-    private Logger logger = LoggerFactory.getLogger(WalletService.class);
+    private final Logger logger = LoggerFactory.getLogger(WalletService.class);
 
     public WalletService(){
         userDAO = UserDAO.getInstance();

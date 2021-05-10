@@ -1,6 +1,5 @@
 package es.deusto.deustock.services.investment.operation;
 
-import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.services.investment.operation.OperationFactory;
 import es.deusto.deustock.services.investment.operation.type.LongOperation;
 import es.deusto.deustock.services.investment.operation.type.Operation;

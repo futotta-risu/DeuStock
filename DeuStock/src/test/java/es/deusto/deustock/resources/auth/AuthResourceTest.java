@@ -1,8 +1,6 @@
 package es.deusto.deustock.resources.auth;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 import javax.ws.rs.WebApplicationException;
@@ -45,7 +43,7 @@ class AuthResourceTest {
     
     @Test
     @DisplayName("Test login returns 200")
-    public void testLoginReturns200() throws SQLException {
+    public void testLoginReturns200() {
     	//Given
     	UserDTO userDTO = new UserDTO().setUsername("Test").setPassword("Pass");
         when(mockAuthService.login(anyString(),anyString())).thenReturn(userDTO);
@@ -62,7 +60,7 @@ class AuthResourceTest {
 
     @Test
     @DisplayName("Test login throws WebApplicationException with AuthService exception")
-    public void testLoginThrowsWebApplicationExceptionWithServiceException() throws SQLException {
+    public void testLoginThrowsWebApplicationExceptionWithServiceException() {
         //Given
         when(mockAuthService.login(anyString(),anyString())).thenThrow(
                 new LoginException("Exception")
@@ -83,7 +81,7 @@ class AuthResourceTest {
     
     @Test
     @DisplayName("Test register returns 200")
-    public void testRegisterReturns200() throws SQLException {
+    public void testRegisterReturns200() {
         //Given
         UserDTO userDTO = new UserDTO();
         userDTO.setUsername("userDTO");

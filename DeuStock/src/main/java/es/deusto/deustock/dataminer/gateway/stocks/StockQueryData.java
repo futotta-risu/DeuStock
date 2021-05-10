@@ -14,10 +14,11 @@ public class StockQueryData {
         DAILY, WEEKLY, MONTHLY
     }
 
-    private final int DEFAULT_INTERVAL_SIZE = 25;
+    private static final int DEFAULT_INTERVAL_SIZE = 25;
 
     private String acronym;
-    private Calendar from, to;
+    private Calendar from;
+    private Calendar to;
     private Interval interval  = Interval.DAILY;
     private boolean withHistoric = false;
     private int intervalSize = DEFAULT_INTERVAL_SIZE;

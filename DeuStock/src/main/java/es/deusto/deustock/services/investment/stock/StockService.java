@@ -94,7 +94,7 @@ public class StockService {
             case "small" -> stockList = smallList;
             case "big" ->  stockList =  bigList;
             default ->  throw new IllegalArgumentException("Invalid list name");
-        };
+        }
 
         for(String stockName : stockList){
             try{

@@ -1,20 +1,10 @@
 package es.deusto.deustock.resources.investment.operation;
 
-import es.deusto.deustock.dao.StockDAO;
-import es.deusto.deustock.dao.StockHistoryDAO;
-import es.deusto.deustock.dao.UserDAO;
-import es.deusto.deustock.dao.WalletDAO;
 import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.data.User;
-import es.deusto.deustock.data.stocks.Wallet;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
-import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
-import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
 import es.deusto.deustock.resources.investment.operation.OpenOperationResource;
 import es.deusto.deustock.services.investment.operation.OperationService;
 
 import es.deusto.deustock.services.investment.operation.exceptions.OperationException;
-import es.deusto.deustock.services.investment.operation.type.OperationType;
 import es.deusto.deustock.services.investment.stock.StockService;
 import es.deusto.deustock.services.investment.stock.exceptions.StockException;
 import es.deusto.deustock.services.investment.wallet.WalletService;
@@ -25,8 +15,6 @@ import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
-
-import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

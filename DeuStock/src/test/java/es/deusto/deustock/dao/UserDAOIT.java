@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.Date;
 
 import org.dbunit.DBTestCase;
-import org.dbunit.DatabaseUnitException;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;

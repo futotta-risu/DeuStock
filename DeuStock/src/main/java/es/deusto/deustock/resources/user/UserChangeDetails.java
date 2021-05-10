@@ -3,9 +3,7 @@ package es.deusto.deustock.resources.user;
 import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.dto.UserDTO;
-import org.apache.xmlbeans.impl.xb.xsdschema.Attribute;
 
-import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;

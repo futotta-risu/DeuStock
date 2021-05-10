@@ -19,12 +19,13 @@ import yahoofinance.histquotes.HistoricalQuote;
 
 public class TimeChart {
 	
-private static TimeChart INSTANCE;
+private static TimeChart instance;
 	
 	public static TimeChart getInstance() {
-		if (INSTANCE == null) 
-			INSTANCE = new TimeChart();
-		return INSTANCE;
+		if (instance == null) {
+			instance = new TimeChart();
+		}
+		return instance;
 	}
 
 	public XYChart getTimeChart(DeuStock deustock, int height, int width) {

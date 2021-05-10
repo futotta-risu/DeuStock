@@ -3,7 +3,6 @@ package es.deusto.deustock.services.auth;
 import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.dto.UserDTO;
-import es.deusto.deustock.log.DeuLogger;
 import es.deusto.deustock.services.auth.exceptions.AuthException;
 import es.deusto.deustock.services.auth.exceptions.LoginException;
 import es.deusto.deustock.services.auth.exceptions.RegisterException;

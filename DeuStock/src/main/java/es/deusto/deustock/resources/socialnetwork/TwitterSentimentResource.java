@@ -1,7 +1,8 @@
 package es.deusto.deustock.resources.socialnetwork;
 
 import es.deusto.deustock.dataminer.features.SentimentExtractor;
-import es.deusto.deustock.log.DeuLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -21,6 +22,8 @@ import static es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkG
 public class TwitterSentimentResource {
 
     private SentimentExtractor extractor;
+    private final Logger logger = LoggerFactory.getLogger(TwitterSentimentResource.class);
+
 
     public TwitterSentimentResource(){
         extractor = new SentimentExtractor(Twitter);
@@ -35,13 +38,14 @@ public class TwitterSentimentResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response getSentiment(@PathParam("query") String query) {
-        DeuLogger.logger.info("Sentiment Analyzer called");
+        logger.info("Sentiment Analyzer called");
 
         double sentiment;
         try {
             sentiment = extractor.getSentimentTendency(query);
         } catch (InterruptedException e) {
-            DeuLogger.logger.error("Sentiment Analyzer Interrupted.");
+            Thread.currentThread().interrupt();
+            logger.error("Sentiment Analyzer Interrupted.");
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 

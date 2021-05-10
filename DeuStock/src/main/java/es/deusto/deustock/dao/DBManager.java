@@ -19,7 +19,7 @@ public class DBManager implements IDBManager{
 
 	private final Logger logger = LoggerFactory.getLogger(DBManager.class);
 
-
+	private final static String SELECT_CONDITION_QUERY = "SELECT FROM %s WHERE %s";
 
 	private DBManager(){
 		pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
@@ -37,7 +37,7 @@ public class DBManager implements IDBManager{
 	 * 
 	 * @param object -> Objeto que se quiere almacenar en la BD
 	 */
-	public void store(Object object) throws SQLException {
+	public void store(Object object) {
 		var pm = pmf.getPersistenceManager();
 		pm.getFetchPlan().setMaxFetchDepth(-1);
 		var tx = pm.currentTransaction();
@@ -106,14 +106,14 @@ public class DBManager implements IDBManager{
 			tx.begin();
 			var query = pm.newQuery(
 					SQL_TYPE,
-					"SELECT FROM " + entityClass.getName() + " WHERE " + conditions
+					String.format(SELECT_CONDITION_QUERY, entityClass.getName(), conditions)
 			);
 			query.setUnique(false);
 			object = (List<Object>) query.executeWithMap(params);
 			tx.commit();
 
 		} catch (Exception ex) {
-			logger.error("Error getting Object: " + ex.getMessage());
+			logger.error("Error getting Object: {}", ex.getMessage());
 		} finally {
 
 			if (tx != null && tx.isActive()) {
@@ -135,7 +135,7 @@ public class DBManager implements IDBManager{
 			tx.begin();
 			var query = pm.newQuery(
 					SQL_TYPE,
-					"SELECT FROM " + entityClass.getName() + " WHERE " + conditions
+					String.format(SELECT_CONDITION_QUERY, entityClass.getName(), conditions)
 			);
 			query.compile();
 			query.setUnique(true);
@@ -183,7 +183,7 @@ public class DBManager implements IDBManager{
 			tx.begin();
 			var query = pm.newQuery(
 					SQL_TYPE,
-					"SELECT FROM " + entityClass.getName() + " WHERE " + conditions
+					String.format(SELECT_CONDITION_QUERY, entityClass.getName(), conditions)
 			);
 
 			query.setUnique(true);
@@ -205,7 +205,7 @@ public class DBManager implements IDBManager{
 	@Override
 	public void delete(Object object) {
 		var pm = pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
+		var tx = pm.currentTransaction();
 		try {
 			tx.begin();
 			pm.deletePersistent(object);

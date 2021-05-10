@@ -1,7 +1,5 @@
 package es.deusto.deustock.services.investment.operation.type;
 
-import es.deusto.deustock.data.DeuStock;
-
 /**
  * @author Erik B. Terres
  */

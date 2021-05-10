@@ -63,7 +63,7 @@ public class CloseOperationResource {
 
             walletService.updateMoneyByWalletID(history.getWallet().getId(), -actualPrice);
             walletService.closeStockHistory(stockHistoryID);
-        } catch (OperationException | WalletException | StockException e) {
+        } catch (WalletException | StockException e) {
             throw new WebApplicationException(e.getMessage(), Response.Status.UNAUTHORIZED);
         }
 

@@ -2,7 +2,6 @@ package es.deusto.deustock.resources.investment.stock;
 
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.services.investment.stock.StockService;
-import es.deusto.deustock.services.investment.stock.exceptions.InvalidStockQueryDataException;
 import es.deusto.deustock.services.investment.stock.exceptions.StockException;
 
 

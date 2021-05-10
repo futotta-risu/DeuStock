@@ -1,14 +1,10 @@
 package es.deusto.deustock.resources.help;
 
 import es.deusto.deustock.util.file.DSJSONUtils;
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.test.TestProperties;
 import org.json.JSONObject;
-import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
-import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
 import java.io.IOException;

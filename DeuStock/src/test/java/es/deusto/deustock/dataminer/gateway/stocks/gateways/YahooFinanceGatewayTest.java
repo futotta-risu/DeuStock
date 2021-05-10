@@ -13,7 +13,6 @@ import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.quotes.stock.StockQuote;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 
