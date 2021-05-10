@@ -37,9 +37,16 @@ public class StockReport extends Report {
 
     private static final Logger logger = LoggerFactory.getLogger(StockReport.class);
 
+    private SentimentExtractor extractor;
+
     public StockReport(DeuStock stock){
         super();
         this.stock = stock;
+        this.extractor = new SentimentExtractor(TWITTER);
+    }
+
+    public void setExtractor(SentimentExtractor extractor){
+        this.extractor = extractor;
     }
 
 
@@ -103,7 +110,7 @@ public class StockReport extends Report {
         double sentiment;
 
         try {
-            sentiment = new SentimentExtractor(TWITTER).getSentimentTendency(this.stock.getAcronym());
+            sentiment = extractor.getSentimentTendency(this.stock.getAcronym());
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             logger.error("Could not add sentiment of {} due to error.", stock.getAcronym());

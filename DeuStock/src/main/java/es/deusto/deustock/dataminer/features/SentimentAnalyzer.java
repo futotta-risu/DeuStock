@@ -31,7 +31,7 @@ public class SentimentAnalyzer {
 
         var props = new Properties();
         props.setProperty("annotators", "tokenize, ssplit, pos, parse, sentiment");
-        props.put("threads", "8");
+        props.put("threads", "4");
 
         var pipeline = new StanfordCoreNLP(props);
         var annotation = pipeline.process(message);

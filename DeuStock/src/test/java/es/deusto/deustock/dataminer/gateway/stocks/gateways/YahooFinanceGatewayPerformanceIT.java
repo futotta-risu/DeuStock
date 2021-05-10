@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author Erik B. Terres & Lander San Millan
  */
-public class YahooFinanceGatewayPerformanceTest {
+public class YahooFinanceGatewayPerformanceIT {
 	
 	@Rule
 	public ContiPerfRule i = new ContiPerfRule();
