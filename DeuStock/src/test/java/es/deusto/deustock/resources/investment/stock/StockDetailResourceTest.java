@@ -1,4 +1,4 @@
-package es.deusto.deustock.resources.investment;
+package es.deusto.deustock.resources.investment.stock;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -13,6 +13,7 @@ import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.resources.investment.stock.StockDetailResource;
 import es.deusto.deustock.services.investment.stock.StockService;
 import es.deusto.deustock.services.investment.stock.exceptions.InvalidStockQueryDataException;
+import es.deusto.deustock.services.investment.stock.exceptions.StockException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -43,10 +44,10 @@ public class StockDetailResourceTest {
     
     @Test
     @DisplayName("Test get stock detail with a blank NAME returns 401")
-    void testGetStockDetailWithBlankNameReturns401() throws InvalidStockQueryDataException {
+    void testGetStockDetailWithBlankNameReturns401() throws StockException {
     	StockDetailResource stockDetailResource = new StockDetailResource();
 
-    	when(stockService.getStockDetailData(any(),any())).thenThrow(new InvalidStockQueryDataException("Invalid symbol"));
+    	when(stockService.getStockDetailData(any(),any())).thenThrow(new StockException("Invalid symbol"));
         setMocksToResource(stockDetailResource);
 
 		assertThrows(WebApplicationException.class, () -> stockDetailResource.getStock("  ", "DAILY"));
@@ -54,10 +55,10 @@ public class StockDetailResourceTest {
     
     @Test
     @DisplayName("Test get stock detail with a blank INTERVAL returns 401")
-    void testGetStockDetailWithBlankIntervalReturns401() throws InvalidStockQueryDataException {
+    void testGetStockDetailWithBlankIntervalReturns401() throws StockException {
     	StockDetailResource stockDetailResource = new StockDetailResource();
 
-        when(stockService.getStockDetailData(any(),any())).thenThrow(new InvalidStockQueryDataException("Invalid interval"));
+        when(stockService.getStockDetailData(any(),any())).thenThrow(new StockException("Invalid interval"));
         setMocksToResource(stockDetailResource);
 
 		assertThrows(WebApplicationException.class, () -> stockDetailResource.getStock("BB", "   "));
@@ -65,10 +66,10 @@ public class StockDetailResourceTest {
     
     @Test
     @DisplayName("Test get stock detail with a blank INTERVAL returns 401")
-    void testGetStockDetailWithWrongIntervalReturns401() throws InvalidStockQueryDataException {
+    void testGetStockDetailWithWrongIntervalReturns401() throws StockException {
     	StockDetailResource stockDetailResource = new StockDetailResource();
 
-        when(stockService.getStockDetailData(any(),any())).thenThrow(new InvalidStockQueryDataException("Invalid Interval"));
+        when(stockService.getStockDetailData(any(),any())).thenThrow(new StockException("Invalid Interval"));
         setMocksToResource(stockDetailResource);
 
 		assertThrows(WebApplicationException.class, () -> stockDetailResource.getStock("BB", "ThisReturns401"));
@@ -76,10 +77,10 @@ public class StockDetailResourceTest {
     
     @Test
     @DisplayName("Test get stock detail throws exception on unknown exception")
-    void testGetStockDetailThrowsExceptionOnUnknownStock() throws InvalidStockQueryDataException {
+    void testGetStockDetailThrowsExceptionOnUnknownStock() throws StockException {
         //Given
         StockDetailResource stockDetailResource = new StockDetailResource();
-        when(stockService.getStockDetailData(any(),any())).thenThrow(new InvalidStockQueryDataException("Unknown Stock"));
+        when(stockService.getStockDetailData(any(),any())).thenThrow(new StockException("Unknown Stock"));
         setMocksToResource(stockDetailResource);
 
         //When
@@ -90,7 +91,7 @@ public class StockDetailResourceTest {
 
     @Test
     @DisplayName("Test get stock detail returns status 200")
-    void testGetStockReturns200() throws  InvalidStockQueryDataException {
+    void testGetStockReturns200() throws  StockException {
     	//Given
         DeuStock stock = new DeuStock("BB").setPrice(20);
 
@@ -109,7 +110,7 @@ public class StockDetailResourceTest {
 
     @Test
     @DisplayName("Test get stock detail returns stock")
-    void testGetStockReturnsStock() throws InvalidStockQueryDataException {
+    void testGetStockReturnsStock() throws StockException {
         //Given
         DeuStock stock = new DeuStock("BB").setPrice(20);
 

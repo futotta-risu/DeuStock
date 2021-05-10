@@ -63,87 +63,17 @@ public class OperationService {
     }
 
 
-    public void openOperation(
-            OperationType operationType,
-            String symbol,
-            String username,
-            double amount
-    ) throws OperationException, SQLException, StockNotFoundException {
-
-        DeuStock stock;
-        if(!stockDAO.has(symbol)){
-            stock = new DeuStock(symbol);
-            stockDAO.store(stock);
-        }
-
-        stock = stockDAO.get(symbol);
-
-        DeuStock stockData = stockDataAPIGateway
-                .getStockData(new StockQueryData(symbol).setWithHistoric(false));
-        stock.setPrice(stockData.getPrice());
-
-        Operation operation = operationFactory.create(operationType, stock, amount);
-        User user = userDAO.get(username);
-
-        this.wallet = user.getWallet();
-
-        double openPrice = operation.getOpenPrice();
-        if(!wallet.hasEnoughMoney(openPrice)){
-            DeuLogger.logger.error("Not enough money on wallet.");
-            throw new OperationException("Not enough money to open operation");
-        }
-
-        StockHistory stockHistory = stockHistoryDAO.create(
-                wallet,
-                operation.getStock(),
-                operation.getAmount(),
-                operation.getType()
-        );
-
-        stockHistoryDAO.store(stockHistory);
-        wallet.changeMoney(-openPrice);
-        walletDAO.update(wallet);
+    public double getOpenPrice(
+            OperationType operationType, double openPrice, double amount
+    ) throws OperationException{
+        Operation operation = operationFactory.create(operationType, openPrice, amount);
+        return operation.getOpenPrice();
     }
 
-    public void closeOperation(String stockHistoryID) throws OperationException, StockNotFoundException {
+    public double getClosePrice(OperationType operationType, double openPrice, double closePrice, double amount) throws OperationException {
 
-        StockHistory stockHistory;
-        try {
-            stockHistory = stockHistoryDAO.get(stockHistoryID);
-        } catch (SQLException throwables) {
-            throw new OperationException("Unknown stockHistoryID");
-        }
-
-        if(stockHistory.isClosed()){
-            throw new OperationException("Unknown stockHistoryID");
-        }
-
-
-        DeuStock stock = stockDataAPIGateway
-                .getStockData(
-                        new StockQueryData(
-                                stockHistory.getStock().getAcronym()
-                        ).setWithHistoric(false)
-                );
-
-        Operation operation = operationFactory.create(
-                stockHistory.getOperation(),
-                stock,
-                stockHistory.getAmount()
-        );
-        double closePrice = operation.getClosePrice();
-
-        this.wallet = stockHistory.getWallet();
-
-        try {
-            wallet.changeMoney(closePrice);
-            walletDAO.update(wallet);
-            stockHistory.setClosed(true);
-            stockHistoryDAO.update(stockHistory);
-        }catch (SQLException sqlException){
-            // TODO Add catch functionality
-            throw new OperationException("SQL Error");
-        }
+        Operation operation = operationFactory.create(operationType, openPrice, amount);
+        return operation.getClosePrice(closePrice);
     }
 
 }

@@ -1,4 +1,4 @@
-package es.deusto.deustock.resources.investment;
+package es.deusto.deustock.resources.investment.wallet;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;

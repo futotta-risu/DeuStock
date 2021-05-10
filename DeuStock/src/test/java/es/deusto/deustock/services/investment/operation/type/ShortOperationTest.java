@@ -10,15 +10,10 @@ class ShortOperationTest {
 
     private DeuStock stock;
 
-    @BeforeEach
-    public void setUp(){
-        stock = new DeuStock("BB").setPrice(20);
-    }
-
     @Test
     void testConstructor(){
         // Given
-        Operation operation = new ShortOperation(stock, 30);
+        Operation operation = new ShortOperation(20, 30);
 
         // When
 
@@ -29,7 +24,7 @@ class ShortOperationTest {
     @Test
     void getOpenPrice() {
         // Given
-        Operation operation = new ShortOperation(stock, 30);
+        Operation operation = new ShortOperation(20, 30);
 
         // When
         double result = operation.getOpenPrice();
@@ -41,10 +36,10 @@ class ShortOperationTest {
     @Test
     void getClosePrice() {
         // Given
-        Operation operation = new ShortOperation(stock, 40);
+        Operation operation = new ShortOperation(20, 40);
 
         // When
-        double result = operation.getClosePrice();
+        double result = operation.getClosePrice(25);
 
         // Then
         assertEquals(0, result);
@@ -53,7 +48,7 @@ class ShortOperationTest {
     @Test
     void getType() {
         // Given
-        Operation operation = new ShortOperation(stock, 20);
+        Operation operation = new ShortOperation(20, 20);
 
         // When
         OperationType type = operation.getType();

@@ -1,4 +1,4 @@
-package es.deusto.deustock.resources.investment;
+package es.deusto.deustock.resources.investment.stock;
 
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.resources.investment.stock.StockListResource;
