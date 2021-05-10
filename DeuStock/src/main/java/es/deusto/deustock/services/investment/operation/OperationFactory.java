@@ -1,7 +1,5 @@
 package es.deusto.deustock.services.investment.operation;
 
-
-import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.services.investment.operation.type.*;
 
 public class OperationFactory {
@@ -17,10 +15,10 @@ public class OperationFactory {
         return instance;
     }
 
-    public Operation create(OperationType operation, DeuStock stock, double amount){
+    public Operation create(OperationType operation, double stockOpenPrice, double amount){
         return switch (operation) {
-            case LONG -> new LongOperation(stock, amount);
-            case SHORT -> new ShortOperation(stock, amount);
+            case LONG -> new LongOperation(stockOpenPrice, amount);
+            case SHORT -> new ShortOperation(stockOpenPrice, amount);
         };
 
     }

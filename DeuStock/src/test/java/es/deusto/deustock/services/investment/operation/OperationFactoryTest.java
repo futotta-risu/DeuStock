@@ -15,31 +15,16 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class OperationFactoryTest {
 
-    @Test
-    void testCreateFailsOnNullStock() {
-        // Given
-        OperationFactory factory = OperationFactory.getInstance();
-
-        // When
-
-        // Then
-        assertThrows(
-                NullPointerException.class,
-                () -> factory.create(OperationType.LONG, null, 20)
-        );
-    }
-
-    @Test
+        @Test
     void testCreateFailsOnZeroOrNegativeAmount() {
         // Given
         OperationFactory factory = OperationFactory.getInstance();
-        DeuStock stock = new DeuStock("BB").setPrice(20);
         // When
 
         // Then
         assertThrows(
                 IllegalArgumentException.class,
-                () -> factory.create(OperationType.LONG, stock, -1)
+                () -> factory.create(OperationType.LONG, 20, -1)
         );
     }
 
@@ -47,14 +32,13 @@ class OperationFactoryTest {
     void createNullThrowsIllegalArgumentException() {
         // Given
         OperationFactory factory = OperationFactory.getInstance();
-        DeuStock stock = new DeuStock("BB").setPrice(20);
 
         // When
 
         // Then
         assertThrows(
                 NullPointerException.class,
-                () -> factory.create(null, stock, 20)
+                () -> factory.create(null, 20, 20)
         );
     }
 
@@ -62,10 +46,9 @@ class OperationFactoryTest {
     void createLONGReturnsInstanceOfLongOperation() {
         // Given
         OperationFactory factory = OperationFactory.getInstance();
-        DeuStock stock = new DeuStock("BB").setPrice(20);
 
         // When
-        Operation operation = factory.create(OperationType.LONG, stock, 20);
+        Operation operation = factory.create(OperationType.LONG, 20, 20);
 
         // Then
         assertTrue(operation instanceof LongOperation);
@@ -75,10 +58,8 @@ class OperationFactoryTest {
     void createSHORTReturnsInstanceOfShortOperation() {
         // Given
         OperationFactory factory = OperationFactory.getInstance();
-        DeuStock stock = new DeuStock("BB").setPrice(20);
-
         // When
-        Operation operation = factory.create(OperationType.SHORT, stock, 20);
+        Operation operation = factory.create(OperationType.SHORT, 20, 20);
 
         // Then
         assertTrue(operation instanceof ShortOperation);

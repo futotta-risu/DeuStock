@@ -35,7 +35,7 @@ public class TwitterSentimentResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response getSentiment(@PathParam("query") String query) {
-        DeuLogger.logger.info("Sentiment Analyzer called for query: " + query);
+        DeuLogger.logger.info("Sentiment Analyzer called");
 
         double sentiment;
         try {

@@ -1,9 +1,14 @@
 package es.deusto.deustock.resources.investment.operation;
 
-import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
+import es.deusto.deustock.data.DeuStock;
+import es.deusto.deustock.data.stocks.StockHistory;
 import es.deusto.deustock.log.DeuLogger;
 import es.deusto.deustock.services.investment.operation.OperationService;
 import es.deusto.deustock.services.investment.operation.exceptions.OperationException;
+import es.deusto.deustock.services.investment.stock.StockService;
+import es.deusto.deustock.services.investment.stock.exceptions.StockException;
+import es.deusto.deustock.services.investment.wallet.WalletService;
+import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -16,13 +21,25 @@ import javax.ws.rs.core.Response;
 public class CloseOperationResource {
 
     private OperationService operationService;
+    private WalletService walletService;
+    private StockService stockService;
 
     public CloseOperationResource(){
         operationService = new OperationService();
+        walletService = new WalletService();
+        stockService = new StockService();
     }
 
     public void setOperationService(OperationService operationService){
         this.operationService = operationService;
+    }
+
+    public void setWalletService(WalletService walletService){
+        this.walletService = walletService;
+    }
+
+    public void setStockService(StockService stockService){
+        this.stockService = stockService;
     }
 
     @GET
@@ -34,8 +51,19 @@ public class CloseOperationResource {
         DeuLogger.logger.info("Petition to close the operation");
 
         try {
-            operationService.closeOperation(stockHistoryID);
-        } catch (OperationException | StockNotFoundException e) {
+            StockHistory history = walletService.getStockHistory(stockHistoryID);
+            if(history.isClosed()){
+                throw new WebApplicationException("Already Closed Operation", Response.Status.UNAUTHORIZED);
+            }
+
+            DeuStock stock = stockService.getStockWithPrice(history.getStock().getAcronym());
+            double actualPrice = operationService.getClosePrice(
+                    history.getOperation(), history.getPrice() , stock.getPrice(), history.getAmount()
+            );
+
+            walletService.updateMoneyByWalletID(history.getWallet().getId(), -actualPrice);
+            walletService.closeStockHistory(stockHistoryID);
+        } catch (OperationException | WalletException | StockException e) {
             throw new WebApplicationException(e.getMessage(), Response.Status.UNAUTHORIZED);
         }
 

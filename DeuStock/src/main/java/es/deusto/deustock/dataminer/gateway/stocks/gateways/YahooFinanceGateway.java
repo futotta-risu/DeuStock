@@ -65,7 +65,6 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
                 deustock.setHistory(stock.getHistory());
             }
         } catch (IOException e) {
-            e.printStackTrace();
             DeuLogger.logger.error("Could not get the stock data " + queryData.getAcronym());
         }
         return deustock;
@@ -85,7 +84,6 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
             return new HashMap<>();
         }
 

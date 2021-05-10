@@ -6,30 +6,19 @@ import es.deusto.deustock.data.DeuStock;
  * @author Erik B. Terres
  */
 public abstract class Operation implements StockOperation{
-
-    DeuStock stock;
-
     double stockOpenPrice;
     double amount;
 
     private Operation(){}
 
-    public Operation(DeuStock stock, double amount){
-        if(stock == null){
-            throw new NullPointerException("Cannot create operation on null stock.");
-        }
+    public Operation(double stockOpenPrice, double amount){
 
         if(amount <= 0){
             throw new IllegalArgumentException("Cannot create operation on zero or less amount.");
         }
 
-        this.stock = stock;
         this.amount = amount;
-        this.stockOpenPrice = stock.getPrice();
-    }
-
-    public DeuStock getStock() {
-        return stock;
+        this.stockOpenPrice = stockOpenPrice;
     }
 
     public double getAmount() {
