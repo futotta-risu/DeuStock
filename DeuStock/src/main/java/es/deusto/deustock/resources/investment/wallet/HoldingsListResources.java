@@ -93,7 +93,7 @@ public class HoldingsListResources {
 	public Response resetHoldings(@PathParam("username") String username) throws WebApplicationException {
         try {
             walletService.resetHoldings(username);
-        } catch (SQLException sqlException) {
+        } catch (WalletException sqlException) {
             throw new WebApplicationException(sqlException.getMessage(), Response.Status.UNAUTHORIZED);
         }
         return Response.status(200).build();

@@ -7,17 +7,14 @@ import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
-import es.deusto.deustock.log.DeuLogger;
 
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData.Interval;
-import es.deusto.deustock.services.investment.operation.exceptions.OperationException;
 import es.deusto.deustock.services.investment.stock.exceptions.InvalidStockQueryDataException;
 import es.deusto.deustock.services.investment.stock.exceptions.StockException;
-import org.ejml.data.DEigenpair;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;

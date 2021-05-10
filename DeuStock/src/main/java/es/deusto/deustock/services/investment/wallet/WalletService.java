@@ -9,19 +9,12 @@ import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.dto.stocks.StockHistoryDTO;
 import es.deusto.deustock.data.stocks.StockHistory;
 import es.deusto.deustock.data.stocks.Wallet;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
-import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
-import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
-import es.deusto.deustock.log.DeuLogger;
-import es.deusto.deustock.services.investment.operation.OperationFactory;
-import es.deusto.deustock.services.investment.operation.exceptions.OperationException;
-import es.deusto.deustock.services.investment.operation.type.Operation;
 import es.deusto.deustock.services.investment.operation.type.OperationType;
 import es.deusto.deustock.services.investment.wallet.exceptions.NotEnoughMoneyException;
 import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
 import es.deusto.deustock.services.investment.wallet.exceptions.WalletNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
@@ -36,15 +29,13 @@ public class WalletService {
     private StockHistoryDAO stockHistoryDAO;
     private WalletDAO walletDAO;
     private UserDAO userDAO;
-    private OperationFactory operationFactory;
-    private StockDataAPIGateway stockGateway;
+
+    private Logger logger = LoggerFactory.getLogger(WalletService.class);
 
     public WalletService(){
         userDAO = UserDAO.getInstance();
         walletDAO = WalletDAO.getInstance();
         stockHistoryDAO = StockHistoryDAO.getInstance();
-        operationFactory = OperationFactory.getInstance();
-        stockGateway = StockDataGatewayFactory.getInstance().create(StockDataGatewayEnum.YahooFinance);
     }
 
     public void setUserDAO(UserDAO userDAO){
@@ -89,17 +80,21 @@ public class WalletService {
 
 
 
-    public void resetHoldings(String username) throws SQLException {
-        User user = userDAO.get(username);
-        Wallet wallet = user.getWallet();
+    public void resetHoldings(String username) throws WalletException {
+        try{
+            User user = userDAO.get(username);
+            Wallet wallet = user.getWallet();
 
-        List<StockHistory> shList = stockHistoryDAO.getStockHistory(wallet.getId());
-        for (StockHistory stockHistory : shList) {
-            stockHistory.setClosed(true);
-            stockHistoryDAO.update(stockHistory);
+            List<StockHistory> shList = stockHistoryDAO.getStockHistory(wallet.getId());
+            for (StockHistory stockHistory : shList) {
+                stockHistory.setClosed(true);
+                stockHistoryDAO.update(stockHistory);
+            }
+            wallet.setMoney(5000);
+            walletDAO.update(wallet);
+        } catch (SQLException e){
+            throw new WalletException("Error resetting wallet");
         }
-        wallet.setMoney(5000);
-        walletDAO.update(wallet);
     }
 
 
@@ -124,7 +119,7 @@ public class WalletService {
         Wallet wallet = getWallet(username);
 
         if(!wallet.hasEnoughMoney(amount)){
-            DeuLogger.logger.error("Not enough money on wallet.");
+            logger.error("Not enough money on wallet.");
             throw new NotEnoughMoneyException("Not enough money to open operation");
         }
 
@@ -142,7 +137,7 @@ public class WalletService {
         }
 
         if(!wallet.hasEnoughMoney(amount)){
-            DeuLogger.logger.error("Not enough money on wallet.");
+            logger.error("Not enough money on wallet.");
             throw new NotEnoughMoneyException("Not enough money to open operation");
         }
 
@@ -153,10 +148,7 @@ public class WalletService {
 
     /**
      *
-     * @param username
      * @param stock Required stock with price
-     * @param amount
-     * @param type
      * @throws WalletException
      */
     public void addToHoldings(String username, DeuStock stock, double amount, OperationType type) throws WalletException {
@@ -168,6 +160,7 @@ public class WalletService {
         );
 
         try {
+            wallet.addHistory(stockHistory);
             stockHistoryDAO.store(stockHistory);
         } catch (SQLException sqlException) {
             throw new WalletException("Error updating wallet");
