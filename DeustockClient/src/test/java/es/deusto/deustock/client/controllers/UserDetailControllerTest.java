@@ -46,7 +46,7 @@ public class UserDetailControllerTest{
      * @param robot - Will be injected by the test runner.
      */
     @Test
-    void testEditPrfileButton(FxRobot robot) {
+    void testEditProfileButton(FxRobot robot) {
         // when:
         robot.clickOn(editProfileButton);
         //Then
