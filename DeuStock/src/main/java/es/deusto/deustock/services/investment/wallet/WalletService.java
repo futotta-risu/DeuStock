@@ -103,41 +103,20 @@ public class WalletService {
     }
 
 
-    public List<StockHistoryDTO> getHoldings(String username) throws SQLException, StockNotFoundException {
-        User user = userDAO.get(username);
+    public List<StockHistoryDTO> getHoldings(String username) throws WalletException {
 
-        /*List<StockHistoryDTO> holdings = user
-                .getWallet()
-                .getHistory()
-                .stream()
-                .filter(c -> !c.isClosed())
-                .map(stockHistoryDAO::getDTO)
-                .collect(Collectors.toList());
-
-
-        for(StockHistoryDTO stockHistoryDTO : holdings){
-            DeuStock stock = new DeuStock(stockHistoryDTO.getSymbol())
-                    .setPrice(stockHistoryDTO.getOpenPrice());
-
-            OperationType opType = stockHistoryDTO.getOperation();
-
-            Operation openOperation = operationFactory.create(opType, stock, stockHistoryDTO.getAmount());
-
-            stockHistoryDTO.setOpenValue(openOperation.getOpenPrice());
-
-            stock = stockGateway.getStockData(
-                    new StockQueryData(stockHistoryDTO.getSymbol())
-                            .setWithHistoric(false)
-            );
-
-            // Close y Actual
-            Operation closeOperation = operationFactory.create(stockHistoryDTO.getOperation(), stock, stockHistoryDTO.getAmount());
-            stockHistoryDTO.setActualPrice(stock.getPrice())
-                    .setActualValue(closeOperation.getClosePrice());
-
+        try {
+            User user = userDAO.get(username);
+            return user
+                    .getWallet()
+                    .getHistory()
+                    .stream()
+                    .filter(c -> !c.isClosed())
+                    .map(stockHistoryDAO::getDTO)
+                    .collect(Collectors.toList());
+        }catch (SQLException e){
+            throw new WalletException("Error getting wallet");
         }
-        return holdings;*/
-        return null;
     }
 
 
