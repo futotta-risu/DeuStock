@@ -43,7 +43,7 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
 
     @Override
     public DeuStock getStockData(StockQueryData queryData) throws StockNotFoundException{
-        DeuStock deustock = new DeuStock(queryData);
+        var deustock = new DeuStock(queryData);
         try {
 
             Stock stock;
@@ -82,7 +82,7 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
                     .get(stockNames.toArray(String[]::new), false );
 
             for( Stock stock : stocks.values()){
-                DeuStock deustock = new DeuStock(stock.getSymbol());
+                var deustock = new DeuStock(stock.getSymbol());
                 deustock.setPrice(stock.getQuote().getPrice().doubleValue());
                 stocksAdapted.put(deustock.getAcronym(), deustock);
             }

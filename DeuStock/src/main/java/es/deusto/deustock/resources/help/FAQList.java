@@ -20,7 +20,6 @@ public class FAQList {
 
     private static final String PATH ="data/faq_list.json";
 
-    public FAQList(){}
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

@@ -27,7 +27,7 @@ public class SocialNetworkGatewayFactory {
     public SocialNetworkAPIGateway create(SocialNetworkGatewayEnum type){
         Objects.requireNonNull(type);
         return switch (type) {
-            case Twitter -> TwitterGateway.getInstance();
+            case TWITTER -> TwitterGateway.getInstance();
         };
 
 

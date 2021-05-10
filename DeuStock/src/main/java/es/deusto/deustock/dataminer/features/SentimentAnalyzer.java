@@ -29,15 +29,17 @@ public class SentimentAnalyzer {
     public static double analyze(String message) {
         if(message==null || message.isBlank()) return 2;
 
-        Properties props = new Properties();
+        var props = new Properties();
         props.setProperty("annotators", "tokenize, ssplit, pos, parse, sentiment");
         props.put("threads", "8");
-        StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
-        Annotation annotation = pipeline.process(message);
-        int i = 0;
+
+        var pipeline = new StanfordCoreNLP(props);
+        var annotation = pipeline.process(message);
+
+        var i = 0;
         double sentiment = 0;
         for (CoreMap sentence : annotation.get(CoreAnnotations.SentencesAnnotation.class)) {
-            Tree tree = sentence.get(SentimentCoreAnnotations.SentimentAnnotatedTree.class);
+            var tree = sentence.get(SentimentCoreAnnotations.SentimentAnnotatedTree.class);
             sentiment += RNNCoreAnnotations.getPredictedClass(tree);
 
             i++;
@@ -81,7 +83,7 @@ public class SentimentAnalyzer {
         List<AnalyzeSentiment> threads = new ArrayList<>();
 
         for(SocialNetworkMessage msg : messages){
-            AnalyzeSentiment thread = new AnalyzeSentiment(msg);
+            var thread = new AnalyzeSentiment(msg);
             threads.add(thread);
             thread.start();
         }

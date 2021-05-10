@@ -8,7 +8,6 @@ import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
 
-import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData.Interval;
 import es.deusto.deustock.services.investment.stock.exceptions.InvalidStockQueryDataException;
 import es.deusto.deustock.services.investment.stock.exceptions.StockException;
 
@@ -34,7 +33,7 @@ public class StockService {
 
 
     public StockService(){
-        gateway = StockDataGatewayFactory.getInstance().create(StockDataGatewayEnum.YahooFinance);
+        gateway = StockDataGatewayFactory.getInstance().create(StockDataGatewayEnum.YAHOO_FINANCE);
         stockDAO = StockDAO.getInstance();
     }
 
@@ -59,9 +58,9 @@ public class StockService {
             throw new InvalidStockQueryDataException("Invalid symbol");
         }
         try {
-            Interval interval = StockQueryData.Interval.valueOf(intervalString);
+            var interval = StockQueryData.Interval.valueOf(intervalString);
 
-            DeuStock returnStock = gateway.getStockData(
+            var returnStock = gateway.getStockData(
                     new StockQueryData(symbol,interval).setWithHistoric(withHistoric)
             );
 
@@ -90,11 +89,11 @@ public class StockService {
 
         List<String> stockList;
 
-        switch(size){
-            case "small" -> stockList = smallList;
-            case "big" ->  stockList =  bigList;
+        stockList = switch(size){
+            case "small" -> smallList;
+            case "big" ->  bigList;
             default ->  throw new IllegalArgumentException("Invalid list name");
-        }
+        };
 
         for(String stockName : stockList){
             try{

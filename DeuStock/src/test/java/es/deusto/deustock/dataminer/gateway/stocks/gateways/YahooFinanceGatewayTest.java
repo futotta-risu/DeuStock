@@ -30,7 +30,7 @@ public class YahooFinanceGatewayTest {
     void setUp(){
         this.gateway = (YahooFinanceGateway) StockDataGatewayFactory
                 .getInstance()
-                .create(StockDataGatewayEnum.YahooFinance);
+                .create(StockDataGatewayEnum.YAHOO_FINANCE);
 
         stock = new Stock("AMZN");
         StockQuote quote = new StockQuote("AMZN");

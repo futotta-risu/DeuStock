@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 import static es.deusto.deustock.util.math.Financial.rsi;
 import static es.deusto.deustock.util.math.Statistics.*;
-import static es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum.Twitter;
+import static es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum.TWITTER;
 import static org.apache.pdfbox.pdmodel.font.PDType1Font.TIMES_ROMAN;
 import static org.apache.pdfbox.pdmodel.graphics.image.JPEGFactory.createFromImage;
 
@@ -35,7 +35,7 @@ public class StockReport extends Report {
 
     private final DecimalFormat decimalFormat =  new DecimalFormat("#.##");
 
-    private final static Logger logger = LoggerFactory.getLogger(StockReport.class);
+    private static final Logger logger = LoggerFactory.getLogger(StockReport.class);
 
     public StockReport(DeuStock stock){
         super();
@@ -68,7 +68,7 @@ public class StockReport extends Report {
     }
 
     private void addActualPrice() throws IOException {
-        String date = Calendar.getInstance().getTime().toString();
+        var date = Calendar.getInstance().getTime().toString();
         double price = stock.getPrice();
 
         addSimpleTextLine("Precio [ " + date + " ] = " + decimalFormat.format(price) + " €");
@@ -103,7 +103,7 @@ public class StockReport extends Report {
         double sentiment;
 
         try {
-            sentiment = new SentimentExtractor(Twitter).getSentimentTendency(this.stock.getAcronym());
+            sentiment = new SentimentExtractor(TWITTER).getSentimentTendency(this.stock.getAcronym());
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             logger.error("Could not add sentiment of {} due to error.", stock.getAcronym());

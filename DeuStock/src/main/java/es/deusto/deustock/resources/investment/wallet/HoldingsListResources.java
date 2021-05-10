@@ -3,7 +3,6 @@ package es.deusto.deustock.resources.investment.wallet;
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.data.dto.stocks.StockHistoryDTO;
 import es.deusto.deustock.services.investment.operation.OperationService;
-import es.deusto.deustock.services.investment.operation.exceptions.OperationException;
 import es.deusto.deustock.services.investment.stock.StockService;
 import es.deusto.deustock.services.investment.stock.exceptions.StockException;
 import es.deusto.deustock.services.investment.wallet.WalletService;

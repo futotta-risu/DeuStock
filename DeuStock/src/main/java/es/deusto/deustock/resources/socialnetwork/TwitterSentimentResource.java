@@ -11,7 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum.Twitter;
+import static es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum.TWITTER;
 
 /**
  * Twitter sentiment resource for sentiment analysis.
@@ -26,7 +26,7 @@ public class TwitterSentimentResource {
 
 
     public TwitterSentimentResource(){
-        extractor = new SentimentExtractor(Twitter);
+        extractor = new SentimentExtractor(TWITTER);
     }
 
     public TwitterSentimentResource(SentimentExtractor extractor){

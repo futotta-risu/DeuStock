@@ -14,14 +14,14 @@ class SentimentExtractorTest {
     @Test
     @DisplayName("Test the constructor does not return null")
     void testConstructor(){
-        SentimentExtractor e = new SentimentExtractor(SocialNetworkGatewayEnum.Twitter);
+        SentimentExtractor e = new SentimentExtractor(SocialNetworkGatewayEnum.TWITTER);
         assertNotNull(e);
     }
 
     @Test
     @DisplayName("Tests the Get Sentiment Tendency from the Extractor")
     void getSentimentTendency() throws InterruptedException {
-        SentimentExtractor e = new SentimentExtractor(SocialNetworkGatewayEnum.Twitter);
+        SentimentExtractor e = new SentimentExtractor(SocialNetworkGatewayEnum.TWITTER);
         SocialNetworkQueryData sqd = new SocialNetworkQueryData("BTC");
 
         double result = e.getSentimentTendency(sqd);

@@ -19,7 +19,7 @@ class StockReportTest {
     @DisplayName("Test generating a report.")
     public void testGenerateReport() throws StockNotFoundException, IOException {
         YahooFinanceGateway gateway = (YahooFinanceGateway) StockDataGatewayFactory
-                .getInstance().create(StockDataGatewayEnum.YahooFinance);
+                .getInstance().create(StockDataGatewayEnum.YAHOO_FINANCE);
 
         DeuStock stock = gateway.getStockData(new StockQueryData("BB").setWithHistoric(true));
 

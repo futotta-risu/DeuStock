@@ -2,13 +2,14 @@ package es.deusto.deustock.resources.investment.operation;
 
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.services.investment.operation.OperationService;
-import es.deusto.deustock.log.DeuLogger;
-import es.deusto.deustock.services.investment.operation.exceptions.OperationException;
 import es.deusto.deustock.services.investment.operation.type.OperationType;
 import es.deusto.deustock.services.investment.stock.StockService;
 import es.deusto.deustock.services.investment.stock.exceptions.StockException;
 import es.deusto.deustock.services.investment.wallet.WalletService;
 import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -19,6 +20,8 @@ import javax.ws.rs.core.Response;
  */
 @Path("stock/operation/open")
 public class OpenOperationResource {
+
+    private static final Logger logger = LoggerFactory.getLogger(OpenOperationResource.class);
 
     private OperationService operationService;
     private StockService stockService;
@@ -51,9 +54,9 @@ public class OpenOperationResource {
             @PathParam("username") String username,
             @PathParam("amount") double amount
     ) throws WebApplicationException {
-        DeuLogger.logger.info("Petition to open a operation");
+        logger.info("Petition to open a operation");
 
-        OperationType operationType = OperationType.valueOf(operationTypeString);
+        var operationType = OperationType.valueOf(operationTypeString);
 
         try{
             DeuStock stock = stockService.getStockWithPrice(symbol);

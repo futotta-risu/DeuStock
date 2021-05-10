@@ -8,7 +8,6 @@ import es.deusto.deustock.data.stocks.Wallet;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
-import es.deusto.deustock.services.investment.operation.exceptions.OperationException;
 import es.deusto.deustock.services.investment.operation.type.Operation;
 import es.deusto.deustock.services.investment.operation.type.OperationType;
 
@@ -34,7 +33,7 @@ public class OperationService {
         stockHistoryDAO = StockHistoryDAO.getInstance();
         walletDAO = WalletDAO.getInstance();
         stockDAO = StockDAO.getInstance();
-        stockDataAPIGateway = StockDataGatewayFactory.getInstance().create(StockDataGatewayEnum.YahooFinance);
+        stockDataAPIGateway = StockDataGatewayFactory.getInstance().create(StockDataGatewayEnum.YAHOO_FINANCE);
         operationFactory = OperationFactory.getInstance();
         userDAO = UserDAO.getInstance();
     }
@@ -56,17 +55,12 @@ public class OperationService {
     }
 
 
-    public double getOpenPrice(
-            OperationType operationType, double openPrice, double amount
-    ) {
-        Operation operation = operationFactory.create(operationType, openPrice, amount);
-        return operation.getOpenPrice();
+    public double getOpenPrice(OperationType operationType, double openPrice, double amount) {
+        return operationFactory.create(operationType, openPrice, amount).getOpenPrice();
     }
 
     public double getClosePrice(OperationType operationType, double openPrice, double closePrice, double amount) {
-
-        Operation operation = operationFactory.create(operationType, openPrice, amount);
-        return operation.getClosePrice(closePrice);
+        return operationFactory.create(operationType, openPrice, amount).getClosePrice(closePrice);
     }
 
 }

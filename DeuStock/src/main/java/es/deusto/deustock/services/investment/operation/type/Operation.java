@@ -9,7 +9,7 @@ public abstract class Operation implements StockOperation{
 
     private Operation(){}
 
-    public Operation(double stockOpenPrice, double amount){
+    protected Operation(double stockOpenPrice, double amount){
 
         if(amount <= 0){
             throw new IllegalArgumentException("Cannot create operation on zero or less amount.");

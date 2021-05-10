@@ -120,7 +120,7 @@ public abstract class Report {
 	 * @return New PDPage
 	 */
 	protected PDPage createPage() throws IOException {
-		PDPage page = new PDPage(PDRectangle.A4);
+		var page = new PDPage(PDRectangle.A4);
 		this.contentStream = new PDPageContentStream(document, page);
 
 		this.actPageLine = 0;
@@ -158,7 +158,7 @@ public abstract class Report {
 	protected void addSimpleTextLine(String text) throws IOException {
 		this.contentStream.setFont(TIMES_ROMAN, 12);
 		this.contentStream.beginText();
-		this.contentStream.newLineAtOffset(25, 730 - 25 * this.actPageLine++);
+		this.contentStream.newLineAtOffset(25,  730 - 25.0f * this.actPageLine++);
 		this.contentStream.showText(text);
 		this.contentStream.endText();
 	}

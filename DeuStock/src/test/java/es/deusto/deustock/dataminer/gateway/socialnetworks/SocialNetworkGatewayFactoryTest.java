@@ -15,7 +15,7 @@ class SocialNetworkGatewayFactoryTest {
     @Test
     void testCreateTwitterGateway() {
         SocialNetworkGatewayFactory factory = SocialNetworkGatewayFactory.getInstance();
-        SocialNetworkAPIGateway  twitterGateway =  factory.create(SocialNetworkGatewayEnum.Twitter);
+        SocialNetworkAPIGateway  twitterGateway =  factory.create(SocialNetworkGatewayEnum.TWITTER);
         assertNotNull(twitterGateway);
     }
 

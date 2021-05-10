@@ -12,11 +12,11 @@ import java.util.List;
  */
 public class SocialTextCleaner {
 
-    private final static String CHAR_FILTER      = "[^\\p{L}\\p{M}\\p{N}\\p{P}\\p{Z}\\p{Cf}\\p{Cs}\\s]";
-    private final static String URL_FILTER = "(https?://)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)";
-    private final static String USERNAME_FILTER = "@[\\S]+";
-    private final static String HASHTAG_FILTER = "#";
-    private final static String SPACE_FILTER = "[\\s]+";
+    private static final String CHAR_FILTER      = "[^\\p{L}\\p{M}\\p{N}\\p{P}\\p{Z}\\p{Cf}\\p{Cs}\\s]";
+    private static final String URL_FILTER = "(https?://)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)";
+    private static final String USERNAME_FILTER = "@[\\S]+";
+    private static final String HASHTAG_FILTER = "#";
+    private static final String SPACE_FILTER = "[\\s]+";
 
     private SocialTextCleaner(){}
 
@@ -29,7 +29,7 @@ public class SocialTextCleaner {
     }
 
     public static String removeHashtags(String txt) {
-        return txt.replaceAll(HASHTAG_FILTER, "");
+        return txt.replace(HASHTAG_FILTER, "");
     }
 
     /**

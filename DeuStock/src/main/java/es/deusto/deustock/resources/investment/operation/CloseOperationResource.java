@@ -2,13 +2,13 @@ package es.deusto.deustock.resources.investment.operation;
 
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.data.stocks.StockHistory;
-import es.deusto.deustock.log.DeuLogger;
 import es.deusto.deustock.services.investment.operation.OperationService;
-import es.deusto.deustock.services.investment.operation.exceptions.OperationException;
 import es.deusto.deustock.services.investment.stock.StockService;
 import es.deusto.deustock.services.investment.stock.exceptions.StockException;
 import es.deusto.deustock.services.investment.wallet.WalletService;
 import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -19,6 +19,8 @@ import javax.ws.rs.core.Response;
  */
 @Path("stock/operation/close")
 public class CloseOperationResource {
+
+    private static final Logger logger = LoggerFactory.getLogger(CloseOperationResource.class);
 
     private OperationService operationService;
     private WalletService walletService;
@@ -48,15 +50,15 @@ public class CloseOperationResource {
     public Response closeOperation(
             @PathParam("stockHistoryID") String stockHistoryID
     ) throws WebApplicationException {
-        DeuLogger.logger.info("Petition to close the operation");
+        logger.info("Petition to close the operation");
 
         try {
-            StockHistory history = walletService.getStockHistory(stockHistoryID);
+            var history = walletService.getStockHistory(stockHistoryID);
             if(history.isClosed()){
                 throw new WebApplicationException("Already Closed Operation", Response.Status.UNAUTHORIZED);
             }
 
-            DeuStock stock = stockService.getStockWithPrice(history.getStock().getAcronym());
+            var stock = stockService.getStockWithPrice(history.getStock().getAcronym());
             double actualPrice = operationService.getClosePrice(
                     history.getOperation(), history.getPrice() , stock.getPrice(), history.getAmount()
             );

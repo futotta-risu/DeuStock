@@ -19,7 +19,7 @@ public class DBManager implements IDBManager{
 
 	private final Logger logger = LoggerFactory.getLogger(DBManager.class);
 
-	private final static String SELECT_CONDITION_QUERY = "SELECT FROM %s WHERE %s";
+	private static final  String SELECT_CONDITION_QUERY = "SELECT FROM %s WHERE %s";
 
 	private DBManager(){
 		pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");

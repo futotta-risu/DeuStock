@@ -34,14 +34,14 @@ public class UserDetail {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUsername(@PathParam("username") String username) throws SQLException {
-        User user = userDAO.get(username);
+        var user = userDAO.get(username);
 
         if(user == null){
             logger.error("Cannot get user  information");
             return Response.status(401).build();
         }
 
-        UserDTO userDTO = userDAO.getDTO(user);
+        var userDTO = userDAO.getDTO(user);
 
         return Response
                 .status(Response.Status.OK)

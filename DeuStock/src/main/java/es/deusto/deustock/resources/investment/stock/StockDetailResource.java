@@ -34,7 +34,6 @@ public class StockDetailResource {
 
         DeuStock stock;
         try {
-            System.out.println("T-1");
             stock = stockService.getStockDetailData(symbol, interval);
         } catch (StockException e) {
             throw new WebApplicationException(e.getMessage(), Response.Status.UNAUTHORIZED);

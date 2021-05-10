@@ -28,7 +28,7 @@ public class UserChangeDetails {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response changeDetails(UserDTO userDTO) throws SQLException {
-        User user = userDAO.get(userDTO.getUsername());
+        var user = userDAO.get(userDTO.getUsername());
 
         if(user==null){
             return Response.status(401).build();
