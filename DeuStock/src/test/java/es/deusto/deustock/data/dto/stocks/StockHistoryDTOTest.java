@@ -39,7 +39,7 @@ public class StockHistoryDTOTest {
         final Field field = stockHistoryDTO.getClass().getDeclaredField("id");
         field.setAccessible(true);
 
-        assertEquals(field.get(stockHistoryDTO), (long) 5);
+        assertEquals((long) 5, field.get(stockHistoryDTO));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class StockHistoryDTOTest {
         final long result = stockHistoryDTO.getId();
 
         //then
-        assertEquals( result,  2);
+        assertEquals(2, result);
     }
 
     @Test
@@ -71,7 +71,7 @@ public class StockHistoryDTOTest {
         final Field field = stockHistoryDTO.getClass().getDeclaredField("symbol");
         field.setAccessible(true);
 
-        assertEquals(field.get(stockHistoryDTO), "BB");
+        assertEquals("BB", field.get(stockHistoryDTO));
     }
 
     @Test
@@ -87,7 +87,7 @@ public class StockHistoryDTOTest {
         final String result = stockHistoryDTO.getSymbol();
 
         //then
-        assertEquals( result, "AMZN");
+        assertEquals("AMZN", result);
     }
 
     @Test
@@ -103,7 +103,7 @@ public class StockHistoryDTOTest {
         final Field field = stockHistoryDTO.getClass().getDeclaredField("openPrice");
         field.setAccessible(true);
 
-        assertEquals(field.get(stockHistoryDTO), 44.3);
+        assertEquals(44.3, field.get(stockHistoryDTO));
     }
 
     @Test
@@ -119,7 +119,7 @@ public class StockHistoryDTOTest {
         final double result = stockHistoryDTO.getOpenPrice();
 
         //then
-        assertEquals( result, 44.6);
+        assertEquals(44.6, result);
     }
 
     @Test
@@ -135,7 +135,7 @@ public class StockHistoryDTOTest {
         final Field field = stockHistoryDTO.getClass().getDeclaredField("actualPrice");
         field.setAccessible(true);
 
-        assertEquals(field.get(stockHistoryDTO), 44.3);
+        assertEquals(44.3, field.get(stockHistoryDTO));
     }
 
     @Test
@@ -151,7 +151,7 @@ public class StockHistoryDTOTest {
         final double result = stockHistoryDTO.getActualPrice();
 
         //then
-        assertEquals( result, 44.6);
+        assertEquals(44.6, result);
     }
 
     @Test
@@ -167,7 +167,7 @@ public class StockHistoryDTOTest {
         final Field field = stockHistoryDTO.getClass().getDeclaredField("amount");
         field.setAccessible(true);
 
-        assertEquals(field.get(stockHistoryDTO), 44.3);
+        assertEquals(44.3, field.get(stockHistoryDTO));
     }
 
     @Test
@@ -183,7 +183,7 @@ public class StockHistoryDTOTest {
         final double result = stockHistoryDTO.getAmount();
 
         //then
-        assertEquals( result, 44.6);
+        assertEquals(44.6, result);
     }
 
     @Test
@@ -199,7 +199,7 @@ public class StockHistoryDTOTest {
         final Field field = stockHistoryDTO.getClass().getDeclaredField("openValue");
         field.setAccessible(true);
 
-        assertEquals(field.get(stockHistoryDTO), 44.3);
+        assertEquals(44.3, field.get(stockHistoryDTO));
     }
 
     @Test
@@ -215,7 +215,7 @@ public class StockHistoryDTOTest {
         final double result = stockHistoryDTO.getOpenValue();
 
         //then
-        assertEquals( result, 44.6);
+        assertEquals(44.6, result);
     }
 
     @Test
@@ -231,7 +231,7 @@ public class StockHistoryDTOTest {
         final Field field = stockHistoryDTO.getClass().getDeclaredField("actualValue");
         field.setAccessible(true);
 
-        assertEquals(field.get(stockHistoryDTO), 44.3);
+        assertEquals(44.3, field.get(stockHistoryDTO));
     }
 
     @Test
@@ -247,7 +247,7 @@ public class StockHistoryDTOTest {
         final double result = stockHistoryDTO.getActualValue();
 
         //then
-        assertEquals( result, 44.6);
+        assertEquals(44.6, result);
     }
 
     @Test
@@ -263,7 +263,7 @@ public class StockHistoryDTOTest {
         final Field field = stockHistoryDTO.getClass().getDeclaredField("operation");
         field.setAccessible(true);
 
-        assertEquals(field.get(stockHistoryDTO), OperationType.LONG);
+        assertEquals(OperationType.LONG, field.get(stockHistoryDTO));
     }
 
     @Test
@@ -279,6 +279,6 @@ public class StockHistoryDTOTest {
         final OperationType result = stockHistoryDTO.getOperation();
 
         //then
-        assertEquals( result, OperationType.SHORT);
+        assertEquals(OperationType.SHORT, result);
     }
 }

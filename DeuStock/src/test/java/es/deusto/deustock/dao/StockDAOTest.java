@@ -151,7 +151,7 @@ public class StockDAOTest {
 
         // Then
         assertNotNull(result);
-        assertEquals(result.size(),2);
+        assertEquals(2, result.size());
     }
     
     @Test
@@ -164,7 +164,7 @@ public class StockDAOTest {
         DeuStock stockObtained = stockDAO.getOrCreateStock("acronymTest");
         
         assertNotNull(stockObtained);
-        assertEquals(stockObtained.getAcronym(), "Test");
+        assertEquals("Test", stockObtained.getAcronym());
     }
 
 }

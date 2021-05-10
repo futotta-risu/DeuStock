@@ -64,7 +64,7 @@ public class YahooFinanceGatewayTest {
 
         // Then
         assertNotNull(stockData);
-        assertEquals(stockData.getAcronym(), "AMZN");
+        assertEquals("AMZN", stockData.getAcronym());
         assertTrue(stockData.getHistory().isEmpty());
         assertTrue(stockData.getPrice() > 0);
     }
