@@ -12,6 +12,7 @@ import es.deusto.deustock.services.investment.operation.type.OperationType;
 import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
+import yahoofinance.Stock;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -302,6 +303,149 @@ public class WalletServiceTest {
                 () -> service.updateMoneyByWalletID("TestUser", 6000.0)
         );
     }
-    
+
+    @Test
+    void testAddToHoldingsAddsStockHistory() throws SQLException, WalletException {
+        User u = new User("TestUsername", "TestPass");
+        Wallet wallet = new Wallet();
+        u.setWallet(wallet);
+
+        DeuStock stock = new DeuStock("BB").setPrice(20.0);
+        StockHistory stockHistory = new StockHistory(wallet,stock,20.0,20.0,OperationType.LONG);
+
+        when(mockUserDAO.get(anyString())).thenReturn(u);
+        when(mockStockHistoryDAO.create(any(),any(),anyDouble(),any())).thenReturn(stockHistory);
+        doNothing().when(mockStockHistoryDAO).store(any());
+        doNothing().when(mockWalletDAO).update(any());
+
+        WalletService service = new WalletService();
+        service.setWalletDAO(mockWalletDAO);
+        service.setUserDAO(mockUserDAO);
+        service.setStockHistoryDAO(mockStockHistoryDAO);
+
+        // When
+        service.addToHoldings("TestUsername",stock,20.0, OperationType.LONG);
+
+        // Then
+        assertEquals(1, wallet.getHistory().size());
+    }
+
+    @Test
+    void testAddToHoldingsThrowsOnSQLException() throws SQLException, WalletException {
+        User u = new User("TestUsername", "TestPass");
+        Wallet wallet = new Wallet();
+        u.setWallet(wallet);
+
+        DeuStock stock = new DeuStock("BB").setPrice(20.0);
+        StockHistory stockHistory = new StockHistory(wallet,stock,20.0,20.0,OperationType.LONG);
+
+        when(mockUserDAO.get(anyString())).thenReturn(u);
+        when(mockStockHistoryDAO.create(any(),any(),anyDouble(),any())).thenReturn(stockHistory);
+        doThrow(new SQLException("Can't store")).when(mockStockHistoryDAO).store(any());
+        doNothing().when(mockWalletDAO).update(any());
+
+        WalletService service = new WalletService();
+        service.setWalletDAO(mockWalletDAO);
+        service.setUserDAO(mockUserDAO);
+        service.setStockHistoryDAO(mockStockHistoryDAO);
+
+        // When
+
+        // Then
+        assertThrows(
+                WalletException.class,
+                () -> service.addToHoldings("TestUsername",stock,20.0, OperationType.LONG)
+        );
+    }
+
+    @Test
+    void testGetStockHistoryReturnsStockHistory() throws SQLException, WalletException {
+        User u = new User("TestUsername", "TestPass");
+        Wallet wallet = new Wallet();
+        u.setWallet(wallet);
+
+        DeuStock stock = new DeuStock("BB").setPrice(20.0);
+        StockHistory stockHistory = new StockHistory(wallet,stock,20.0,20.0,OperationType.LONG);
+
+        doReturn(stockHistory).when(mockStockHistoryDAO).get(any());
+
+        WalletService service = new WalletService();
+        service.setStockHistoryDAO(mockStockHistoryDAO);
+
+        // When
+        StockHistory result = service.getStockHistory("TestUsername");
+
+        // Then
+        assertEquals(stockHistory, result);
+    }
+
+    @Test
+    void testGetStockHistoryThrowsWalletExceptionOnSQLException() throws SQLException, WalletException {
+        User u = new User("TestUsername", "TestPass");
+        Wallet wallet = new Wallet();
+        u.setWallet(wallet);
+
+        DeuStock stock = new DeuStock("BB").setPrice(20.0);
+        StockHistory stockHistory = new StockHistory(wallet,stock,20.0,20.0,OperationType.LONG);
+
+        doThrow(new SQLException("No StockHistory")).when(mockStockHistoryDAO).get(any());
+
+        WalletService service = new WalletService();
+        service.setStockHistoryDAO(mockStockHistoryDAO);
+
+        // When
+
+        // Then
+        assertThrows(
+                WalletException.class,
+                () -> service.getStockHistory("TestUsername")
+        );
+    }
+
+    @Test
+    void testCloseHistoryClosesHistory() throws SQLException, WalletException {
+        User u = new User("TestUsername", "TestPass");
+        Wallet wallet = new Wallet();
+        u.setWallet(wallet);
+
+        DeuStock stock = new DeuStock("BB").setPrice(20.0);
+        StockHistory stockHistory = new StockHistory(wallet,stock,20.0,20.0,OperationType.LONG);
+
+        doReturn(stockHistory).when(mockStockHistoryDAO).get(any());
+        doNothing().when(mockStockHistoryDAO).update(any());
+
+        WalletService service = new WalletService();
+        service.setStockHistoryDAO(mockStockHistoryDAO);
+
+        // When
+        service.closeStockHistory("TestUsername");
+
+        // Then
+        assertTrue(stockHistory.isClosed());
+    }
+
+    @Test
+    void testCloseHistoryThrowsWalletExceptionOnSQLException() throws SQLException, WalletException {
+        User u = new User("TestUsername", "TestPass");
+        Wallet wallet = new Wallet();
+        u.setWallet(wallet);
+
+        DeuStock stock = new DeuStock("BB").setPrice(20.0);
+        StockHistory stockHistory = new StockHistory(wallet,stock,20.0,20.0,OperationType.LONG);
+
+        doThrow(new SQLException("Exception")).when(mockStockHistoryDAO).get(any());
+        doNothing().when(mockStockHistoryDAO).update(any());
+
+        WalletService service = new WalletService();
+        service.setStockHistoryDAO(mockStockHistoryDAO);
+
+        // When
+
+        // Then
+        assertThrows(
+                WalletException.class,
+                () -> service.closeStockHistory("TestUsername")
+        );
+    }
 
 }

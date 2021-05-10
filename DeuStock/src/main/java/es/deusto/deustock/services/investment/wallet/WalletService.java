@@ -170,29 +170,21 @@ public class WalletService {
     }
 
     public StockHistory getStockHistory(String stockHistoryID) throws WalletException {
-        StockHistory stockHistory;
-
         try {
-            stockHistory = stockHistoryDAO.get(stockHistoryID);
+            return stockHistoryDAO.get(stockHistoryID);
         } catch (SQLException sqlException) {
             throw new WalletException("Error updating wallet");
         }
-
-        return stockHistory;
     }
 
     public void closeStockHistory(String stockHistoryID) throws WalletException {
-        StockHistory stockHistory;
-
         try {
-            stockHistory = stockHistoryDAO.get(stockHistoryID);
+            StockHistory stockHistory = stockHistoryDAO.get(stockHistoryID);
             stockHistory.setClosed(true);
             stockHistoryDAO.update(stockHistory);
         } catch (SQLException sqlException) {
             throw new WalletException("Error updating wallet");
         }
-
-
     }
 
 }
