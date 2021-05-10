@@ -2,6 +2,7 @@ package es.deusto.deustock.client.controllers;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxRobot;
@@ -22,6 +23,16 @@ public class UserDetailControllerTest{
     private Button editProfileButton;
     private UserDetailController controller;
 
+    @BeforeClass
+    public static void setupSpec() throws Exception {
+        if (Boolean.getBoolean("headless")) {
+            System.setProperty("testfx.robot", "glass");
+            System.setProperty("testfx.headless", "true");
+            System.setProperty("prism.order", "sw");
+            System.setProperty("prism.text", "t2k");
+            System.setProperty("java.awt.headless", "true");
+        }
+    }
     /**
      * Will be called with {@code @Before} semantics, i. e. before each test method.
      *
