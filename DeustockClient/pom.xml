@@ -71,7 +71,8 @@
 					<redirectTestOutputToFile>true</redirectTestOutputToFile>
 					<forkCount>3</forkCount>
 					<reuseForks>true</reuseForks>
-					<argLine>${surefireArgLine} -Xmx1024m -noverify --enable-preview</argLine>
+					<!--suppress UnresolvedMavenProperty -->
+                    <argLine>${surefireArgLine} -Xmx1024m -noverify --enable-preview</argLine>
 				</configuration>
 
 	        </plugin>
@@ -203,9 +204,22 @@
             <version>5.7.0</version>
         </dependency>
         <dependency>
-            <groupId>org.loadui</groupId>
-            <artifactId>testFx</artifactId>
-            <version>3.1.2</version>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-core</artifactId>
+            <version>4.0.16-alpha</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-junit5</artifactId>
+            <version>4.0.15-alpha</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.13.2</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <properties>

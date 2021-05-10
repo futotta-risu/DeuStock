@@ -94,7 +94,7 @@ public class UserDetailController implements DSGenericController{
         );
 
         this.editProfileButton.setOnMouseClicked(
-        		moseEvent ->
+        		mouseEvent ->
         		    MainController.getInstance().loadAndChangePaneWithParams(
                             ViewPaths.ChangeUserDetailViewPath,
                             new HashMap<>() {{ put("username", username ); }}
