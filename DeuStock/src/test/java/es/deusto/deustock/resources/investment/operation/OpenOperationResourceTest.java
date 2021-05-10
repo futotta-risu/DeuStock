@@ -57,38 +57,13 @@ class OpenOperationResourceTest {
 
     }
 
-    @Test
-    void openOperationThrowsExceptionOnOperationException() throws WebApplicationException, StockException, OperationException, WalletException {
-        DeuStock stock = new DeuStock("BB").setPrice(20);
-
-        when(mockStockService.getStockWithPrice(anyString())).thenReturn(stock);
-        when(mockOperationService.getOpenPrice(any(),anyDouble(),anyDouble())).thenThrow(new OperationException("Unknown Exception"));
-        doNothing().when(mockWalletService).updateMoney(anyString(),anyDouble());
-        doNothing().when(mockWalletService).addToHoldings(anyString(),any(),anyDouble(),any());
-
-        OpenOperationResource resource = new OpenOperationResource();
-        resource.setOperationService(mockOperationService);
-        resource.setStockService(mockStockService);
-        resource.setWalletService(mockWalletService);
-
-        // When
-
-        // Then
-
-        assertThrows(WebApplicationException.class,
-                () -> resource.openOperation(
-                        "LONG", "BB", "TestUsername", 20
-                )
-        );
-
-    }
 
     @Test
     void openOperationThrowsExceptionOnWalletException() throws WebApplicationException, StockException, OperationException, WalletException {
         DeuStock stock = new DeuStock("BB").setPrice(20);
 
         when(mockStockService.getStockWithPrice(anyString())).thenReturn(stock);
-        when(mockOperationService.getOpenPrice(any(),anyDouble(),anyDouble())).thenThrow(new OperationException("Unknown Exception"));
+        when(mockOperationService.getOpenPrice(any(),anyDouble(),anyDouble())).thenReturn(20.0);
         doThrow(new WalletException("Wallet exception")).when(mockWalletService).updateMoney(anyString(),anyDouble());
         doNothing().when(mockWalletService).addToHoldings(anyString(),any(),anyDouble(),any());
 
