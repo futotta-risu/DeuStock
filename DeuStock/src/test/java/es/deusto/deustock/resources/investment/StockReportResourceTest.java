@@ -42,7 +42,7 @@ class StockReportResourceTest {
     
     @Test
     @DisplayName("Test create a simple pdf with chart returns 200")
-    public void testCreateSimplePdfWithChartReturns200() throws IOException, StockNotFoundException{
+    void testCreateSimplePdfWithChartReturns200() throws IOException, StockNotFoundException{
     	//Given
     	DeuStock stock = new DeuStock("Test");
     	List<HistoricalQuote> quotes = new LinkedList<>();
@@ -74,7 +74,7 @@ class StockReportResourceTest {
 
     @Test
     @DisplayName("Test create a simple pdf with chart returns Exception")
-    public void testCreateSimplePdfWithChartReturnsException() throws StockNotFoundException{
+    void testCreateSimplePdfWithChartReturnsException() throws StockNotFoundException{
     	//Given
     	StockNotFoundException ex = new StockNotFoundException(new StockQueryData("BB"));
 
@@ -92,7 +92,7 @@ class StockReportResourceTest {
     
     @Test
     @DisplayName("Test create report returns 401 on non existent stock")
-    public void testCreateReportReturns401OnNonExistentStock() throws IOException, StockNotFoundException{
+    void testCreateReportReturns401OnNonExistentStock() throws IOException, StockNotFoundException{
         //Given
         when(mockStockGateway.getStockData(any())).thenReturn(null);
 

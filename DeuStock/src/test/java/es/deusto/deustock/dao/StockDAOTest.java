@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
 /**
  * @author Erik B. Terres
  */
-public class StockDAOTest {
+class StockDAOTest {
 
     private IDBManager dbManager;
     private StockDAO stockDAO;

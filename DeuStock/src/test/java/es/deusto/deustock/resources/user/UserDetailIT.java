@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author Erik B. Terres
  */
 @Tag("server-resource")
-public class UserDetailIT extends JerseyTest {
+class UserDetailIT extends JerseyTest {
 
     @BeforeEach
     @Override
@@ -45,7 +45,7 @@ public class UserDetailIT extends JerseyTest {
 
     @Test
     @DisplayName("Test get username returns 200")
-    public void testGetUsernameReturns200() throws SQLException {
+    void testGetUsernameReturns200() throws SQLException {
         // Given
         User user = new User("TestUserReturn200", "TestPass");
         UserDAO.getInstance().store(user);
@@ -64,7 +64,7 @@ public class UserDetailIT extends JerseyTest {
 
     @Test
     @DisplayName("Test get username returns correct user")
-    public void testGetUsernameReturnsUser() throws SQLException {
+    void testGetUsernameReturnsUser() throws SQLException {
         // Given
         User user = new User("TestUserReturnsUser", "TestPass");
         UserDAO.getInstance().store(user);
@@ -86,13 +86,11 @@ public class UserDetailIT extends JerseyTest {
 
     @Test
     @DisplayName("Test get username returns status 401 on non existent user")
-    public void testGetUsernameReturnsStatus401OnNonExistingUser(){
+    void testGetUsernameReturnsStatus401OnNonExistingUser(){
         Response response = target("user")
                 .path("UserDetailTest401OnNonExistentUser")
                 .request().get();
 
         assertEquals(401, response.getStatus());
     }
-
-
 }

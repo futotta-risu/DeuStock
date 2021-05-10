@@ -43,7 +43,7 @@ class AuthResourceTest {
     
     @Test
     @DisplayName("Test login returns 200")
-    public void testLoginReturns200() {
+    void testLoginReturns200() {
     	//Given
     	UserDTO userDTO = new UserDTO().setUsername("Test").setPassword("Pass");
         when(mockAuthService.login(anyString(),anyString())).thenReturn(userDTO);
@@ -60,7 +60,7 @@ class AuthResourceTest {
 
     @Test
     @DisplayName("Test login throws WebApplicationException with AuthService exception")
-    public void testLoginThrowsWebApplicationExceptionWithServiceException() {
+    void testLoginThrowsWebApplicationExceptionWithServiceException() {
         //Given
         when(mockAuthService.login(anyString(),anyString())).thenThrow(
                 new LoginException("Exception")
@@ -81,7 +81,7 @@ class AuthResourceTest {
     
     @Test
     @DisplayName("Test register returns 200")
-    public void testRegisterReturns200() {
+    void testRegisterReturns200() {
         //Given
         UserDTO userDTO = new UserDTO();
         userDTO.setUsername("userDTO");
@@ -102,7 +102,7 @@ class AuthResourceTest {
     
     @Test
     @DisplayName("Test register already existing user throws WebApplicationException")
-    public void testRegisterThrowsWebApplicationExceptionWithServiceException(){
+    void testRegisterThrowsWebApplicationExceptionWithServiceException(){
         //Given
         UserDTO userDTO = new UserDTO();
         userDTO.setUsername("userDTO");
@@ -124,7 +124,7 @@ class AuthResourceTest {
     
     @Test
     @DisplayName("Test delete user returns 200")
-    public void testDeleteUserReturns200() throws SQLException {
+    void testDeleteUserReturns200() throws SQLException {
     	//Given
     	User user = new User("Test", "Pass");
 
@@ -142,7 +142,7 @@ class AuthResourceTest {
     
     @Test
     @DisplayName("Test delete with wrong password returns 401")
-    public void testDeleteUserWithWrongPassReturns401() throws SQLException {
+    void testDeleteUserWithWrongPassReturns401() throws SQLException {
     	//Given
     	User user = new User("Test", "Pass");
     	
@@ -160,7 +160,7 @@ class AuthResourceTest {
     
     @Test
     @DisplayName("Test delete non existent user returns 401")
-    public void testDeleteNonExistentUserReturns401() throws SQLException {
+    void testDeleteNonExistentUserReturns401() throws SQLException {
     	//Given
     	
     	//When

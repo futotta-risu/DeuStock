@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * @author Erik B. Terres
  */
-public class UserDTOTest {
+class UserDTOTest {
 
     @Test
     @DisplayName("Test Constructor is not null")

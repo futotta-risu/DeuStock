@@ -11,8 +11,10 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
-public class WalletTest {
+/**
+ * @author Erik B. Terres
+ */
+class WalletTest {
 
     @Test
     void testConstructor(){

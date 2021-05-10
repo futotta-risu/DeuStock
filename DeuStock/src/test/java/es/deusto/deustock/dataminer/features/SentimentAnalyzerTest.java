@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("sentiment")
-public class SentimentAnalyzerTest {
+class SentimentAnalyzerTest {
 
     @Test
     @DisplayName("Test Analyze String")

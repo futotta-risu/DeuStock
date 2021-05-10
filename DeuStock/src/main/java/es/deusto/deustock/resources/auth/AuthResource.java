@@ -121,7 +121,7 @@ public class AuthResource {
 			@PathParam("password") String password
 	) throws SQLException {
 		logger.info("User delete petition");
-		User user = userDAO.get(username);
+		var user = userDAO.get(username);
 
 		if (user == null) {
 			logger.warn("User not found in DB while deleting");

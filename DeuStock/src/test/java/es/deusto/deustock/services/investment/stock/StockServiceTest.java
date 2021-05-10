@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @Tag("service")
-public class StockServiceTest {
+class StockServiceTest {
 
     private StockDataAPIGateway mockGateway;
     private StockDAO mockStockDAO;

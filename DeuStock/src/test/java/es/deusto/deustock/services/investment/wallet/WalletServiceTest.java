@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @Tag("service")
-public class WalletServiceTest {
+class WalletServiceTest {
 
     private UserDAO mockUserDAO;
     private StockHistoryDAO mockStockHistoryDAO;

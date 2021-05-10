@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TwitterGatewayTest {
+class TwitterGatewayTest {
 
     @Test
     @DisplayName("Twitter API get Tweets")

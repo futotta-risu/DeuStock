@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 /**
  * @author Erik B. Terres
  */
-public class YahooFinanceGatewayTest {
+class YahooFinanceGatewayTest {
     private YahooFinanceGateway gateway;
     private Stock stock, stockFake;
 

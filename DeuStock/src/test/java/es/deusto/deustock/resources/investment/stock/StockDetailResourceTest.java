@@ -21,8 +21,8 @@ import org.junit.jupiter.api.Test;
 /**
  * @author landersanmillan
  */
-@Tag("server-resource-2")
-public class StockDetailResourceTest {
+@Tag("server-resource")
+class StockDetailResourceTest {
 	
 	private StockService stockService;
 	

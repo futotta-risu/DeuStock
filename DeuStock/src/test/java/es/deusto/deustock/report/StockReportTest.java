@@ -2,11 +2,6 @@ package es.deusto.deustock.report;
 
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.dataminer.features.SentimentExtractor;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
-import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
-import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
-import es.deusto.deustock.dataminer.gateway.stocks.gateways.YahooFinanceGateway;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -17,11 +12,9 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -31,7 +24,7 @@ class StockReportTest {
 
     @Test
     @DisplayName("Test generating a report.")
-    public void testGenerateReport() throws IOException, InterruptedException {
+    void testGenerateReport() throws IOException, InterruptedException {
         // Given
         DeuStock stock = new DeuStock("BB").setPrice(22.0);
 

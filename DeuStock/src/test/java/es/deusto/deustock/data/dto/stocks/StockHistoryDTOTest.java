@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * @author Erik B. Terres
  */
-public class StockHistoryDTOTest {
+class StockHistoryDTOTest {
 
     @Test
     @DisplayName("Test Constructor does not return null")

@@ -12,85 +12,85 @@ import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import org.junit.jupiter.api.function.ThrowingSupplier;
 import yahoofinance.histquotes.HistoricalQuote;
 
-public class DeuStockTest {
+class DeuStockTest {
 	
 	@Test
-	public void testConstructor0() {
+	void testConstructor0() {
 		DeuStock deustock = new DeuStock();
 		assertDoesNotThrow((ThrowingSupplier<DeuStock>) DeuStock::new);
 		assertNotNull(deustock);
 	}
 	
 	@Test
-	public void testConstructor1() {
+	void testConstructor1() {
 		DeuStock deustock = new DeuStock("AZ");
 		assertEquals("AZ", deustock.getAcronym());
 	}
 	
 	@Test
-	public void testConstructor2() {
+	void testConstructor2() {
 		StockQueryData sqd = new StockQueryData("AZ");
 		DeuStock deustock = new DeuStock(sqd);
 		assertEquals("AZ", deustock.getAcronym());
 	}
 
 	@Test
-	public void testGetPrice() {
+	void testGetPrice() {
 		DeuStock deustock = new DeuStock();
 		deustock.setPrice(50);
 		assertEquals(50, deustock.getPrice(), 0.02);
 	}
 	
 	@Test
-	public void testSetPrice() {
+	void testSetPrice() {
 		DeuStock deustock = new DeuStock();
 		deustock.setPrice(50);
 		assertEquals(50, deustock.getPrice(), 0.02);
 	}
 	
 	@Test
-	public void testGetFullName() {
+	void testGetFullName() {
 		DeuStock deustock = new DeuStock();
 		deustock.setFullName("Aritz Zugazaga");
 		assertEquals("Aritz Zugazaga", deustock.getFullName());
 	}
 	
 	@Test
-	public void testSetFullName() {
+	void testSetFullName() {
 		DeuStock deustock = new DeuStock();
 		deustock.setFullName("Aritz Zugazaga");
 		assertEquals("Aritz Zugazaga", deustock.getFullName());
 	}
 	
 	@Test
-	public void testGetAcronym() {
+	void testGetAcronym() {
 		DeuStock deustock = new DeuStock("AZ");
 		assertEquals("AZ", deustock.getAcronym());
 	}
 	
 	@Test
-	public void testSetAcronym() {
+	void testSetAcronym() {
 		DeuStock deustock = new DeuStock("AZ");
 		deustock.setAcronym("LS");
 		assertEquals("LS", deustock.getAcronym());
 	}
 
 	@Test
-	public void testGetDescription() {
+	void testGetDescription() {
 		DeuStock deustock = new DeuStock();
 		deustock.setDescription("Hola me gusta la CocaCola");
 		assertEquals("Hola me gusta la CocaCola", deustock.getDescription());
 	}
 	
 	@Test
-	public void testSetDescription() {
+	void testSetDescription() {
 		DeuStock deustock = new DeuStock();
 		deustock.setDescription("Hola me gusta la CocaCola");
 		assertEquals("Hola me gusta la CocaCola", deustock.getDescription());
 	}
 	
 	@Test
-	public void testGetHistory() {
+	void testGetHistory() {
 		DeuStock deustock = new DeuStock();
 		List<HistoricalQuote> list = new ArrayList<>();
 		HistoricalQuote HQ = new HistoricalQuote();
@@ -101,7 +101,7 @@ public class DeuStockTest {
 	}
 	
 	@Test
-	public void testSetHistory() {
+	void testSetHistory() {
 		DeuStock deustock = new DeuStock();
 		List<HistoricalQuote> list = new ArrayList<>();
 		HistoricalQuote HQ = new HistoricalQuote();
@@ -112,7 +112,7 @@ public class DeuStockTest {
 	}
 	
 	@Test
-	public void testToString() {
+	void testToString() {
 		DeuStock deustock = new DeuStock("AZ");
 		deustock.setPrice(50);
 		String actuals = deustock.toString();

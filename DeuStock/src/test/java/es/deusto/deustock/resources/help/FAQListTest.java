@@ -17,10 +17,10 @@ import static org.mockito.Mockito.mockStatic;
 /**
  * @author Erik B. Terres
  */
-public class FAQListTest {
+class FAQListTest {
 
     @Test
-    public void testFAQReturns200()  {
+    void testFAQReturns200()  {
         // Given
         FAQList faqList = new FAQList();
 
@@ -32,7 +32,7 @@ public class FAQListTest {
     }
 
     @Test
-    public void testFAQReturnsQuestions()  {
+    void testFAQReturnsQuestions()  {
         // Given
         FAQList faqList = new FAQList();
 
@@ -46,7 +46,7 @@ public class FAQListTest {
 
 
     @Test
-    public void testFAQThrowsErrorOnWrongPath() {
+    void testFAQThrowsErrorOnWrongPath() {
         try (MockedStatic<DSJSONUtils> jsonMock= mockStatic(DSJSONUtils.class)) {
             // Given
             FAQList faqList = new FAQList();

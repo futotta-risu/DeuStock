@@ -37,7 +37,7 @@ class UserDetailTest {
     
     @Test
     @DisplayName("Test getUsername returns 200")
-    public void testGetUsernameReturns200() throws SQLException {
+    void testGetUsernameReturns200() throws SQLException {
     	//Given
     	User user = new User("Test", "Pass");
     	UserDTO userDTO = new UserDTO().setUsername("Test").setPassword("Pass");
@@ -56,7 +56,7 @@ class UserDetailTest {
     
     @Test
     @DisplayName("Test getUsername returns 401")
-    public void testGetUsernameReturns401() throws SQLException {
+    void testGetUsernameReturns401() throws SQLException {
     	//Given
     	
     	//When
@@ -69,7 +69,5 @@ class UserDetailTest {
         //Then
 		assertEquals(401, response.getStatus());
     }
-
-
 
 }

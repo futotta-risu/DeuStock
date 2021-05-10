@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @Tag("service")
-public class AuthServiceTest {
+class AuthServiceTest {
 
     private UserDAO mockUserDAO;
 
@@ -25,7 +25,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void testLoginReturnsUserDTOWithCorrectData() throws SQLException {
+    void testLoginReturnsUserDTOWithCorrectData() throws SQLException {
         User u = new User("TestUser", "TestPass");
         UserDTO uDTO = new UserDTO();
         uDTO.setUsername("TestUser");
@@ -43,7 +43,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void testLoginThrowsLoginExceptionWithUnknownUser() throws SQLException {
+    void testLoginThrowsLoginExceptionWithUnknownUser() throws SQLException {
         User u = new User("TestUser", "TestPass");
         when(mockUserDAO.get(any())).thenThrow(new SQLException("No user"));
 
@@ -55,7 +55,7 @@ public class AuthServiceTest {
 
 
     @Test
-    public void testLoginThrowsLoginExceptionWithIncorrectPassword() throws SQLException {
+    void testLoginThrowsLoginExceptionWithIncorrectPassword() throws SQLException {
         User u = new User("TestUser", "TestPass");
         when(mockUserDAO.has(any())).thenReturn(true);
         when(mockUserDAO.get(any())).thenReturn(u);
@@ -67,14 +67,14 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void testLoginThrowsErrorWithNoUser(){
+    void testLoginThrowsErrorWithNoUser(){
         AuthService service = new AuthService();
         service.setUserDAO(mockUserDAO);
         assertThrows(LoginException.class, () -> service.login(" ", "TestPass2") );
     }
 
     @Test
-    public void testRegisterDoesNotThrowWithCorrectData() throws SQLException {
+    void testRegisterDoesNotThrowWithCorrectData() throws SQLException {
         User user = new User("TestUsername", "TestPass");
         UserDTO u = new UserDTO();
         u.setUsername("TestUsername");
@@ -91,7 +91,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void testRegisterThrowsErrorWithRepeatedUser() throws SQLException {
+    void testRegisterThrowsErrorWithRepeatedUser() throws SQLException {
         UserDTO u = new UserDTO();
         u.setUsername("TestUsername");
         u.setPassword("TestPass");
@@ -106,7 +106,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void testRegisterThrowsErrorWithSQLExceptions() throws SQLException {
+    void testRegisterThrowsErrorWithSQLExceptions() throws SQLException {
         UserDTO u = new UserDTO();
         u.setUsername("TestUsername");
         u.setPassword("TestPass");
@@ -121,7 +121,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void testRegisterThrowsErrorWithNoUser() throws SQLException {
+    void testRegisterThrowsErrorWithNoUser() throws SQLException {
         User user = new User("", "TestPass");
         UserDTO u = new UserDTO();
         u.setUsername("");
@@ -136,6 +136,5 @@ public class AuthServiceTest {
 
         assertThrows(AuthException.class, () -> service.register(u) );
     }
-
 
 }

@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author landersanmillan
  */
 @Tag("server-resource")
-public class AuthResourceIT extends JerseyTest{
+class AuthResourceIT extends JerseyTest{
 
 	@BeforeEach
 	@Override
@@ -49,7 +49,7 @@ public class AuthResourceIT extends JerseyTest{
 
 	@Test
 	@DisplayName("Test Register returns 200")
-	public void testRegisterReturns200() throws SQLException {
+	void testRegisterReturns200() throws SQLException {
 		// Given
 		UserDTO user = new UserDTO();
 		user.setUsername("ResourceRegisterReturns200");
@@ -70,7 +70,7 @@ public class AuthResourceIT extends JerseyTest{
 
 	@Test
 	@DisplayName("Test Register saves user")
-	public void testRegisterSavesUser() throws SQLException {
+	void testRegisterSavesUser() throws SQLException {
 		// Given
 		UserDTO user = new UserDTO();
 		user.setUsername("ResourceRegisterSavesUser");
@@ -89,7 +89,7 @@ public class AuthResourceIT extends JerseyTest{
 
 	@Test
 	@DisplayName("Test Register doesn't save duplicated User")
-	public void testRegisterCannotSaveDuplicatedUser() throws SQLException {
+	void testRegisterCannotSaveDuplicatedUser() throws SQLException {
 		//Given
 		UserDTO user = new UserDTO();
 		user.setUsername("ResourceRegisterDoesNotSaveDuplicated");
@@ -111,7 +111,7 @@ public class AuthResourceIT extends JerseyTest{
 
     @Test
 	@DisplayName("Test Login returns 200 on success")
-	public void testLoginReturns200OnSuccess() throws SQLException {
+	void testLoginReturns200OnSuccess() throws SQLException {
 		// Given
 		UserDTO user = new UserDTO();
 		user.setUsername("ResourceLoginReturns200");
@@ -137,7 +137,7 @@ public class AuthResourceIT extends JerseyTest{
 
 	@Test
 	@DisplayName("Test Login returns 401 with incorrect pass")
-	public void testLoginReturns401WithIncorrectPass() throws SQLException {
+	void testLoginReturns401WithIncorrectPass() throws SQLException {
 		// Given
 		User user = new User("ResourceLoginReturns401WithIncorrectPass", "TestPass");
 		UserDAO.getInstance().store(user);
@@ -160,7 +160,7 @@ public class AuthResourceIT extends JerseyTest{
 
 	@Test
 	@DisplayName("Test Login returns 401 with non existent user")
-	public void testLoginReturns401WithNonExistentUser() {
+	void testLoginReturns401WithNonExistentUser() {
 		// Given
 
 		// When
@@ -175,7 +175,7 @@ public class AuthResourceIT extends JerseyTest{
 
     @Test
 	@DisplayName("Test Delete user returns 200")
-	public void testDeleteReturns200() throws SQLException {
+	void testDeleteReturns200() throws SQLException {
 		// Given
 		User user = new User("ResourceDelete200", "TestPass");
 		UserDAO.getInstance().store(user);
@@ -192,7 +192,7 @@ public class AuthResourceIT extends JerseyTest{
 
 	@Test
 	@DisplayName("Test Delete returns 401 on non existent user")
-	public void testDeleteReturns401OnUnknownUser(){
+	void testDeleteReturns401OnUnknownUser(){
 		// Given
 
 		// When
@@ -207,7 +207,7 @@ public class AuthResourceIT extends JerseyTest{
 
 	@Test
 	@DisplayName("Test Delete returns 401 on incorrect Pass")
-	public void testDeleteReturns401WithIncorrectPass() throws SQLException {
+	void testDeleteReturns401WithIncorrectPass() throws SQLException {
 		// Given
 		User user = new User("ResourceDelete401IncorrectPass", "TestPass");
 		UserDAO.getInstance().store(user);

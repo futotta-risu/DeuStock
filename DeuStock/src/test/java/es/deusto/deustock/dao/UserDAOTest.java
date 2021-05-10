@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 /**
  * @author Erik B. Terres
  */
-public class UserDAOTest {
+class UserDAOTest {
     private IDBManager dbManager;
     private UserDAO userDAO;
 
