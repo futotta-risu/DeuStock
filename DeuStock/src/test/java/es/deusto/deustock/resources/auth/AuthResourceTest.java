@@ -14,13 +14,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import es.deusto.deustock.dao.UserDAO;
-
-import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.dto.UserDTO;
-
-import java.sql.SQLException;
-
 
 /**
  * @author landersanmillan
@@ -28,18 +22,13 @@ import java.sql.SQLException;
 @Tag("server-resource")
 class AuthResourceTest {
 
-	private UserDAO mockUserDAO;
 	private AuthService mockAuthService;
     
     @BeforeEach
     public void setUp() {
-    	mockUserDAO = mock(UserDAO.class);
         mockAuthService = mock(AuthService.class);
     }
 
-    public void setMocksToResource(AuthResource userResource){
-    	userResource.setUserDAO(mockUserDAO);
-    }
     
     @Test
     @DisplayName("Test login returns 200")

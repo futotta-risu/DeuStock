@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 public class UserDeleteResource {
     private UserService userService;
 
-    private final Logger logger = LoggerFactory.getLogger(UserDetail.class);
+    private final Logger logger = LoggerFactory.getLogger(UserDeleteResource.class);
 
     public UserDeleteResource(){
         this.userService = new UserService();

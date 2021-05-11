@@ -31,7 +31,8 @@ public class UserDetail {
     @Produces(MediaType.APPLICATION_JSON)
 
     public Response getUsername(@PathParam("username") String username) throws WebApplicationException{
-        UserDTO userDTO;
+        logger.info("Get user petition");
+	    UserDTO userDTO;
 
         try {
             userDTO = userService.getUserByUsername(username);

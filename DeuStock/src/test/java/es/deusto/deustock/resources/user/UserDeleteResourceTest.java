@@ -1,7 +1,5 @@
 package es.deusto.deustock.resources.user;
 
-import es.deusto.deustock.data.User;
-import es.deusto.deustock.resources.auth.AuthResource;
 import es.deusto.deustock.services.user.UserService;
 import es.deusto.deustock.services.user.exceptions.UserException;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,11 +8,9 @@ import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
-import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 class UserDeleteResourceTest {

@@ -17,7 +17,7 @@ import javax.ws.rs.core.Response;
 public class UserChangeDetails {
 
     private UserService userService;
-    private final Logger logger = LoggerFactory.getLogger(UserDetail.class);
+    private final Logger logger = LoggerFactory.getLogger(UserChangeDetails.class);
 
     public UserChangeDetails(){
         this.userService = new UserService();
@@ -30,7 +30,7 @@ public class UserChangeDetails {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response changeDetails(UserDTO userDTO) throws WebApplicationException{
-
+        logger.info("UserChangeDetail request");
         try{
             userService.updateUser(userDTO);
         }catch (UserException e){

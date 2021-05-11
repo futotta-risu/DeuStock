@@ -4,8 +4,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import es.deusto.deustock.dao.UserDAO;
-import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.dto.UserDTO;
 import es.deusto.deustock.services.auth.AuthService;
 import es.deusto.deustock.services.auth.exceptions.AuthException;
@@ -13,30 +11,20 @@ import es.deusto.deustock.services.auth.exceptions.LoginException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.SQLException;
 
 /**
  * Clase que contiene los metodos REST asociados a la clase Usuario
  * 
- * @author landersanmillan 
- * @see UserDAO
+ * @author landersanmillan
  */
 @Path("users")
 public class AuthResource {
-
-	// TODO Refactor delete function and delete dao
-	private UserDAO userDAO;
 	private AuthService authService;
 
 	private final Logger logger = LoggerFactory.getLogger(AuthResource.class);
 
 	public AuthResource(){
-		this.userDAO = UserDAO.getInstance();
 		authService = new AuthService();
-	}
-
-	public void setUserDAO(UserDAO userDAO){
-		this.userDAO = userDAO;
 	}
 
 	public void setAuthService(AuthService authService){
