@@ -1,6 +1,10 @@
 package es.deusto.deustock.resources.user;
 
 import es.deusto.deustock.data.dto.UserDTO;
+import es.deusto.deustock.services.user.UserService;
+import es.deusto.deustock.services.user.exceptions.UserException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
