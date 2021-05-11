@@ -21,38 +21,13 @@ import java.sql.SQLException;
  * @author Erik B. Terres
  */
 public class OperationService {
-    Wallet wallet;
 
-    StockHistoryDAO stockHistoryDAO;
-    WalletDAO walletDAO;
-    StockDAO stockDAO;
-    StockDataAPIGateway stockDataAPIGateway;
     OperationFactory operationFactory;
-    UserDAO userDAO;
 
-    public OperationService(){
-        stockHistoryDAO = StockHistoryDAO.getInstance();
-        walletDAO = WalletDAO.getInstance();
-        stockDAO = StockDAO.getInstance();
-        stockDataAPIGateway = StockDataGatewayFactory.getInstance().create(StockDataGatewayEnum.YAHOO_FINANCE);
-        operationFactory = OperationFactory.getInstance();
-        userDAO = UserDAO.getInstance();
-    }
+    public OperationService(){ }
 
-    public void setStockHistoryDAO(StockHistoryDAO stockHistoryDAO) {
-        this.stockHistoryDAO = stockHistoryDAO;
-    }
-
-    public void setWalletDAO(WalletDAO walletDAO) {
-        this.walletDAO = walletDAO;
-    }
-
-    public void setWallet(Wallet wallet){
-        this.wallet = wallet;
-    }
-
-    public void setWallet(String walletID) throws SQLException {
-        this.wallet = walletDAO.getWallet(walletID);
+    public void setOperationFactory(OperationFactory factory){
+        this.operationFactory = factory;
     }
 
 

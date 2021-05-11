@@ -198,7 +198,7 @@ class WalletServiceTest {
         u.setWallet(wallet);
 
         when(mockUserDAO.get(anyString())).thenThrow(new SQLException("User not found"));
-        doNothing().when(mockWalletDAO).update(any());
+        doThrow(new SQLException("Wallet cant update")).when(mockWalletDAO).update(any());
 
         WalletService service = new WalletService();
         service.setWalletDAO(mockWalletDAO);
@@ -218,6 +218,27 @@ class WalletServiceTest {
         User u = new User("TestUsername", "TestPass");
         Wallet wallet = new Wallet();
         u.setWallet(wallet);
+
+        when(mockUserDAO.get(anyString())).thenReturn(u);
+        doNothing().when(mockWalletDAO).update(any());
+
+        WalletService service = new WalletService();
+        service.setWalletDAO(mockWalletDAO);
+        service.setUserDAO(mockUserDAO);
+
+        // When
+
+        // Then
+        assertThrows(
+                WalletException.class,
+                () -> service.updateMoney("TestUser", 6000.0)
+        );
+    }
+
+    @Test
+    void testUpdateMoneyThrowsExceptionOnNullWallet() throws SQLException {
+        User u = new User("TestUsername", "TestPass");
+        u.setWallet(null);
 
         when(mockUserDAO.get(anyString())).thenReturn(u);
         doNothing().when(mockWalletDAO).update(any());

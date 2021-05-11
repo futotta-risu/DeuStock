@@ -70,4 +70,14 @@ class SentimentAnalyzerTest {
         assertTrue(msgs.get(1).getSentiment() < 2);
     }
 
+    @Test
+    void testSentimentAnalyserReachesWithoutText(){
+        assertEquals(2, SentimentAnalyzer.analyze(" .  "));
+    }
+
+    @Test
+    void testSentimentAnalyserReachesWithoutTextWithTabs(){
+        assertEquals(2, SentimentAnalyzer.analyze("           "));
+    }
+
 }

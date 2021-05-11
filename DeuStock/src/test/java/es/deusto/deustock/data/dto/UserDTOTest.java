@@ -40,4 +40,18 @@ class UserDTOTest {
         assertDoesNotThrow( () -> new UserDTO().format() );
     }
 
+    @Test
+    @DisplayName("Test toString returns correct String")
+    void testToStringReturnsCorrectString(){
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername("TestUser");
+        userDTO.setPassword("TestPass");
+        userDTO.setDescription("Descr");
+        userDTO.setCountry("SPAIN");
+        userDTO.setFullName("FullName");
+
+        assertEquals("UserDTO{username='TestUser', fullName='FullName'"
+        + ", country='SPAIN', description='Descr'}", userDTO.toString());
+    }
+
 }

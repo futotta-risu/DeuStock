@@ -12,6 +12,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -52,10 +55,14 @@ class StockServiceTest {
     }
 
     @Test
-    void testGetStockThrowsExceptionOnBlankStock() throws StockNotFoundException {
+    void testGetStockThrowsExceptionOnBlankStock() throws StockNotFoundException, SQLException {
         // Given
         DeuStock stock = new DeuStock("BB").setPrice(20);
+        DeuStock stockNoPrice = new DeuStock("BB");
+
         when(mockGateway.getStockData(any())).thenReturn(stock);
+        when(mockStockDAO.has(any())).thenReturn(true);
+        when(mockStockDAO.get(any())).thenReturn(stockNoPrice);
 
         StockService service = new StockService();
         service.setStockDataAPIGateway(mockGateway);
@@ -70,10 +77,13 @@ class StockServiceTest {
     }
 
     @Test
-    void testGetStockThrowsExceptionOnBlankInterval() throws StockNotFoundException {
+    void testGetStockThrowsExceptionOnBlankInterval() throws StockNotFoundException, SQLException {
         // Given
         DeuStock stock = new DeuStock("BB").setPrice(20);
+        DeuStock stockNoPrice = new DeuStock("BB");
         when(mockGateway.getStockData(any())).thenReturn(stock);
+        when(mockStockDAO.has(any())).thenReturn(true);
+        when(mockStockDAO.get(any())).thenReturn(stockNoPrice);
 
         StockService service = new StockService();
         service.setStockDataAPIGateway(mockGateway);
@@ -88,10 +98,13 @@ class StockServiceTest {
     }
 
     @Test
-    void testGetStockThrowsExceptionOnInvalidInterval() throws StockNotFoundException {
+    void testGetStockThrowsExceptionOnInvalidInterval() throws StockNotFoundException, SQLException {
         // Given
         DeuStock stock = new DeuStock("BB").setPrice(20);
+        DeuStock stockNoPrice = new DeuStock("BB");
         when(mockGateway.getStockData(any())).thenReturn(stock);
+        when(mockStockDAO.has(any())).thenReturn(true);
+        when(mockStockDAO.get(any())).thenReturn(stockNoPrice);
 
         StockService service = new StockService();
         service.setStockDataAPIGateway(mockGateway);
@@ -106,13 +119,16 @@ class StockServiceTest {
     }
 
     @Test
-    void testGetStockThrowsExceptionOnStockNotFoundException() throws StockNotFoundException {
+    void testGetStockThrowsExceptionOnStockNotFoundException() throws StockNotFoundException, SQLException {
         // Given
+        DeuStock stockNoPrice = new DeuStock("BB");
         when(mockGateway.getStockData(any())).thenThrow(
                 new StockNotFoundException(
                         new StockQueryData("BB")
                 )
         );
+        when(mockStockDAO.has(any())).thenReturn(true);
+        when(mockStockDAO.get(any())).thenReturn(stockNoPrice);
 
         StockService service = new StockService();
         service.setStockDataAPIGateway(mockGateway);
@@ -124,5 +140,130 @@ class StockServiceTest {
                 InvalidStockQueryDataException.class,
                 () -> service.getStockDetailData("Test", "DAILY")
         );
+    }
+
+    @Test
+    void testGetStockThrowsExceptionOnSQLException() throws StockNotFoundException, SQLException {
+        // Given
+        when(mockGateway.getStockData(any())).thenThrow(
+                new StockNotFoundException(
+                        new StockQueryData("BB")
+                )
+        );
+        when(mockStockDAO.has(any())).thenThrow(new SQLException("Exception"));
+
+
+        StockService service = new StockService();
+        service.setStockDataAPIGateway(mockGateway);
+
+        // When
+
+        // Then
+        assertThrows(
+                InvalidStockQueryDataException.class,
+                () -> service.getStockDetailData("Test", "DAILY")
+        );
+    }
+
+    @Test
+    void testGetStockWithPriceReturnsCorrectData() throws StockException, SQLException, StockNotFoundException {
+        // Given
+        DeuStock stock = new DeuStock("BB").setPrice(20);
+        DeuStock stockNoPrice = new DeuStock("BB");
+
+        when(mockGateway.getStockData(any())).thenReturn(stock);
+        when(mockStockDAO.has(any())).thenReturn(true);
+        when(mockStockDAO.get(any())).thenReturn(stockNoPrice);
+
+        StockService service = new StockService();
+        service.setStockDataAPIGateway(mockGateway);
+        service.setStockDAO(mockStockDAO);
+
+        // When
+        DeuStock result = service.getStockWithPrice("BB");
+
+        // Then
+        assertEquals(stock.getAcronym(), result.getAcronym());
+        assertEquals(stock.getPrice(), result.getPrice());
+    }
+
+    @Test
+    void testGetStockListDataReturnsListWithSmall() throws SQLException {
+        HashMap<String,DeuStock> stocks = new HashMap<>();
+        stocks.put("BB", new DeuStock("BB").setPrice(20));
+        stocks.put("CC", new DeuStock("CC").setPrice(10));
+
+        when(mockStockDAO.has(anyString())).thenReturn(false);
+        doNothing().when(mockStockDAO).store(any());
+        when(mockGateway.getStocksData(any())).thenReturn(stocks);
+
+        StockService service = new StockService();
+        service.setStockDataAPIGateway(mockGateway);
+        service.setStockDAO(mockStockDAO);
+
+        // When
+        List<DeuStock> result = service.getStockListData("small");
+
+        // Then
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    void testGetStockListDataDoesNotBreakOnSQLException() throws SQLException {
+        HashMap<String,DeuStock> stocks = new HashMap<>();
+        stocks.put("BB", new DeuStock("BB").setPrice(20));
+        stocks.put("CC", new DeuStock("CC").setPrice(10));
+
+        when(mockStockDAO.has(anyString())).thenThrow(new SQLException("Exception"));
+        when(mockGateway.getStocksData(any())).thenReturn(stocks);
+
+        StockService service = new StockService();
+        service.setStockDataAPIGateway(mockGateway);
+        service.setStockDAO(mockStockDAO);
+
+        // When
+        List<DeuStock> result = service.getStockListData("big");
+
+        // Then
+        assertEquals(2, result.size());
+    }
+
+    @Test
+    void testGetStockListThrowsIllegalArgumentWithUnknownList() throws SQLException {
+        HashMap<String,DeuStock> stocks = new HashMap<>();
+        stocks.put("BB", new DeuStock("BB").setPrice(20));
+        stocks.put("CC", new DeuStock("CC").setPrice(10));
+
+        when(mockStockDAO.has(anyString())).thenThrow(new SQLException("Exception"));
+        when(mockGateway.getStocksData(any())).thenReturn(stocks);
+
+        StockService service = new StockService();
+        service.setStockDataAPIGateway(mockGateway);
+        service.setStockDAO(mockStockDAO);
+
+        // When
+
+        // Then
+        assertThrows(IllegalArgumentException.class, () -> service.getStockListData("unknown"));
+    }
+
+    @Test
+    void testGetStocksWithPriceReturnsList(){
+        // Given
+        HashMap<String,DeuStock> stocks = new HashMap<>();
+        stocks.put("BB", new DeuStock("BB").setPrice(20));
+        stocks.put("CC", new DeuStock("CC").setPrice(10));
+
+        when(mockGateway.getStocksData(any())).thenReturn(stocks);
+
+        StockService service = new StockService();
+        service.setStockDataAPIGateway(mockGateway);
+
+        // When
+        List<DeuStock> result = service.getStocksWithPrice(new ArrayList<>(stocks.values()));
+
+        // Then
+        assertEquals(2, result.size());
+
     }
 }

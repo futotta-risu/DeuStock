@@ -54,4 +54,36 @@ class StockReportTest {
         assertTrue(file.exists());
     }
 
+    @Test
+    @DisplayName("Test generating a report.")
+    void testGenerateReportDoesNotThrowOnInterruptedThread() throws IOException, InterruptedException {
+        // Given
+        DeuStock stock = new DeuStock("BB").setPrice(22.0);
+
+        List<HistoricalQuote> quotes = new ArrayList<>();
+        for(int i = 0; i < 10; i++){
+            HistoricalQuote quote = new HistoricalQuote();
+            quote.setClose(new BigDecimal(String.valueOf(20+i)));
+            quote.setSymbol("BB");
+            Calendar cal = Calendar.getInstance();
+            cal.set(2010,i,20);
+            quote.setDate(cal);
+            quotes.add(quote);
+        }
+
+        stock.setHistory(quotes);
+
+        SentimentExtractor extractor = mock(SentimentExtractor.class);
+        when(extractor.getSentimentTendency(anyString())).thenThrow(new InterruptedException());
+
+        StockReport report = new StockReport(stock);
+        report.setExtractor(extractor);
+
+        // When
+        File file = report.generate();
+
+        // Then
+        assertTrue(file.exists());
+    }
+
 }
