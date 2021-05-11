@@ -215,7 +215,7 @@ public class DBManager implements IDBManager{
 			pm.deletePersistent(object);
 			tx.commit();
 		} catch (Exception ex) {
-			logger.error("   $ Error retreiving an extent: {}", ex.getMessage());
+			logger.error("   $ Error deleting object: {}", ex.getMessage());
 		} finally {
 			if (tx != null && tx.isActive()) {
 				tx.rollback();
