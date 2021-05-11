@@ -15,7 +15,7 @@ public class DBManager implements IDBManager{
 	private static final String SQL_TYPE = "javax.jdo.query.JDOQL";
 
     private static IDBManager instance = null;
-	private final PersistenceManagerFactory pmf;
+	private PersistenceManagerFactory pmf;
 
 	private final Logger logger = LoggerFactory.getLogger(DBManager.class);
 
@@ -23,6 +23,10 @@ public class DBManager implements IDBManager{
 
 	private DBManager(){
 		pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
+	}
+
+	public void setPFM(PersistenceManagerFactory pmf){
+		this.pmf = pmf;
 	}
 
 	public static IDBManager getInstance() {
