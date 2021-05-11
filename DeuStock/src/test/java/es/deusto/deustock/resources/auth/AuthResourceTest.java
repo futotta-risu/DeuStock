@@ -123,57 +123,6 @@ class AuthResourceTest {
                 () -> userResource.register(userDTO)
         );
     }
-    
-    @Test
-    @DisplayName("Test delete user returns 200")
-    public void testDeleteUserReturns200() throws SQLException {
-    	//Given
-    	User user = new User("Test", "Pass");
 
-    	//When
-		when(mockUserDAO.get(anyString())).thenReturn(user);
-    	doNothing().when(mockUserDAO).delete(user);
-  	    
-    	AuthResource userResource = new AuthResource();
-        setMocksToResource(userResource);
-        Response response = userResource.delete("Test", "Pass");
-  	    
-        //Then
-		assertEquals(200, response.getStatus());
-    }
-    
-    @Test
-    @DisplayName("Test delete with wrong password returns 401")
-    public void testDeleteUserWithWrongPassReturns401() throws SQLException {
-    	//Given
-    	User user = new User("Test", "Pass");
-    	
-    	//When
-		when(mockUserDAO.get(anyString())).thenReturn(user);
-    	doNothing().when(mockUserDAO).delete(user);
-  	    
-    	AuthResource userResource = new AuthResource();
-        setMocksToResource(userResource);
-        Response response = userResource.delete("Test", "WrongPassword");
-  	    
-        //Then
-		assertEquals(401, response.getStatus());
-    }
-    
-    @Test
-    @DisplayName("Test delete non existent user returns 401")
-    public void testDeleteNonExistentUserReturns401() throws SQLException {
-    	//Given
-    	
-    	//When
-		when(mockUserDAO.get(anyString())).thenReturn(null);
-  	    
-    	AuthResource userResource = new AuthResource();
-        setMocksToResource(userResource);
-        Response response = userResource.delete("Test", "Pass");
-  	    
-        //Then
-		assertEquals(401, response.getStatus());
-    }
     
 }

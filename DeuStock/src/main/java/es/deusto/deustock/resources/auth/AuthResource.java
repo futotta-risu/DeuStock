@@ -99,44 +99,4 @@ public class AuthResource {
 		return Response.status(200).build();
 	}
 
-	/**
-	 * Metodo que permite eliminar un usuario de la BD, en el path se reciben el
-	 * nombre de usuario y la contraseña encriptada en SHA-256
-	 * 
-	 * @param username Nombre del usuario
-	 * @param password Contraseña encriptada asociada a la cuenta
-	 * @return <strong>Response</strong> Devuelve una respuesta dependiendo del
-	 *         estado resultante del borrado:
-	 *         <ul>
-	 *         <li>200 - OK</li>
-	 *         <li>401 - Forbidden</li>
-	 *         </ul>
-	 */
-
-	// TODO Change location
-	@GET
-	@Path("delete/{username}/{password}")
-	public Response delete(
-			@PathParam("username") String username,
-			@PathParam("password") String password
-	) throws SQLException {
-		logger.info("User delete petition");
-		User user = userDAO.get(username);
-
-		if (user == null) {
-			logger.warn("User not found in DB while deleting");
-			return Response.status(401).build();
-		}
-
-		if(!user.checkPassword(password)) {
-			logger.warn("Wrong user/pass combination for  while deleting");
-			return Response.status(401).build();
-		}
-
-		userDAO.delete(username);
-		return Response.status(200).build();
-
-	}
-
-
 }

@@ -1,50 +1,50 @@
 package es.deusto.deustock.resources.user;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
+import es.deusto.deustock.services.user.UserService;
+import es.deusto.deustock.services.user.exceptions.UserException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.dto.UserDTO;
 
-import java.sql.SQLException;
 
 /**
  * @author landersanmillan
  */
 @Tag("server-resource")
 class UserDetailTest {
-	private UserDAO mockUserDAO;
+	private UserService mockUserService;
     
     @BeforeEach
     public void setUp() {
-    	mockUserDAO = mock(UserDAO.class);
+        mockUserService = mock(UserService.class);
     }
 
     public void setMocksToResource(UserDetail userDetailResource){
-    	userDetailResource.setUserDAO(mockUserDAO);
+    	userDetailResource.setUserService(mockUserService);
     }
     
     @Test
     @DisplayName("Test getUsername returns 200")
-    public void testGetUsernameReturns200() throws SQLException {
+    void testGetUsernameReturns200() throws UserException {
+
     	//Given
     	User user = new User("Test", "Pass");
     	UserDTO userDTO = new UserDTO().setUsername("Test").setPassword("Pass");
     	
     	//When
-		when(mockUserDAO.get(anyString())).thenReturn(user);
-    	when(mockUserDAO.getDTO(any())).thenReturn(userDTO);
+		when(mockUserService.getUserByUsername(anyString())).thenReturn(userDTO);
   	    
     	UserDetail userDetailResource = new UserDetail();
         setMocksToResource(userDetailResource);
@@ -56,18 +56,20 @@ class UserDetailTest {
     
     @Test
     @DisplayName("Test getUsername returns 401")
-    public void testGetUsernameReturns401() throws SQLException {
+    void testGetUsernameReturns401() throws UserException {
     	//Given
     	
     	//When
-		when(mockUserDAO.get(anyString())).thenReturn(null);
+        when(mockUserService.getUserByUsername(anyString())).thenThrow(new UserException("Exception"));
   	    
     	UserDetail userDetailResource = new UserDetail();
         setMocksToResource(userDetailResource);
-        Response response = userDetailResource.getUsername("AnyString");
   	    
         //Then
-		assertEquals(401, response.getStatus());
+		assertThrows(
+                WebApplicationException.class,
+                () -> userDetailResource.getUsername("AnyString")
+        );
     }
 
 

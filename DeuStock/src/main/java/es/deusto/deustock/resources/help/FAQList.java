@@ -1,8 +1,9 @@
 package es.deusto.deustock.resources.help;
 
-import es.deusto.deustock.log.DeuLogger;
 import es.deusto.deustock.util.file.DSJSONUtils;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -18,6 +19,8 @@ import java.io.IOException;
 @Path("help/faq/list")
 public class FAQList {
 
+    private static final Logger logger = LoggerFactory.getLogger(FAQList.class);
+
     private static final String PATH ="data/faq_list.json";
 
     public FAQList(){}
@@ -32,7 +35,7 @@ public class FAQList {
                     .build();
 
         } catch (IOException | ParseException e) {
-        	DeuLogger.logger.error("Could not get FAQList due to problems reading file: " + PATH);
+        	logger.error("Could not get FAQList due to problems reading file: " + PATH);
         }
         return Response.status(401).build();
     }

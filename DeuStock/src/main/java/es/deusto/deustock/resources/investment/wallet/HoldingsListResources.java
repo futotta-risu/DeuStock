@@ -1,34 +1,18 @@
 package es.deusto.deustock.resources.investment.wallet;
 
-import es.deusto.deustock.dao.StockHistoryDAO;
-import es.deusto.deustock.dao.UserDAO;
-import es.deusto.deustock.dao.WalletDAO;
 import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.dto.stocks.StockHistoryDTO;
-import es.deusto.deustock.data.stocks.StockHistory;
-import es.deusto.deustock.data.stocks.Wallet;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
-import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
-import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
-import es.deusto.deustock.log.DeuLogger;
-import es.deusto.deustock.services.investment.operation.OperationFactory;
 import es.deusto.deustock.services.investment.operation.OperationService;
 import es.deusto.deustock.services.investment.operation.exceptions.OperationException;
 import es.deusto.deustock.services.investment.stock.StockService;
 import es.deusto.deustock.services.investment.stock.exceptions.StockException;
 import es.deusto.deustock.services.investment.wallet.WalletService;
-import es.deusto.deustock.services.investment.operation.type.Operation;
-import es.deusto.deustock.services.investment.operation.type.OperationType;
 import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -63,7 +47,7 @@ public class HoldingsListResources {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getHoldings(@PathParam("username") String username) throws WebApplicationException {
-        List<StockHistoryDTO> holdings = null;
+        List<StockHistoryDTO> holdings;
         try {
             holdings = walletService.getHoldings(username);
 

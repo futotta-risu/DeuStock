@@ -4,20 +4,13 @@ import es.deusto.deustock.dao.StockDAO;
 import es.deusto.deustock.dao.StockHistoryDAO;
 import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.dao.WalletDAO;
-import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.data.User;
-import es.deusto.deustock.data.stocks.StockHistory;
 import es.deusto.deustock.data.stocks.Wallet;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
-import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
-import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
-import es.deusto.deustock.log.DeuLogger;
 import es.deusto.deustock.services.investment.operation.exceptions.OperationException;
 import es.deusto.deustock.services.investment.operation.type.Operation;
 import es.deusto.deustock.services.investment.operation.type.OperationType;
-import es.deusto.deustock.services.investment.stock.StockService;
 
 import java.sql.SQLException;
 
