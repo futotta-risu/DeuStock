@@ -13,10 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Erik B. Terres
@@ -41,7 +38,7 @@ class DBManagerTest {
 		when(mockPMF.getPersistenceManager()).thenReturn(mockPM);
 		when(mockPM.currentTransaction()).thenReturn(mockTransaction);
 		doNothing().when(mockTransaction).begin();
-		when(mockTransaction.isActive()).thenReturn(true);
+
 		doNothing().when(mockTransaction).rollback();
 		doNothing().when(mockTransaction).commit();
 
@@ -68,11 +65,30 @@ class DBManagerTest {
 		FetchPlan mockFetchPlan = mock(FetchPlan.class);
 		when(mockPM.getFetchPlan()).thenReturn(mockFetchPlan);
 		when(mockFetchPlan.setMaxFetchDepth(anyInt())).thenReturn(mockFetchPlan);
+		when(mockTransaction.isActive()).thenReturn(true);
 
 		//When
         assertDoesNotThrow( () -> dbManager.store(object) );
 
     }
+
+	@Test
+	@DisplayName("Test storeObject catch works with non active transaction")
+	void testStoreCatchWorksIsNotActive(){
+		//Given
+		Object object = new Object();
+
+		when(mockPM.makePersistent(any(Object.class))).thenThrow(new IllegalArgumentException("Exception"));
+
+		FetchPlan mockFetchPlan = mock(FetchPlan.class);
+		when(mockPM.getFetchPlan()).thenReturn(mockFetchPlan);
+		when(mockFetchPlan.setMaxFetchDepth(anyInt())).thenReturn(mockFetchPlan);
+		when(mockTransaction.isActive()).thenReturn(false);
+
+		//When
+		assertDoesNotThrow( () -> dbManager.store(object) );
+
+	}
 
 	@Test
 	@DisplayName("Test storeObject function works")
@@ -88,7 +104,6 @@ class DBManagerTest {
 
 	// GET ALL
 
-	
     @Test
     @DisplayName("Test getAll catch works")
     void testGetAllCatchWorks(){
@@ -96,12 +111,26 @@ class DBManagerTest {
     	Class<Object> objectClass = Object.class;
 
 		when(mockPM.getExtent(objectClass)).thenThrow(new IllegalArgumentException("Exception"));
-
+		when(mockTransaction.isActive()).thenReturn(true);
     	//When
 
         // Then
         assertDoesNotThrow( () -> dbManager.getAll(objectClass) );
     }
+
+	@Test
+	@DisplayName("Test getAll catch works with non active transaction")
+	void testGetAllCatchWorksIsNotActive(){
+		//Given
+		Class<Object> objectClass = Object.class;
+
+		when(mockPM.getExtent(objectClass)).thenThrow(new IllegalArgumentException("Exception"));
+		when(mockTransaction.isActive()).thenReturn(false);
+		//When
+
+		// Then
+		assertDoesNotThrow( () -> dbManager.getAll(objectClass) );
+	}
 
     // GET LIST
 
@@ -127,6 +156,23 @@ class DBManagerTest {
 		Class<Object> objectClass = Object.class;
 
 		doThrow(new IllegalArgumentException("Exception")).when(mockQuery).executeWithMap(anyMap());
+		when(mockTransaction.isActive()).thenReturn(true);
+
+		//When
+		assertDoesNotThrow(
+				() ->dbManager.getList(objectClass, "testConditions", new HashMap<>())
+		);
+
+	}
+
+	@Test
+	@DisplayName("Test getList catch works with non active transaction")
+	void testGetListWithConditionCatchWorksIsNotActive(){
+		//Given
+		Class<Object> objectClass = Object.class;
+
+		doThrow(new IllegalArgumentException("Exception")).when(mockQuery).executeWithMap(anyMap());
+		when(mockTransaction.isActive()).thenReturn(false);
 
 		//When
 		assertDoesNotThrow(
@@ -157,10 +203,22 @@ class DBManagerTest {
 
     	//When
         doThrow(new IllegalArgumentException("Exception")).when(mockPM).detachCopy(any());
-
+		when(mockTransaction.isActive()).thenReturn(true);
 
         assertDoesNotThrow( () -> dbManager.get(Object.class, "", new HashMap<>()));
     }
+
+	@Test
+	@DisplayName("Test get with condition catch works with non active transaction")
+	void testGetObjectWithConditionCatchWorksIsNotActive(){
+		//Given
+
+		//When
+		doThrow(new IllegalArgumentException("Exception")).when(mockPM).detachCopy(any());
+		when(mockTransaction.isActive()).thenReturn(false);
+
+		assertDoesNotThrow( () -> dbManager.get(Object.class, "", new HashMap<>()));
+	}
 
     // UPDATE
 
@@ -188,6 +246,22 @@ class DBManagerTest {
 		Object object = new Object();
 
 		when(mockPM.makePersistent(any())).thenThrow(new IllegalArgumentException("Exception"));
+		when(mockTransaction.isActive()).thenReturn(true);
+
+		//When
+		assertDoesNotThrow( () -> dbManager.update(object) );
+
+	}
+
+	@Test
+	@DisplayName("Test update catch works with non active transaction")
+	void testUpdateCatchWorksIsNotActive(){
+		//Given
+
+		Object object = new Object();
+
+		when(mockPM.makePersistent(any())).thenThrow(new IllegalArgumentException("Exception"));
+		when(mockTransaction.isActive()).thenReturn(false);
 
 		//When
 		assertDoesNotThrow( () -> dbManager.update(object) );
@@ -203,12 +277,27 @@ class DBManagerTest {
     	Class<Object> objectClass = Object.class;
     	
     	//When
-		doThrow(new IllegalArgumentException("Exception")).when(mockPM).deletePersistentAll(anyMap());
+		doThrow(new IllegalArgumentException("Exception")).when(mockQuery).deletePersistentAll(anyMap());
+		when(mockTransaction.isActive()).thenReturn(true);
 
         assertDoesNotThrow(
 				() -> dbManager.delete(objectClass, "", new HashMap<>())
 		);
     }
+	@Test
+	@DisplayName("Test delete with conditions catch works with non active transaction")
+	void testDeleteObjectWithConditionThrowsErrorIsNotActive(){
+		//Given
+		Class<Object> objectClass = Object.class;
+
+		//When
+		doThrow(new IllegalArgumentException("Exception")).when(mockQuery).deletePersistentAll(anyMap());
+		when(mockTransaction.isActive()).thenReturn(false);
+
+		assertDoesNotThrow(
+				() -> dbManager.delete(objectClass, "", new HashMap<>())
+		);
+	}
     
     @Test
     @DisplayName("Test delete with conditions works")
@@ -254,6 +343,21 @@ class DBManagerTest {
 
 		//When
 		doThrow(new IllegalArgumentException()).when(mockPM).deletePersistent(any(Object.class));
+		when(mockTransaction.isActive()).thenReturn(true);
+
+		// Then
+		assertDoesNotThrow( () -> dbManager.delete(objectClass) );
+	}
+
+	@Test
+	@DisplayName("Test delete object function catch works with non active transaction")
+	void testDeleteObjectThrowsErrorIsNotActive(){
+		//Given
+		Class<Object> objectClass = Object.class;
+
+		//When
+		doThrow(new IllegalArgumentException()).when(mockPM).deletePersistent(any(Object.class));
+		when(mockTransaction.isActive()).thenReturn(false);
 
 		// Then
 		assertDoesNotThrow( () -> dbManager.delete(objectClass) );
