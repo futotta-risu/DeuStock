@@ -71,7 +71,7 @@ public class UserService {
             }
 
             userDAO.delete(username);
-        }catch (SQLException | UserException e){
+        }catch (SQLException e){
             throw new UserException("Could not delete user");
         }
 
