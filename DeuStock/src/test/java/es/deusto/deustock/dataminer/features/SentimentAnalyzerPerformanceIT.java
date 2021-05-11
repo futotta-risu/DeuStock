@@ -6,7 +6,6 @@ import org.databene.contiperf.Required;
 import org.databene.contiperf.junit.ContiPerfRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
 

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("sentiment")
-class SentimentExtractorTest {
+class SentimentExtractorIT {
 
     @Test
     @DisplayName("Test the constructor does not return null")

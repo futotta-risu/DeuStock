@@ -46,7 +46,7 @@ public class HoldingsListResources {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getHoldings(@PathParam("username") String username) throws WebApplicationException {
-        List<StockHistoryDTO> holdings = null;
+        List<StockHistoryDTO> holdings;
         try {
             holdings = walletService.getHoldings(username);
 

@@ -8,6 +8,7 @@ import es.deusto.deustock.data.stocks.Wallet;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
+import es.deusto.deustock.services.investment.operation.exceptions.OperationException;
 import es.deusto.deustock.services.investment.operation.type.Operation;
 import es.deusto.deustock.services.investment.operation.type.OperationType;
 

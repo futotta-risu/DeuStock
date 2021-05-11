@@ -1,7 +1,5 @@
 package es.deusto.deustock.resources.investment.operation;
 
-import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.data.stocks.StockHistory;
 import es.deusto.deustock.services.investment.operation.OperationService;
 import es.deusto.deustock.services.investment.stock.StockService;
 import es.deusto.deustock.services.investment.stock.exceptions.StockException;

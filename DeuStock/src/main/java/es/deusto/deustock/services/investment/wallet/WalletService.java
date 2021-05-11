@@ -4,7 +4,6 @@ import es.deusto.deustock.dao.StockHistoryDAO;
 import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.dao.WalletDAO;
 import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.dto.stocks.StockHistoryDTO;
 import es.deusto.deustock.data.stocks.StockHistory;
 import es.deusto.deustock.data.stocks.Wallet;

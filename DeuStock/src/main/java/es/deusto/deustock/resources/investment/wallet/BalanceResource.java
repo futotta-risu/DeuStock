@@ -1,7 +1,6 @@
 package es.deusto.deustock.resources.investment.wallet;
 
 import es.deusto.deustock.dao.UserDAO;
-import es.deusto.deustock.data.User;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
