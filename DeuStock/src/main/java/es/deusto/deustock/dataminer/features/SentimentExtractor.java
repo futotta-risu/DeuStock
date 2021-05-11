@@ -2,7 +2,6 @@ package es.deusto.deustock.dataminer.features;
 
 import es.deusto.deustock.data.SocialNetworkMessage;
 import es.deusto.deustock.dataminer.cleaner.SocialTextCleaner;
-import es.deusto.deustock.dataminer.features.SentimentAnalyzer;
 import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkAPIGateway;
 import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum;
 import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayFactory;

@@ -17,7 +17,7 @@ class StockDataGatewayFactoryTest {
     @Test
     void testCreateYahooFinance() {
         StockDataGatewayFactory factory = StockDataGatewayFactory.getInstance();
-        StockDataAPIGateway  yahooGateway =  factory.create(StockDataGatewayEnum.YahooFinance);
+        StockDataAPIGateway  yahooGateway =  factory.create(StockDataGatewayEnum.YAHOO_FINANCE);
         assertNotNull(yahooGateway);
     }
 

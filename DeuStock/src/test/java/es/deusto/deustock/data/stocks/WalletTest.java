@@ -11,8 +11,10 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
-public class WalletTest {
+/**
+ * @author Erik B. Terres
+ */
+class WalletTest {
 
     @Test
     void testConstructor(){
@@ -33,14 +35,14 @@ public class WalletTest {
         final String result = wallet.getId();
 
         //then
-        assertEquals( result, "TestID");
+        assertEquals("TestID", result);
     }
 
 
     @Test
     void testInitialMoneyIsCorrect(){
         Wallet wallet = new Wallet();
-        assertEquals(wallet.getMoney(),5000);
+        assertEquals(5000, wallet.getMoney());
     }
 
     @Test
@@ -62,7 +64,7 @@ public class WalletTest {
         final Field field = wallet.getClass().getDeclaredField("money");
         field.setAccessible(true);
 
-        assertEquals(field.get(wallet), (double) 55);
+        assertEquals((double) 55, field.get(wallet));
     }
 
 
@@ -70,14 +72,14 @@ public class WalletTest {
     void testAddMoney() {
         Wallet wallet = new Wallet();
         wallet.changeMoney(100);
-        assertEquals(wallet.getMoney(),5100);
+        assertEquals(5100, wallet.getMoney());
     }
 
     @Test
     void testTakeMoney() {
         Wallet wallet = new Wallet();
         wallet.changeMoney(-230.4);
-        assertEquals(wallet.getMoney(),4769.6);
+        assertEquals(4769.6, wallet.getMoney());
     }
 
     @Test
@@ -128,7 +130,7 @@ public class WalletTest {
         final Field field = wallet.getClass().getDeclaredField("history");
         field.setAccessible(true);
 
-        assertEquals(field.get(wallet), stockHistories);
+        assertEquals(stockHistories, field.get(wallet));
     }
 
 

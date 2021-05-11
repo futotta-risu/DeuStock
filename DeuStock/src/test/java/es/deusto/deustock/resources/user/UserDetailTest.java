@@ -72,6 +72,4 @@ class UserDetailTest {
         );
     }
 
-
-
 }

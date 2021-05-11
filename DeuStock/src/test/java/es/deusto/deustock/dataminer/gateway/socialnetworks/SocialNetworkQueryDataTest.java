@@ -12,15 +12,15 @@ class SocialNetworkQueryDataTest {
     @Test
     void testConstructorWithQuery(){
         SocialNetworkQueryData data = new SocialNetworkQueryData("Test Data");
-        assertEquals(data.getSearchQuery(),"Test Data");
+        assertEquals("Test Data", data.getSearchQuery());
     }
 
     @Test
     void testConstructorWithAllParameters(){
         SocialNetworkQueryData data = new SocialNetworkQueryData("Test Data", new Date(2019, Calendar.MARCH,3),15);
-        assertEquals(data.getSearchQuery(),"Test Data");
-        assertEquals(data.getDateFrom(),new Date(2019, Calendar.MARCH,3));
-        assertEquals(data.getNMessages(),15);
+        assertEquals("Test Data", data.getSearchQuery());
+        assertEquals(new Date(2019, Calendar.MARCH,3), data.getDateFrom());
+        assertEquals(15, data.getNMessages());
     }
 
 
@@ -28,28 +28,28 @@ class SocialNetworkQueryDataTest {
     void setDateFrom() {
         SocialNetworkQueryData data = new SocialNetworkQueryData();
         data.setDateFrom(new Date(2022, Calendar.MAY,5));
-        assertEquals(data.getDateFrom(),new Date(2022, Calendar.MAY,5));
+        assertEquals(new Date(2022, Calendar.MAY,5), data.getDateFrom());
     }
 
     @Test
     void setNMessages() {
         SocialNetworkQueryData data = new SocialNetworkQueryData();
         data.setNMessages(10);
-        assertEquals(data.getNMessages(),10);
+        assertEquals(10, data.getNMessages());
     }
 
     @Test
     void testSetNMessagesLessThanZero() {
         SocialNetworkQueryData data = new SocialNetworkQueryData();
         data.setNMessages(-2);
-        assertEquals(data.getNMessages(),1);
+        assertEquals(1, data.getNMessages());
     }
 
     @Test
     void testSetNMessagesGreaterThan100() {
         SocialNetworkQueryData data = new SocialNetworkQueryData();
         data.setNMessages(200);
-        assertEquals(data.getNMessages(),100);
+        assertEquals(100, data.getNMessages());
 
     }
 }

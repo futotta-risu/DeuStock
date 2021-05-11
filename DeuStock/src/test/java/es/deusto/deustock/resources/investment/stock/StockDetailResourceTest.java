@@ -12,22 +12,17 @@ import javax.ws.rs.core.Response;
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.resources.investment.stock.StockDetailResource;
 import es.deusto.deustock.services.investment.stock.StockService;
-import es.deusto.deustock.services.investment.stock.exceptions.InvalidStockQueryDataException;
 import es.deusto.deustock.services.investment.stock.exceptions.StockException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
-import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
-import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
-
 /**
  * @author landersanmillan
  */
-@Tag("server-resource-2")
-public class StockDetailResourceTest {
+@Tag("server-resource")
+class StockDetailResourceTest {
 	
 	private StockService stockService;
 	

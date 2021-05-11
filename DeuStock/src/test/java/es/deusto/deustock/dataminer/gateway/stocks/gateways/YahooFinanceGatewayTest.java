@@ -13,7 +13,6 @@ import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.quotes.stock.StockQuote;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -23,7 +22,7 @@ import static org.mockito.Mockito.*;
 /**
  * @author Erik B. Terres
  */
-public class YahooFinanceGatewayTest {
+class YahooFinanceGatewayTest {
     private YahooFinanceGateway gateway;
     private Stock stock, stockFake;
 
@@ -31,7 +30,7 @@ public class YahooFinanceGatewayTest {
     void setUp(){
         this.gateway = (YahooFinanceGateway) StockDataGatewayFactory
                 .getInstance()
-                .create(StockDataGatewayEnum.YahooFinance);
+                .create(StockDataGatewayEnum.YAHOO_FINANCE);
 
         stock = new Stock("AMZN");
         StockQuote quote = new StockQuote("AMZN");
@@ -65,7 +64,7 @@ public class YahooFinanceGatewayTest {
 
         // Then
         assertNotNull(stockData);
-        assertEquals(stockData.getAcronym(), "AMZN");
+        assertEquals("AMZN", stockData.getAcronym());
         assertTrue(stockData.getHistory().isEmpty());
         assertTrue(stockData.getPrice() > 0);
     }

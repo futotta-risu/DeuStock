@@ -20,12 +20,12 @@ public class Wallet  implements Serializable {
     private static final double INITIAL_MONEY = 5000;
 
     @Persistent(mappedBy = "wallet")
-    List<StockHistory> history;
+    private List<StockHistory> history;
 
-    double money;
+    private double money;
 
     @Persistent(mappedBy = "wallet")
-    User user;
+    private User user;
 
     public Wallet(){
         this.id = UUID.randomUUID().toString();

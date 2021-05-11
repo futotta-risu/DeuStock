@@ -17,8 +17,6 @@ import org.junit.jupiter.api.Test;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
-import java.sql.SQLException;
-
 import static es.deusto.deustock.services.investment.operation.type.OperationType.LONG;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -61,32 +59,6 @@ class CloseOperationResourceTest {
 
         // Then
         assertEquals(200, response.getStatus());
-    }
-
-    @Test
-    void closeOperationReturns401OnOperationException() throws WebApplicationException, WalletException, OperationException, StockException {
-        // Given
-        Wallet wallet = new Wallet();
-        DeuStock stock = new DeuStock("BB").setPrice(20);
-        DeuStock stockNoPrice = new DeuStock("BB");
-        StockHistory stockHistory = new StockHistory(
-                wallet, stockNoPrice, 10, 15, LONG);
-
-        when(mockWalletService.getStockHistory(anyString())).thenReturn(stockHistory);
-        when(mockStockService.getStockWithPrice(anyString())).thenReturn(stock);
-        when(mockOperationService.getClosePrice(any(),anyDouble(),anyDouble(),anyDouble())).thenThrow(new OperationException("Test"));
-        doNothing().when(mockWalletService).updateMoneyByWalletID(anyString(),anyDouble());
-        doNothing().when(mockWalletService).closeStockHistory(anyString());
-
-        CloseOperationResource resource = new CloseOperationResource();
-        resource.setStockService(mockStockService);
-        resource.setWalletService(mockWalletService);
-        resource.setOperationService(mockOperationService);
-
-        // When
-
-        // Then
-        assertThrows(WebApplicationException.class, ()-> resource.closeOperation("TestString"));
     }
 
     @Test

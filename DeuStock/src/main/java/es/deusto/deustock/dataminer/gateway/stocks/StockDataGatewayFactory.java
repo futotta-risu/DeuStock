@@ -27,7 +27,7 @@ public class StockDataGatewayFactory {
     public StockDataAPIGateway create(StockDataGatewayEnum type){
         Objects.requireNonNull(type);
         return switch (type) {
-            case YahooFinance -> YahooFinanceGateway.getInstance();
+            case YAHOO_FINANCE -> YahooFinanceGateway.getInstance();
         };
     }
 

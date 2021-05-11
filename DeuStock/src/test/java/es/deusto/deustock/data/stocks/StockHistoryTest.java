@@ -6,7 +6,10 @@ import org.junit.jupiter.api.Test;
 import static es.deusto.deustock.services.investment.operation.type.OperationType.LONG;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class StockHistoryTest {
+/**
+ * @author Erik B. Terres
+ */
+class StockHistoryTest {
 
     @Test
     void testConstructorDoesNotThrowException(){

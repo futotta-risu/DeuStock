@@ -1,6 +1,5 @@
 package es.deusto.deustock.services.investment.wallet;
 
-import com.thoughtworks.qdox.model.expression.Not;
 import es.deusto.deustock.dao.StockHistoryDAO;
 import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.dao.WalletDAO;
@@ -30,7 +29,7 @@ public class WalletService {
     private WalletDAO walletDAO;
     private UserDAO userDAO;
 
-    private Logger logger = LoggerFactory.getLogger(WalletService.class);
+    private final Logger logger = LoggerFactory.getLogger(WalletService.class);
 
     public WalletService(){
         userDAO = UserDAO.getInstance();
@@ -82,8 +81,8 @@ public class WalletService {
 
     public void resetHoldings(String username) throws WalletException {
         try{
-            User user = userDAO.get(username);
-            Wallet wallet = user.getWallet();
+            var user = userDAO.get(username);
+            var wallet = user.getWallet();
 
             List<StockHistory> shList = stockHistoryDAO.getStockHistory(wallet.getId());
             for (StockHistory stockHistory : shList) {
@@ -101,7 +100,7 @@ public class WalletService {
     public List<StockHistoryDTO> getHoldings(String username) throws WalletException {
 
         try {
-            User user = userDAO.get(username);
+            var user = userDAO.get(username);
             return user
                     .getWallet()
                     .getHistory()
@@ -116,7 +115,7 @@ public class WalletService {
 
 
     public void updateMoney(String username, double amount) throws WalletException {
-        Wallet wallet = getWallet(username);
+        var wallet = getWallet(username);
 
         if(!wallet.hasEnoughMoney(amount)){
             logger.error("Not enough money on wallet.");
@@ -153,9 +152,9 @@ public class WalletService {
      */
     public void addToHoldings(String username, DeuStock stock, double amount, OperationType type) throws WalletException {
 
-        Wallet wallet = getWallet(username);
+        var wallet = getWallet(username);
 
-        StockHistory stockHistory = stockHistoryDAO.create(
+        var stockHistory = stockHistoryDAO.create(
                 wallet, stock, amount, type
         );
 
@@ -179,7 +178,7 @@ public class WalletService {
 
     public void closeStockHistory(String stockHistoryID) throws WalletException {
         try {
-            StockHistory stockHistory = stockHistoryDAO.get(stockHistoryID);
+            var stockHistory = stockHistoryDAO.get(stockHistoryID);
             stockHistory.setClosed(true);
             stockHistoryDAO.update(stockHistory);
         } catch (SQLException sqlException) {

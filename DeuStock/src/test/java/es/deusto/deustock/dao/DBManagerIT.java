@@ -4,10 +4,8 @@ package es.deusto.deustock.dao;
 //import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.FileInputStream;
-import java.sql.SQLException;
 
 import org.dbunit.DBTestCase;
-import org.dbunit.DatabaseUnitException;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;

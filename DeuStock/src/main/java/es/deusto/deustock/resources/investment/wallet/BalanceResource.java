@@ -32,7 +32,7 @@ public class BalanceResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response getBalance(@PathParam("username") String username) throws SQLException {
-        User user = userDAO.get(username);
+        var user = userDAO.get(username);
 
         if(user == null){
             return Response.status(401).build();

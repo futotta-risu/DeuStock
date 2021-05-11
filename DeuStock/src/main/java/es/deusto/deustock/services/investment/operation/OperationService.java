@@ -34,7 +34,7 @@ public class OperationService {
         stockHistoryDAO = StockHistoryDAO.getInstance();
         walletDAO = WalletDAO.getInstance();
         stockDAO = StockDAO.getInstance();
-        stockDataAPIGateway = StockDataGatewayFactory.getInstance().create(StockDataGatewayEnum.YahooFinance);
+        stockDataAPIGateway = StockDataGatewayFactory.getInstance().create(StockDataGatewayEnum.YAHOO_FINANCE);
         operationFactory = OperationFactory.getInstance();
         userDAO = UserDAO.getInstance();
     }
@@ -56,17 +56,12 @@ public class OperationService {
     }
 
 
-    public double getOpenPrice(
-            OperationType operationType, double openPrice, double amount
-    ) throws OperationException{
-        Operation operation = operationFactory.create(operationType, openPrice, amount);
-        return operation.getOpenPrice();
+    public double getOpenPrice(OperationType operationType, double openPrice, double amount) {
+        return operationFactory.create(operationType, openPrice, amount).getOpenPrice();
     }
 
-    public double getClosePrice(OperationType operationType, double openPrice, double closePrice, double amount) throws OperationException {
-
-        Operation operation = operationFactory.create(operationType, openPrice, amount);
-        return operation.getClosePrice(closePrice);
+    public double getClosePrice(OperationType operationType, double openPrice, double closePrice, double amount) {
+        return operationFactory.create(operationType, openPrice, amount).getClosePrice(closePrice);
     }
 
 }

@@ -3,6 +3,8 @@ package es.deusto.deustock;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URI;
@@ -13,6 +15,8 @@ import java.net.URI;
  *
  */
 public class Main {
+
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     private Main(){}
 
@@ -36,10 +40,10 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         final HttpServer server = startServer();
-        System.out.printf("Jersey app started with WADL available at "
-                + "%sapplication.wadl\nHit enter to stop it...%n", BASE_URI);
+        logger.info("Jersey app started with WADL available at "
+                + "{} application.wadl\nHit enter to stop it...%n", BASE_URI);
         System.in.read();
-        server.stop();
+        server.shutdownNow();
     }
 }
 

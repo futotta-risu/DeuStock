@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Erik B. Terres
  */
 @Tag("server-resource")
-public class FAQListIT extends JerseyTest {
+class FAQListIT extends JerseyTest {
 
     @BeforeEach
     @Override
@@ -38,14 +38,14 @@ public class FAQListIT extends JerseyTest {
     }
 
     @Test
-    public void testFAQReturns200(){
+    void testFAQReturns200(){
         Response response = target("help/faq/list").request().get();
 
         assertEquals(200, response.getStatus());
     }
 
     @Test
-    public void testFAQReturnsQuestions()  {
+    void testFAQReturnsQuestions()  {
         Response response = target("help/faq/list").request().get();
 
         JSONObject faq = new JSONObject(response.readEntity(String.class));

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("sentiment")
-public class SentimentAnalyzerTest {
+class SentimentAnalyzerTest {
 
     @Test
     @DisplayName("Test Analyze String")
@@ -28,19 +28,19 @@ public class SentimentAnalyzerTest {
     @Test
     @DisplayName("Test Analyze String returns average on null")
     void testAnalyzeNullString(){
-        assertEquals(SentimentAnalyzer.analyze((String) null),2);
+        assertEquals(2, SentimentAnalyzer.analyze((String) null));
     }
 
     @Test
     @DisplayName("Test Analyze String returns average on empty")
     void testAnalyzeEmptyString(){
-        assertEquals(SentimentAnalyzer.analyze(""),2);
+        assertEquals(2, SentimentAnalyzer.analyze(""));
     }
 
     @Test
     @DisplayName("Test Analyze String returns average on empty")
     void testAnalyzeWhitespaceString(){
-        assertEquals(SentimentAnalyzer.analyze("   "),2);
+        assertEquals(2, SentimentAnalyzer.analyze("   "));
     }
 
 

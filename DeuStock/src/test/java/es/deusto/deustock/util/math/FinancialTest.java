@@ -25,32 +25,30 @@ class FinancialTest {
     }
 
     @Test
-    public void rsiDouble(){
-
-
+    void rsiDouble(){
         double result = Financial.rsi(this.numbers, 5);
 
         assertTrue(result > 0.5);
-        assertEquals(result, 0.75, 0.01);
+        assertEquals(0.75, result, 0.01);
     }
 
     @Test
-    public void rsiFailsOnNegativeN(){
+    void rsiFailsOnNegativeN(){
         assertThrows(IllegalArgumentException.class, () -> Financial.rsi(this.numbers, -2));
     }
 
     @Test
-    public void rsiFailsOnZeroN(){
+    void rsiFailsOnZeroN(){
         assertThrows(IllegalArgumentException.class, () -> Financial.rsi(this.numbers, 0));
     }
 
     @Test
-    public void rsiFailsOnOneN(){
+    void rsiFailsOnOneN(){
         assertThrows(IllegalArgumentException.class, () -> Financial.rsi(this.numbers, 1));
     }
 
     @Test
-    public void rsiFailsOnNBiggerThanListSize(){
+    void rsiFailsOnNBiggerThanListSize(){
         assertThrows(IllegalArgumentException.class, () -> Financial.rsi(this.numbers, 200));
     }
 

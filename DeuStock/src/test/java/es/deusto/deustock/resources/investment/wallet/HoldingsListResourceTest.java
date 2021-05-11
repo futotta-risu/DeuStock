@@ -6,19 +6,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
-import static org.mockito.Mockito.doNothing;
-
 import javax.ws.rs.core.Response;
 
 import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.data.User;
-import es.deusto.deustock.data.stocks.StockHistory;
-import es.deusto.deustock.data.stocks.Wallet;
-import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
 import es.deusto.deustock.resources.investment.wallet.HoldingsListResources;
 import es.deusto.deustock.services.investment.operation.OperationService;
 import es.deusto.deustock.services.investment.operation.exceptions.OperationException;
-import es.deusto.deustock.services.investment.operation.type.OperationType;
 import es.deusto.deustock.services.investment.stock.StockService;
 import es.deusto.deustock.services.investment.stock.exceptions.StockException;
 import es.deusto.deustock.services.investment.wallet.WalletService;
@@ -28,12 +21,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import es.deusto.deustock.dao.StockHistoryDAO;
-import es.deusto.deustock.dao.UserDAO;
-import es.deusto.deustock.dao.WalletDAO;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
-
-import java.sql.SQLException;
 import java.util.LinkedList;
 
 /**

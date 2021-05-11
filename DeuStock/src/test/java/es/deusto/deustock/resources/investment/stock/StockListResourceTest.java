@@ -5,14 +5,11 @@ import es.deusto.deustock.services.investment.stock.StockService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
-import java.lang.module.ResolutionException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 class StockListResourceTest {

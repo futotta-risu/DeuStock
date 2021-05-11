@@ -45,7 +45,7 @@ public class UserDAO implements IDAO<User> {
 	}
 
 	public User create(UserDTO userDTO){
-		User user = new User(userDTO.getUsername(), userDTO.getPassword());
+		var user = new User(userDTO.getUsername(), userDTO.getPassword());
 		user.setCountry(userDTO.getCountry());
 		user.setDescription(userDTO.getDescription());
 		user.setFullName(userDTO.getFullName());

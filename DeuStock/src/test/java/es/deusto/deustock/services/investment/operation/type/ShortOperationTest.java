@@ -1,7 +1,6 @@
 package es.deusto.deustock.services.investment.operation.type;
 
 import es.deusto.deustock.data.DeuStock;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

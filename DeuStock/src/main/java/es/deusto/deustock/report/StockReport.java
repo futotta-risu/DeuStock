@@ -3,16 +3,16 @@ package es.deusto.deustock.report;
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.dataminer.features.SentimentExtractor;
 import es.deusto.deustock.dataminer.visualization.TimeChart;
-import es.deusto.deustock.log.DeuLogger;
 
 import org.apache.pdfbox.pdmodel.PDPage;
 
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.XYChart;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import yahoofinance.histquotes.HistoricalQuote;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 import static es.deusto.deustock.util.math.Financial.rsi;
 import static es.deusto.deustock.util.math.Statistics.*;
-import static es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum.Twitter;
+import static es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum.TWITTER;
 import static org.apache.pdfbox.pdmodel.font.PDType1Font.TIMES_ROMAN;
 import static org.apache.pdfbox.pdmodel.graphics.image.JPEGFactory.createFromImage;
 
@@ -31,14 +31,22 @@ import static org.apache.pdfbox.pdmodel.graphics.image.JPEGFactory.createFromIma
  */
 public class StockReport extends Report {
 
-    final private DeuStock stock;
+    private final DeuStock stock;
 
-    final private DecimalFormat decimalFormat =  new DecimalFormat("#.##");
+    private final DecimalFormat decimalFormat =  new DecimalFormat("#.##");
 
+    private static final Logger logger = LoggerFactory.getLogger(StockReport.class);
+
+    private SentimentExtractor extractor;
 
     public StockReport(DeuStock stock){
         super();
         this.stock = stock;
+        this.extractor = new SentimentExtractor(TWITTER);
+    }
+
+    public void setExtractor(SentimentExtractor extractor){
+        this.extractor = extractor;
     }
 
 
@@ -67,7 +75,7 @@ public class StockReport extends Report {
     }
 
     private void addActualPrice() throws IOException {
-        String date = Calendar.getInstance().getTime().toString();
+        var date = Calendar.getInstance().getTime().toString();
         double price = stock.getPrice();
 
         addSimpleTextLine("Precio [ " + date + " ] = " + decimalFormat.format(price) + " €");
@@ -102,9 +110,10 @@ public class StockReport extends Report {
         double sentiment;
 
         try {
-            sentiment = new SentimentExtractor(Twitter).getSentimentTendency(this.stock.getAcronym());
+            sentiment = extractor.getSentimentTendency(this.stock.getAcronym());
         } catch (InterruptedException e) {
-            DeuLogger.logger.error("Could not add sentiment of " + stock.getAcronym() + " due to error.");
+            Thread.currentThread().interrupt();
+            logger.error("Could not add sentiment of {} due to error.", stock.getAcronym());
             addSimpleTextLine( "Error getting sentiment. Please contact us.");
             return;
         }
@@ -115,7 +124,7 @@ public class StockReport extends Report {
 
     private void addStockChart(int height, int width) throws IOException {
         XYChart timeChart = TimeChart.getInstance().getTimeChart(stock, height, width);
-        BufferedImage bufferedTimeChart = BitmapEncoder.getBufferedImage(timeChart);
+        var bufferedTimeChart = BitmapEncoder.getBufferedImage(timeChart);
 
         contentStream.drawImage(createFromImage(document,bufferedTimeChart), 0, 0);
         contentStream.close();

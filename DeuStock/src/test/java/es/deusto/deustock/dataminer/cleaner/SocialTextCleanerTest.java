@@ -9,7 +9,7 @@ import java.util.List;
 import static es.deusto.deustock.dataminer.cleaner.SocialTextCleaner.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SocialTextCleanerTest {
+class SocialTextCleanerTest {
 
     @Test
     void testRemoveInvalidChars() {

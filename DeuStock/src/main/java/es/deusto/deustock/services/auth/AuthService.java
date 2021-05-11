@@ -3,10 +3,10 @@ package es.deusto.deustock.services.auth;
 import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.dto.UserDTO;
-import es.deusto.deustock.log.DeuLogger;
 import es.deusto.deustock.services.auth.exceptions.AuthException;
 import es.deusto.deustock.services.auth.exceptions.LoginException;
 import es.deusto.deustock.services.auth.exceptions.RegisterException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,8 +57,7 @@ public class AuthService {
             if(userDAO.has(userDTO.getUsername())){
                 throw new RegisterException("User already registered");
             }
-            User user = userDAO.create(userDTO);
-            userDAO.store(user);
+            userDAO.store(userDAO.create(userDTO));
         }catch (SQLException e){
             throw new RegisterException("Error adding user");
         }
