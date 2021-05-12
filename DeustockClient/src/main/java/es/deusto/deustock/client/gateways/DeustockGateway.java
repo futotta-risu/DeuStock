@@ -57,6 +57,13 @@ public class DeustockGateway {
 
         return Double.parseDouble(response.readEntity(String.class));
     }
+    public double getRedditSentiment(String searchQuery){
+        Response response = getHostWebTarget().path("reddit").path("sentiment")
+                .path(searchQuery).request(MediaType.TEXT_PLAIN).get();
+
+        return Double.parseDouble(response.readEntity(String.class));
+    }
+
 
     public List<FAQQuestion>  getFAQList(){
         Response data = getHostWebTarget()
