@@ -41,7 +41,7 @@ public class RedditGateway  implements SocialNetworkAPIGateway {
     private RedditGateway(){
         JSONObject config;
         try {
-            config = DSJSONUtils.readFile(PATH);
+            config = getConfiguration();
             // Initialize REST Client
             restClient = new PoliteHttpRestClient();
             restClient.setUserAgent("bot/1.0 by name");
@@ -57,6 +57,16 @@ public class RedditGateway  implements SocialNetworkAPIGateway {
         } catch (Exception e) {
             logger.error("Could not login with the given credentials [Reddit]");
         }
+    }
+
+    private JSONObject getConfiguration() throws IOException, ParseException {
+        if(System.getenv("reddit_username_secret")!=null){
+            var configuration = new JSONObject();
+            configuration.put("UsernameSecret",System.getenv("reddit_username_secret"));
+            configuration.put("PasswordSecret",System.getenv("reddit_password_secret"));
+            return configuration;
+        }else return DSJSONUtils.readFile(PATH);
+
     }
 
 
