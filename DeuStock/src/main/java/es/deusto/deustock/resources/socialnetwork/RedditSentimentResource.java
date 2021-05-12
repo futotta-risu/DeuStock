@@ -20,7 +20,7 @@ import static es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkG
 public class RedditSentimentResource {
 
     private SentimentExtractor extractor;
-    private final Logger logger = LoggerFactory.getLogger(TwitterSentimentResource.class);
+    private final Logger logger = LoggerFactory.getLogger(RedditSentimentResource.class);
 
     public RedditSentimentResource(){
         extractor = new SentimentExtractor(REDDIT);
