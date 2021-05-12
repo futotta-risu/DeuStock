@@ -27,11 +27,11 @@ class UserChangeDetailsTest {
         userDTO.setUsername("TestUsername");
         userDTO.setPassword("TestPass");
 
-        //When
         doNothing().when(mockUserService).updateUser(any());
         UserChangeDetails resource = new UserChangeDetails();
         resource.setUserService(mockUserService);
 
+        //When
         Response response = resource.changeDetails(userDTO);
 
         //Then
@@ -41,8 +41,12 @@ class UserChangeDetailsTest {
     @Test
     void testChangeDetailsThrowsExceptionOnUserExceptions() throws UserException {
         //Given
-        doThrow(new UserException("Exception test")).when(mockUserService).deleteUser(anyString(),anyString());
-        UserDeleteResource resource = new UserDeleteResource();
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername("TestUsername");
+        userDTO.setPassword("TestPass");
+
+        doThrow(new UserException("Exception test")).when(mockUserService).updateUser(any(UserDTO.class));
+        UserChangeDetails resource = new UserChangeDetails();
         resource.setUserService(mockUserService);
 
         //When
@@ -50,7 +54,7 @@ class UserChangeDetailsTest {
         //Then
         assertThrows(
                 WebApplicationException.class,
-                () -> resource.delete("Test", "Pass")
+                () -> resource.changeDetails(userDTO)
         );
     }
 }

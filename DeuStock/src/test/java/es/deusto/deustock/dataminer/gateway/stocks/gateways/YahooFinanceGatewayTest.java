@@ -7,12 +7,17 @@ import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.MockedStatic;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.HistoricalQuote;
 import yahoofinance.quotes.stock.StockQuote;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -43,12 +48,13 @@ class YahooFinanceGatewayTest {
         stockFake.setQuote(quoteFake);
     }
 
-    @Test
-    void getStockDataWithoutHistoric() throws StockNotFoundException {
+    @ParameterizedTest
+    @EnumSource(value = StockQueryData.Interval.class, names = {"DAILY", "WEEKLY", "MONTHLY"})
+    void getStockDataWithoutHistoric(StockQueryData.Interval interval) throws StockNotFoundException {
 
         // Given
         StockQueryData stockQueryData = new StockQueryData(
-                "AMZN", StockQueryData.Interval.DAILY
+                "AMZN", interval
         ).setWithHistoric(false);
 
         DeuStock stockData;
@@ -69,53 +75,6 @@ class YahooFinanceGatewayTest {
         assertTrue(stockData.getPrice() > 0);
     }
 
-    @Test
-    void getStockDataWithoutHistoricWeekly() throws StockNotFoundException {
-
-        StockQueryData stockQueryData = new StockQueryData(
-                "AMZN",
-                StockQueryData.Interval.WEEKLY
-        ).setWithHistoric(false);
-
-        DeuStock stockData;
-
-        try (MockedStatic<YahooFinance> yahooFinanceMock = mockStatic(YahooFinance.class)) {
-
-            yahooFinanceMock.when(() -> YahooFinance.get(anyString())).thenReturn(stock);
-            yahooFinanceMock.when(() -> YahooFinance.get(anyString(),any(),any(), any())).thenReturn(stockFake);
-
-            // When
-            stockData = gateway.getStockData(stockQueryData);
-        }
-
-        assertNotNull(stockData);
-        assertTrue(stockData.getHistory().isEmpty());
-        assertTrue(stockData.getPrice() > 0);
-    }
-
-    @Test
-    void getStockDataWithoutHistoricMonthly() throws StockNotFoundException {
-
-        StockQueryData stockQueryData = new StockQueryData(
-                "AMZN",
-                StockQueryData.Interval.MONTHLY
-        ).setWithHistoric(false);
-
-        DeuStock stockData;
-
-        try (MockedStatic<YahooFinance> yahooFinanceMock = mockStatic(YahooFinance.class)) {
-
-            yahooFinanceMock.when(() -> YahooFinance.get(anyString())).thenReturn(stock);
-            yahooFinanceMock.when(() -> YahooFinance.get(anyString(),any(),any(), any())).thenReturn(stockFake);
-
-            // When
-            stockData = gateway.getStockData(stockQueryData);
-        }
-
-        assertNotNull(stockData);
-        assertTrue(stockData.getHistory().isEmpty());
-        assertTrue(stockData.getPrice() > 0);
-    }
 
     @Test
     void getStockDataFailsOnUnknownStock() {
@@ -141,15 +100,35 @@ class YahooFinanceGatewayTest {
 
     }
 
-
-
-
     @Test
-    void getStockDataWithHistoric() throws StockNotFoundException {
+    void getStockDataThrowsIOException() {
+
+        StockQueryData stockQueryData = new StockQueryData(
+                "FXQH",
+                StockQueryData.Interval.DAILY
+        ).setWithHistoric(false);
+
+        try (MockedStatic<YahooFinance> yahooFinanceMock = mockStatic(YahooFinance.class)) {
+
+            yahooFinanceMock.when(() -> YahooFinance.get(anyString())).thenThrow(new IOException("Exception"));
+            yahooFinanceMock.when(() -> YahooFinance.get(anyString(),any(),any(), any())).thenReturn(stockFake);
+
+            // When
+
+            // Then
+            assertDoesNotThrow( () ->gateway.getStockData(stockQueryData) );
+        }
+
+    }
+
+
+    @ParameterizedTest
+    @EnumSource(value = StockQueryData.Interval.class, names = {"DAILY", "WEEKLY", "MONTHLY"})
+    void getStockDataWithHistoric(StockQueryData.Interval interval) throws StockNotFoundException {
         // Given
         StockQueryData stockQueryData = new StockQueryData(
                 "BB",
-                StockQueryData.Interval.DAILY
+                interval
         ).setWithHistoric(true);
 
         List<HistoricalQuote> historicalQuotes = new LinkedList<>();
@@ -200,6 +179,33 @@ class YahooFinanceGatewayTest {
         assertTrue(result.containsKey("AMZN1"));
         assertNotNull(result.get("AMZN"));
         assertNotNull(result.get("AMZN1"));
+    }
+
+    @Test
+    void getStocksGeneralDataThrowsIOException() {
+        // Given
+        List<String> stockDataList = new ArrayList<>();
+        stockDataList.add("AMZN");
+        stockDataList.add("AMZN1");
+
+        Map<String, Stock> stocks = new HashMap<>();
+        stocks.put("AMZN", stock);
+        stocks.put("AMZN1", stockFake);
+
+        HashMap<String, DeuStock> result;
+
+        try (MockedStatic<YahooFinance> yahooFinanceMock = mockStatic(YahooFinance.class)) {
+
+            yahooFinanceMock.when(() -> YahooFinance.get(any(String[].class), anyBoolean())).thenThrow( new IOException("Exception"));
+
+            // When
+
+            // Then
+
+            assertDoesNotThrow( () -> gateway.getStocksData(stockDataList));
+        }
+
+
     }
 
     @Test

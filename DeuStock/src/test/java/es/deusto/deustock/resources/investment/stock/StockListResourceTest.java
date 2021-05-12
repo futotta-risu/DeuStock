@@ -5,6 +5,7 @@ import es.deusto.deustock.services.investment.stock.StockService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,4 +66,25 @@ class StockListResourceTest {
         assertEquals(2, stocksResult.size());
 
     }
+
+    @Test
+    void testGetStockListThrowsIllegalArgumentExceptionOnUnknownList() {
+        // Given
+
+        when(mockStockService.getStockListData(anyString()))
+                .thenThrow(new IllegalArgumentException("Exception"));
+
+        StockListResource resource = new StockListResource();
+        resource.setStockService(mockStockService);
+
+        // When
+
+        // Then
+        assertThrows(
+                WebApplicationException.class,
+                () -> resource.getStock("TestString")
+        );
+
+    }
+
 }

@@ -87,4 +87,60 @@ class CloseOperationResourceTest {
         // Then
         assertThrows(WebApplicationException.class, ()-> resource.closeOperation("TestString"));
     }
+
+
+    @Test
+    void closeOperationThrowsOnWalletException() throws WebApplicationException, WalletException, OperationException, StockException {
+        // Given
+        Wallet wallet = new Wallet();
+        DeuStock stock = new DeuStock("BB").setPrice(20);
+        DeuStock stockNoPrice = new DeuStock("BB");
+        StockHistory stockHistory = new StockHistory(
+                wallet, stockNoPrice, 10, 15, LONG);
+        stockHistory.setClosed(true);
+
+        when(mockWalletService.getStockHistory(anyString())).thenThrow(new WalletException("Exception"));
+        when(mockStockService.getStockWithPrice(anyString())).thenReturn(stock);
+        when(mockOperationService.getClosePrice(any(),anyDouble(),anyDouble(),anyDouble())).thenReturn(20.0);
+        doNothing().when(mockWalletService).updateMoneyByWalletID(anyString(),anyDouble());
+        doNothing().when(mockWalletService).closeStockHistory(anyString());
+
+        CloseOperationResource resource = new CloseOperationResource();
+        resource.setStockService(mockStockService);
+        resource.setWalletService(mockWalletService);
+        resource.setOperationService(mockOperationService);
+
+        // When
+
+        // Then
+        assertThrows(WebApplicationException.class, ()-> resource.closeOperation("TestString"));
+    }
+
+    @Test
+    void closeOperationThrowsOnStockException() throws WebApplicationException, WalletException, OperationException, StockException {
+        // Given
+        Wallet wallet = new Wallet();
+        DeuStock stock = new DeuStock("BB").setPrice(20);
+        DeuStock stockNoPrice = new DeuStock("BB");
+        StockHistory stockHistory = new StockHistory(
+                wallet, stockNoPrice, 10, 15, LONG);
+        stockHistory.setClosed(true);
+
+
+        when(mockWalletService.getStockHistory(anyString())).thenReturn(stockHistory);
+        when(mockStockService.getStockWithPrice(anyString())).thenThrow(new StockException("Exception"));
+        when(mockOperationService.getClosePrice(any(),anyDouble(),anyDouble(),anyDouble())).thenReturn(20.0);
+        doNothing().when(mockWalletService).updateMoneyByWalletID(anyString(),anyDouble());
+        doNothing().when(mockWalletService).closeStockHistory(anyString());
+
+        CloseOperationResource resource = new CloseOperationResource();
+        resource.setStockService(mockStockService);
+        resource.setWalletService(mockWalletService);
+        resource.setOperationService(mockOperationService);
+
+        // When
+
+        // Then
+        assertThrows(WebApplicationException.class, ()-> resource.closeOperation("TestString"));
+    }
 }

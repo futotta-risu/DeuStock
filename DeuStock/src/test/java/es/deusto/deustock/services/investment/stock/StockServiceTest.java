@@ -10,6 +10,8 @@ import es.deusto.deustock.services.investment.stock.exceptions.StockException;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -52,6 +54,29 @@ class StockServiceTest {
         // Then
         assertEquals(stock.getAcronym(), result.getAcronym());
         assertEquals(stock.getPrice(), result.getPrice());
+    }
+
+    @Test
+    void testGetStockDataThrowsExceptionOnSQLException() throws StockNotFoundException, StockException, SQLException {
+        // Given
+        DeuStock stock = new DeuStock("BB").setPrice(20);
+        DeuStock stockNoPrice = new DeuStock("BB");
+
+        when(mockGateway.getStockData(any())).thenReturn(stock);
+        when(mockStockDAO.has(any())).thenThrow(new SQLException("Exception"));
+        when(mockStockDAO.get(any())).thenReturn(stockNoPrice);
+
+        StockService service = new StockService();
+        service.setStockDataAPIGateway(mockGateway);
+        service.setStockDAO(mockStockDAO);
+
+        // When
+
+        // Then
+        assertThrows(
+            InvalidStockQueryDataException.class,
+            () -> service.getStockDetailData("BB", "DAILY")
+        );
     }
 
     @Test
@@ -187,13 +212,14 @@ class StockServiceTest {
         assertEquals(stock.getPrice(), result.getPrice());
     }
 
-    @Test
-    void testGetStockListDataReturnsListWithSmall() throws SQLException {
+    @ParameterizedTest
+    @ValueSource(booleans =  {true, false})
+    void testGetStockListDataReturnsListWithSmall(boolean has) throws SQLException {
         HashMap<String,DeuStock> stocks = new HashMap<>();
         stocks.put("BB", new DeuStock("BB").setPrice(20));
         stocks.put("CC", new DeuStock("CC").setPrice(10));
 
-        when(mockStockDAO.has(anyString())).thenReturn(false);
+        when(mockStockDAO.has(anyString())).thenReturn(has);
         doNothing().when(mockStockDAO).store(any());
         when(mockGateway.getStocksData(any())).thenReturn(stocks);
 
@@ -207,6 +233,7 @@ class StockServiceTest {
         // Then
         assertEquals(2, result.size());
     }
+
 
     @Test
     void testGetStockListDataDoesNotBreakOnSQLException() throws SQLException {

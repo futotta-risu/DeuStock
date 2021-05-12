@@ -74,6 +74,18 @@ class AuthServiceTest {
     }
 
     @Test
+    void testLoginThrowsErrorSQLException() throws SQLException {
+        User u = new User("TestUser", "TestPass");
+        when(mockUserDAO.has(any())).thenThrow(new SQLException("Exception"));
+        when(mockUserDAO.get(any())).thenReturn(u);
+
+        AuthService service = new AuthService();
+        service.setUserDAO(mockUserDAO);
+
+        assertThrows(LoginException.class, () -> service.login("TestUser", "TestPass2") );
+    }
+
+    @Test
     void testRegisterDoesNotThrowWithCorrectData() throws SQLException {
         User user = new User("TestUsername", "TestPass");
         UserDTO u = new UserDTO();

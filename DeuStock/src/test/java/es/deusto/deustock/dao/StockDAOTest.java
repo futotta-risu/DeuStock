@@ -159,10 +159,28 @@ class StockDAOTest {
     void testGetOrCreateStock() throws SQLException {
         DeuStock stock = new DeuStock("Test");
 
+
         when(dbManager.get(eq(DeuStock.class), anyString(),any())).thenReturn(stock);
+        doNothing().when(dbManager).store(any());
 
         DeuStock stockObtained = stockDAO.getOrCreateStock("acronymTest");
         
+        assertNotNull(stockObtained);
+        assertEquals("Test", stockObtained.getAcronym());
+    }
+
+    @Test
+    @DisplayName("Test getOrCreateStock function returns stock")
+    void testGetOrCreateStockOnNonExistentStock() throws SQLException {
+        DeuStock stock = new DeuStock("Test");
+
+        doReturn(null)
+                .doReturn(stock)
+                .when(dbManager).get(eq(DeuStock.class),anyString(), any());
+        doNothing().when(dbManager).store(any());
+
+        DeuStock stockObtained = stockDAO.getOrCreateStock("acronymTest");
+
         assertNotNull(stockObtained);
         assertEquals("Test", stockObtained.getAcronym());
     }
