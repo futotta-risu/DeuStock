@@ -71,6 +71,8 @@ jobs:
         twitter_access_token_secret : ${{secrets.TWITTERACCESSTOKENSECRET}}
         twitter_consumer_key : ${{secrets.TWITTERCONSUMERKEY}}
         twitter_consumer_key_secret : ${{secrets.TWITTERCONSUMERSECRET}}
+        reddit_username_secret : ${{secrets.REDDITUSERNAMESECRET}}
+        reddit_password_secret : ${{secrets.REDDITPASSWORDSECRET}}
       run: mvn --file DeuStock/pom.xml --batch-mode --update-snapshots verify
 
 
