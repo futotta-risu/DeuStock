@@ -172,11 +172,11 @@
 		<!-- ###################################################### -->
         <!--  					 DATA SCRAPPING 				    -->
         <!-- ###################################################### -->
-        <dependency>
-            <groupId>com.github.jreddit</groupId>
-            <artifactId>jreddit</artifactId>
-            <version>1.0.3</version>
-        </dependency>
+		<dependency>
+			<groupId>com.github.jreddit</groupId>
+			<artifactId>jreddit</artifactId>
+			<version>1.0.3</version>
+		</dependency>
         <dependency>
             <groupId>org.twitter4j</groupId>
             <artifactId>twitter4j-core</artifactId>
