@@ -6,6 +6,7 @@ import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.visual.ViewPaths;
 import es.deusto.deustock.client.visual.stocks.list.StockInfoLine;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -65,12 +66,33 @@ public class StockListViewController {
                 StockInfoLine stockLine = new StockInfoLine(stock);
                 stockLines.put(stock.getAcronym(), stockLine);
                 
-                Image image1 = new Image("file:src/main/resources/views/img/notfav.png");
-                Image image2 = new Image("file:src/main/resources/views/img/fav.png");
+                Image imageNotFav = new Image("file:src/main/resources/views/img/notfav.png");
+                Image imageFav = new Image("file:src/main/resources/views/img/fav.png");
                 Button favButton = new Button();
+                favButton.setStyle("-fx-border-color: transparent; -fx-background-color: transparent;");
                 
-                favButton.setGraphic(new ImageView(image1));
-                favButton.setOnAction(e -> favButton.setGraphic(new ImageView(image2)));
+                ImageView imageViewNotFav = new ImageView(imageNotFav);
+                imageViewNotFav.setFitWidth(50);
+                imageViewNotFav.setFitHeight(50);
+                imageViewNotFav.setPreserveRatio(false);
+                ImageView imageViewFav = new ImageView(imageFav);
+                imageViewFav.setFitWidth(50);
+                imageViewFav.setFitHeight(50);
+                imageViewFav.setPreserveRatio(false);
+                
+                favButton.setGraphic(imageViewNotFav);
+                favButton.setOnAction(new EventHandler() {
+
+					@Override
+					public void handle(Event event) {
+						if(favButton.getGraphic() == imageViewNotFav) {
+							favButton.setGraphic(imageViewFav);
+						} else {
+							favButton.setGraphic(imageViewNotFav);
+						}
+						
+					}
+                });
                 
                 Button detailButton = new Button();
                 detailButton.setText("More Info");
@@ -82,6 +104,7 @@ public class StockListViewController {
                 ));
                 
                 stockList.getChildren().add(stockLine);
+                stockList.getChildren().add(favButton);
                 stockList.getChildren().add(detailButton);
                 stockList.getChildren().add(new Separator());
             }else
