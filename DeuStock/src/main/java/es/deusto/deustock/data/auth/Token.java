@@ -4,7 +4,7 @@ import es.deusto.deustock.data.User;
 
 import javax.jdo.annotations.*;
 
-@PersistenceCapable(detachable = "true")
+@PersistenceCapable
 public class Token {
 
     @Persistent(defaultFetchGroup = "true")
