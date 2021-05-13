@@ -1,5 +1,6 @@
 package es.deusto.deustock.resources.user;
 
+import es.deusto.deustock.resources.auth.Secured;
 import es.deusto.deustock.services.user.UserService;
 import es.deusto.deustock.services.user.exceptions.UserException;
 import org.slf4j.Logger;
@@ -9,7 +10,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 public class UserDeleteResource {
     private UserService userService;
@@ -41,12 +44,15 @@ public class UserDeleteResource {
 
     // TODO Change location
     @GET
+    @Secured
     @Path("delete/{username}/{password}")
     public Response delete(
             @PathParam("username") String username,
-            @PathParam("password") String password
+            @PathParam("password") String password,
+            @Context SecurityContext securityContext
     ) throws WebApplicationException {
         logger.info("User delete petition");
+        String tokenUsername = securityContext.getUserPrincipal().getName();
         try{
             userService.deleteUser(username, password);
         }catch (UserException e){

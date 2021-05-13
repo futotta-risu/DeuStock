@@ -5,6 +5,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 import static org.mockito.ArgumentMatchers.anyString;
 
@@ -18,6 +19,7 @@ import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.stocks.Wallet;
 
+import java.security.Principal;
 import java.sql.SQLException;
 
 /**
@@ -42,12 +44,19 @@ class BalanceResourceTest {
     @DisplayName("Test get balance with null user throws 401")
     void testGetBalanceWithNullUserReturns401() throws SQLException {
     	//Given
-		
-        //When
-  	    when(mockUserDAO.get(anyString())).thenReturn(null);
-  	    BalanceResource balanceResource = new BalanceResource();
+
+        when(mockUserDAO.get(anyString())).thenReturn(null);
+        BalanceResource balanceResource = new BalanceResource();
         setMocksToResource(balanceResource);
-        Response response = balanceResource.getBalance("");
+
+        SecurityContext mockSecurityContext = mock(SecurityContext.class);
+        Principal mockPrincipal = mock(Principal.class);
+        when(mockSecurityContext.getUserPrincipal()).thenReturn(mockPrincipal);
+        when(mockPrincipal.getName()).thenReturn("TestUsername");
+
+        //When
+        Response response = balanceResource.getBalance(mockSecurityContext);
+
   	    
         //Then
 		assertEquals(401, response.getStatus());
@@ -59,12 +68,18 @@ class BalanceResourceTest {
     	//Given
 		User user = new User("Test", "Pass");
 		user.setWallet(new Wallet());
-        
-		//When
-  	    when(mockUserDAO.get(anyString())).thenReturn(user);
-  	    BalanceResource balanceResource = new BalanceResource();
+
+        when(mockUserDAO.get(anyString())).thenReturn(user);
+        BalanceResource balanceResource = new BalanceResource();
         setMocksToResource(balanceResource);
-        Response response = balanceResource.getBalance("");
+
+        SecurityContext mockSecurityContext = mock(SecurityContext.class);
+        Principal mockPrincipal = mock(Principal.class);
+        when(mockSecurityContext.getUserPrincipal()).thenReturn(mockPrincipal);
+        when(mockPrincipal.getName()).thenReturn("TestUsername");
+
+        //When
+        Response response = balanceResource.getBalance(mockSecurityContext);
   	    
         //Then
 		assertEquals(200, response.getStatus());

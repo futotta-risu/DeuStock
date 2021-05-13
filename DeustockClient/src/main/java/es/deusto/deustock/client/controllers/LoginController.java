@@ -49,6 +49,9 @@ public class LoginController {
 	@FXML
 	private Button registerBtn;
 
+	@FXML
+	private Button pruebaButton;
+
 	public LoginController(){}
 
 	@FXML

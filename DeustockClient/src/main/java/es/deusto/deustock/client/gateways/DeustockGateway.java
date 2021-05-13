@@ -15,6 +15,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -91,7 +92,9 @@ public class DeustockGateway {
     public User login(String username, String password){
     	Response response = getHostWebTarget().path("users").path("login")
                 .path(username).path(getEncrypt(password))
-                .request(MediaType.APPLICATION_JSON).get();
+                .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + username)
+                .get();
 
         return response.readEntity(User.class);
     }

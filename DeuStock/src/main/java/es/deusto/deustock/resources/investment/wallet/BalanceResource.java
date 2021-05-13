@@ -1,13 +1,16 @@
 package es.deusto.deustock.resources.investment.wallet;
 
 import es.deusto.deustock.dao.UserDAO;
+import es.deusto.deustock.resources.auth.Secured;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import java.sql.SQLException;
 
 
@@ -27,10 +30,12 @@ public class BalanceResource {
         this.userDAO = userDAO;
     }
 
-    @Path("{username}/balance")
     @GET
+    @Secured
+    @Path("/balance")
     @Produces(MediaType.TEXT_PLAIN)
-    public Response getBalance(@PathParam("username") String username) throws SQLException {
+    public Response getBalance(@Context SecurityContext securityContext) throws SQLException {
+        String username = securityContext.getUserPrincipal().getName();
         var user = userDAO.get(username);
 
         if(user == null){

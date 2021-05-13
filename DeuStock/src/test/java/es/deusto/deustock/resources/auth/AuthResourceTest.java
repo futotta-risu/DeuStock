@@ -35,7 +35,7 @@ class AuthResourceTest {
     void testLoginReturns200() {
     	//Given
     	UserDTO userDTO = new UserDTO().setUsername("Test").setPassword("Pass");
-        when(mockAuthService.login(anyString(),anyString())).thenReturn(userDTO);
+        when(mockAuthService.login(anyString(),anyString())).thenReturn("TestToken");
 
         AuthResource userResource = new AuthResource();
         userResource.setAuthService(mockAuthService);

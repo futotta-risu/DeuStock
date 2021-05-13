@@ -1,6 +1,7 @@
 package es.deusto.deustock.resources.investment.operation;
 
 import es.deusto.deustock.data.DeuStock;
+import es.deusto.deustock.resources.auth.Secured;
 import es.deusto.deustock.services.investment.operation.OperationService;
 import es.deusto.deustock.services.investment.operation.type.OperationType;
 import es.deusto.deustock.services.investment.stock.StockService;
@@ -12,12 +13,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 /**
  * @author Erik B. Terres
  */
+
 @Path("stock/operation/open")
 public class OpenOperationResource {
 
@@ -46,17 +50,20 @@ public class OpenOperationResource {
 
 
     @GET
+    @Secured
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{operation}/{symbol}/{username}/{amount}")
+    @Path("/{operation}/{symbol}/{amount}")
     public Response openOperation(
             @PathParam("operation") String operationTypeString,
             @PathParam("symbol") String symbol,
-            @PathParam("username") String username,
-            @PathParam("amount") double amount
-    ) throws WebApplicationException {
+            @PathParam("amount") double amount,
+            @Context SecurityContext securityContext
+        ) throws WebApplicationException {
         logger.info("Petition to open a operation");
 
         var operationType = OperationType.valueOf(operationTypeString);
+
+        String username = securityContext.getUserPrincipal().getName();
 
         try{
             DeuStock stock = stockService.getStockWithPrice(symbol);
