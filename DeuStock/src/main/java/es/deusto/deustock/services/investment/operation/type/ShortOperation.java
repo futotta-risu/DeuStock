@@ -7,6 +7,7 @@ public class ShortOperation extends Operation{
 
     public ShortOperation(double stockOpenPrice, double amount) {
         super(stockOpenPrice, amount);
+        System.out.println("CREADA SHORT OPERATION");
     }
 
     @Override

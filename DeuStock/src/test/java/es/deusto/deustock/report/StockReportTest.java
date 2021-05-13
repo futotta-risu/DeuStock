@@ -10,6 +10,7 @@ import yahoofinance.histquotes.HistoricalQuote;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -24,7 +25,7 @@ class StockReportTest {
 
     @Test
     @DisplayName("Test generating a report.")
-    void testGenerateReport() throws IOException, InterruptedException {
+    void testGenerateReport() throws IOException, InterruptedException, SQLException {
         // Given
         DeuStock stock = new DeuStock("BB").setPrice(22.0);
 
@@ -56,7 +57,7 @@ class StockReportTest {
 
     @Test
     @DisplayName("Test generating a report.")
-    void testGenerateReportDoesNotThrowOnInterruptedThread() throws IOException, InterruptedException {
+    void testGenerateReportDoesNotThrowOnInterruptedThread() throws IOException, InterruptedException, SQLException {
         // Given
         DeuStock stock = new DeuStock("BB").setPrice(22.0);
 

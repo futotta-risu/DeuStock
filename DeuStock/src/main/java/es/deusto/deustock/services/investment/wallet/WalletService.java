@@ -114,16 +114,26 @@ public class WalletService {
 
 
     public void updateMoney(String username, double amount) throws WalletException {
+        System.out.println("0.0.0.1");
         var wallet = getWallet(username);
+        System.out.println("0.0.0.2");
 
         if(!wallet.hasEnoughMoney(amount)){
+            System.out.println("0.0.0.3");
+
             logger.error("Not enough money on wallet.");
+            System.out.println("0.0.0.4");
+
             throw new NotEnoughMoneyException("Not enough money to open operation");
         }
+        System.out.println("0.0.0.6");
 
         wallet.changeMoney(-amount);
+        System.out.println("0.0.0.7");
 
         updateWallet(wallet);
+        System.out.println("0.0.0.8");
+
     }
 
     public void updateMoneyByWalletID(String walletID, double amount) throws WalletException {

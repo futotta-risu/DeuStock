@@ -17,6 +17,7 @@ public abstract class Operation implements StockOperation{
 
         this.amount = amount;
         this.stockOpenPrice = stockOpenPrice;
+        System.out.println("CREADA OPERATION NORMAL");
     }
 
     public double getAmount() {

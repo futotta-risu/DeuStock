@@ -56,13 +56,20 @@ public class OpenOperationResource {
     ) throws WebApplicationException {
         logger.info("Petition to open a operation");
 
+        System.out.println(operationTypeString);
         var operationType = OperationType.valueOf(operationTypeString);
+        System.out.println(operationType);
 
         try{
             DeuStock stock = stockService.getStockWithPrice(symbol);
+            System.out.println(stock.getAcronym());
+            System.out.println(operationType + " " + stock.getPrice() + " " + amount);
             double openPrice = operationService.getOpenPrice(operationType, stock.getPrice(),amount);
+            System.out.println(openPrice);
             walletService.updateMoney(username, openPrice);
+            System.out.println("DINERO ACTUALIZADO");
             walletService.addToHoldings(username, stock, amount, operationType);
+            System.out.println("HOLDING AÑADIDO");
         }catch (StockException | WalletException e){
             throw new WebApplicationException(e.getMessage(), Response.Status.UNAUTHORIZED);
         }
