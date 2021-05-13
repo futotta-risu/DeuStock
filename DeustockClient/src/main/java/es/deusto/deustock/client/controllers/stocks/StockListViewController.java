@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * StockListView controller
@@ -31,6 +32,12 @@ public class StockListViewController {
     @FXML
     private TextField twitterSearchField;
 
+    @FXML 
+    private TextField searchStockText;
+    
+    @FXML
+    private Button searchStockButton;
+    
     @FXML
     private VBox stockList;
 
@@ -47,16 +54,29 @@ public class StockListViewController {
         refreshButton.setOnMouseClicked(mouseEvent -> refreshStocks());
 
         stockList.getChildren().add(refreshButton);
+
+        searchStock();
+        searchStockButton.setOnMouseClicked(mouseEvent -> searchStock());
     }
 
-    @FXML
-    private void sentimentSearch(){
-        String searchQuery = twitterSearchField.getText();
+    private void searchStock(){
+        String searchQuery = searchStockText.getText();
+        
         DeustockGateway gateway = new DeustockGateway();
+        stockLines = new HashMap<>();
+        Stock stock = gateway.getSearchedStock(searchQuery);
 
-        sentimentLabel.setText("Sentiment: " + gateway.getTwitterSentiment(searchQuery));
+        if(stock != null) {
+            StockInfoLine stockLine = new StockInfoLine(stock);
+            stockLines.put(stock.getAcronym(), stockLine);
+
+            stockList.getChildren().add(stockLine);
+            stockList.getChildren().add(new Separator());
+        }else {
+            stockList.getChildren().add(new Label(" ** NO SE HA ENCONTRADO NINGUN STOCK CON ESE ACRONYM **"));
+        }
     }
-
+    
     public void refreshStocks(){
         DeustockGateway gateway = new DeustockGateway();
 
