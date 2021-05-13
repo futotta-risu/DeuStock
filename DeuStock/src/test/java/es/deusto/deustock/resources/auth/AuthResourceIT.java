@@ -126,10 +126,10 @@ class AuthResourceIT extends JerseyTest{
 				.path("TestPass")
 				.request(MediaType.APPLICATION_JSON).get();
 
-		UserDTO userLogin = response.readEntity(UserDTO.class);
+		String token = response.readEntity(String.class);
 
 		// Then
-        assertEquals("ResourceLoginReturns200", userLogin.getUsername());
+        assertFalse(token.isBlank());
 
         // After
 		UserDAO.getInstance().delete(user.getUsername());

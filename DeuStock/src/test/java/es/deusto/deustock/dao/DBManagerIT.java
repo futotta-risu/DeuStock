@@ -53,11 +53,13 @@ public class DBManagerIT extends DBTestCase{
     
     @Before
     public void setUp() throws Exception {
+        super.setUp();
     	this.getDatabaseTester().getSetUpOperation().execute(this.getConnection(), this.getDataSet());
     }
     
     @After
     public void tearDown() throws Exception {
+        super.tearDown();
     	this.getDatabaseTester().getTearDownOperation().execute(this.getConnection(), this.getDataSet());
     }
     
