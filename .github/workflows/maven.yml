@@ -60,7 +60,7 @@ jobs:
         directory: ./DeuStock
 
     - name: Build with Maven (Client)
-      run: mvn --file DeustockClient/pom.xml --batch-mode --update-snapshots verify
+      run: xvfb-run mvn --file DeustockClient/pom.xml --batch-mode --update-snapshots verify
       
     - name: Upload client coverage to Codecov
       uses: codecov/codecov-action@v1
