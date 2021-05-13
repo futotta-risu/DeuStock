@@ -1,5 +1,6 @@
 package es.deusto.deustock.data;
 
+import es.deusto.deustock.data.auth.Token;
 import es.deusto.deustock.data.dto.UserDTO;
 import es.deusto.deustock.data.stocks.Wallet;
 import es.deusto.deustock.util.crypto.Crypto;

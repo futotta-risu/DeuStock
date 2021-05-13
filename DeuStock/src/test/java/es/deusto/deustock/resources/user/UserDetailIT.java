@@ -3,6 +3,7 @@ package es.deusto.deustock.resources.user;
 import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.dto.UserDTO;
+import es.deusto.deustock.resources.UserResource;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 
@@ -39,7 +40,7 @@ class UserDetailIT extends JerseyTest {
     @Override
     protected Application configure() {
         forceSet(TestProperties.CONTAINER_PORT, "0");
-        return new ResourceConfig(UserDetail.class);
+        return new ResourceConfig(UserResource.class);
     }
 
 

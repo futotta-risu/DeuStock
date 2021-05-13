@@ -2,7 +2,6 @@ package es.deusto.deustock.resources;
 
 import es.deusto.deustock.data.dto.UserDTO;
 import es.deusto.deustock.resources.auth.Secured;
-import es.deusto.deustock.resources.user.UserDetail;
 import es.deusto.deustock.services.user.UserService;
 import es.deusto.deustock.services.user.exceptions.UserException;
 import jdk.jfr.SettingDefinition;
@@ -17,7 +16,7 @@ import javax.ws.rs.core.*;
 public class UserResource {
 
     private UserService userService;
-    private final Logger logger = LoggerFactory.getLogger(UserDetail.class);
+    private final Logger logger = LoggerFactory.getLogger(UserResource.class);
 
     public UserResource(){
         this.userService = new UserService();

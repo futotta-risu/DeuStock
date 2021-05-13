@@ -2,12 +2,9 @@ package es.deusto.deustock.data.auth;
 
 import es.deusto.deustock.data.User;
 
-import javax.jdo.annotations.Join;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.Unique;
+import javax.jdo.annotations.*;
 
-@PersistenceCapable
+@PersistenceCapable(detachable = "true")
 public class Token {
 
     @Persistent(defaultFetchGroup = "true")
