@@ -1,22 +1,31 @@
 package es.deusto.deustock.client.controllers;
 
+import es.deusto.deustock.client.data.User;
+import es.deusto.deustock.client.gateways.DeustockGateway;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.testfx.api.FxRobot;
-import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
 
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+@Execution(ExecutionMode.SAME_THREAD)
 @ExtendWith(ApplicationExtension.class)
 public class UserDetailControllerTest{
 
@@ -53,15 +62,44 @@ public class UserDetailControllerTest{
     }
 
 
-    /**
-     * @param robot - Will be injected by the test runner.
-     */
+
     @Test
-    void testEditProfileButton(FxRobot robot) {
-        // when:
-        robot.clickOn(editProfileButton);
-        //Then
-        Assertions.assertThat(robot.lookup("#editProfileButton").queryButton()).hasText("Cambiar Detalles");
+    void testOpenOnUser(FxRobot robot) {
+        // Given
+        User user = new User();
+        user.setUsername("Test2");
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("username", "Test");
+
+        DeustockGateway gateway = mock(DeustockGateway.class);
+        when(gateway.getUser(anyString())).thenReturn(user);
+        controller.setDeustockGateway(gateway);
+        // When
+
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                controller.setParams(params);
+            }
+        });
+
     }
+
+    @Test
+    void testOpenOnNonNullUser(FxRobot robot) {
+        // Given
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("username", "Test");
+
+        DeustockGateway gateway = mock(DeustockGateway.class);
+        when(gateway.getUser(anyString())).thenReturn(null);
+        controller.setDeustockGateway(gateway);
+        // When
+
+
+        Platform.runLater( () -> controller.setParams(params) );
+    }
+
 
 }

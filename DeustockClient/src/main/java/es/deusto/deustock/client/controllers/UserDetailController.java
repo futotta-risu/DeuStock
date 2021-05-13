@@ -39,7 +39,15 @@ public class UserDetailController implements DSGenericController{
     @FXML
     Button resetWalletButton;
 
-    public  UserDetailController(){}
+    private DeustockGateway gateway;
+
+    public  UserDetailController(){
+        gateway = new DeustockGateway();
+    }
+
+    public void setDeustockGateway(DeustockGateway deustockGateway){
+        this.gateway = deustockGateway;
+    }
 
     @FXML
     public void initialize(){
@@ -57,7 +65,6 @@ public class UserDetailController implements DSGenericController{
     }
 
     private void getUser(){
-        DeustockGateway gateway = new DeustockGateway();
         this.user = gateway.getUser(this.username);
     }
 
