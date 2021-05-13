@@ -20,9 +20,6 @@ import java.io.IOException;
 @ExtendWith(ApplicationExtension.class)
 public class UserDetailControllerTest{
 
-    private Button editProfileButton;
-    private UserDetailController controller;
-
     @BeforeClass
     public static void setupSpec() throws Exception {
         if (Boolean.getBoolean("headless")) {
@@ -44,24 +41,6 @@ public class UserDetailControllerTest{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/UserDetailView.fxml"));
         System.out.println(loader);
         Parent root = loader.load();
-        controller = loader.getController();
-        Scene scene = new Scene(root);
-
-        editProfileButton = controller.editProfileButton;
-        stage.setScene(scene);
-        stage.show();
-    }
-
-
-    /**
-     * @param robot - Will be injected by the test runner.
-     */
-    @Test
-    void testEditProfileButton(FxRobot robot) {
-        // when:
-        robot.clickOn(editProfileButton);
-        //Then
-        Assertions.assertThat(robot.lookup("#editProfileButton").queryButton()).hasText("Cambiar Detalles");
     }
 
 }
