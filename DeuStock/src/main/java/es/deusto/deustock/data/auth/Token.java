@@ -9,9 +9,8 @@ import java.io.Serializable;
 @PersistenceCapable(detachable = "true")
 public class Token  implements Serializable {
 
-    @Persistent(defaultFetchGroup = "true")
     @CascadeOnDelete
-    @Join
+    @Persistent(defaultFetchGroup = "true")
     User user;
 
     @PrimaryKey
