@@ -72,34 +72,43 @@ public class UserDetailController implements DSGenericController{
     }
 
     private void initRoot(){
+        System.out.println("LLLLLL - Init t-1");
         if(this.username==null){
+            System.out.println("Init t-11");
             return;
         }
-
+        System.out.println("Init t-12");
         if(this.user == null || !this.user.getUsername().equals(this.username)) {
+            System.out.println("Init t-13");
             getUser();
         }
-
+        System.out.println("Init t-14");
         // Error on retrieving user
         if(this.user==null){
+            System.out.println("Init t-15");
             return;
         }
+        System.out.println("Init t-16");
 
         this.usernameLabel.setText(user.getUsername());
         //this.sexLabel.setText(String.valueOf(user.isSex()));
         this.descriptionLabel.setText(user.getDescription());
-
+        System.out.println("Init t-17");
         this.accountDeleteButton.setOnMouseClicked(
                 mouseEvent -> deleteUser()
         );
-
+        System.out.println("Init t-18");
         this.editProfileButton.setOnMouseClicked(
-        		moseEvent ->
-        		    MainController.getInstance().loadAndChangePaneWithParams(
+        		moseEvent -> {
+        		    System.out.println("Intentando cambiar");
+                    MainController.getInstance().loadAndChangePaneWithParams(
                             ViewPaths.ChangeUserDetailViewPath,
                             new HashMap<>() {{ put("username", username ); }}
-                    )
+                    );
+                }
+
         );
+        System.out.println("Init t-19");
     	this.resetWalletButton.setOnMouseClicked(
     			mouseEvent -> resetAccountWallet()
     	);

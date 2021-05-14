@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
+
 @Path("user")
 public class UserResource {
 
@@ -27,10 +28,11 @@ public class UserResource {
     }
 
     @GET
-    @Path("{username}")
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{username}")
     public Response getUser(@PathParam("username") String username) throws WebApplicationException{
         logger.info("Get user petition");
+        System.out.println("T-4");
         UserDTO userDTO;
 
         try {
@@ -46,17 +48,17 @@ public class UserResource {
 
     }
 
-    @PATCH
-    @Secured
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateUser(
             UserDTO user,
             @Context SecurityContext securityContext
     ) throws WebApplicationException{
+        System.out.println("T-12");
         logger.info("UserChangeDetail request");
         String username =securityContext.getUserPrincipal().getName();
         try{
-            // TODO if username not equls userDTO forbidden;
+            // TODO if username not equals userDTO forbidden;
             userService.updateUser(user);
         }catch (UserException e){
             throw new WebApplicationException(e.getMessage(), Response.Status.UNAUTHORIZED);
@@ -66,10 +68,9 @@ public class UserResource {
     }
 
     @DELETE
-    @Secured
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("{password}")
     public Response deleteUser(
-            String password,
+            @PathParam("password") String password,
             @Context SecurityContext securityContext
     ) throws WebApplicationException{
         logger.info("User delete petition");

@@ -63,15 +63,15 @@ public class LoginController {
 
 		loginButton.setOnMouseClicked(
 				mouseEvent -> {
-					User login = login();
+					String token = login();
 
-					if(login==null) {
+					if(token==null) {
 						dialog.setContentText("DATOS ERRONEOS");
 				        dialog.showAndWait();
 						return;
 					}
 
-					MainController.getInstance().initGenericStage(login);
+					MainController.getInstance().initGenericStage(usernameTxt.getText(), token);
 					MainController.getInstance().loadAndChangePane(
 							ViewPaths.HomeViewPath
 					);
@@ -87,7 +87,7 @@ public class LoginController {
 
 	
 	@FXML
-	private User login(){
+	private String login(){
 		Dialog<String> dialog = new Dialog<>();
 	    dialog.setTitle("ERROR");
 	    ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);

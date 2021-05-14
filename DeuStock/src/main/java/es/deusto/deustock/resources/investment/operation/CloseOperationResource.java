@@ -1,5 +1,6 @@
 package es.deusto.deustock.resources.investment.operation;
 
+import es.deusto.deustock.resources.auth.Secured;
 import es.deusto.deustock.services.investment.operation.OperationService;
 import es.deusto.deustock.services.investment.stock.StockService;
 import es.deusto.deustock.services.investment.stock.exceptions.StockException;
@@ -45,13 +46,14 @@ public class CloseOperationResource {
     }
 
     @POST
+    @Secured
     @Path("close")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response closeOperation(
             String stockHistoryID,
             @Context SecurityContext securityContext
-            ) throws WebApplicationException {
+        ) throws WebApplicationException {
         logger.info("Petition to close the operation");
 
         String username = securityContext.getUserPrincipal().getName();
