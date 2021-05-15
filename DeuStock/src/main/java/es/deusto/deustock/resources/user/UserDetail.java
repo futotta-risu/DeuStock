@@ -3,8 +3,8 @@ package es.deusto.deustock.resources.user;
 import es.deusto.deustock.data.dto.UserDTO;
 import es.deusto.deustock.services.user.UserService;
 import es.deusto.deustock.services.user.exceptions.UserException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -17,7 +17,7 @@ import javax.ws.rs.core.Response;
 public class UserDetail {
 	
 	private UserService userService;
-	private final Logger logger = LoggerFactory.getLogger(UserDetail.class);
+	private final Logger logger = Logger.getLogger(UserDetail.class);
 	
 	public UserDetail(){
 		this.userService = new UserService();

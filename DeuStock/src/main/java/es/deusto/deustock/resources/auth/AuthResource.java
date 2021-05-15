@@ -8,8 +8,8 @@ import es.deusto.deustock.data.dto.UserDTO;
 import es.deusto.deustock.services.auth.AuthService;
 import es.deusto.deustock.services.auth.exceptions.AuthException;
 import es.deusto.deustock.services.auth.exceptions.LoginException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+import org.apache.log4j.Logger;
 
 
 /**
@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 public class AuthResource {
 	private AuthService authService;
 
-	private final Logger logger = LoggerFactory.getLogger(AuthResource.class);
+	private final Logger logger = Logger.getLogger(AuthResource.class);
 
 	public AuthResource(){
 		authService = new AuthService();
@@ -74,7 +74,7 @@ public class AuthResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/register")
 	public Response register(UserDTO userDTO) throws WebApplicationException {
-		logger.info("Register petition for User {}", userDTO.getUsername());
+		logger.info(String.format("Register petition for User %s", userDTO.getUsername()));
 
 		try{
 			authService.register(userDTO);

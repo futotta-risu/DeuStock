@@ -1,7 +1,7 @@
 package es.deusto.deustock.resources;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -17,7 +17,7 @@ import javax.ws.rs.core.Response;
 @Path("helloworld")
 public class HelloWorld {
 
-    private static final Logger logger = LoggerFactory.getLogger(HelloWorld.class);
+    private static final Logger logger = Logger.getLogger(HelloWorld.class);
 
     /**
      * Method handling HTTP GET requests. The returned object will be sent

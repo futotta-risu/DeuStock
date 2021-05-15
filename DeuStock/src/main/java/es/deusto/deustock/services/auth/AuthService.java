@@ -7,15 +7,15 @@ import es.deusto.deustock.services.auth.exceptions.AuthException;
 import es.deusto.deustock.services.auth.exceptions.LoginException;
 import es.deusto.deustock.services.auth.exceptions.RegisterException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
 
 public class AuthService {
 
     private UserDAO userDAO;
-    private final Logger logger = LoggerFactory.getLogger(AuthService.class);
+    private final Logger logger = Logger.getLogger(AuthService.class);
 
     public AuthService(){
         userDAO = UserDAO.getInstance();

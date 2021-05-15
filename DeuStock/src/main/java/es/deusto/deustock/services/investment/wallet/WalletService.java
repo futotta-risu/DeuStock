@@ -11,8 +11,8 @@ import es.deusto.deustock.services.investment.operation.type.OperationType;
 import es.deusto.deustock.services.investment.wallet.exceptions.NotEnoughMoneyException;
 import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
 import es.deusto.deustock.services.investment.wallet.exceptions.WalletNotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
 
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
@@ -28,7 +28,7 @@ public class WalletService {
     private WalletDAO walletDAO;
     private UserDAO userDAO;
 
-    private final Logger logger = LoggerFactory.getLogger(WalletService.class);
+    private final Logger logger = Logger.getLogger(WalletService.class);
 
     public WalletService(){
         userDAO = UserDAO.getInstance();

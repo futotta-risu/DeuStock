@@ -8,8 +8,8 @@ import es.deusto.deustock.services.investment.stock.exceptions.StockException;
 import es.deusto.deustock.services.investment.wallet.WalletService;
 import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -21,7 +21,7 @@ import javax.ws.rs.core.Response;
 @Path("stock/operation/open")
 public class OpenOperationResource {
 
-    private static final Logger logger = LoggerFactory.getLogger(OpenOperationResource.class);
+    private static final Logger logger = Logger.getLogger(OpenOperationResource.class);
 
     private OperationService operationService;
     private StockService stockService;

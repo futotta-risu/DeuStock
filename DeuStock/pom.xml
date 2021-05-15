@@ -447,7 +447,7 @@
 				<version>5.2.1</version>
 				<configuration>
 					<api>JDO</api>
-					<log4jConfiguration>${config.files.dir}/log4j.properties</log4jConfiguration>
+					<log4jConfiguration>resources/log4j_datanucleus.properties</log4jConfiguration>
 					<verbose>true</verbose>
 					<props>${config.files.dir}/datanucleus.properties</props>
 					<fork>false</fork>
@@ -473,7 +473,7 @@
 					<systemProperties>
 						<systemProperty>
 							<key>log4j.configuration</key>
-							<value>file:${config.files.dir}/log4j.properties</value>
+							<value>resources/log4j.properties</value>
 						</systemProperty>
 					</systemProperties>
 				</configuration>

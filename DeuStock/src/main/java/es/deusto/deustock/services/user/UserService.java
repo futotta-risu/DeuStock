@@ -3,8 +3,8 @@ package es.deusto.deustock.services.user;
 import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.data.dto.UserDTO;
 import es.deusto.deustock.services.user.exceptions.UserException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
 
@@ -12,7 +12,7 @@ public class UserService {
 
     private UserDAO userDAO;
 
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private static final Logger logger = Logger.getLogger(UserService.class);
 
     public UserService(){
         userDAO = UserDAO.getInstance();

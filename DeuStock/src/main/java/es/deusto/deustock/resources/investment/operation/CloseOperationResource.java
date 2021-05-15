@@ -5,8 +5,8 @@ import es.deusto.deustock.services.investment.stock.StockService;
 import es.deusto.deustock.services.investment.stock.exceptions.StockException;
 import es.deusto.deustock.services.investment.wallet.WalletService;
 import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -18,7 +18,7 @@ import javax.ws.rs.core.Response;
 @Path("stock/operation/close")
 public class CloseOperationResource {
 
-    private static final Logger logger = LoggerFactory.getLogger(CloseOperationResource.class);
+    private static final Logger logger = Logger.getLogger(CloseOperationResource.class);
 
     private OperationService operationService;
     private WalletService walletService;
