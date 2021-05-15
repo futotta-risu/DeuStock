@@ -11,7 +11,7 @@ class CryptoTest {
     @DisplayName("Test getHash returns correct hash")
     void testGetHash() {
         // Given
-        String hash = "35454B055CC325EA1AF2126E27707052";
+        String hash = "9B9FAB23AFD71E2FA950A4220EDD9D5F0E8CDE4C79720AE184428759CD77EB8EF69170D9710E0A0BF6BE6D4BBFFDD35119820C860EFDB89A4A05306636302D09";
         String testHash = "ILoveJava";
 
         // When

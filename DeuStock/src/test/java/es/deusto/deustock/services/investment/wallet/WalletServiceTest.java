@@ -439,4 +439,27 @@ class WalletServiceTest {
         );
     }
 
+    @Test
+    void testGetBalanceReturnsBalance() throws SQLException, WalletException {
+        User u = new User("TestUsername", "TestPass");
+        Wallet wallet = new Wallet();
+        u.setWallet(wallet);
+
+        doReturn(u).when(mockUserDAO).get(any());
+        WalletService service = new WalletService();
+        service.setUserDAO(mockUserDAO);
+
+        assertEquals(5000, service.getBalance("TestUser"));
+    }
+
+    @Test
+    void testGetBalanceThrowsExceptionOnSQLException() throws SQLException {
+        doThrow(new SQLException("Exception")).when(mockUserDAO).get(any());
+
+        WalletService service = new WalletService();
+        service.setUserDAO(mockUserDAO);
+
+        assertThrows(WalletException.class, () -> service.getBalance("TestUsername"));
+    }
+
 }

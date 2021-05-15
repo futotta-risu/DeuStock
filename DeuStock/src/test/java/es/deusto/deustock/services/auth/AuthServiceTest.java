@@ -1,15 +1,20 @@
 package es.deusto.deustock.services.auth;
 
+import es.deusto.deustock.dao.TokenDAO;
 import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.data.User;
+import es.deusto.deustock.data.auth.Token;
 import es.deusto.deustock.data.dto.UserDTO;
 import es.deusto.deustock.services.auth.exceptions.AuthException;
+import es.deusto.deustock.services.auth.exceptions.InvalidTokenException;
 import es.deusto.deustock.services.auth.exceptions.LoginException;
+import es.deusto.deustock.services.auth.exceptions.RegisterException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import javax.xml.registry.RegistryException;
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,15 +24,16 @@ import static org.mockito.Mockito.*;
 class AuthServiceTest {
 
     private UserDAO mockUserDAO;
+    private TokenDAO mockTokenDAO;
 
     @BeforeEach
     void setUp(){
         mockUserDAO = mock(UserDAO.class);
+        mockTokenDAO = mock(TokenDAO.class);
     }
 
     @Test
-    @Disabled
-    void testLoginReturnsUserDTOWithCorrectData() throws SQLException {
+    void testLoginReturnsTokenWithCorrectData() throws SQLException {
         // TODO Fullfill
         User u = new User("TestUser", "TestPass");
         UserDTO uDTO = new UserDTO();
@@ -37,13 +43,14 @@ class AuthServiceTest {
         when(mockUserDAO.get(any())).thenReturn(u);
         when(mockUserDAO.has(any())).thenReturn(true);
         when(mockUserDAO.getDTO(any())).thenReturn(uDTO);
+        doReturn(true).doReturn(false).when(mockTokenDAO).has(any());
+        doNothing().when(mockTokenDAO).store(any());
 
         AuthService service = new AuthService();
         service.setUserDAO(mockUserDAO);
+        service.setTokenDAO(mockTokenDAO);
 
-        String token = service.login("TestUser", "TestPass");
-        //assertEquals("TestUser" , userDTO.getUsername());
-        fail();
+        assertDoesNotThrow( () -> service.login("TestUser", "TestPass"));
     }
 
     @Test
@@ -151,6 +158,105 @@ class AuthServiceTest {
         service.setUserDAO(mockUserDAO);
 
         assertThrows(AuthException.class, () -> service.register(u) );
+    }
+
+    @Test
+    void testCreateTokenThrowsOnSQLExceptionOnHas() throws SQLException {
+        User user = new User("TestUsername", "TestPass");
+        doThrow(new SQLException("Exception")).when(mockTokenDAO).has(any());
+        doNothing().when(mockTokenDAO).store(any());
+        AuthService service = new AuthService();
+        service.setUserDAO(mockUserDAO);
+        service.setTokenDAO(mockTokenDAO);
+
+        assertThrows(
+                RegisterException.class,
+                () -> service.createToken(user)
+        );
+    }
+
+    @Test
+    void testCreateTokenThrowsOnSQLExceptionOnStore() throws SQLException {
+        User user = new User("TestUsername", "TestPass");
+        doReturn(true).doReturn(false).when(mockTokenDAO).has(any());
+        doThrow(new SQLException("Exception")).when(mockTokenDAO).store(any());
+        AuthService service = new AuthService();
+        service.setUserDAO(mockUserDAO);
+        service.setTokenDAO(mockTokenDAO);
+
+        assertThrows(
+                RegisterException.class,
+                () -> service.createToken(user)
+        );
+    }
+
+    @Test
+    void testCreateTokenThrowsOnWithFirstTokenExisting() throws SQLException {
+        User user = new User("TestUsername", "TestPass");
+        doReturn(true).doReturn(false).when(mockTokenDAO).has(any());
+        doNothing().when(mockTokenDAO).store(any());
+        AuthService service = new AuthService();
+        service.setUserDAO(mockUserDAO);
+        service.setTokenDAO(mockTokenDAO);
+
+        assertDoesNotThrow( () -> service.createToken(user));
+    }
+
+    @Test
+    void testValidateTokenReturnsUser() throws SQLException {
+        // Given
+        User user = new User("TestUsername", "TestPass");
+        Token token = new Token("TestToken", user);
+        doReturn(true).when(mockTokenDAO).has(any());
+        doReturn(token).when(mockTokenDAO).get(any());
+
+        AuthService service = new AuthService();
+        service.setTokenDAO(mockTokenDAO);
+
+        // When
+        String result = service.validateToken("TestToken");
+
+        // Then
+        assertEquals("TestUsername", result);
+    }
+
+    @Test
+    void testValidateTokenThrowsInvalidTokenExceptionOnSQLException() throws SQLException {
+        // Given
+        User user = new User("TestUsername", "TestPass");
+        Token token = new Token("TestToken", user);
+        doThrow(new SQLException("Exception")).when(mockTokenDAO).has(any());
+        doReturn(token).when(mockTokenDAO).get(any());
+
+        AuthService service = new AuthService();
+        service.setTokenDAO(mockTokenDAO);
+
+        // When
+
+        // Then
+        assertThrows(
+                InvalidTokenException.class,
+                () -> service.validateToken("TestToken")
+        );
+    }
+
+    @Test
+    void testValidateTokenThrowsInvalidTokenExceptionOnNonExistentToken() throws SQLException {
+        User user = new User("TestUsername", "TestPass");
+        Token token = new Token("TestToken", user);
+        doReturn(false).when(mockTokenDAO).has(any());
+        doReturn(token).when(mockTokenDAO).get(any());
+
+        AuthService service = new AuthService();
+        service.setTokenDAO(mockTokenDAO);
+
+        // When
+
+        // Then
+        assertThrows(
+                InvalidTokenException.class,
+                () -> service.validateToken("TestToken")
+        );
     }
 
 }

@@ -9,6 +9,8 @@ import java.util.Objects;
  */
 public class Crypto {
 
+    private Crypto(){}
+
     /**
      * Returns the MD5 encryption of a String.
      *
@@ -16,6 +18,6 @@ public class Crypto {
      */
     public static String getHash(String text){
         Objects.requireNonNull(text);
-        return DigestUtils.md5Hex(text).toUpperCase();
+        return DigestUtils.sha512Hex(text).toUpperCase();
     }
 }

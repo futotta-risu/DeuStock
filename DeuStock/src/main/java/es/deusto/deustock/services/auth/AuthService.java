@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.Random;
 
@@ -36,12 +37,16 @@ public class AuthService {
         this.userDAO = userDAO;
     }
 
+    public void setTokenDAO(TokenDAO tokenDAO){
+        this.tokenDAO = tokenDAO;
+    }
+
     public String createToken(User user){
         String encryptedToken;
         try{
             do{
                 byte[] array = new byte[7]; // length is bounded by 7
-                new Random().nextBytes(array);
+                new SecureRandom().nextBytes(array);
                 String randomToken = new String(array, StandardCharsets.UTF_8);
                 encryptedToken = Crypto.getHash(randomToken);
             }while(tokenDAO.has(encryptedToken));
@@ -50,7 +55,7 @@ public class AuthService {
         }
 
 
-        Token token = new Token(encryptedToken, user);
+        var token = new Token(encryptedToken, user);
 
         try{
             tokenDAO.store(token);
@@ -64,7 +69,7 @@ public class AuthService {
     public String validateToken(String token) throws InvalidTokenException {
         try{
             if(tokenDAO.has(token)){
-                Token tempToken = tokenDAO.get(token);
+                var tempToken = tokenDAO.get(token);
                 return tempToken.getUser().getUsername();
             }else{
                 throw new InvalidTokenException("No token found");
@@ -106,7 +111,6 @@ public class AuthService {
                 throw new RegisterException("User already registered");
             }
             User user = userDAO.create(userDTO);
-            createToken(user);
             if(user == null){
                 return;
             }
