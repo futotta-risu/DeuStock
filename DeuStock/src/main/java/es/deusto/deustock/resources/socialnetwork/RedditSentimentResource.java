@@ -11,34 +11,31 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum.TWITTER;
+import static es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkGatewayEnum.REDDIT;
 
 /**
- * Twitter sentiment resource for sentiment analysis.
- *
- * @author Erik B. Terres
+ * @author landersanmi
  */
-@Path("twitter/sentiment/{query}")
-public class TwitterSentimentResource {
+@Path("reddit/sentiment/{query}")
+public class RedditSentimentResource {
 
     private SentimentExtractor extractor;
-    private final Logger logger = LoggerFactory.getLogger(TwitterSentimentResource.class);
+    private final Logger logger = LoggerFactory.getLogger(RedditSentimentResource.class);
 
-
-    public TwitterSentimentResource(){
-        extractor = new SentimentExtractor(TWITTER);
+    public RedditSentimentResource(){
+        extractor = new SentimentExtractor(REDDIT);
     }
 
-    public TwitterSentimentResource(SentimentExtractor extractor){
+    public RedditSentimentResource(SentimentExtractor extractor){
         this.extractor = extractor;
     }
-    
+
     public void setSentimentExtractor(SentimentExtractor extractor) { this.extractor = extractor; }
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response getSentiment(@PathParam("query") String query) {
-        logger.info("Sentiment Analyzer called [Twitter]");
+        logger.info("Sentiment Analyzer called [Reddit]");
 
         double sentiment;
         try {
