@@ -11,8 +11,7 @@ import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkQueryDat
 import es.deusto.deustock.util.file.DSJSONUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ import java.util.List;
 public class RedditGateway  implements SocialNetworkAPIGateway {
 
     private static final String PATH ="data/secret_keys/secrets_reddit.json";
-    private static final Logger logger = LoggerFactory.getLogger(RedditGateway.class);
+    private static final Logger logger = Logger.getLogger(RedditGateway.class);
 
     private PoliteHttpRestClient restClient;
     private User user = null;

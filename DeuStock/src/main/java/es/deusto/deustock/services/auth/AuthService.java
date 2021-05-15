@@ -10,10 +10,9 @@ import es.deusto.deustock.services.auth.exceptions.InvalidTokenException;
 import es.deusto.deustock.services.auth.exceptions.LoginException;
 import es.deusto.deustock.services.auth.exceptions.RegisterException;
 
+
+import org.apache.log4j.Logger;
 import es.deusto.deustock.util.crypto.Crypto;
-import org.apache.poi.ss.formula.functions.T;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -24,9 +23,7 @@ import java.util.Random;
 public class AuthService {
 
     private UserDAO userDAO;
-    private TokenDAO tokenDAO;
-
-    private final Logger logger = LoggerFactory.getLogger(AuthService.class);
+    private final Logger logger = Logger.getLogger(AuthService.class);
 
     public AuthService(){
         userDAO = UserDAO.getInstance();
