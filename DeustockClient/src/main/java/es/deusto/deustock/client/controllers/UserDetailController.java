@@ -63,7 +63,8 @@ public class UserDetailController implements DSGenericController{
 
     private void deleteUser(){
         DeustockGateway gateway = new DeustockGateway();
-        if(gateway.deleteUser(this.username, user.getPassword())){
+
+        if(gateway.deleteUser(MainController.getInstance().getToken())){
             MainController.getInstance().setUser(null);
             MainController.getInstance().loadAndChangeScene(
                     ViewPaths.LoginViewPath
@@ -72,43 +73,30 @@ public class UserDetailController implements DSGenericController{
     }
 
     private void initRoot(){
-        System.out.println("LLLLLL - Init t-1");
         if(this.username==null){
-            System.out.println("Init t-11");
             return;
         }
-        System.out.println("Init t-12");
         if(this.user == null || !this.user.getUsername().equals(this.username)) {
-            System.out.println("Init t-13");
             getUser();
         }
-        System.out.println("Init t-14");
         // Error on retrieving user
         if(this.user==null){
-            System.out.println("Init t-15");
             return;
         }
-        System.out.println("Init t-16");
 
         this.usernameLabel.setText(user.getUsername());
         //this.sexLabel.setText(String.valueOf(user.isSex()));
         this.descriptionLabel.setText(user.getDescription());
-        System.out.println("Init t-17");
-        this.accountDeleteButton.setOnMouseClicked(
-                mouseEvent -> deleteUser()
-        );
-        System.out.println("Init t-18");
+
+        this.accountDeleteButton.setOnMouseClicked( mouseEvent -> deleteUser() );
         this.editProfileButton.setOnMouseClicked(
-        		moseEvent -> {
-        		    System.out.println("Intentando cambiar");
+        		moseEvent ->
                     MainController.getInstance().loadAndChangePaneWithParams(
                             ViewPaths.ChangeUserDetailViewPath,
                             new HashMap<>() {{ put("username", username ); }}
-                    );
-                }
-
+                    )
         );
-        System.out.println("Init t-19");
+
     	this.resetWalletButton.setOnMouseClicked(
     			mouseEvent -> resetAccountWallet()
     	);
@@ -119,6 +107,7 @@ public class UserDetailController implements DSGenericController{
     	DeustockGateway gateway = new DeustockGateway();
     	boolean succesfullyReseted = gateway.resetHoldings(this.user.getUsername());
     	if(!succesfullyReseted) {
+    	    // TODO handle with exception
     		System.out.println("No se ha podido resetear");
     	}
     }

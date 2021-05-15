@@ -1,9 +1,11 @@
 package es.deusto.deustock.client.gateways;
 
+import es.deusto.deustock.client.controllers.MainController;
 import es.deusto.deustock.client.data.Stock;
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.data.help.FAQQuestion;
 import es.deusto.deustock.client.data.stocks.StockHistory;
+import es.deusto.deustock.client.gateways.exceptions.ForbiddenException;
 import es.deusto.deustock.client.log.DeuLogger;
 import es.deusto.deustock.client.net.RESTVars;
 
@@ -72,7 +74,7 @@ public class DeustockGateway {
     
     public boolean register(String username, String password, String fullName, String aboutMe, String country){
 
-    	Response response = getHostWebTarget().path("users").path("register")
+    	Response response = getHostWebTarget().path("auth").path("register")
 			.request("application/json")
             .post(Entity.entity(new User()
                         .setUsername(username)
@@ -86,12 +88,14 @@ public class DeustockGateway {
         return response.getStatus() == 200;
     }
     
-    public String login(String username, String password){
-    	Response response = getHostWebTarget().path("users").path("login")
+    public String login(String username, String password) throws ForbiddenException {
+    	Response response = getHostWebTarget().path("auth").path("login")
                 .path(username).path(getEncrypt(password))
                 .request(MediaType.APPLICATION_JSON)
                 .get();
-
+        if(response.getStatus() != 200){
+            throw new ForbiddenException("Could not log in");
+        }
         return response.readEntity(String.class);
     }
     
@@ -111,17 +115,16 @@ public class DeustockGateway {
     }
 
     public User getUser(String username){
-        System.out.println("Init t-112 " + username);
         Response data = getHostWebTarget()
-                .path("user").path(username)
+                .path("tpuser").path(username)
                 .request(MediaType.APPLICATION_JSON).get();
-        System.out.println("Init t-143 " + data.getStatus());
+
         return data.readEntity(User.class);
     }
 
-    public boolean deleteUser(String token, String password){
+    public boolean deleteUser(String token){
         Response response = getHostWebTarget()
-                .path("users").path("delete").path(password)
+                .path("tpuser")
                 .request(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .delete();
@@ -139,13 +142,10 @@ public class DeustockGateway {
 
 
     public boolean updateUser(User user, String token) {
-
-        Response response = getHostWebTarget().path("users/details/change")
+        Response response = getHostWebTarget().path("tpuser")
                 .request("application/json")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .put(Entity.entity(user, MediaType.APPLICATION_JSON));
-
-        System.out.println("STATUS : " + response.getStatus());
 
         return response.getStatus() == 200;
     }
@@ -190,12 +190,14 @@ public class DeustockGateway {
     }
 
     public double getBalance(String username){
+        // TODO Delete username
         Response response = getHostWebTarget()
-                .path("holdings").path(username).path("balance")
+                .path("holdings").path("balance")
                 .request(MediaType.TEXT_PLAIN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + MainController.getInstance().getToken())
                 .get();
 
-        return Double.parseDouble(response.readEntity(String.class));
+        return response.readEntity(Double.class);
     }
 
     public void openOperation(OperationType operationType, Stock stock, String token, double amount){
@@ -214,7 +216,7 @@ public class DeustockGateway {
                 .path(operationType.name())
                 .path(stock.getAcronym())
                 .path(String.valueOf(amount))
-                .request()
+                .request(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .get();
     }

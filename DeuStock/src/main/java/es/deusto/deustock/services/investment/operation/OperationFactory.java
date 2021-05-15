@@ -16,6 +16,7 @@ public class OperationFactory {
     }
 
     public Operation create(OperationType operation, double stockOpenPrice, double amount){
+
         return switch (operation) {
             case LONG -> new LongOperation(stockOpenPrice, amount);
             case SHORT -> new ShortOperation(stockOpenPrice, amount);

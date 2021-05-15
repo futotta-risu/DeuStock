@@ -13,7 +13,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
 
-@Path("user")
+@Path("tpuser")
 public class UserResource {
 
     private UserService userService;
@@ -32,7 +32,6 @@ public class UserResource {
     @Path("/{username}")
     public Response getUser(@PathParam("username") String username) throws WebApplicationException{
         logger.info("Get user petition");
-        System.out.println("T-4");
         UserDTO userDTO;
 
         try {
@@ -49,14 +48,15 @@ public class UserResource {
     }
 
     @PUT
+    @Secured
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateUser(
             UserDTO user,
             @Context SecurityContext securityContext
     ) throws WebApplicationException{
-        System.out.println("T-12");
         logger.info("UserChangeDetail request");
-        String username =securityContext.getUserPrincipal().getName();
+
+        String username = securityContext.getUserPrincipal().getName();
         try{
             // TODO if username not equals userDTO forbidden;
             userService.updateUser(user);
@@ -68,15 +68,15 @@ public class UserResource {
     }
 
     @DELETE
-    @Path("{password}")
+    @Secured
     public Response deleteUser(
-            @PathParam("password") String password,
             @Context SecurityContext securityContext
     ) throws WebApplicationException{
         logger.info("User delete petition");
-        String tokenUsername = securityContext.getUserPrincipal().getName();
+        String username = securityContext.getUserPrincipal().getName();
+
         try{
-            userService.deleteUser(tokenUsername, password);
+            userService.deleteUser(username);
         }catch (UserException e){
             throw new WebApplicationException(e.getMessage(), Response.Status.UNAUTHORIZED);
         }

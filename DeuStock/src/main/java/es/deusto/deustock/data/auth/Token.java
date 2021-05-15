@@ -9,7 +9,7 @@ import java.io.Serializable;
 @PersistenceCapable(detachable = "true")
 public class Token  implements Serializable {
 
-    @CascadeOnDelete
+
     @Persistent(defaultFetchGroup = "true")
     User user;
 

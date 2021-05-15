@@ -40,32 +40,26 @@ public class UserService {
     public void updateUser(UserDTO userDTO) throws UserException {
         try{
             var user = userDAO.get(userDTO.getUsername());
+
             if(user==null){
                 logger.error("Cannot get user  information");
                 throw new UserException("User not found");
             }
-
             user.updateInfo(userDTO);
 
             userDAO.update(user);
-
         }catch (SQLException e){
             throw new UserException("Error Updating User");
         }
     }
 
-    public void deleteUser(String username, String password) throws UserException {
+    public void deleteUser(String username) throws UserException {
         try{
             var user = userDAO.get(username);
 
             if (user == null) {
                 logger.warn("User not found in DB while deleting");
                 throw new UserException("User not found");
-            }
-
-            if(!user.checkPassword(password)) {
-                logger.warn("Wrong user/pass combination for  while deleting");
-                throw new UserException("Incorrect Password");
             }
 
             userDAO.delete(username);

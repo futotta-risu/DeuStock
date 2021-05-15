@@ -348,33 +348,6 @@ class WalletServiceTest {
         assertEquals(1, wallet.getHistory().size());
     }
 
-    @Test
-    void testAddToHoldingsThrowsOnSQLException() throws SQLException {
-        User u = new User("TestUsername", "TestPass");
-        Wallet wallet = new Wallet();
-        u.setWallet(wallet);
-
-        DeuStock stock = new DeuStock("BB").setPrice(20.0);
-        StockHistory stockHistory = new StockHistory(wallet,stock,20.0,20.0,OperationType.LONG);
-
-        when(mockUserDAO.get(anyString())).thenReturn(u);
-        when(mockStockHistoryDAO.create(any(),any(),anyDouble(),any())).thenReturn(stockHistory);
-        doThrow(new SQLException("Can't store")).when(mockStockHistoryDAO).store(any());
-        doNothing().when(mockWalletDAO).update(any());
-
-        WalletService service = new WalletService();
-        service.setWalletDAO(mockWalletDAO);
-        service.setUserDAO(mockUserDAO);
-        service.setStockHistoryDAO(mockStockHistoryDAO);
-
-        // When
-
-        // Then
-        assertThrows(
-                WalletException.class,
-                () -> service.addToHoldings("TestUsername",stock,20.0, OperationType.LONG)
-        );
-    }
 
     @Test
     void testGetStockHistoryReturnsStockHistory() throws SQLException, WalletException {

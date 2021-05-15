@@ -4,11 +4,13 @@ import es.deusto.deustock.data.auth.Token;
 import es.deusto.deustock.data.dto.UserDTO;
 import es.deusto.deustock.data.stocks.Wallet;
 import es.deusto.deustock.util.crypto.Crypto;
+import org.eclipse.persistence.annotations.CascadeOnDelete;
 
 import java.io.Serial;
 import java.util.Calendar;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.jdo.annotations.*;
 
 /**
@@ -27,6 +29,9 @@ public class User implements Serializable{
 
 	String fullName;
 
+	@CascadeOnDelete
+	@Persistent(mappedBy = "user")
+	List<Token> token;
 
 	@NotPersistent
 	Date birthDate;

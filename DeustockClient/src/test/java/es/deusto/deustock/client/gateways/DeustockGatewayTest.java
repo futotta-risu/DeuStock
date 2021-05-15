@@ -3,6 +3,7 @@ package es.deusto.deustock.client.gateways;
 import es.deusto.deustock.client.data.Stock;
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.data.help.FAQQuestion;
+import es.deusto.deustock.client.gateways.exceptions.ForbiddenException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
@@ -168,7 +169,7 @@ public class DeustockGatewayTest {
         }
     }
     @Test
-    public void testLogin() {
+    public void testLogin() throws ForbiddenException {
         try(MockedStatic<ClientBuilder> clientBuilder = mockStatic(ClientBuilder.class)){
             User user = new User();
             user.setUsername("usernameTest");
@@ -183,6 +184,7 @@ public class DeustockGatewayTest {
             when(mockBuilder.post(any())).thenReturn(response);
             when(mockBuilder.get()).thenReturn(response);
             when(response.readEntity(String.class)).thenReturn("TestToken");
+            when(response.getStatus()).thenReturn(200);
 
             String result = new DeustockGateway().login("usernameTest", "passTest");
 
@@ -234,7 +236,7 @@ public class DeustockGatewayTest {
 
             //WHEN
             boolean result = new DeustockGateway()
-                    .deleteUser("usernameTest", "passTest");
+                    .deleteUser("usernameTest");
 
             //THEN
             assertTrue(result);

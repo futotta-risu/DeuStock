@@ -5,6 +5,7 @@ package es.deusto.deustock.client.controllers;
 
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.gateways.DeustockGateway;
+import es.deusto.deustock.client.gateways.exceptions.ForbiddenException;
 import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -63,11 +64,12 @@ public class LoginController {
 
 		loginButton.setOnMouseClicked(
 				mouseEvent -> {
-					String token = login();
-
-					if(token==null) {
+					String token;
+					try{
+						token = login();
+					}catch (ForbiddenException e){
 						dialog.setContentText("DATOS ERRONEOS");
-				        dialog.showAndWait();
+						dialog.showAndWait();
 						return;
 					}
 
@@ -87,7 +89,7 @@ public class LoginController {
 
 	
 	@FXML
-	private String login(){
+	private String login() throws ForbiddenException {
 		Dialog<String> dialog = new Dialog<>();
 	    dialog.setTitle("ERROR");
 	    ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);

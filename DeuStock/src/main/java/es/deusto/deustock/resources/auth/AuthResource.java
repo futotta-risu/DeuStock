@@ -51,7 +51,6 @@ public class AuthResource {
 			@PathParam("password") String password
 	){
 		logger.info("Login petition detected");
-		System.out.println("T-1");
 
 		try{
 			return Response
@@ -79,14 +78,13 @@ public class AuthResource {
 	@Path("/register")
 	public Response register(UserDTO userDTO) throws WebApplicationException {
 		logger.info("Register petition for User {}", userDTO.getUsername());
-		System.out.println("T-2");
+
 		try{
 			authService.register(userDTO);
 		}catch (AuthException e){
 			logger.warn("Error adding user.");
 			throw new WebApplicationException(e.getMessage(), Response.Status.UNAUTHORIZED);
 		}
-
 
 		return Response.ok().build();
 	}

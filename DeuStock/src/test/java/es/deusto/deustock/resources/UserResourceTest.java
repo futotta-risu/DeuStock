@@ -85,11 +85,11 @@ class UserResourceTest {
         when(mockSecurityContext.getUserPrincipal()).thenReturn(mockPrincipal);
         when(mockPrincipal.getName()).thenReturn("TestUsername");
 
-        doNothing().when(mockUserService).deleteUser(anyString(),anyString());
+        doNothing().when(mockUserService).deleteUser(anyString());
 
         //When
 
-        Response response = resource.deleteUser("Pass", mockSecurityContext);
+        Response response = resource.deleteUser( mockSecurityContext);
 
         //Then
         assertEquals(200, response.getStatus());
@@ -99,7 +99,7 @@ class UserResourceTest {
     @DisplayName("Test delete with wrong password returns 401")
     void testDeleteUserWithWrongPassReturns401() throws UserException {
         //Given
-        doThrow(new UserException("Exception test")).when(mockUserService).deleteUser(anyString(),anyString());
+        doThrow(new UserException("Exception test")).when(mockUserService).deleteUser(anyString());
 
         SecurityContext mockSecurityContext = mock(SecurityContext.class);
         Principal mockPrincipal = mock(Principal.class);
@@ -111,7 +111,7 @@ class UserResourceTest {
         //Then
         assertThrows(
                 WebApplicationException.class,
-                () -> resource.deleteUser("Test", mockSecurityContext)
+                () -> resource.deleteUser( mockSecurityContext)
         );
     }
 

@@ -57,7 +57,7 @@ class AuthResourceIT extends JerseyTest{
 
 		// When
 		Response response = this.target()
-				.path("users/register")
+				.path("auth/register")
 				.request("application/json")
 				.post(Entity.json(user));
 
@@ -76,7 +76,7 @@ class AuthResourceIT extends JerseyTest{
 		user.setUsername("ResourceRegisterSavesUser");
 		user.setPassword("TestPass");
 		// When
-		this.target("users/register")
+		this.target("auth/register")
 				.request("application/json")
 				.post(Entity.json(user));
 
@@ -98,7 +98,7 @@ class AuthResourceIT extends JerseyTest{
 		UserDAO.getInstance().store(userU);
 
 		// When
-		Response response = this.target("users/register")
+		Response response = this.target("auth/register")
 				.request("application/json")
 				.post(Entity.json(user));
 
@@ -121,7 +121,7 @@ class AuthResourceIT extends JerseyTest{
 		UserDAO.getInstance().store(rUser);
 
 		// When
-		Response response = target("users/login")
+		Response response = target("auth/login")
 				.path("ResourceLoginReturns200")
 				.path("TestPass")
 				.request(MediaType.APPLICATION_JSON).get();
@@ -146,7 +146,7 @@ class AuthResourceIT extends JerseyTest{
 		userDTO.setUsername("ResourceLoginReturns401WithIncorrectPass");
 
 		// When
-		Response response = target("users/login")
+		Response response = target("auth/login")
 				.path("ResourceLoginReturns401WithIncorrectPass")
 				.path("TestPassIncorrect")
 				.request(MediaType.APPLICATION_JSON).get();
@@ -164,7 +164,7 @@ class AuthResourceIT extends JerseyTest{
 		// Given
 
 		// When
-		Response response = target("users/login")
+		Response response = target("auth/login")
 				.path("LoginReturns401WithNonExistentUser")
 				.path("TestPass")
 				.request(MediaType.APPLICATION_JSON).get();

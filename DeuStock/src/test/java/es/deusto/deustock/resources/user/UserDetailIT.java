@@ -52,7 +52,7 @@ class UserDetailIT extends JerseyTest {
         UserDAO.getInstance().store(user);
 
         // When
-        Response response = target("user")
+        Response response = target("tpuser")
                 .path("TestUserReturn200")
                 .request().get();
 
@@ -71,7 +71,7 @@ class UserDetailIT extends JerseyTest {
         UserDAO.getInstance().store(user);
 
         // When
-        Response response = this.target("user")
+        Response response = this.target("tpuser")
                 .path("TestUserReturnsUser")
                 .request()
                 .get();
@@ -88,7 +88,7 @@ class UserDetailIT extends JerseyTest {
     @Test
     @DisplayName("Test get username returns status 401 on non existent user")
     void testGetUsernameReturnsStatus401OnNonExistingUser(){
-        Response response = target("user")
+        Response response = target("tpuser")
                 .path("UserDetailTest401OnNonExistentUser")
                 .request().get();
 

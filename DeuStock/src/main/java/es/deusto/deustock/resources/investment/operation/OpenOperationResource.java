@@ -59,6 +59,7 @@ public class OpenOperationResource {
             @PathParam("amount") double amount,
             @Context SecurityContext securityContext
         ) throws WebApplicationException {
+
         logger.info("Petition to open a operation");
 
         var operationType = OperationType.valueOf(operationTypeString);
@@ -67,9 +68,13 @@ public class OpenOperationResource {
 
         try{
             DeuStock stock = stockService.getStockWithPrice(symbol);
+
             double openPrice = operationService.getOpenPrice(operationType, stock.getPrice(),amount);
+
             walletService.updateMoney(username, openPrice);
+
             walletService.addToHoldings(username, stock, amount, operationType);
+
         }catch (StockException | WalletException e){
             throw new WebApplicationException(e.getMessage(), Response.Status.UNAUTHORIZED);
         }
