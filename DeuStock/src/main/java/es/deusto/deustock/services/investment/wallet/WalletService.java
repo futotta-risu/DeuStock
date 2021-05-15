@@ -50,8 +50,13 @@ public class WalletService {
 
 
 
-    public Response getBalance(String username){
-        return Response.status(Response.Status.UNAUTHORIZED).build();
+    public double getBalance(String username) throws WalletException{
+        try {
+            Wallet wallet = userDAO.get(username).getWallet();
+            return wallet.getMoney();
+        }catch (SQLException e){
+            throw new WalletException(e.getMessage());
+        }
     }
 
     private Wallet getWallet(String username) throws WalletException {
@@ -150,19 +155,12 @@ public class WalletService {
      * @throws WalletException
      */
     public void addToHoldings(String username, DeuStock stock, double amount, OperationType type) throws WalletException {
-
         var wallet = getWallet(username);
 
         var stockHistory = stockHistoryDAO.create(
                 wallet, stock, amount, type
         );
-
-        try {
-            wallet.addHistory(stockHistory);
-            stockHistoryDAO.store(stockHistory);
-        } catch (SQLException sqlException) {
-            throw new WalletException("Error updating wallet");
-        }
+        wallet.addHistory(stockHistory);
 
         updateWallet(wallet);
     }

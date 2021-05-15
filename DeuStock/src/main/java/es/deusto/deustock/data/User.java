@@ -1,12 +1,16 @@
 package es.deusto.deustock.data;
 
+import es.deusto.deustock.data.auth.Token;
 import es.deusto.deustock.data.dto.UserDTO;
 import es.deusto.deustock.data.stocks.Wallet;
+import es.deusto.deustock.util.crypto.Crypto;
+import org.eclipse.persistence.annotations.CascadeOnDelete;
 
 import java.io.Serial;
 import java.util.Calendar;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.jdo.annotations.*;
 
 /**
@@ -18,14 +22,23 @@ import javax.jdo.annotations.*;
 public class User implements Serializable{
 	@Serial
 	private static final long serialVersionUID = 1L;
+
 	@Unique
 	String username;
 	String password;
+
 	String fullName;
+
+	@CascadeOnDelete
+	@Persistent(mappedBy = "user")
+	List<Token> token;
+
 	@NotPersistent
 	Date birthDate;
+
 	String country;
 	String description;
+
 	@NotPersistent
 	Date registerDate;
 	@NotPersistent
@@ -33,7 +46,13 @@ public class User implements Serializable{
 
 	@Persistent(defaultFetchGroup = "true")
 	Wallet wallet;
-	
+
+	public User(String username, String password) {
+		this.username = username;
+		this.password = password;
+		this.registerDate = Calendar.getInstance().getTime();
+		this.lastActivity = this.registerDate;
+	}
 	
 	public String getUsername() { return username; }
 	public User setUsername(String username) {
@@ -77,13 +96,7 @@ public class User implements Serializable{
 	public Wallet getWallet(){
 		return this.wallet;
 	}
-	
-	public User(String username, String password) {
-		this.username = username;
-		this.password = password;
-		this.registerDate = Calendar.getInstance().getTime();
-		this.lastActivity = this.registerDate;
-	}
+
 
 	public void updateInfo(User u) {
 		this.password = u.password;

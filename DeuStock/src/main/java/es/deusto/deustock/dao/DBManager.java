@@ -183,6 +183,7 @@ public class DBManager implements IDBManager{
 		try {
 
 			tx.begin();
+			pm.flush();
 			var query = pm.newQuery(
 					SQL_TYPE,
 					String.format(SELECT_CONDITION_QUERY, entityClass.getName(), conditions)
@@ -210,6 +211,7 @@ public class DBManager implements IDBManager{
 		var tx = pm.currentTransaction();
 		try {
 			tx.begin();
+			pm.flush();
 			pm.deletePersistent(object);
 			tx.commit();
 		} catch (Exception ex) {

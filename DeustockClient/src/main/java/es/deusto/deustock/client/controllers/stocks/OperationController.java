@@ -69,7 +69,7 @@ public class OperationController implements DSGenericController {
                 e -> new DeustockGateway().openOperation(
                         operationSelect.getValue(),
                         stock,
-                        username,
+                        MainController.getInstance().getToken(),
                         // Temporaly solves the case of empty textbox
                         Double.parseDouble("0" + amountTextField.getText()))
         );

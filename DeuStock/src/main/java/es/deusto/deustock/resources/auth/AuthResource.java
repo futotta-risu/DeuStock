@@ -1,8 +1,10 @@
 package es.deusto.deustock.resources.auth;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 import es.deusto.deustock.data.dto.UserDTO;
 import es.deusto.deustock.services.auth.AuthService;
@@ -13,11 +15,11 @@ import org.apache.log4j.Logger;
 
 
 /**
- * Clase que contiene los metodos REST asociados a la clase Usuario
+ * Funciones REST relativas a la Auth
  * 
- * @author landersanmillan
+ * @author Erik B. Terres
  */
-@Path("users")
+@Path("auth")
 public class AuthResource {
 	private AuthService authService;
 
@@ -44,18 +46,19 @@ public class AuthResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/login/{username}/{password}")
-	public Response login(@PathParam("username") String username, @PathParam("password") String password){
+	public Response login(
+			@PathParam("username") String username,
+			@PathParam("password") String password
+	){
 		logger.info("Login petition detected");
 
-		UserDTO user;
-
 		try{
-			user = authService.login(username, password);
+			return Response
+					.ok(authService.login(username, password))
+					.build();
 		}catch (LoginException e){
 			throw new WebApplicationException(e.getMessage(), Response.Status.UNAUTHORIZED);
 		}
-
-		return Response.ok(user).build();
 	}
 
 	/**
@@ -83,8 +86,7 @@ public class AuthResource {
 			throw new WebApplicationException(e.getMessage(), Response.Status.UNAUTHORIZED);
 		}
 
-
-		return Response.status(200).build();
+		return Response.ok().build();
 	}
 
 }

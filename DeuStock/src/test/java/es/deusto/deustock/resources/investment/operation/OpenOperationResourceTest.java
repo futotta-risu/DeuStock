@@ -1,7 +1,6 @@
 package es.deusto.deustock.resources.investment.operation;
 
 import es.deusto.deustock.data.DeuStock;
-import es.deusto.deustock.resources.investment.operation.OpenOperationResource;
 import es.deusto.deustock.services.investment.operation.OperationService;
 
 import es.deusto.deustock.services.investment.operation.exceptions.OperationException;
@@ -15,6 +14,9 @@ import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+
+import java.security.Principal;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -27,11 +29,19 @@ class OpenOperationResourceTest {
     private WalletService mockWalletService;
     private StockService mockStockService;
 
+    private OpenOperationResource resource;
+
     @BeforeEach
     void setUp(){
         mockOperationService =  mock(OperationService.class);
         mockWalletService =  mock(WalletService.class);
         mockStockService =  mock(StockService.class);
+
+        resource = new OpenOperationResource();
+
+        resource.setOperationService(mockOperationService);
+        resource.setStockService(mockStockService);
+        resource.setWalletService(mockWalletService);
     }
 
     @Test
@@ -43,13 +53,13 @@ class OpenOperationResourceTest {
         doNothing().when(mockWalletService).updateMoney(anyString(),anyDouble());
         doNothing().when(mockWalletService).addToHoldings(anyString(),any(),anyDouble(),any());
 
-        OpenOperationResource resource = new OpenOperationResource();
-        resource.setOperationService(mockOperationService);
-        resource.setStockService(mockStockService);
-        resource.setWalletService(mockWalletService);
+        SecurityContext mockSecurityContext = mock(SecurityContext.class);
+        Principal mockPrincipal = mock(Principal.class);
+        when(mockSecurityContext.getUserPrincipal()).thenReturn(mockPrincipal);
+        when(mockPrincipal.getName()).thenReturn("TestUsername");
 
         // When
-        Response response = resource.openOperation("LONG", "BB", "TestUsername", 20);
+        Response response = resource.openOperation("LONG", "BB",  20, mockSecurityContext);
 
         // Then
 
@@ -67,10 +77,10 @@ class OpenOperationResourceTest {
         doThrow(new WalletException("Wallet exception")).when(mockWalletService).updateMoney(anyString(),anyDouble());
         doNothing().when(mockWalletService).addToHoldings(anyString(),any(),anyDouble(),any());
 
-        OpenOperationResource resource = new OpenOperationResource();
-        resource.setOperationService(mockOperationService);
-        resource.setStockService(mockStockService);
-        resource.setWalletService(mockWalletService);
+        SecurityContext mockSecurityContext = mock(SecurityContext.class);
+        Principal mockPrincipal = mock(Principal.class);
+        when(mockSecurityContext.getUserPrincipal()).thenReturn(mockPrincipal);
+        when(mockPrincipal.getName()).thenReturn("TestUsername");
 
         // When
 
@@ -78,7 +88,7 @@ class OpenOperationResourceTest {
 
         assertThrows(WebApplicationException.class,
                 () -> resource.openOperation(
-                        "LONG", "BB", "TestUsername", 20
+                        "LONG", "BB", 20, mockSecurityContext
                 )
         );
 
@@ -93,10 +103,10 @@ class OpenOperationResourceTest {
         doNothing().when(mockWalletService).updateMoney(anyString(),anyDouble());
         doNothing().when(mockWalletService).addToHoldings(anyString(),any(),anyDouble(),any());
 
-        OpenOperationResource resource = new OpenOperationResource();
-        resource.setOperationService(mockOperationService);
-        resource.setStockService(mockStockService);
-        resource.setWalletService(mockWalletService);
+        SecurityContext mockSecurityContext = mock(SecurityContext.class);
+        Principal mockPrincipal = mock(Principal.class);
+        when(mockSecurityContext.getUserPrincipal()).thenReturn(mockPrincipal);
+        when(mockPrincipal.getName()).thenReturn("TestUsername");
 
         // When
 
@@ -104,7 +114,7 @@ class OpenOperationResourceTest {
 
         assertThrows(WebApplicationException.class,
                 () -> resource.openOperation(
-                        "LONG", "BB", "TestUsername", 20
+                        "LONG", "BB",  20, mockSecurityContext
                 )
         );
 
