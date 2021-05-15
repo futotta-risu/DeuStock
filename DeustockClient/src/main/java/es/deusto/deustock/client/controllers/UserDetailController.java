@@ -78,7 +78,6 @@ public class UserDetailController implements DSGenericController{
         if(gateway.deleteUser(mainController.getToken())){
             mainController.setUser(null);
             mainController.loadAndChangeScene(
-
                     ViewPaths.LoginViewPath
             );
         }
