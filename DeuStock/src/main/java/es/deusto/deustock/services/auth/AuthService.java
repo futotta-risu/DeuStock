@@ -23,6 +23,7 @@ import java.util.Random;
 public class AuthService {
 
     private UserDAO userDAO;
+    private TokenDAO tokenDAO;
     private final Logger logger = Logger.getLogger(AuthService.class);
 
     public AuthService(){
