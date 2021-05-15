@@ -17,6 +17,7 @@ public class UserDetailController implements DSGenericController{
 
     private String username = null;
     private User user;
+    private MainController mainController;
 
     @FXML
     Label usernameLabel;
@@ -43,10 +44,15 @@ public class UserDetailController implements DSGenericController{
 
     public  UserDetailController(){
         gateway = new DeustockGateway();
+        mainController = MainController.getInstance();
     }
 
     public void setDeustockGateway(DeustockGateway deustockGateway){
         this.gateway = deustockGateway;
+    }
+
+    public void setMainController(MainController controller){
+        this.mainController = controller;
     }
 
     @FXML
@@ -68,11 +74,10 @@ public class UserDetailController implements DSGenericController{
         this.user = gateway.getUser(this.username);
     }
 
-    private void deleteUser(){
-        DeustockGateway gateway = new DeustockGateway();
+    public void deleteUser(){
         if(gateway.deleteUser(this.username, user.getPassword())){
-            MainController.getInstance().setUser(null);
-            MainController.getInstance().loadAndChangeScene(
+            mainController.setUser(null);
+            mainController.loadAndChangeScene(
                     ViewPaths.LoginViewPath
             );
         }
@@ -102,19 +107,18 @@ public class UserDetailController implements DSGenericController{
 
         this.editProfileButton.setOnMouseClicked(
         		mouseEvent ->
-        		    MainController.getInstance().loadAndChangePaneWithParams(
+        		    mainController.loadAndChangePaneWithParams(
                             ViewPaths.ChangeUserDetailViewPath,
                             new HashMap<>() {{ put("username", username ); }}
                     )
         );
     	this.resetWalletButton.setOnMouseClicked(
-    			mouseEvent -> resetAccountWallet()
+                mouseEvent -> resetAccountWallet()
     	);
     	
     }
     
     public void resetAccountWallet() {
-    	DeustockGateway gateway = new DeustockGateway();
     	boolean succesfullyReseted = gateway.resetHoldings(this.user.getUsername());
     	if(!succesfullyReseted) {
     		System.out.println("No se ha podido resetear");
