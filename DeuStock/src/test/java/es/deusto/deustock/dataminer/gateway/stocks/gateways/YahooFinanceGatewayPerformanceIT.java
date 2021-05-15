@@ -3,7 +3,6 @@ package es.deusto.deustock.dataminer.gateway.stocks.gateways;
 import org.databene.contiperf.PerfTest;
 import org.databene.contiperf.Required;
 import org.databene.contiperf.junit.ContiPerfRule;
-import org.junit.Rule;
 import org.junit.*;
 
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import java.util.List;
 /**
  * @author Erik B. Terres & Lander San Millan
  */
-public class YahooFinanceGatewayPerformanceTest {
+public class YahooFinanceGatewayPerformanceIT {
 	
 	@Rule
 	public ContiPerfRule i = new ContiPerfRule();

@@ -1,4 +1,4 @@
-package es.deusto.deustock.resources.investment;
+package es.deusto.deustock.resources.investment.stock;
 
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.resources.investment.stock.StockDetailResource;
@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Erik B. Terres
  */
 @Tag("server-integration-resource")
-public class StockDetailIT extends JerseyTest {
+class StockDetailIT extends JerseyTest {
     @BeforeEach
     @Override
     public void setUp() throws Exception {
@@ -38,7 +38,7 @@ public class StockDetailIT extends JerseyTest {
 
     @Test
     @DisplayName("Test get stock returns status 200")
-    public void testGetStockReturns200(){
+    void testGetStockReturns200(){
         Response response = target("stock/detail")
                 .path("BB")
                 .path("DAILY")
@@ -49,7 +49,7 @@ public class StockDetailIT extends JerseyTest {
 
     @Test
     @DisplayName("Test get stock returns correct Stock")
-    public void testGetStockReturnsCorrectStock(){
+    void testGetStockReturnsCorrectStock(){
         Response response = target("stock/detail")
                 .path("BB")
                 .path("DAILY")
@@ -64,7 +64,7 @@ public class StockDetailIT extends JerseyTest {
 
     @Test
     @DisplayName("Test get stock returns 401 on non existent Stock")
-    public void testGetStockReturns401OnNonExistentStock(){
+    void testGetStockReturns401OnNonExistentStock(){
         Response response = target("stock/detail")
                 .path("TXFG")
                 .path("DAILY")
@@ -75,7 +75,7 @@ public class StockDetailIT extends JerseyTest {
 
     @Test
     @DisplayName("Test get stock returns 401 on non existent interval")
-    public void testGetStockReturns401OnNonExistentInterval(){
+    void testGetStockReturns401OnNonExistentInterval(){
         Response response = target("stock/detail")
                 .path("BB")
                 .path("NonExistent")

@@ -1,11 +1,9 @@
 package es.deusto.deustock.services.investment.operation.type;
 
-import es.deusto.deustock.data.DeuStock;
-
 public class LongOperation extends Operation  {
 
-	public LongOperation(DeuStock stock, double amount){
-		super(stock, amount);
+	public LongOperation(double stockOpenPrice, double amount){
+		super(stockOpenPrice, amount);
 	}
 
 	@Override
@@ -14,8 +12,8 @@ public class LongOperation extends Operation  {
 	}
 
 	@Override
-	public double getClosePrice() {
-		return stock.getPrice() * getAmount();
+	public double getClosePrice(double actualStockPrice) {
+		return actualStockPrice * getAmount();
 	}
 
 	@Override

@@ -4,8 +4,9 @@ import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
-import es.deusto.deustock.log.DeuLogger;
 
+
+import org.apache.log4j.Logger;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.Interval;
@@ -23,6 +24,9 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
 
     private static final YahooFinanceGateway instance = new YahooFinanceGateway();
 
+    private static final Logger logger = Logger.getLogger(YahooFinanceGateway.class);
+
+
     private YahooFinanceGateway(){ }
 
     private Interval adaptInterval(StockQueryData.Interval interval){
@@ -39,7 +43,7 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
 
     @Override
     public DeuStock getStockData(StockQueryData queryData) throws StockNotFoundException{
-        DeuStock deustock = new DeuStock(queryData);
+        var deustock = new DeuStock(queryData);
         try {
 
             Stock stock;
@@ -65,8 +69,7 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
                 deustock.setHistory(stock.getHistory());
             }
         } catch (IOException e) {
-            e.printStackTrace();
-            DeuLogger.logger.error("Could not get the stock data " + queryData.getAcronym());
+            logger.error(String.format("Could not get the stock data %s.", queryData.getAcronym()));
         }
         return deustock;
     }
@@ -79,13 +82,12 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
                     .get(stockNames.toArray(String[]::new), false );
 
             for( Stock stock : stocks.values()){
-                DeuStock deustock = new DeuStock(stock.getSymbol());
+                var deustock = new DeuStock(stock.getSymbol());
                 deustock.setPrice(stock.getQuote().getPrice().doubleValue());
                 stocksAdapted.put(deustock.getAcronym(), deustock);
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
             return new HashMap<>();
         }
 

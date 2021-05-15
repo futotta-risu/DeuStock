@@ -1,7 +1,6 @@
 package es.deusto.deustock.resources.investment;
 
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.ws.rs.GET;
@@ -27,7 +26,7 @@ public class StockReportResource {
     private StockDataAPIGateway stockGateway;
     
     public StockReportResource() {
-    	this.stockGateway = StockDataGatewayFactory.getInstance().create(StockDataGatewayEnum.YahooFinance);
+    	this.stockGateway = StockDataGatewayFactory.getInstance().create(StockDataGatewayEnum.YAHOO_FINANCE);
     }
     
     public void setStockGateway(StockDataAPIGateway stockGateway) { this.stockGateway = stockGateway; }
@@ -55,9 +54,9 @@ public class StockReportResource {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
-        StockReport report = new StockReport(stock);
+        var report = new StockReport(stock);
 
-        File reportFile = report.generate();
+        var reportFile = report.generate();
 
         Response.ResponseBuilder response = Response.ok(reportFile);
         response.header("Content-Disposition","attachment; filename=" + stockAcronym + "_report.pdf");

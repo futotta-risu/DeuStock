@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @author Erik B. Terres
  */
-public class StockHistoryDAOTest {
+class StockHistoryDAOTest {
 
     private StockHistoryDAO stockHistoryDAO;
     private IDBManager dbManager;

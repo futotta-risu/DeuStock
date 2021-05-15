@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import javax.ws.rs.core.Response;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -19,7 +18,7 @@ import static org.mockito.Mockito.when;
  * @author Erik B. Terres & Lander San Millan
  */
 @Tag("server-resource")
-public class TwitterSentimentTest {
+class TwitterSentimentTest {
 	
 	private SentimentExtractor mockExtractor;
 	
@@ -33,7 +32,7 @@ public class TwitterSentimentTest {
     }
 
     @Test
-    public void testTwitterSentimentReturnsCorrectOutput() throws InterruptedException {
+    void testTwitterSentimentReturnsCorrectOutput() throws InterruptedException {
 
         SentimentExtractor extractor = mock(SentimentExtractor.class);
         when(extractor.getSentimentTendency(anyString())).thenReturn(3.0);
@@ -46,7 +45,7 @@ public class TwitterSentimentTest {
     
     @Test
     @DisplayName("Test get holdings list returns Illegal Argument Exception")
-    public void testTwitterGetSentimentReturnsInterruptedException() throws InterruptedException{
+    void testTwitterGetSentimentReturnsInterruptedException() throws InterruptedException{
     	//Given
     	TwitterSentimentResource twitterSentimentResource = new TwitterSentimentResource();
         when(mockExtractor.getSentimentTendency(anyString())).thenThrow(new InterruptedException());
@@ -60,6 +59,5 @@ public class TwitterSentimentTest {
 		} catch (Exception e) {
 			assertEquals(InterruptedException.class, e.getClass());
 		}
- 
     }
 }

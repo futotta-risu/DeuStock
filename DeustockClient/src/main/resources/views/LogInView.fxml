@@ -63,6 +63,7 @@
                               <Font name="Calibri" size="14.0" />
                            </font>
                         </Button>
+                        <Button fx:id="pruebaButton" mnemonicParsing="false" text="Prueba" />
                      </children>
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

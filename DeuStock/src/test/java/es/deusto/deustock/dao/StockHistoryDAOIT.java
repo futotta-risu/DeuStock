@@ -60,7 +60,7 @@ class StockHistoryDAOIT {
     }
 
     @Test
-    public void testGet() throws SQLException {
+    void testGet() throws SQLException {
         Wallet wallet = new Wallet();
         DeuStock stock = StockDAO.getInstance().getOrCreateStock("BB").setPrice(22);
         StockHistory stockHistory = StockHistoryDAO.getInstance().create(

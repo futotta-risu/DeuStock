@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author Erik B. Terres
  */
 @Tag("server-resource")
-public class HelloWorldTest extends JerseyTest {
+class HelloWorldTest extends JerseyTest {
 
     @BeforeEach
     @Override
@@ -43,7 +43,7 @@ public class HelloWorldTest extends JerseyTest {
 
     @Test
     @DisplayName("Test Hello World returns status 200")
-    public void testHelloWorldReturnsStatus200(){
+    void testHelloWorldReturnsStatus200(){
         Response response = this.target("helloworld/")
                 .request().get();
 
@@ -52,7 +52,7 @@ public class HelloWorldTest extends JerseyTest {
 
     @Test
     @DisplayName("Test Hello World returns 'Hello World'")
-    public void testHelloWorldReturnsHelloWorld(){
+    void testHelloWorldReturnsHelloWorld(){
         Response response = this.target("helloworld/")
                 .request().get();
 

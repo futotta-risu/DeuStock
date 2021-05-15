@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TwitterGatewayTest {
+class TwitterGatewayTest {
 
     @Test
     @DisplayName("Twitter API get Tweets")
@@ -33,10 +33,10 @@ public class TwitterGatewayTest {
             fail("Unable to read file");
         }
 
-        assertEquals(configuration.get("ConsumerKey"),"TestConsumerKey");
-        assertEquals(configuration.get("ConsumerSecret"),"TestConsumerSecret");
-        assertEquals(configuration.get("AccessToken"),"TestAccessToken");
-        assertEquals(configuration.get("AccessTokenSecret"),"TestAccessTokenSecret");
+        assertEquals("TestConsumerKey", configuration.get("ConsumerKey"));
+        assertEquals("TestConsumerSecret", configuration.get("ConsumerSecret"));
+        assertEquals("TestAccessToken", configuration.get("AccessToken"));
+        assertEquals("TestAccessTokenSecret", configuration.get("AccessTokenSecret"));
 
     }
 

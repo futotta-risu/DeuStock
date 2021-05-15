@@ -3,6 +3,7 @@ package es.deusto.deustock.client.gateways;
 import es.deusto.deustock.client.data.Stock;
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.data.help.FAQQuestion;
+import es.deusto.deustock.client.gateways.exceptions.ForbiddenException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
@@ -168,7 +169,7 @@ public class DeustockGatewayTest {
         }
     }
     @Test
-    public void testLogin() {
+    public void testLogin() throws ForbiddenException {
         try(MockedStatic<ClientBuilder> clientBuilder = mockStatic(ClientBuilder.class)){
             User user = new User();
             user.setUsername("usernameTest");
@@ -182,11 +183,12 @@ public class DeustockGatewayTest {
             when(mockWebTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
             when(mockBuilder.post(any())).thenReturn(response);
             when(mockBuilder.get()).thenReturn(response);
-            when(response.readEntity(User.class)).thenReturn(user);
+            when(response.readEntity(String.class)).thenReturn("TestToken");
+            when(response.getStatus()).thenReturn(200);
 
-            User result = new DeustockGateway().login("usernameTest", "passTest");
+            String result = new DeustockGateway().login("usernameTest", "passTest");
 
-            assertEquals(user, result);
+            assertEquals("TestToken", result);
         }
     }
     @Test
@@ -225,14 +227,16 @@ public class DeustockGatewayTest {
             clientBuilder.when(ClientBuilder::newClient).thenReturn(mockClient);
             when(mockClient.target(anyString())).thenReturn(mockWebTarget);
             when(mockWebTarget.path(anyString())).thenReturn(mockWebTarget);
-            when(mockWebTarget.request()).thenReturn(mockBuilder);
+            when(mockWebTarget.request(anyString())).thenReturn(mockBuilder);
+            when(mockBuilder.header(anyString(), anyString())).thenReturn(mockBuilder);
             when(mockBuilder.post(any())).thenReturn(response);
             when(mockBuilder.get()).thenReturn(response);
+            when(mockBuilder.delete()).thenReturn(response);
 	        when(response.getStatus()).thenReturn(200);
 
             //WHEN
             boolean result = new DeustockGateway()
-                    .deleteUser("usernameTest", "passTest");
+                    .deleteUser("usernameTest");
 
             //THEN
             assertTrue(result);
@@ -252,14 +256,22 @@ public class DeustockGatewayTest {
             when(mockClient.target(anyString())).thenReturn(mockWebTarget);
             when(mockWebTarget.path(anyString())).thenReturn(mockWebTarget);
             when(mockWebTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
+            when(mockBuilder.header(anyString(), anyString())).thenReturn(mockBuilder);
             when(mockBuilder.post(any())).thenReturn(response);
+            when(mockBuilder.put(any())).thenReturn(response);
             when(mockBuilder.get()).thenReturn(response);
             when(response.getStatus()).thenReturn(200);
+
+            User userTest = new User()
+                    .setUsername("usernameTest")
+                    .setCountry("countryTest")
+                    .setDescription( "aboutMeTeTest")
+                    .setFullName("fullNameTest");
 
             //WHEN
             Date dateTest = new Date();
             boolean result = new DeustockGateway()
-                    .updateUser("usernameTest", "fullNameTest", dateTest, "aboutMeTeTest", "countryTest");
+                    .updateUser(userTest, "TokenTest");
 
             //THEN
             assertTrue(result);

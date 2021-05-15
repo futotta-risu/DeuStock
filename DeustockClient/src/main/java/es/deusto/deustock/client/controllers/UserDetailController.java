@@ -78,6 +78,7 @@ public class UserDetailController implements DSGenericController{
         if(gateway.deleteUser(this.username, user.getPassword())){
             mainController.setUser(null);
             mainController.loadAndChangeScene(
+
                     ViewPaths.LoginViewPath
             );
         }
@@ -87,11 +88,9 @@ public class UserDetailController implements DSGenericController{
         if(this.username==null){
             return;
         }
-
         if(this.user == null || !this.user.getUsername().equals(this.username)) {
             getUser();
         }
-
         // Error on retrieving user
         if(this.user==null){
             return;
@@ -101,17 +100,17 @@ public class UserDetailController implements DSGenericController{
         //this.sexLabel.setText(String.valueOf(user.isSex()));
         this.descriptionLabel.setText(user.getDescription());
 
-        this.accountDeleteButton.setOnMouseClicked(
-                mouseEvent -> deleteUser()
-        );
-
+        this.accountDeleteButton.setOnMouseClicked( mouseEvent -> deleteUser() );
         this.editProfileButton.setOnMouseClicked(
+
         		mouseEvent ->
         		    mainController.loadAndChangePaneWithParams(
+
                             ViewPaths.ChangeUserDetailViewPath,
                             new HashMap<>() {{ put("username", username ); }}
                     )
         );
+
     	this.resetWalletButton.setOnMouseClicked(
                 mouseEvent -> resetAccountWallet()
     	);
@@ -121,6 +120,7 @@ public class UserDetailController implements DSGenericController{
     public void resetAccountWallet() {
     	boolean succesfullyReseted = gateway.resetHoldings(this.user.getUsername());
     	if(!succesfullyReseted) {
+    	    // TODO handle with exception
     		System.out.println("No se ha podido resetear");
     	}
     }

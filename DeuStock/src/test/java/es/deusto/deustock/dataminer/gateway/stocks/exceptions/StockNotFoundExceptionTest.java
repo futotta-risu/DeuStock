@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Tag;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("investment")
-public class StockNotFoundExceptionTest {
+class StockNotFoundExceptionTest {
 
     @Test
     void testCorrectMessage(){

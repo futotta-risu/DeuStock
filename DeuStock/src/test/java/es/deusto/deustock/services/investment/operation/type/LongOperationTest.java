@@ -1,25 +1,15 @@
 package es.deusto.deustock.services.investment.operation.type;
 
-import es.deusto.deustock.data.DeuStock;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class LongOperationTest {
 
-    private DeuStock stock;
-
-    @BeforeEach
-    public void setUp(){
-        stock = new DeuStock("BB").setPrice(20);
-    }
-
-
     @Test
     void testConstructor(){
         // Given
-        Operation operation = new LongOperation(stock, 30);
+        Operation operation = new LongOperation(20, 30);
 
         // When
 
@@ -30,7 +20,7 @@ class LongOperationTest {
     @Test
     void getOpenPrice() {
         // Given
-        Operation operation = new LongOperation(stock, 30);
+        Operation operation = new LongOperation(20, 30);
 
         // When
         double result = operation.getOpenPrice();
@@ -42,10 +32,10 @@ class LongOperationTest {
     @Test
     void getClosePrice() {
         // Given
-        Operation operation = new LongOperation(stock, 40);
+        Operation operation = new LongOperation(30, 40);
 
         // When
-        double result = operation.getClosePrice();
+        double result = operation.getClosePrice(20);
 
         // Then
         assertEquals(800, result);
@@ -54,7 +44,7 @@ class LongOperationTest {
     @Test
     void getType() {
         // Given
-        Operation operation = new LongOperation(stock, 20);
+        Operation operation = new LongOperation(20, 20);
 
         // When
         OperationType type = operation.getType();

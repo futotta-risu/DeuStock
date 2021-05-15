@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface IDBManager {
 
-	void store(Object object) throws SQLException;
+	void store(Object object);
 	List<Object> getAll(Class entityClass);
-	List<Object> getList(Class entityClass, String conditions, HashMap<String, String> params) throws SQLException;
-	Object get(Class entityClass, String conditions, HashMap<String, String> params) throws SQLException;
-	void delete(Class entityClass, String conditions, HashMap<String, String> params) throws SQLException;
+	List<Object> getList(Class entityClass, String conditions, HashMap<String, String> params);
+	Object get(Class entityClass, String conditions, HashMap<String, String> params);
+	void delete(Class entityClass, String conditions, HashMap<String, String> params);
 	void delete(Object object);
-	void update(Object object) throws SQLException;
+	void update(Object object);
 }

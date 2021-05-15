@@ -21,7 +21,7 @@ public class Financial {
 
         double positive = 0;
 
-        for(int i = 1; i < n ; i++){
+        for(var i = 1; i < n ; i++){
             if(tail.get(i).compareTo(tail.get(i-1)) > 0){
                 positive++;
             }

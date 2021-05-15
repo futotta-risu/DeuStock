@@ -16,7 +16,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
+
 
 /**
  * StockListView controller
@@ -53,8 +55,8 @@ public class StockListViewController {
     private void sentimentSearch(){
         String searchQuery = twitterSearchField.getText();
         DeustockGateway gateway = new DeustockGateway();
-
-        sentimentLabel.setText("Sentiment: " + gateway.getTwitterSentiment(searchQuery));
+        DecimalFormat df = new DecimalFormat("####0.0000");
+        sentimentLabel.setText("Sentiment [Twitter / Reddit] = [ " + df.format(gateway.getTwitterSentiment(searchQuery)) + " / " + df.format(gateway.getRedditSentiment(searchQuery)) + " ]");
     }
 
     public void refreshStocks(){

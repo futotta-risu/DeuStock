@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
 /**
  * @author Erik B. Terres
  */
-public class StockDAOTest {
+class StockDAOTest {
 
     private IDBManager dbManager;
     private StockDAO stockDAO;
@@ -151,7 +151,7 @@ public class StockDAOTest {
 
         // Then
         assertNotNull(result);
-        assertEquals(result.size(),2);
+        assertEquals(2, result.size());
     }
     
     @Test
@@ -159,12 +159,30 @@ public class StockDAOTest {
     void testGetOrCreateStock() throws SQLException {
         DeuStock stock = new DeuStock("Test");
 
+
         when(dbManager.get(eq(DeuStock.class), anyString(),any())).thenReturn(stock);
+        doNothing().when(dbManager).store(any());
 
         DeuStock stockObtained = stockDAO.getOrCreateStock("acronymTest");
         
         assertNotNull(stockObtained);
-        assertEquals(stockObtained.getAcronym(), "Test");
+        assertEquals("Test", stockObtained.getAcronym());
+    }
+
+    @Test
+    @DisplayName("Test getOrCreateStock function returns stock")
+    void testGetOrCreateStockOnNonExistentStock() throws SQLException {
+        DeuStock stock = new DeuStock("Test");
+
+        doReturn(null)
+                .doReturn(stock)
+                .when(dbManager).get(eq(DeuStock.class),anyString(), any());
+        doNothing().when(dbManager).store(any());
+
+        DeuStock stockObtained = stockDAO.getOrCreateStock("acronymTest");
+
+        assertNotNull(stockObtained);
+        assertEquals("Test", stockObtained.getAcronym());
     }
 
 }

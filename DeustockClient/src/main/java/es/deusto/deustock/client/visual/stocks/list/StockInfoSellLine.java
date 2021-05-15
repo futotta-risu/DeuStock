@@ -58,7 +58,9 @@ public class StockInfoSellLine extends GridPane{
         );
 
         sellButton.setOnMouseClicked(
-                e -> new DeustockGateway().closeOperation(String.valueOf(stockHistory.getId()))
+                e -> new DeustockGateway().closeOperation(
+                        String.valueOf(stockHistory.getId()),
+                        MainController.getInstance().getToken())
         );
         
         add(stockNameLabel,1,0);

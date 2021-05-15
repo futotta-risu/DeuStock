@@ -1,14 +1,15 @@
 package es.deusto.deustock.resources.investment.wallet;
 
 import es.deusto.deustock.dao.UserDAO;
-import es.deusto.deustock.data.User;
+import es.deusto.deustock.resources.auth.Secured;
+import es.deusto.deustock.services.investment.wallet.WalletService;
+import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import java.sql.SQLException;
 
 
@@ -18,28 +19,30 @@ import java.sql.SQLException;
 @Path("holdings")
 public class BalanceResource {
 
-    private UserDAO userDAO;
+    private WalletService walletService;
 
     public BalanceResource(){
-        userDAO = UserDAO.getInstance();
+        walletService = new WalletService();
     }
 
-    public void setUserDAO(UserDAO userDAO){
-        this.userDAO = userDAO;
+    public void setWalletService(WalletService walletService){
+        this.walletService = walletService;
     }
 
-    @Path("{username}/balance")
     @GET
+    @Secured
+    @Path("/balance")
     @Produces(MediaType.TEXT_PLAIN)
-    public Response getBalance(@PathParam("username") String username) throws SQLException {
-        User user = userDAO.get(username);
+    public Response getBalance(@Context SecurityContext securityContext)  {
+        String username = securityContext.getUserPrincipal().getName();
 
-        if(user == null){
-            return Response.status(401).build();
+        double balance;
+        try{
+            balance = walletService.getBalance(username);
+        }catch (WalletException e){
+            throw new WebApplicationException(e.getMessage(), Response.Status.UNAUTHORIZED);
         }
 
-        return Response.status(Response.Status.OK)
-                .entity(user.getWallet().getMoney())
-                .build();
+        return Response.ok(balance).build();
     }
 }

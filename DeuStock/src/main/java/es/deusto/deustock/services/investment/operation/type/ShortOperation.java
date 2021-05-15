@@ -1,14 +1,12 @@
 package es.deusto.deustock.services.investment.operation.type;
 
-import es.deusto.deustock.data.DeuStock;
-
 /**
  * @author Erik B. Terres
  */
 public class ShortOperation extends Operation{
 
-    public ShortOperation(DeuStock stock, double amount) {
-        super(stock, amount);
+    public ShortOperation(double stockOpenPrice, double amount) {
+        super(stockOpenPrice, amount);
     }
 
     @Override
@@ -17,7 +15,7 @@ public class ShortOperation extends Operation{
     }
 
     @Override
-    public double getClosePrice() {
+    public double getClosePrice(double actualStockPrice) {
         return 0;
     }
 

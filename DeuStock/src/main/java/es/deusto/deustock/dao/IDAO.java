@@ -5,6 +5,7 @@ import java.util.Collection;
 
 public interface IDAO <T>{
 
+    // TODO Delete throw
     boolean has(Object identity) throws SQLException;
 
     void store(T object) throws SQLException;

@@ -33,6 +33,12 @@ class StockQueryDataTest {
     }
 
     @Test
+    void testSetIntervalSize(){
+        StockQueryData q = new StockQueryData("AMZ", StockQueryData.Interval.DAILY);
+        assertDoesNotThrow(() -> q.setIntervalSize(2));
+    }
+
+    @Test
     void testGetTo(){
         StockQueryData q = new StockQueryData("AMZ", StockQueryData.Interval.DAILY);
         assertDoesNotThrow(q::getTo);

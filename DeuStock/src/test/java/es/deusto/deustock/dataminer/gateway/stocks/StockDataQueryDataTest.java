@@ -9,8 +9,8 @@ class StockDataQueryDataTest {
     @Test
     void testConstructor(){
         StockQueryData q = new StockQueryData("AMZ", StockQueryData.Interval.DAILY);
-        assertEquals(q.getAcronym(),"AMZ");
-        assertEquals(q.getInterval(), StockQueryData.Interval.DAILY);
+        assertEquals("AMZ", q.getAcronym());
+        assertEquals(StockQueryData.Interval.DAILY, q.getInterval());
     }
 
 }

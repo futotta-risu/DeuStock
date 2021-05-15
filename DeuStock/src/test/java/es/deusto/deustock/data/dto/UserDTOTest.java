@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * @author Erik B. Terres
  */
-public class UserDTOTest {
+class UserDTOTest {
 
     @Test
     @DisplayName("Test Constructor is not null")
@@ -38,6 +38,20 @@ public class UserDTOTest {
     @DisplayName("Test Format does not throw exception on null values")
     void testFormatDoesNotThrowExceptionOnNullValues(){
         assertDoesNotThrow( () -> new UserDTO().format() );
+    }
+
+    @Test
+    @DisplayName("Test toString returns correct String")
+    void testToStringReturnsCorrectString(){
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername("TestUser");
+        userDTO.setPassword("TestPass");
+        userDTO.setDescription("Descr");
+        userDTO.setCountry("SPAIN");
+        userDTO.setFullName("FullName");
+
+        assertEquals("UserDTO{username='TestUser', fullName='FullName'"
+        + ", country='SPAIN', description='Descr'}", userDTO.toString());
     }
 
 }

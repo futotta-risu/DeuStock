@@ -3,11 +3,13 @@ package es.deusto.deustock.dataminer.gateway.socialnetworks.gateways;
 import es.deusto.deustock.data.SocialNetworkMessage;
 import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkAPIGateway;
 import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkQueryData;
-import es.deusto.deustock.log.DeuLogger;
 import es.deusto.deustock.util.file.DSJSONUtils;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
+
+import org.apache.log4j.Logger;
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 
@@ -24,6 +26,7 @@ import java.util.Objects;
 public class TwitterGateway implements SocialNetworkAPIGateway {
 
     private static final String PATH ="data/secret_keys/secret_twitter_keys.json";
+    private static final Logger logger = Logger.getLogger(TwitterGateway.class);
 
     private final TwitterFactory twitterF;
 
@@ -34,7 +37,7 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
         try {
             config = getConfiguration();
         } catch (IOException | ParseException e) {
-            DeuLogger.logger.error("Could not load twitter configuration.");
+            logger.error("Could not load twitter configuration.");
             this.twitterF = null;
             return;
         }
@@ -43,7 +46,7 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
 
     private JSONObject getConfiguration() throws IOException, ParseException {
         if(System.getenv("twitter_access_token")!=null){
-            JSONObject configuration = new JSONObject();
+            var configuration = new JSONObject();
             configuration.put("AccessToken",System.getenv("twitter_access_token"));
             configuration.put("AccessTokenSecret",System.getenv("twitter_access_token_secret"));
             configuration.put("ConsumerKey",System.getenv("twitter_consumer_key"));
@@ -54,7 +57,7 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
     }
 
     private ConfigurationBuilder getConfigurationBuilder(JSONObject configuration){
-        ConfigurationBuilder cb = new ConfigurationBuilder();
+        var cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
                 .setOAuthConsumerKey((String)configuration.get("ConsumerKey"))
                 .setOAuthConsumerSecret((String)configuration.get("ConsumerSecret"))
@@ -76,9 +79,9 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
     public List<SocialNetworkMessage> getMessageList(SocialNetworkQueryData queryData) {
         Objects.requireNonNull(queryData);
 
-        Twitter twitter = this.twitterF.getInstance();
+        var twitter = this.twitterF.getInstance();
 
-        Query query = new Query(queryData.getSearchQuery()+" -filter:retweets");
+        var query = new Query(queryData.getSearchQuery()+" -filter:retweets");
         query.setCount(queryData.getNMessages());
         //query.until(queryData.getFrom());
         query.setLang("en");
@@ -92,7 +95,7 @@ public class TwitterGateway implements SocialNetworkAPIGateway {
                 );
             }
         } catch (TwitterException e) {
-            DeuLogger.logger.error("Error on getting tweets.");
+            logger.error("Error on getting tweets.");
         }
 
         return messages;

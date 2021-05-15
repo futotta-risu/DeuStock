@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 /**
  * @author Erik B. Terres
  */
-public class UserDAOTest {
+class UserDAOTest {
     private IDBManager dbManager;
     private UserDAO userDAO;
 
@@ -55,6 +55,35 @@ public class UserDAOTest {
         // Then
         assertNull(result);
     }
+
+    @Test
+    @DisplayName("Test get User on existent user")
+    void testHasOnExistentUser() throws SQLException {
+        // Given
+        User user = new User("TestUser" , "TestPass");
+        when(dbManager.get(eq(User.class), anyString(),any())).thenReturn(user);
+
+        // When
+        final boolean result = userDAO.has("Test");
+
+        // Then
+        assertTrue(result);
+    }
+
+    @Test
+    @DisplayName("Test get User on existent user")
+    void testHasOnNonExistentUser() throws SQLException {
+        // Given
+        User user = new User("TestUser" , "TestPass");
+        when(dbManager.get(eq(User.class), anyString(),any())).thenReturn(null);
+
+        // When
+        final boolean result = userDAO.has("Test");
+
+        // Then
+        assertFalse(result);
+    }
+
 
     @Test
     @DisplayName("Test store function does not throw error")

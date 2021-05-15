@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Erik B. Terres
  */
 @Tag("integration-resource")
-public class TwitterSentimentIT extends JerseyTest {
+class TwitterSentimentIT extends JerseyTest {
 
     @BeforeEach
     @Override
@@ -37,7 +37,7 @@ public class TwitterSentimentIT extends JerseyTest {
     }
 
     @Test
-    public void testTwitterSentimentReturns200() {
+    void testTwitterSentimentReturns200() {
         Response response = target("twitter/sentiment")
                 .path("BTC")
                 .request().get();

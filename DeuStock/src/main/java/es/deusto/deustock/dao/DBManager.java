@@ -1,28 +1,30 @@
 package es.deusto.deustock.dao;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.jdo.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 public class DBManager implements IDBManager{
 
 	private static final String SQL_TYPE = "javax.jdo.query.JDOQL";
 
     private static IDBManager instance = null;
-	private final PersistenceManagerFactory pmf;
+	private PersistenceManagerFactory pmf;
 
-	private final Logger logger = LoggerFactory.getLogger(DBManager.class);
+	private final Logger logger = Logger.getLogger(DBManager.class);
 
-
+	private static final  String SELECT_CONDITION_QUERY = "SELECT FROM %s WHERE %s";
 
 	private DBManager(){
 		pmf = JDOHelper.getPersistenceManagerFactory("datanucleus.properties");
+	}
+
+	public void setPFM(PersistenceManagerFactory pmf){
+		this.pmf = pmf;
 	}
 
 	public static IDBManager getInstance() {
@@ -37,7 +39,7 @@ public class DBManager implements IDBManager{
 	 * 
 	 * @param object -> Objeto que se quiere almacenar en la BD
 	 */
-	public void store(Object object) throws SQLException {
+	public void store(Object object) {
 		var pm = pmf.getPersistenceManager();
 		pm.getFetchPlan().setMaxFetchDepth(-1);
 		var tx = pm.currentTransaction();
@@ -48,7 +50,7 @@ public class DBManager implements IDBManager{
 			pm.makePersistent(object); //object?
 			tx.commit();
 		} catch (Exception e) {
-			logger.error("Could not store object: {}. {}", object, e.getMessage());
+			logger.error(String.format("Could not store object: %s. %s", object, e.getMessage()));
 		}finally {
 			if(tx.isActive()) {
 				tx.rollback();
@@ -84,7 +86,7 @@ public class DBManager implements IDBManager{
 				}
 				tx.commit();
 			} catch (Exception ex) {
-				logger.error("Error getting objects from class {}", entityClass.getName() );
+				logger.error(String.format("Error getting objects from class %s", entityClass.getName() ));
 			} finally {
 				if (tx != null && tx.isActive())
 					tx.rollback();
@@ -101,19 +103,19 @@ public class DBManager implements IDBManager{
 		pm.setDetachAllOnCommit(true);
 		List<Object> object = null;
 		try {
-			logger.info("Querying list of {}", entityClass);
+			logger.info(String.format("Querying list of %s", entityClass));
 
 			tx.begin();
 			var query = pm.newQuery(
 					SQL_TYPE,
-					"SELECT FROM " + entityClass.getName() + " WHERE " + conditions
+					String.format(SELECT_CONDITION_QUERY, entityClass.getName(), conditions)
 			);
 			query.setUnique(false);
 			object = (List<Object>) query.executeWithMap(params);
 			tx.commit();
 
 		} catch (Exception ex) {
-			logger.error("Error getting Object: " + ex.getMessage());
+			logger.error(String.format("Error getting Object: %s", ex.getMessage()));
 		} finally {
 
 			if (tx != null && tx.isActive()) {
@@ -135,7 +137,7 @@ public class DBManager implements IDBManager{
 			tx.begin();
 			var query = pm.newQuery(
 					SQL_TYPE,
-					"SELECT FROM " + entityClass.getName() + " WHERE " + conditions
+					String.format(SELECT_CONDITION_QUERY, entityClass.getName(), conditions)
 			);
 			query.compile();
 			query.setUnique(true);
@@ -143,7 +145,7 @@ public class DBManager implements IDBManager{
 			tx.commit();
 
 		} catch (Exception ex) {
-			logger.error("Error getting Object from class {}", entityClass.getName());
+			logger.error(String.format("Error getting Object from class %s", entityClass.getName()));
 		} finally {
 
 			if (tx != null && tx.isActive()) {
@@ -163,7 +165,7 @@ public class DBManager implements IDBManager{
 			pm.makePersistent(object);
 			tx.commit();
 		} catch (Exception ex) {
-			logger.error("   $ Error retreiving an extent: {}", ex.getMessage());
+			logger.error(String.format("   $ Error retreiving an extent: %s", ex.getMessage()));
 		} finally {
 			if (tx != null && tx.isActive()) {
 				tx.rollback();
@@ -181,9 +183,10 @@ public class DBManager implements IDBManager{
 		try {
 
 			tx.begin();
+			pm.flush();
 			var query = pm.newQuery(
 					SQL_TYPE,
-					"SELECT FROM " + entityClass.getName() + " WHERE " + conditions
+					String.format(SELECT_CONDITION_QUERY, entityClass.getName(), conditions)
 			);
 
 			query.setUnique(true);
@@ -191,7 +194,7 @@ public class DBManager implements IDBManager{
 			tx.commit();
 
 		} catch (Exception ex) {
-			logger.error("Error getting object for deleting: {}", ex.getMessage());
+			logger.error(String.format("Error getting object for deleting: %s", ex.getMessage()));
 		} finally {
 
 			if (tx != null && tx.isActive()) {
@@ -205,13 +208,14 @@ public class DBManager implements IDBManager{
 	@Override
 	public void delete(Object object) {
 		var pm = pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
+		var tx = pm.currentTransaction();
 		try {
 			tx.begin();
+			pm.flush();
 			pm.deletePersistent(object);
 			tx.commit();
 		} catch (Exception ex) {
-			logger.error("   $ Error retreiving an extent: {}", ex.getMessage());
+			logger.error("   $ Error deleting object: " + ex.getMessage());
 		} finally {
 			if (tx != null && tx.isActive()) {
 				tx.rollback();

@@ -2,7 +2,7 @@ package es.deusto.deustock.resources.investment.stock;
 
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.services.investment.stock.StockService;
-import es.deusto.deustock.services.investment.stock.exceptions.InvalidStockQueryDataException;
+import es.deusto.deustock.services.investment.stock.exceptions.StockException;
 
 
 import javax.ws.rs.*;
@@ -35,7 +35,7 @@ public class StockDetailResource {
         DeuStock stock;
         try {
             stock = stockService.getStockDetailData(symbol, interval);
-        } catch (InvalidStockQueryDataException e) {
+        } catch (StockException e) {
             throw new WebApplicationException(e.getMessage(), Response.Status.UNAUTHORIZED);
         }
 

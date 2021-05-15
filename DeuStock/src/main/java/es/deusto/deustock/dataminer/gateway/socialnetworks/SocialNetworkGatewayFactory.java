@@ -1,5 +1,6 @@
 package es.deusto.deustock.dataminer.gateway.socialnetworks;
 
+import es.deusto.deustock.dataminer.gateway.socialnetworks.gateways.RedditGateway;
 import es.deusto.deustock.dataminer.gateway.socialnetworks.gateways.TwitterGateway;
 
 import javax.validation.constraints.NotNull;
@@ -25,9 +26,9 @@ public class SocialNetworkGatewayFactory {
 
     @NotNull
     public SocialNetworkAPIGateway create(SocialNetworkGatewayEnum type){
-        Objects.requireNonNull(type);
         return switch (type) {
-            case Twitter -> TwitterGateway.getInstance();
+            case TWITTER -> TwitterGateway.getInstance();
+            case REDDIT -> RedditGateway.getInstance();
         };
 
 

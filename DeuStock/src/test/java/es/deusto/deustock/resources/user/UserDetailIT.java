@@ -3,6 +3,7 @@ package es.deusto.deustock.resources.user;
 import es.deusto.deustock.dao.UserDAO;
 import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.dto.UserDTO;
+import es.deusto.deustock.resources.UserResource;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 
@@ -22,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author Erik B. Terres
  */
 @Tag("server-resource")
-public class UserDetailIT extends JerseyTest {
+class UserDetailIT extends JerseyTest {
 
     @BeforeEach
     @Override
@@ -39,19 +40,19 @@ public class UserDetailIT extends JerseyTest {
     @Override
     protected Application configure() {
         forceSet(TestProperties.CONTAINER_PORT, "0");
-        return new ResourceConfig(UserDetail.class);
+        return new ResourceConfig(UserResource.class);
     }
 
 
     @Test
     @DisplayName("Test get username returns 200")
-    public void testGetUsernameReturns200() throws SQLException {
+    void testGetUsernameReturns200() throws SQLException {
         // Given
         User user = new User("TestUserReturn200", "TestPass");
         UserDAO.getInstance().store(user);
 
         // When
-        Response response = target("user")
+        Response response = target("tpuser")
                 .path("TestUserReturn200")
                 .request().get();
 
@@ -64,13 +65,13 @@ public class UserDetailIT extends JerseyTest {
 
     @Test
     @DisplayName("Test get username returns correct user")
-    public void testGetUsernameReturnsUser() throws SQLException {
+    void testGetUsernameReturnsUser() throws SQLException {
         // Given
         User user = new User("TestUserReturnsUser", "TestPass");
         UserDAO.getInstance().store(user);
 
         // When
-        Response response = this.target("user")
+        Response response = this.target("tpuser")
                 .path("TestUserReturnsUser")
                 .request()
                 .get();
@@ -86,13 +87,11 @@ public class UserDetailIT extends JerseyTest {
 
     @Test
     @DisplayName("Test get username returns status 401 on non existent user")
-    public void testGetUsernameReturnsStatus401OnNonExistingUser(){
-        Response response = target("user")
+    void testGetUsernameReturnsStatus401OnNonExistingUser(){
+        Response response = target("tpuser")
                 .path("UserDetailTest401OnNonExistentUser")
                 .request().get();
 
         assertEquals(401, response.getStatus());
     }
-
-
 }

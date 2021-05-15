@@ -1,6 +1,7 @@
 package es.deusto.deustock.resources;
 
-import es.deusto.deustock.log.DeuLogger;
+
+import org.apache.log4j.Logger;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -16,6 +17,8 @@ import javax.ws.rs.core.Response;
 @Path("helloworld")
 public class HelloWorld {
 
+    private static final Logger logger = Logger.getLogger(HelloWorld.class);
+
     /**
      * Method handling HTTP GET requests. The returned object will be sent
      * to the client as "text/plain" media type.
@@ -25,7 +28,7 @@ public class HelloWorld {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response getIt() {
-        DeuLogger.logger.info("Hello World method called.");
+        logger.info("Hello World method called.");
 
         return Response
                 .status(Response.Status.OK)

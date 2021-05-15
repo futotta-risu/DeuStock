@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author landersanmillan
  */
 @Tag("server-resource")
-public class AuthResourceIT extends JerseyTest{
+class AuthResourceIT extends JerseyTest{
 
 	@BeforeEach
 	@Override
@@ -49,7 +49,7 @@ public class AuthResourceIT extends JerseyTest{
 
 	@Test
 	@DisplayName("Test Register returns 200")
-	public void testRegisterReturns200() throws SQLException {
+	void testRegisterReturns200() throws SQLException {
 		// Given
 		UserDTO user = new UserDTO();
 		user.setUsername("ResourceRegisterReturns200");
@@ -57,7 +57,7 @@ public class AuthResourceIT extends JerseyTest{
 
 		// When
 		Response response = this.target()
-				.path("users/register")
+				.path("auth/register")
 				.request("application/json")
 				.post(Entity.json(user));
 
@@ -70,13 +70,13 @@ public class AuthResourceIT extends JerseyTest{
 
 	@Test
 	@DisplayName("Test Register saves user")
-	public void testRegisterSavesUser() throws SQLException {
+	void testRegisterSavesUser() throws SQLException {
 		// Given
 		UserDTO user = new UserDTO();
 		user.setUsername("ResourceRegisterSavesUser");
 		user.setPassword("TestPass");
 		// When
-		this.target("users/register")
+		this.target("auth/register")
 				.request("application/json")
 				.post(Entity.json(user));
 
@@ -89,7 +89,7 @@ public class AuthResourceIT extends JerseyTest{
 
 	@Test
 	@DisplayName("Test Register doesn't save duplicated User")
-	public void testRegisterCannotSaveDuplicatedUser() throws SQLException {
+	void testRegisterCannotSaveDuplicatedUser() throws SQLException {
 		//Given
 		UserDTO user = new UserDTO();
 		user.setUsername("ResourceRegisterDoesNotSaveDuplicated");
@@ -98,7 +98,7 @@ public class AuthResourceIT extends JerseyTest{
 		UserDAO.getInstance().store(userU);
 
 		// When
-		Response response = this.target("users/register")
+		Response response = this.target("auth/register")
 				.request("application/json")
 				.post(Entity.json(user));
 
@@ -111,7 +111,7 @@ public class AuthResourceIT extends JerseyTest{
 
     @Test
 	@DisplayName("Test Login returns 200 on success")
-	public void testLoginReturns200OnSuccess() throws SQLException {
+	void testLoginReturns200OnSuccess() throws SQLException {
 		// Given
 		UserDTO user = new UserDTO();
 		user.setUsername("ResourceLoginReturns200");
@@ -121,15 +121,15 @@ public class AuthResourceIT extends JerseyTest{
 		UserDAO.getInstance().store(rUser);
 
 		// When
-		Response response = target("users/login")
+		Response response = target("auth/login")
 				.path("ResourceLoginReturns200")
 				.path("TestPass")
 				.request(MediaType.APPLICATION_JSON).get();
 
-		UserDTO userLogin = response.readEntity(UserDTO.class);
+		String token = response.readEntity(String.class);
 
 		// Then
-        assertEquals("ResourceLoginReturns200", userLogin.getUsername());
+        assertFalse(token.isBlank());
 
         // After
 		UserDAO.getInstance().delete(user.getUsername());
@@ -137,7 +137,7 @@ public class AuthResourceIT extends JerseyTest{
 
 	@Test
 	@DisplayName("Test Login returns 401 with incorrect pass")
-	public void testLoginReturns401WithIncorrectPass() throws SQLException {
+	void testLoginReturns401WithIncorrectPass() throws SQLException {
 		// Given
 		User user = new User("ResourceLoginReturns401WithIncorrectPass", "TestPass");
 		UserDAO.getInstance().store(user);
@@ -146,7 +146,7 @@ public class AuthResourceIT extends JerseyTest{
 		userDTO.setUsername("ResourceLoginReturns401WithIncorrectPass");
 
 		// When
-		Response response = target("users/login")
+		Response response = target("auth/login")
 				.path("ResourceLoginReturns401WithIncorrectPass")
 				.path("TestPassIncorrect")
 				.request(MediaType.APPLICATION_JSON).get();
@@ -160,69 +160,17 @@ public class AuthResourceIT extends JerseyTest{
 
 	@Test
 	@DisplayName("Test Login returns 401 with non existent user")
-	public void testLoginReturns401WithNonExistentUser() {
+	void testLoginReturns401WithNonExistentUser() {
 		// Given
 
 		// When
-		Response response = target("users/login")
+		Response response = target("auth/login")
 				.path("LoginReturns401WithNonExistentUser")
 				.path("TestPass")
 				.request(MediaType.APPLICATION_JSON).get();
 
 		// Then
 		assertEquals(401, response.getStatus());
-	}
-
-    @Test
-	@DisplayName("Test Delete user returns 200")
-	public void testDeleteReturns200() throws SQLException {
-		// Given
-		User user = new User("ResourceDelete200", "TestPass");
-		UserDAO.getInstance().store(user);
-
-		// When
-		Response response = target("users")
-				.path("delete")
-				.path("ResourceDelete200").path("TestPass")
-				.request().get();
-
-		// Then
-		assertEquals(200, response.getStatus());
-	}
-
-	@Test
-	@DisplayName("Test Delete returns 401 on non existent user")
-	public void testDeleteReturns401OnUnknownUser(){
-		// Given
-
-		// When
-		Response responseDelete = target("users")
-				.path("delete")
-				.path("DeleteReturns401OnUnknownUser").path("TestPass")
-				.request().get();
-
-		// Then
-		assertEquals(401, responseDelete.getStatus());
-	}
-
-	@Test
-	@DisplayName("Test Delete returns 401 on incorrect Pass")
-	public void testDeleteReturns401WithIncorrectPass() throws SQLException {
-		// Given
-		User user = new User("ResourceDelete401IncorrectPass", "TestPass");
-		UserDAO.getInstance().store(user);
-
-		// When
-		Response response = target("users")
-				.path("delete")
-				.path("ResourceDelete401IncorrectPass").path("TestPassIncorrect")
-				.request().get();
-
-		// Then
-		assertEquals(401, response.getStatus());
-
-		// After
-		UserDAO.getInstance().delete(user.getUsername());
 	}
 
 }

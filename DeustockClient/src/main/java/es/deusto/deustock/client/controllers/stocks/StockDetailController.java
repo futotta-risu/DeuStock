@@ -127,7 +127,7 @@ public class StockDetailController implements DSGenericController {
                 e -> MainController.getInstance().loadAndChangePaneWithParams(
                         ViewPaths.OperationView,
                         new HashMap<>() {{
-                            put("username",MainController.getInstance().getUser().getUsername());
+                            put("username",MainController.getInstance().getUser());
                             put("stock", stock);
                         }}
                 )
