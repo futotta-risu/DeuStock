@@ -75,7 +75,7 @@ public class UserDetailController implements DSGenericController{
     }
 
     public void deleteUser(){
-        if(gateway.deleteUser(this.username, user.getPassword())){
+        if(gateway.deleteUser(mainController.getToken())){
             mainController.setUser(null);
             mainController.loadAndChangeScene(
 

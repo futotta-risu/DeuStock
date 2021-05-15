@@ -121,7 +121,7 @@ public class UserDetailControllerTest{
         MainController mockMainController = mock(MainController.class);
 
         when(gateway.getUser(anyString())).thenReturn(user);
-        when(gateway.deleteUser(anyString(), anyString())).thenReturn(true);
+        when(gateway.deleteUser(anyString())).thenReturn(true);
 
         doNothing().when(mockMainController).setUser(any());
         doNothing().when(mockMainController).loadAndChangeScene(anyString());
@@ -147,7 +147,7 @@ public class UserDetailControllerTest{
         MainController mockMainController = mock(MainController.class);
 
         when(gateway.getUser(anyString())).thenReturn(user);
-        when(gateway.deleteUser(anyString(), anyString())).thenReturn(false);
+        when(gateway.deleteUser(anyString())).thenReturn(false);
 
         doNothing().when(mockMainController).setUser(any());
         doNothing().when(mockMainController).loadAndChangeScene(anyString());
