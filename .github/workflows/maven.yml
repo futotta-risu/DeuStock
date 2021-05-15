@@ -10,6 +10,14 @@ on:
     branches: [ main ]
 
 jobs:
+  formatting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2 
+      - uses: axel-op/googlejavaformat-action@v3
+        with:
+          args: "--skip-sorting-imports --replace"
+
   build:
 
     runs-on: ubuntu-latest
@@ -24,7 +32,7 @@ jobs:
             ports:
                 - '3306:3306'
             options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
+  
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 14
