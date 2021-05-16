@@ -1,45 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="960.0" style="-fx-background-color: #00b2d9;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.ControlButtonController">
 
+<GridPane minHeight="80.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.ControlButtonController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="16.66" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="16.66" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="16.66" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="16.66" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="16.66" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="16.66" prefWidth="100.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" percentHeight="100.0" vgrow="SOMETIMES" />
+   </rowConstraints>
    <children>
-      <Button fx:id="homeButton" mnemonicParsing="false" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #00b2d9;" text="Home" textFill="WHITE">
+      <Button fx:id="homeButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #00b2d9;" text="Home" textFill="WHITE" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <font>
             <Font size="28.0" />
          </font>
       </Button>
-      <Button id="aboutButton" fx:id="aboutButton" mnemonicParsing="false" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #00b2d9;" text="Sobre Nosotros" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+      <Button id="aboutButton" fx:id="aboutButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #00b2d9;" text="DeuStock" textFill="WHITE" GridPane.columnIndex="3">
          <font>
             <Font size="28.0" />
          </font>
       </Button>
-      <Button id="helpButton" fx:id="helpButton" mnemonicParsing="false" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #00b2d9;" text="Ayuda" textFill="WHITE">
+      <Button id="helpButton" fx:id="helpButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #00b2d9;" text="Ayuda" textFill="WHITE" GridPane.columnIndex="2">
          <font>
             <Font size="28.0" />
          </font>
       </Button>
-      <Button id="stockButton" fx:id="stockListButton" mnemonicParsing="false" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #00b2d9;" text="Stock" textFill="WHITE">
+      <Button id="stockButton" fx:id="stockListButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #00b2d9;" text="Stock" textFill="WHITE" GridPane.columnIndex="1">
          <font>
             <Font size="28.0" />
          </font>
       </Button>
-      <Button id="profileButton" fx:id="profileButton" mnemonicParsing="false" prefHeight="101.0" prefWidth="160.0" style="-fx-background-color: #00b2d9;" text="Perfil" textFill="WHITE">
+      <Button id="profileButton" fx:id="profileButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #00b2d9;" text="Perfil" textFill="WHITE" GridPane.columnIndex="5">
          <font>
             <Font size="28.0" />
          </font>
       </Button>
-      <Button id="myStocksButton" fx:id="myStocksButton" mnemonicParsing="false" prefHeight="100.0" prefWidth="160.0"  style="-fx-background-color: #00b2d9;" text="MyStocks" textFill="WHITE">
+      <Button id="myStocksButton" fx:id="myStocksButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #00b2d9;" text="Balance" textFill="WHITE" GridPane.columnIndex="4">
          <font>
             <Font size="28.0" />
          </font>
       </Button>
    </children>
-</FlowPane>
+</GridPane>

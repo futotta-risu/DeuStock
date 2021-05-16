@@ -7,6 +7,7 @@ import es.deusto.deustock.client.data.stocks.StockHistory;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.visual.stocks.list.StockInfoSellLine;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -51,13 +52,14 @@ public class CurrentBalanceController implements DSGenericController {
         stockList.getChildren().add(refreshButton);
         
     }
-    
+
 
     
     public void refreshStocks(){
-    	this.stockList.getChildren().remove(0, this.stockList.getChildren().size());
+        this.stockList.getChildren().removeIf(node -> node instanceof StockInfoSellLine);
+
         List<StockHistory> stockHistories = new DeustockGateway().getHoldings(username);
-        
+
         stockQuantityLabel.setText("You have a total of " + stockHistories.size() + " different stocks");
 
         for(StockHistory sh : stockHistories){

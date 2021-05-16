@@ -32,14 +32,22 @@ public class MainController {
     private String user;
     private String token;
 
-    private final int DEFAULT_HEIGHT = 600;
-    private final int DEFAULT_WIDTH  = 800;
+    private final int MIN_HEIGHT = 600;
+    private final int MIN_WIDTH  = 1000;
 
     private MainController(){}
 
     public static MainController getInstance(){
         if(instance == null) instance = new MainController();
         return instance;
+    }
+
+    public void setDefaultStageParams(){
+        stage.setTitle("DeuStock Client");
+
+        // TODO Look up for real screen size.
+        stage.setMinHeight(MIN_HEIGHT);
+        stage.setMinWidth(MIN_WIDTH);
     }
 
     /**
@@ -98,7 +106,7 @@ public class MainController {
         changePane(loadPane(path,null));
     }
     public void loadAndChangeScene(String path) {
-        changeScene(new Scene(loadPane(path,null),DEFAULT_WIDTH, DEFAULT_HEIGHT));
+        changeScene(new Scene(loadPane(path,null)));
     }
 
     public void loadAndChangePaneWithParams(String path, HashMap<String,Object> params) {
@@ -123,8 +131,9 @@ public class MainController {
 
         this.genericPane.setBottom(loadPane(ViewPaths.ControlButtonViewPath, params));
         this.genericPane.setCenter(new Pane());
-        this.scene = new Scene(this.genericPane,DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        this.scene = new Scene(this.genericPane);
         this.stage.setScene(this.scene);
+        this.stage.setMaximized(true);
     }
 
     public String getUser() {
@@ -138,5 +147,7 @@ public class MainController {
     public String getToken(){
         return token;
     }
+
+
 
 }
