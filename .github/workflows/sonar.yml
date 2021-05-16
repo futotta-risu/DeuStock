@@ -65,5 +65,5 @@ jobs:
     
 
     - name: Build with Maven (Client)
-      run: mvn --file DeustockClient/pom.xml --batch-mode --update-snapshots verify
+      run: xvfb-run mvn --file DeustockClient/pom.xml --batch-mode --update-snapshots verify
       
