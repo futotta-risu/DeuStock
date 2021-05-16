@@ -7,11 +7,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.stocks.StockListViewController">
+<VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.stocks.StockListViewController">
 	<children>
 		<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="336.0" prefWidth="616.0" style="-fx-background-color: white;" stylesheets="@StockListView.css" VBox.vgrow="ALWAYS">
 			<children>
 				<Text layoutX="16.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DeuStock">
+
 					<font>
 						<Font name="Arial Black" size="24.0" />
 					</font>
@@ -20,6 +21,7 @@
             <TextField id="searchStockText" fx:id="searchStockText" layoutX="32.0" layoutY="62.0" prefHeight="25.0" prefWidth="412.0" />
             <Button id="searchStockButton" fx:id="searchStockButton" layoutX="455.0" layoutY="62.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="78.0" text="Buscar" />
             <Button fx:id="refreshButton" layoutX="545.0" layoutY="62.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="78.0" text="Refresh" />
+
 			</children>
 		</AnchorPane>
 	</children>

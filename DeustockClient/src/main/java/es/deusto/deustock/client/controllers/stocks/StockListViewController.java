@@ -17,8 +17,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
+
 
 /**
  * StockListView controller
@@ -67,6 +69,7 @@ public class StockListViewController {
         if(stock != null) {
             StockInfoLine stockLine = new StockInfoLine(stock);
             stockLines.put(stock.getAcronym(), stockLine);
+
 
             stockList.getChildren().add(stockLine);
             stockList.getChildren().add(new Separator());

@@ -1,9 +1,11 @@
 package es.deusto.deustock.client.gateways;
 
+import es.deusto.deustock.client.controllers.MainController;
 import es.deusto.deustock.client.data.Stock;
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.data.help.FAQQuestion;
 import es.deusto.deustock.client.data.stocks.StockHistory;
+import es.deusto.deustock.client.gateways.exceptions.ForbiddenException;
 import es.deusto.deustock.client.log.DeuLogger;
 import es.deusto.deustock.client.net.RESTVars;
 
@@ -15,9 +17,7 @@ import javax.print.attribute.standard.Media;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -65,6 +65,13 @@ public class DeustockGateway {
 
         return Double.parseDouble(response.readEntity(String.class));
     }
+    public double getRedditSentiment(String searchQuery){
+        Response response = getHostWebTarget().path("reddit").path("sentiment")
+                .path(searchQuery).request(MediaType.TEXT_PLAIN).get();
+
+        return Double.parseDouble(response.readEntity(String.class));
+    }
+
 
     public List<FAQQuestion>  getFAQList(){
         Response data = getHostWebTarget()
@@ -82,7 +89,7 @@ public class DeustockGateway {
     
     public boolean register(String username, String password, String fullName, String aboutMe, String country){
 
-    	Response response = getHostWebTarget().path("users").path("register")
+    	Response response = getHostWebTarget().path("auth").path("register")
 			.request("application/json")
             .post(Entity.entity(new User()
                         .setUsername(username)
@@ -96,15 +103,19 @@ public class DeustockGateway {
         return response.getStatus() == 200;
     }
     
-    public User login(String username, String password){
-    	Response response = getHostWebTarget().path("users").path("login")
+    public String login(String username, String password) throws ForbiddenException {
+    	Response response = getHostWebTarget().path("auth").path("login")
                 .path(username).path(getEncrypt(password))
-                .request(MediaType.APPLICATION_JSON).get();
-
-        return response.readEntity(User.class);
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+        if(response.getStatus() != 200){
+            throw new ForbiddenException("Could not log in");
+        }
+        return response.readEntity(String.class);
     }
     
     private String getEncrypt(String pass) {
+        // TODO Change location
         MessageDigest messageDigest = null;
         try {
             messageDigest = MessageDigest.getInstance("SHA-256");
@@ -120,16 +131,18 @@ public class DeustockGateway {
 
     public User getUser(String username){
         Response data = getHostWebTarget()
-                .path("user").path(username)
+                .path("tpuser").path(username)
                 .request(MediaType.APPLICATION_JSON).get();
 
         return data.readEntity(User.class);
     }
 
-    public boolean deleteUser(String username, String password){
+    public boolean deleteUser(String token){
         Response response = getHostWebTarget()
-                .path("users").path("delete").path(username).path(password)
-                .request().get();
+                .path("tpuser")
+                .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .delete();
 
         return response.getStatus() == 200;
     }
@@ -143,18 +156,11 @@ public class DeustockGateway {
     }
 
 
-    public boolean updateUser(String username, String fullName, Date birthDate, String aboutMe, String country) {
-        User user = new User()
-                .setUsername(username)
-                .setDescription(aboutMe)
-                .setCountry(country)
-                .setFullName(fullName);
-
-        Response response = getHostWebTarget().path("users/details/change")
+    public boolean updateUser(User user, String token) {
+        Response response = getHostWebTarget().path("tpuser")
                 .request("application/json")
-                .post(Entity.entity(user, MediaType.APPLICATION_JSON));
-
-        System.out.println("STATUS : " + response.getStatus());
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .put(Entity.entity(user, MediaType.APPLICATION_JSON));
 
         return response.getStatus() == 200;
     }
@@ -199,15 +205,17 @@ public class DeustockGateway {
     }
 
     public double getBalance(String username){
+        // TODO Delete username
         Response response = getHostWebTarget()
-                .path("holdings").path(username).path("balance")
+                .path("holdings").path("balance")
                 .request(MediaType.TEXT_PLAIN)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + MainController.getInstance().getToken())
                 .get();
 
-        return Double.parseDouble(response.readEntity(String.class));
+        return response.readEntity(Double.class);
     }
 
-    public void openOperation(OperationType operationType, Stock stock, String username, double amount){
+    public void openOperation(OperationType operationType, Stock stock, String token, double amount){
         if(operationType == null){
             throw new IllegalArgumentException("Invalid operation type");
         }
@@ -222,16 +230,22 @@ public class DeustockGateway {
                 .path("stock/operation/open")
                 .path(operationType.name())
                 .path(stock.getAcronym())
-                .path(username)
                 .path(String.valueOf(amount))
-                .request().get();
+                .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .get();
     }
 
-    public void closeOperation(String stockHistoryID){
+    public void closeOperation(String stockHistoryID, String token){
+        MultivaluedMap<String, String> formData = new MultivaluedHashMap<>();
+        formData.add("stockHistoryID", stockHistoryID);
+
         Response response = getHostWebTarget()
                 .path("stock/operation/close")
                 .path(stockHistoryID)
-                .request().get();
+                .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .post(Entity.entity(formData, MediaType.APPLICATION_JSON));
     }
 
 

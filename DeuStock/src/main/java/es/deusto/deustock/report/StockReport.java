@@ -9,8 +9,7 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.XYChart;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import yahoofinance.histquotes.HistoricalQuote;
 
 import java.io.IOException;
@@ -35,7 +34,7 @@ public class StockReport extends Report {
 
     private final DecimalFormat decimalFormat =  new DecimalFormat("#.##");
 
-    private static final Logger logger = LoggerFactory.getLogger(StockReport.class);
+    private static final Logger logger = Logger.getLogger(StockReport.class);
 
     private SentimentExtractor extractor;
 
@@ -113,7 +112,7 @@ public class StockReport extends Report {
             sentiment = extractor.getSentimentTendency(this.stock.getAcronym());
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            logger.error("Could not add sentiment of {} due to error.", stock.getAcronym());
+            logger.error(String.format("Could not add sentiment of %s due to error.", stock.getAcronym()));
             addSimpleTextLine( "Error getting sentiment. Please contact us.");
             return;
         }

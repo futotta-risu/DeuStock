@@ -128,7 +128,7 @@ class UserServiceTest {
         // When
 
         // Then
-        assertDoesNotThrow(() -> service.deleteUser("TestUsername","TestPass"));
+        assertDoesNotThrow(() -> service.deleteUser("TestUsername"));
     }
 
     @Test
@@ -141,27 +141,7 @@ class UserServiceTest {
         // When
 
         // Then
-        assertThrows(UserException.class, () -> service.deleteUser("TestUsername","TestPass"));
-    }
-
-    @Test
-    void testDeleteUserThrowsExceptionOnIncorrectPassword() throws SQLException {
-        // Given
-        User user = new User("TestUsername","TestPass");
-
-        when(mockUserDAO.get(any())).thenReturn(user);
-        doNothing().when(mockUserDAO).delete(anyString());
-
-        UserService service = new UserService();
-        service.setUserDAO(mockUserDAO);
-
-        // When
-
-        // Then
-        assertThrows(
-                UserException.class,
-                () -> service.deleteUser("TestUsername","TestPassIncorrect")
-        );
+        assertThrows(UserException.class, () -> service.deleteUser("TestUsername"));
     }
 
     @Test
@@ -173,7 +153,7 @@ class UserServiceTest {
         // When
 
         // Then
-        assertThrows(UserException.class, () -> service.deleteUser("TestUsername","TestPass"));
+        assertThrows(UserException.class, () -> service.deleteUser("TestUsername"));
     }
 
 }

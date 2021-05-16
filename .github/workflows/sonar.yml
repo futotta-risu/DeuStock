@@ -57,6 +57,8 @@ jobs:
         twitter_access_token_secret : ${{secrets.TWITTERACCESSTOKENSECRET}}
         twitter_consumer_key : ${{secrets.TWITTERCONSUMERKEY}}
         twitter_consumer_key_secret : ${{secrets.TWITTERCONSUMERSECRET}}
+        reddit_username_secret : ${{secrets.REDDITUSERNAMESECRET}}
+        reddit_password_secret : ${{secrets.REDDITPASSWORDSECRET}}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: mvn --file DeuStock/pom.xml -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar

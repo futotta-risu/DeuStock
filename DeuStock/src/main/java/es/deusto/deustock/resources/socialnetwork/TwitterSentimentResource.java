@@ -1,8 +1,8 @@
 package es.deusto.deustock.resources.socialnetwork;
 
 import es.deusto.deustock.dataminer.features.SentimentExtractor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -22,7 +22,7 @@ import static es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkG
 public class TwitterSentimentResource {
 
     private SentimentExtractor extractor;
-    private final Logger logger = LoggerFactory.getLogger(TwitterSentimentResource.class);
+    private final Logger logger = Logger.getLogger(TwitterSentimentResource.class);
 
 
     public TwitterSentimentResource(){
@@ -38,7 +38,7 @@ public class TwitterSentimentResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response getSentiment(@PathParam("query") String query) {
-        logger.info("Sentiment Analyzer called");
+        logger.info("Sentiment Analyzer called [Twitter]");
 
         double sentiment;
         try {

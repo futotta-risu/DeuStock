@@ -29,7 +29,8 @@ public class MainController {
     private Scene scene;
     private BorderPane genericPane;
 
-    private User user;
+    private String user;
+    private String token;
 
     private final int DEFAULT_HEIGHT = 600;
     private final int DEFAULT_WIDTH  = 800;
@@ -112,12 +113,13 @@ public class MainController {
         this.stage.show();
     }
 
-    public void initGenericStage(User user){
+    public void initGenericStage(String user, String token){
         setUser(user);
+        this.token = token;
         this.genericPane = new BorderPane();
 
         HashMap<String, Object> params = new HashMap<>();
-        params.put("username", user.getUsername());
+        params.put("username", user);
 
         this.genericPane.setBottom(loadPane(ViewPaths.ControlButtonViewPath, params));
         this.genericPane.setCenter(new Pane());
@@ -125,12 +127,16 @@ public class MainController {
         this.stage.setScene(this.scene);
     }
 
-    public User getUser() {
+    public String getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(String user) {
         this.user = user;
+    }
+
+    public String getToken(){
+        return token;
     }
 
 }

@@ -11,15 +11,13 @@ import java.util.UUID;
 @PersistenceCapable(detachable = "true")
 public class Wallet  implements Serializable {
 
-
-
     @PrimaryKey
     String id;
 
     @NotPersistent
     private static final double INITIAL_MONEY = 5000;
 
-    @Persistent(mappedBy = "wallet")
+    @Persistent(mappedBy = "wallet", defaultFetchGroup = "true")
     private List<StockHistory> history;
 
     private double money;
@@ -52,13 +50,14 @@ public class Wallet  implements Serializable {
         return this.money >= money;
     }
     
-    public void addHistory(StockHistory history){
-        this.history.add(history);
+    public void addHistory(StockHistory stockHistory){
+        history.add(stockHistory);
     }
 	
     public void changeMoney(double amount)  {
-        if(this.getMoney() + amount < 0)
+        if(this.getMoney() + amount < 0) {
             throw new IllegalArgumentException("Cannot subtract more money than the account has");
+        }
 
         this.money += amount;
     }
