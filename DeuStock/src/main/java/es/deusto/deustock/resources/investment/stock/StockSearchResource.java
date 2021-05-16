@@ -29,9 +29,11 @@ public class StockSearchResource {
         DeuStock stock;
         try {
             stock = stockService.getStockWithPrice(symbol);
-            if(stock==null) return Response
-                    .status(Response.Status.UNAUTHORIZED)
-                    .build();
+            if(stock==null){
+                return Response
+                        .status(Response.Status.UNAUTHORIZED)
+                        .build();
+            }
         } catch (StockException e) {
             throw new WebApplicationException(e.getMessage(), Response.Status.UNAUTHORIZED);
         }

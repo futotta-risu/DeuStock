@@ -8,6 +8,7 @@ import es.deusto.deustock.client.visual.stocks.list.StockInfoLine;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -25,18 +26,16 @@ import java.util.List;
  * @author Erik B. Terres
  */
 public class StockListViewController {
-    
-    @FXML
-    private Label sentimentLabel;
 
-    @FXML
-    private TextField twitterSearchField;
 
     @FXML 
     private TextField searchStockText;
     
     @FXML
     private Button searchStockButton;
+
+    @FXML
+    private Button refreshButton;
     
     @FXML
     private VBox stockList;
@@ -49,17 +48,16 @@ public class StockListViewController {
     @FXML
     private void initialize(){
         stockLines = new HashMap<>();
-        refreshStocks();
-        Button refreshButton = new Button("Refresh");
+
         refreshButton.setOnMouseClicked(mouseEvent -> refreshStocks());
-
-        stockList.getChildren().add(refreshButton);
-
-        searchStock();
         searchStockButton.setOnMouseClicked(mouseEvent -> searchStock());
+
+        refreshStocks();
     }
 
     private void searchStock(){
+        emptyStockList();
+
         String searchQuery = searchStockText.getText();
         
         DeustockGateway gateway = new DeustockGateway();
@@ -78,20 +76,21 @@ public class StockListViewController {
     }
     
     public void refreshStocks(){
+        emptyStockList();
         DeustockGateway gateway = new DeustockGateway();
 
-        for(Stock stock : gateway.getStockList("big")){
-            if(!stockLines.containsKey(stock.getAcronym())){
+        for(Stock stock : gateway.getStockList("big")) {
+            if (!stockLines.containsKey(stock.getAcronym())) {
                 StockInfoLine stockLine = new StockInfoLine(stock);
                 stockLines.put(stock.getAcronym(), stockLine);
-                
+
                 Image image1 = new Image("file:src/main/resources/views/img/notfav.png");
                 Image image2 = new Image("file:src/main/resources/views/img/fav.png");
                 Button favButton = new Button();
-                
+
                 favButton.setGraphic(new ImageView(image1));
                 favButton.setOnAction(e -> favButton.setGraphic(new ImageView(image2)));
-                
+
                 Button detailButton = new Button();
                 detailButton.setText("More Info");
                 detailButton.setOnAction(event -> MainController.getInstance().loadAndChangePaneWithParams(
@@ -100,13 +99,27 @@ public class StockListViewController {
                             put("acronym", stock.getAcronym());
                         }}
                 ));
-                
+
                 stockList.getChildren().add(stockLine);
                 stockList.getChildren().add(detailButton);
                 stockList.getChildren().add(new Separator());
-            }else
+            } else {
                 stockLines.get(stock.getAcronym()).refreshStock(stock);
+
+            }
         }
+    }
+
+    private void emptyStockList(){
+        stockLines.clear();
+        stockList.getChildren().removeIf(
+                node -> (
+                        node instanceof StockInfoLine ||
+                                node instanceof Label ||
+                                node instanceof Separator ||
+                                node instanceof Button
+                )
+        );
     }
 
 
