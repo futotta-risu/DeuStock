@@ -13,6 +13,7 @@ import es.deusto.deustock.client.simulation.investment.operations.OperationType;
 import org.apache.maven.surefire.shade.booter.org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 
+import javax.print.attribute.standard.Media;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -40,6 +41,13 @@ public class DeustockGateway {
     public Stock getStock(String acronym, String interval){
         Response  response = getHostWebTarget().path("stock")
                 .path("detail").path(acronym).path(interval).request(MediaType.APPLICATION_JSON).get();
+
+        return response.readEntity(Stock.class);
+    }
+
+    public Stock getSearchedStock(String acronym){
+        Response response = getHostWebTarget().path("stock")
+                .path("search").path(acronym).request(MediaType.APPLICATION_JSON).get();
 
         return response.readEntity(Stock.class);
     }

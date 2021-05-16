@@ -8,6 +8,7 @@ import es.deusto.deustock.client.visual.stocks.list.StockInfoLine;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -18,6 +19,7 @@ import javafx.scene.layout.*;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -26,13 +28,17 @@ import java.util.HashMap;
  * @author Erik B. Terres
  */
 public class StockListViewController {
+
+
+    @FXML 
+    private TextField searchStockText;
     
     @FXML
-    private Label sentimentLabel;
+    private Button searchStockButton;
 
     @FXML
-    private TextField twitterSearchField;
-
+    private Button refreshButton;
+    
     @FXML
     private VBox stockList;
 
@@ -44,36 +50,50 @@ public class StockListViewController {
     @FXML
     private void initialize(){
         stockLines = new HashMap<>();
-        refreshStocks();
-        Button refreshButton = new Button("Refresh");
+
         refreshButton.setOnMouseClicked(mouseEvent -> refreshStocks());
+        searchStockButton.setOnMouseClicked(mouseEvent -> searchStock());
 
-        stockList.getChildren().add(refreshButton);
+        refreshStocks();
     }
 
-    @FXML
-    private void sentimentSearch(){
-        String searchQuery = twitterSearchField.getText();
+    private void searchStock(){
+        emptyStockList();
+
+        String searchQuery = searchStockText.getText();
+        
         DeustockGateway gateway = new DeustockGateway();
-        DecimalFormat df = new DecimalFormat("####0.0000");
-        sentimentLabel.setText("Sentiment [Twitter / Reddit] = [ " + df.format(gateway.getTwitterSentiment(searchQuery)) + " / " + df.format(gateway.getRedditSentiment(searchQuery)) + " ]");
-    }
+        stockLines = new HashMap<>();
+        Stock stock = gateway.getSearchedStock(searchQuery);
 
+        if(stock != null) {
+            StockInfoLine stockLine = new StockInfoLine(stock);
+            stockLines.put(stock.getAcronym(), stockLine);
+
+
+            stockList.getChildren().add(stockLine);
+            stockList.getChildren().add(new Separator());
+        }else {
+            stockList.getChildren().add(new Label(" ** NO SE HA ENCONTRADO NINGUN STOCK CON ESE ACRONYM **"));
+        }
+    }
+    
     public void refreshStocks(){
+        emptyStockList();
         DeustockGateway gateway = new DeustockGateway();
 
-        for(Stock stock : gateway.getStockList("big")){
-            if(!stockLines.containsKey(stock.getAcronym())){
+        for(Stock stock : gateway.getStockList("big")) {
+            if (!stockLines.containsKey(stock.getAcronym())) {
                 StockInfoLine stockLine = new StockInfoLine(stock);
                 stockLines.put(stock.getAcronym(), stockLine);
-                
+
                 Image image1 = new Image("file:src/main/resources/views/img/notfav.png");
                 Image image2 = new Image("file:src/main/resources/views/img/fav.png");
                 Button favButton = new Button();
-                
+
                 favButton.setGraphic(new ImageView(image1));
                 favButton.setOnAction(e -> favButton.setGraphic(new ImageView(image2)));
-                
+
                 Button detailButton = new Button();
                 detailButton.setText("More Info");
                 detailButton.setOnAction(event -> MainController.getInstance().loadAndChangePaneWithParams(
@@ -82,13 +102,27 @@ public class StockListViewController {
                             put("acronym", stock.getAcronym());
                         }}
                 ));
-                
+
                 stockList.getChildren().add(stockLine);
                 stockList.getChildren().add(detailButton);
                 stockList.getChildren().add(new Separator());
-            }else
+            } else {
                 stockLines.get(stock.getAcronym()).refreshStock(stock);
+
+            }
         }
+    }
+
+    private void emptyStockList(){
+        stockLines.clear();
+        stockList.getChildren().removeIf(
+                node -> (
+                        node instanceof StockInfoLine ||
+                                node instanceof Label ||
+                                node instanceof Separator ||
+                                node instanceof Button
+                )
+        );
     }
 
 
