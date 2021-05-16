@@ -111,16 +111,21 @@ public class UserDetailController implements DSGenericController{
         );
 
     	this.resetWalletButton.setOnMouseClicked(
-                mouseEvent -> resetAccountWallet()
+                mouseEvent -> {
+                    try {
+                        resetAccountWallet();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
     	);
     	
     }
     
-    public void resetAccountWallet() {
-    	boolean succesfullyReseted = gateway.resetHoldings(this.user.getUsername());
+    public void resetAccountWallet() throws Exception {
+    	boolean succesfullyReseted = gateway.resetHoldings(this.username);
     	if(!succesfullyReseted) {
-    	    // TODO handle with exception
-    		System.out.println("No se ha podido resetear");
+            throw new Exception("No se ha podido resetear");
     	}
     }
 }

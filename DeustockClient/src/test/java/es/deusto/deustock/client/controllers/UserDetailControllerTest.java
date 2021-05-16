@@ -26,6 +26,8 @@ import java.util.HashMap;
 
 import static javafx.event.Event.*;
 import static javafx.scene.input.MouseEvent.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -103,14 +105,14 @@ public class UserDetailControllerTest{
         DeustockGateway gateway = mock(DeustockGateway.class);
         when(gateway.getUser(anyString())).thenReturn(null);
         controller.setDeustockGateway(gateway);
-        // When
 
+        // When
         Platform.runLater( () -> controller.setParams(params) );
 
     }
 
     @Test
-    void testDeleteUser(FxRobot robot) {
+    void testDeleteUser() {
         // Given
         User user = new User();
         user.setUsername("username");
@@ -128,17 +130,19 @@ public class UserDetailControllerTest{
 
         controller.setMainController(mockMainController);
         controller.setDeustockGateway(gateway);
-
+        // When
         Platform.runLater( () -> {
             controller.setParams(params);
         } );
+
+        //Then
         controller.deleteUser();
 
 
     }
 
     @Test
-    void testDeleteUseronNonExistentUser(FxRobot robot) {
+    void testDeleteUserOnNonExistentUser() {
         // Given
         User user = new User();
         user.setUsername("username");
@@ -160,10 +164,84 @@ public class UserDetailControllerTest{
         Platform.runLater( () -> {
             controller.setParams(params);
         } );
+
+        // When
         controller.deleteUser();
-
-
     }
+
+    @Test
+    void testResetWalletSuccesfully() throws Exception {
+        // Given
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("username", "Test");
+
+        DeustockGateway gateway = mock(DeustockGateway.class);
+        //Por alguna razon con anyString no funciona
+        when(gateway.resetHoldings(any())).thenReturn(true);
+        controller.setDeustockGateway(gateway);
+
+        Platform.runLater( () -> {
+            controller.setParams(params);
+        } );
+
+        // When
+        controller.resetAccountWallet();
+    }
+    @Test
+    void testResetWalletNotSuccesfull() throws Exception {
+        // Given
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("username", "Test");
+
+        DeustockGateway gateway = mock(DeustockGateway.class);
+        when(gateway.resetHoldings(anyString())).thenReturn(false);
+        controller.setDeustockGateway(gateway);
+
+        Platform.runLater( () -> {
+            controller.setParams(params);
+        } );
+
+        // When & Then
+        assertThrows( Exception.class, () ->  controller.resetAccountWallet() );
+    }
+
+    //TODO Revisar los FXRobot
+    @Test
+    void testEditProfileButton(FxRobot robot){
+        //Given
+        MainController mockMainController = mock(MainController.class);
+        controller.setMainController(mockMainController);
+        doNothing().when(mockMainController).loadAndChangePaneWithParams(any(), any());
+        //When
+        robot.clickOn(editProfileButton);
+        //Then
+    }
+
+    @Test
+    void testResetWalletButton(FxRobot robot){
+        //Given
+        DeustockGateway gateway = mock(DeustockGateway.class);
+        when(gateway.resetHoldings(any())).thenReturn(true);
+        controller.setDeustockGateway(gateway);
+
+        //When
+        robot.clickOn(editProfileButton);
+        //Then
+    }
+
+    @Test
+    void testResetWalletButtonReturnException(FxRobot robot){
+        //Given
+        DeustockGateway gateway = mock(DeustockGateway.class);
+        when(gateway.resetHoldings(any())).thenReturn(false);
+        controller.setDeustockGateway(gateway);
+
+        //When & Then
+        assertThrows(Exception.class, () -> robot.clickOn(editProfileButton));
+    }
+
+
+
 
 
 }
