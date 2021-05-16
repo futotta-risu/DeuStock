@@ -36,7 +36,6 @@ public class CurrentBalanceController implements DSGenericController {
         this.gateway = deustockGateway;
     }
 
-
     @Override
 	public void setParams(HashMap<String, Object> params) {
         if(params.containsKey("username"))
@@ -44,7 +43,6 @@ public class CurrentBalanceController implements DSGenericController {
 
         initRoot();
 	}
-
 
     private void initRoot(){
         if(this.username==null) return;
@@ -59,8 +57,6 @@ public class CurrentBalanceController implements DSGenericController {
         stockList.getChildren().add(refreshButton);
         
     }
-    
-
     
     public void refreshStocks(){
     	this.stockList.getChildren().remove(0, this.stockList.getChildren().size());
