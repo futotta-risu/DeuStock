@@ -76,8 +76,9 @@ public class CurrentBalanceControllerTest {
         when(mockGateway.getHoldings(anyString())).thenReturn(sh);
         controller.setDeustockGateway(mockGateway);
 
-        // When
-        Platform.runLater( () -> controller.setParams(params));
+        // When & Then
+        assertDoesNotThrow( () -> Platform.runLater(() -> controller.setParams(params)) );
+        ;
     }
 
     @Test
@@ -89,8 +90,9 @@ public class CurrentBalanceControllerTest {
         when(mockGateway.getUser(anyString())).thenReturn(null);
         controller.setDeustockGateway(mockGateway);
 
-        // When
-        Platform.runLater( () -> controller.setParams(params) );
+        // When & Then
+        assertDoesNotThrow( () -> Platform.runLater(() -> controller.setParams(params)) );
+        ;
 
     }
 
@@ -112,8 +114,8 @@ public class CurrentBalanceControllerTest {
         when(mockGateway.getHoldings(anyString())).thenReturn(sh);
         controller.setDeustockGateway(mockGateway);
 
-        // When
-        Platform.runLater( () -> controller.setParams(params));
+        // When & Then
+        assertDoesNotThrow( () -> Platform.runLater( () -> controller.setParams(params)) );
     }
 
 
