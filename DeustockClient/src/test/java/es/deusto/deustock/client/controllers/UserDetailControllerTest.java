@@ -2,6 +2,7 @@ package es.deusto.deustock.client.controllers;
 
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.gateways.DeustockGateway;
+import es.deusto.deustock.client.gateways.exceptions.ResetException;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -170,7 +171,7 @@ public class UserDetailControllerTest{
         Platform.runLater( () -> controller.setParams(params) );
 
         // When & Then
-        assertThrows( RuntimeException.class, () ->  controller.resetAccountWallet() );
+        assertThrows( ResetException.class, () ->  controller.resetAccountWallet() );
     }
 
     //TODO Revisar los FXRobot

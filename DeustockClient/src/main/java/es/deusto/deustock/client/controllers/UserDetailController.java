@@ -2,6 +2,7 @@ package es.deusto.deustock.client.controllers;
 
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.gateways.DeustockGateway;
+import es.deusto.deustock.client.gateways.exceptions.ResetException;
 import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -111,7 +112,7 @@ public class UserDetailController implements DSGenericController{
                 mouseEvent -> {
                     try {
                         resetAccountWallet();
-                    } catch (RuntimeException re) {
+                    } catch (ResetException re) {
                         re.printStackTrace();
                     }
                 }
@@ -119,8 +120,8 @@ public class UserDetailController implements DSGenericController{
     	
     }
     
-    public void resetAccountWallet() throws RuntimeException {
+    public void resetAccountWallet() throws ResetException {
     	boolean succesfullyReseted = gateway.resetHoldings(this.username);
-    	if(!succesfullyReseted) throw new RuntimeException("No se ha podido resetear");
+    	if(!succesfullyReseted) throw new ResetException("No se ha podido resetear");
     }
 }
