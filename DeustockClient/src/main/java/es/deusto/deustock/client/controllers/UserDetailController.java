@@ -18,6 +18,7 @@ public class UserDetailController implements DSGenericController{
     private String username = null;
     private User user;
     private MainController mainController;
+    private DeustockGateway gateway;
 
     @FXML
     Label usernameLabel;
@@ -40,7 +41,6 @@ public class UserDetailController implements DSGenericController{
     @FXML
     Button resetWalletButton;
 
-    private DeustockGateway gateway;
 
     public  UserDetailController(){
         gateway = new DeustockGateway();
