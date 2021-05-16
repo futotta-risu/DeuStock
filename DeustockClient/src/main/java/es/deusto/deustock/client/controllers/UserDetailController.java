@@ -77,9 +77,7 @@ public class UserDetailController implements DSGenericController{
     public void deleteUser(){
         if(gateway.deleteUser(mainController.getToken())){
             mainController.setUser(null);
-            mainController.loadAndChangeScene(
-                    ViewPaths.LoginViewPath
-            );
+            mainController.loadAndChangeScene(ViewPaths.LoginViewPath);
         }
     }
 
@@ -104,7 +102,6 @@ public class UserDetailController implements DSGenericController{
 
         		mouseEvent ->
         		    mainController.loadAndChangePaneWithParams(
-
                             ViewPaths.ChangeUserDetailViewPath,
                             new HashMap<>() {{ put("username", username ); }}
                     )
@@ -114,8 +111,8 @@ public class UserDetailController implements DSGenericController{
                 mouseEvent -> {
                     try {
                         resetAccountWallet();
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    } catch (RuntimeException re) {
+                        re.printStackTrace();
                     }
                 }
     	);
@@ -124,8 +121,6 @@ public class UserDetailController implements DSGenericController{
     
     public void resetAccountWallet() throws Exception {
     	boolean succesfullyReseted = gateway.resetHoldings(this.username);
-    	if(!succesfullyReseted) {
-            throw new Exception("No se ha podido resetear");
-    	}
+    	if(!succesfullyReseted) throw new RuntimeException("No se ha podido resetear");
     }
 }
