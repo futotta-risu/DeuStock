@@ -83,9 +83,8 @@ public class UserDetailControllerTest{
         when(mockGateway.getUser(anyString())).thenReturn(user);
         controller.setDeustockGateway(mockGateway);
 
-        // When
-        Platform.runLater( () -> controller.setParams(params));
-
+        // When & Then
+        assertDoesNotThrow(() -> Platform.runLater(() -> controller.setParams(params)) );
     }
 
     @Test
@@ -97,9 +96,8 @@ public class UserDetailControllerTest{
         when(mockGateway.getUser(anyString())).thenReturn(null);
         controller.setDeustockGateway(mockGateway);
 
-        // When
-        Platform.runLater( () -> controller.setParams(params) );
-
+        // When & Then
+        assertDoesNotThrow(() -> Platform.runLater(() -> controller.setParams(params)) );
     }
 
     @Test
@@ -119,9 +117,8 @@ public class UserDetailControllerTest{
         controller.setDeustockGateway(mockGateway);
         Platform.runLater( () -> controller.setParams(params) );
 
-        // When
-        controller.deleteUser();
-
+        // When & Then
+        assertDoesNotThrow( () -> controller.deleteUser() );
     }
 
     @Test
@@ -131,8 +128,6 @@ public class UserDetailControllerTest{
         user.setUsername("username");
         HashMap<String, Object> params = new HashMap<>();
         params.put("username", "Test");
-
-
 
         when(mockGateway.getUser(anyString())).thenReturn(user);
         when(mockGateway.deleteUser(any())).thenReturn(false);
@@ -144,8 +139,8 @@ public class UserDetailControllerTest{
         controller.setDeustockGateway(mockGateway);
         Platform.runLater( () -> controller.setParams(params) );
 
-        // When
-        controller.deleteUser();
+        // When & Then
+        assertDoesNotThrow( () -> controller.deleteUser() );
     }
 
     @Test
@@ -159,8 +154,8 @@ public class UserDetailControllerTest{
         controller.setDeustockGateway(mockGateway);
         Platform.runLater( () -> controller.setParams(params) );
 
-        // When
-        controller.resetAccountWallet();
+        // When & Then
+        assertDoesNotThrow( () -> controller.resetAccountWallet() );
     }
 
     @Test
@@ -184,8 +179,9 @@ public class UserDetailControllerTest{
         controller.setMainController(mockMainController);
         doNothing().when(mockMainController).loadAndChangePaneWithParams(any(), any());
 
-        //When
-        robot.clickOn(editProfileButton);
+        //When & Then
+        assertDoesNotThrow( () -> robot.clickOn(editProfileButton) );
+        ;
         //Then
     }
 
@@ -195,9 +191,8 @@ public class UserDetailControllerTest{
         when(mockGateway.resetHoldings(any())).thenReturn(true);
         controller.setDeustockGateway(mockGateway);
 
-        //When
-        robot.clickOn(editProfileButton);
-        //Then
+        //When & Then
+        assertDoesNotThrow( () -> robot.clickOn(editProfileButton) );
     }
 
     @Test
