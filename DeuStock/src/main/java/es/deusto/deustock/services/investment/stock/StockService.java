@@ -11,8 +11,8 @@ import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundExcep
 import es.deusto.deustock.services.investment.stock.exceptions.InvalidStockQueryDataException;
 import es.deusto.deustock.services.investment.stock.exceptions.StockException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class StockService {
     private final List<String> smallList = Arrays.asList("INTC","TSLA") ;
     private final List<String> bigList = Arrays.asList("INTC","TSLA","ETH","BB") ;
 
-    private final Logger logger = LoggerFactory.getLogger(StockService.class);
+    private final Logger logger = Logger.getLogger(StockService.class);
 
     private StockDAO stockDAO;
 
@@ -101,7 +101,7 @@ public class StockService {
                     stockDAO.store(new DeuStock(stockName));
                 }
             }catch (SQLException e){
-                logger.error("Error saving info of {}", stockName);
+                logger.error(String.format("Error saving info of %s", stockName));
             }
         }
 

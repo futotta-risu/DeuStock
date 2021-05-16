@@ -24,9 +24,6 @@ public class StockQueryData {
     private int intervalSize = DEFAULT_INTERVAL_SIZE;
 
 
-
-    private StockQueryData() {}
-
     public StockQueryData(String acronym) {
         setAcronym(acronym);
         setInterval(Interval.DAILY);

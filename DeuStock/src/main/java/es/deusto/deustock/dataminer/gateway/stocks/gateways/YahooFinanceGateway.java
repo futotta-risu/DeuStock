@@ -5,8 +5,8 @@ import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
 import yahoofinance.histquotes.Interval;
@@ -24,7 +24,7 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
 
     private static final YahooFinanceGateway instance = new YahooFinanceGateway();
 
-    private static final Logger logger = LoggerFactory.getLogger(YahooFinanceGateway.class);
+    private static final Logger logger = Logger.getLogger(YahooFinanceGateway.class);
 
 
     private YahooFinanceGateway(){ }
@@ -69,7 +69,7 @@ public class YahooFinanceGateway implements StockDataAPIGateway {
                 deustock.setHistory(stock.getHistory());
             }
         } catch (IOException e) {
-            logger.error("Could not get the stock data {}.", queryData.getAcronym());
+            logger.error(String.format("Could not get the stock data %s.", queryData.getAcronym()));
         }
         return deustock;
     }

@@ -1,27 +1,29 @@
 package es.deusto.deustock.resources.auth;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 import es.deusto.deustock.data.dto.UserDTO;
 import es.deusto.deustock.services.auth.AuthService;
 import es.deusto.deustock.services.auth.exceptions.AuthException;
 import es.deusto.deustock.services.auth.exceptions.LoginException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+import org.apache.log4j.Logger;
 
 
 /**
- * Clase que contiene los metodos REST asociados a la clase Usuario
+ * Funciones REST relativas a la Auth
  * 
- * @author landersanmillan
+ * @author Erik B. Terres
  */
-@Path("users")
+@Path("auth")
 public class AuthResource {
 	private AuthService authService;
 
-	private final Logger logger = LoggerFactory.getLogger(AuthResource.class);
+	private final Logger logger = Logger.getLogger(AuthResource.class);
 
 	public AuthResource(){
 		authService = new AuthService();
@@ -44,18 +46,19 @@ public class AuthResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/login/{username}/{password}")
-	public Response login(@PathParam("username") String username, @PathParam("password") String password){
+	public Response login(
+			@PathParam("username") String username,
+			@PathParam("password") String password
+	){
 		logger.info("Login petition detected");
 
-		UserDTO user;
-
 		try{
-			user = authService.login(username, password);
+			return Response
+					.ok(authService.login(username, password))
+					.build();
 		}catch (LoginException e){
 			throw new WebApplicationException(e.getMessage(), Response.Status.UNAUTHORIZED);
 		}
-
-		return Response.ok(user).build();
 	}
 
 	/**
@@ -74,7 +77,7 @@ public class AuthResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/register")
 	public Response register(UserDTO userDTO) throws WebApplicationException {
-		logger.info("Register petition for User {}", userDTO.getUsername());
+		logger.info(String.format("Register petition for User %s", userDTO.getUsername()));
 
 		try{
 			authService.register(userDTO);
@@ -83,8 +86,7 @@ public class AuthResource {
 			throw new WebApplicationException(e.getMessage(), Response.Status.UNAUTHORIZED);
 		}
 
-
-		return Response.status(200).build();
+		return Response.ok().build();
 	}
 
 }

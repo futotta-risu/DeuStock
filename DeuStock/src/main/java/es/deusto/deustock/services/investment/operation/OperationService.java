@@ -12,7 +12,9 @@ public class OperationService {
 
     OperationFactory operationFactory;
 
-    public OperationService(){ }
+    public OperationService(){
+        operationFactory = OperationFactory.getInstance();
+    }
 
     public void setOperationFactory(OperationFactory factory){
         this.operationFactory = factory;

@@ -1,6 +1,7 @@
 package es.deusto.deustock.resources.investment.operation;
 
 import es.deusto.deustock.data.DeuStock;
+import es.deusto.deustock.resources.auth.Secured;
 import es.deusto.deustock.services.investment.operation.OperationService;
 import es.deusto.deustock.services.investment.operation.type.OperationType;
 import es.deusto.deustock.services.investment.stock.StockService;
@@ -8,20 +9,23 @@ import es.deusto.deustock.services.investment.stock.exceptions.StockException;
 import es.deusto.deustock.services.investment.wallet.WalletService;
 import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 /**
  * @author Erik B. Terres
  */
+
 @Path("stock/operation/open")
 public class OpenOperationResource {
 
-    private static final Logger logger = LoggerFactory.getLogger(OpenOperationResource.class);
+    private static final Logger logger = Logger.getLogger(OpenOperationResource.class);
 
     private OperationService operationService;
     private StockService stockService;
@@ -46,30 +50,33 @@ public class OpenOperationResource {
 
 
     @GET
+    @Secured
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{operation}/{symbol}/{username}/{amount}")
+    @Path("/{operation}/{symbol}/{amount}")
     public Response openOperation(
             @PathParam("operation") String operationTypeString,
             @PathParam("symbol") String symbol,
-            @PathParam("username") String username,
-            @PathParam("amount") double amount
-    ) throws WebApplicationException {
+            @PathParam("amount") double amount,
+            @Context SecurityContext securityContext
+        ) throws WebApplicationException {
+
         logger.info("Petition to open a operation");
 
         System.out.println(operationTypeString);
         var operationType = OperationType.valueOf(operationTypeString);
         System.out.println(operationType);
 
+        String username = securityContext.getUserPrincipal().getName();
+
         try{
             DeuStock stock = stockService.getStockWithPrice(symbol);
-            System.out.println(stock.getAcronym());
-            System.out.println(operationType + " " + stock.getPrice() + " " + amount);
+
             double openPrice = operationService.getOpenPrice(operationType, stock.getPrice(),amount);
-            System.out.println(openPrice);
+
             walletService.updateMoney(username, openPrice);
-            System.out.println("DINERO ACTUALIZADO");
+
             walletService.addToHoldings(username, stock, amount, operationType);
-            System.out.println("HOLDING AÑADIDO");
+
         }catch (StockException | WalletException e){
             throw new WebApplicationException(e.getMessage(), Response.Status.UNAUTHORIZED);
         }

@@ -16,8 +16,6 @@ public class OperationFactory {
     }
 
     public Operation create(OperationType operation, double stockOpenPrice, double amount){
-        System.out.println(operation + " " + stockOpenPrice + " "+ amount);
-        System.out.println("Entrando en switcchcase");
         return switch (operation) {
             case LONG -> new LongOperation(stockOpenPrice, amount);
             case SHORT -> new ShortOperation(stockOpenPrice, amount);

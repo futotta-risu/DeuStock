@@ -16,6 +16,9 @@ import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+
+import java.security.Principal;
 
 import static es.deusto.deustock.services.investment.operation.type.OperationType.LONG;
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,11 +31,19 @@ class CloseOperationResourceTest {
     private WalletService mockWalletService;
     private StockService mockStockService;
 
+    private CloseOperationResource resource;
+
     @BeforeEach
     void setUp(){
         mockOperationService =  mock(OperationService.class);
         mockWalletService =  mock(WalletService.class);
         mockStockService =  mock(StockService.class);
+
+        resource = new CloseOperationResource();
+
+        resource.setStockService(mockStockService);
+        resource.setWalletService(mockWalletService);
+        resource.setOperationService(mockOperationService);
     }
     @Test
     void closeOperationReturns200OnValidOperation() throws WebApplicationException, WalletException, StockException, OperationException {
@@ -49,13 +60,13 @@ class CloseOperationResourceTest {
         doNothing().when(mockWalletService).updateMoneyByWalletID(anyString(),anyDouble());
         doNothing().when(mockWalletService).closeStockHistory(anyString());
 
-        CloseOperationResource resource = new CloseOperationResource();
-        resource.setStockService(mockStockService);
-        resource.setWalletService(mockWalletService);
-        resource.setOperationService(mockOperationService);
+        SecurityContext mockSecurityContext = mock(SecurityContext.class);
+        Principal mockPrincipal = mock(Principal.class);
+        when(mockSecurityContext.getUserPrincipal()).thenReturn(mockPrincipal);
+        when(mockPrincipal.getName()).thenReturn("TestUsername");
 
         // When
-        Response response = resource.closeOperation("TestString");
+        Response response = resource.closeOperation("TestString", mockSecurityContext);
 
         // Then
         assertEquals(200, response.getStatus());
@@ -77,15 +88,18 @@ class CloseOperationResourceTest {
         doNothing().when(mockWalletService).updateMoneyByWalletID(anyString(),anyDouble());
         doNothing().when(mockWalletService).closeStockHistory(anyString());
 
-        CloseOperationResource resource = new CloseOperationResource();
-        resource.setStockService(mockStockService);
-        resource.setWalletService(mockWalletService);
-        resource.setOperationService(mockOperationService);
+        SecurityContext mockSecurityContext = mock(SecurityContext.class);
+        Principal mockPrincipal = mock(Principal.class);
+        when(mockSecurityContext.getUserPrincipal()).thenReturn(mockPrincipal);
+        when(mockPrincipal.getName()).thenReturn("TestUsername");
 
         // When
 
         // Then
-        assertThrows(WebApplicationException.class, ()-> resource.closeOperation("TestString"));
+        assertThrows(
+                WebApplicationException.class,
+                ()-> resource.closeOperation("TestString", mockSecurityContext)
+        );
     }
 
 
@@ -105,15 +119,18 @@ class CloseOperationResourceTest {
         doNothing().when(mockWalletService).updateMoneyByWalletID(anyString(),anyDouble());
         doNothing().when(mockWalletService).closeStockHistory(anyString());
 
-        CloseOperationResource resource = new CloseOperationResource();
-        resource.setStockService(mockStockService);
-        resource.setWalletService(mockWalletService);
-        resource.setOperationService(mockOperationService);
+        SecurityContext mockSecurityContext = mock(SecurityContext.class);
+        Principal mockPrincipal = mock(Principal.class);
+        when(mockSecurityContext.getUserPrincipal()).thenReturn(mockPrincipal);
+        when(mockPrincipal.getName()).thenReturn("TestUsername");
 
         // When
 
         // Then
-        assertThrows(WebApplicationException.class, ()-> resource.closeOperation("TestString"));
+        assertThrows(
+                WebApplicationException.class,
+                ()-> resource.closeOperation("TestString", mockSecurityContext)
+        );
     }
 
     @Test
@@ -126,21 +143,23 @@ class CloseOperationResourceTest {
                 wallet, stockNoPrice, 10, 15, LONG);
         stockHistory.setClosed(true);
 
-
         when(mockWalletService.getStockHistory(anyString())).thenReturn(stockHistory);
         when(mockStockService.getStockWithPrice(anyString())).thenThrow(new StockException("Exception"));
         when(mockOperationService.getClosePrice(any(),anyDouble(),anyDouble(),anyDouble())).thenReturn(20.0);
         doNothing().when(mockWalletService).updateMoneyByWalletID(anyString(),anyDouble());
         doNothing().when(mockWalletService).closeStockHistory(anyString());
 
-        CloseOperationResource resource = new CloseOperationResource();
-        resource.setStockService(mockStockService);
-        resource.setWalletService(mockWalletService);
-        resource.setOperationService(mockOperationService);
+        SecurityContext mockSecurityContext = mock(SecurityContext.class);
+        Principal mockPrincipal = mock(Principal.class);
+        when(mockSecurityContext.getUserPrincipal()).thenReturn(mockPrincipal);
+        when(mockPrincipal.getName()).thenReturn("TestUsername");
 
         // When
 
         // Then
-        assertThrows(WebApplicationException.class, ()-> resource.closeOperation("TestString"));
+        assertThrows(
+                WebApplicationException.class,
+                ()-> resource.closeOperation("TestString", mockSecurityContext)
+        );
     }
 }

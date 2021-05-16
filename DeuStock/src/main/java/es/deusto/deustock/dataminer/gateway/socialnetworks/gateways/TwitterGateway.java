@@ -8,8 +8,8 @@ import es.deusto.deustock.util.file.DSJSONUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 
@@ -26,7 +26,7 @@ import java.util.Objects;
 public class TwitterGateway implements SocialNetworkAPIGateway {
 
     private static final String PATH ="data/secret_keys/secret_twitter_keys.json";
-    private static final Logger logger = LoggerFactory.getLogger(TwitterGateway.class);
+    private static final Logger logger = Logger.getLogger(TwitterGateway.class);
 
     private final TwitterFactory twitterF;
 

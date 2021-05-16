@@ -1,24 +1,27 @@
 package es.deusto.deustock.resources.investment.operation;
 
+import es.deusto.deustock.resources.auth.Secured;
 import es.deusto.deustock.services.investment.operation.OperationService;
 import es.deusto.deustock.services.investment.stock.StockService;
 import es.deusto.deustock.services.investment.stock.exceptions.StockException;
 import es.deusto.deustock.services.investment.wallet.WalletService;
 import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 /**
  * @author Erik B. Terres
  */
-@Path("stock/operation/close")
+@Path("stock/operation")
 public class CloseOperationResource {
 
-    private static final Logger logger = LoggerFactory.getLogger(CloseOperationResource.class);
+    private static final Logger logger = Logger.getLogger(CloseOperationResource.class);
 
     private OperationService operationService;
     private WalletService walletService;
@@ -42,16 +45,24 @@ public class CloseOperationResource {
         this.stockService = stockService;
     }
 
-    @GET
+    @POST
+    @Secured
+    @Path("close")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{stockHistoryID}")
     public Response closeOperation(
-            @PathParam("stockHistoryID") String stockHistoryID
-    ) throws WebApplicationException {
+            String stockHistoryID,
+            @Context SecurityContext securityContext
+        ) throws WebApplicationException {
         logger.info("Petition to close the operation");
+
+        String username = securityContext.getUserPrincipal().getName();
 
         try {
             var history = walletService.getStockHistory(stockHistoryID);
+
+            // TODO check if same user
+
             if(history.isClosed()){
                 throw new WebApplicationException("Already Closed Operation", Response.Status.UNAUTHORIZED);
             }

@@ -1,10 +1,11 @@
 package es.deusto.deustock;
 
+import org.apache.log4j.PropertyConfigurator;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URI;
@@ -16,7 +17,7 @@ import java.net.URI;
  */
 public class Main {
 
-    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+    private static final Logger logger = Logger.getLogger(Main.class);
 
     private Main(){}
 
@@ -38,10 +39,10 @@ public class Main {
      * Main method.
      */
     public static void main(String[] args) throws IOException {
-
+        PropertyConfigurator.configure("resources/log4j.properties");
         final HttpServer server = startServer();
-        logger.info("Jersey app started with WADL available at "
-                + "{} application.wadl\nHit enter to stop it...%n", BASE_URI);
+        logger.info(String.format("Jersey app started with WADL available at "
+                + "{} application.wadl\nHit enter to stop it...%n", BASE_URI));
         System.in.read();
         server.shutdownNow();
     }
