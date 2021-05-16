@@ -72,7 +72,7 @@
 					<forkCount>3</forkCount>
 					<reuseForks>true</reuseForks>
 					<!--suppress UnresolvedMavenProperty -->
-                    <argLine>${surefireArgLine} -Xmx1024m -noverify --enable-preview</argLine>
+                    			<argLine>${surefireArgLine} -Xmx1024m -noverify --enable-preview</argLine>
 				</configuration>
 
 	        </plugin>
