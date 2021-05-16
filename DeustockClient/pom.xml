@@ -202,6 +202,15 @@
             <artifactId>junit-vintage-engine</artifactId>
             <version>5.7.0</version>
         </dependency>
+        <!-- ###################################################### -->
+        <!--  					  DOCUMENTATION 		            -->
+        <!-- ###################################################### -->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>3.9.1</version>
+            <type>maven-plugin</type>
+        </dependency>
     </dependencies>
     <properties>
         <maven.compiler.source>14</maven.compiler.source>
