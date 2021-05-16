@@ -1,12 +1,9 @@
 package es.deusto.deustock.client.controllers;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
 import es.deusto.deustock.client.gateways.DeustockGateway;
-import es.deusto.deustock.client.log.DeuLogger;
 import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;

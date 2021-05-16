@@ -28,10 +28,6 @@ public class TwitterSentimentResource {
     public TwitterSentimentResource(){
         extractor = new SentimentExtractor(TWITTER);
     }
-
-    public TwitterSentimentResource(SentimentExtractor extractor){
-        this.extractor = extractor;
-    }
     
     public void setSentimentExtractor(SentimentExtractor extractor) { this.extractor = extractor; }
 

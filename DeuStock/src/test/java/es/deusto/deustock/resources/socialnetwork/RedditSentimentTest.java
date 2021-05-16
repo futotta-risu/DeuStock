@@ -1,7 +1,6 @@
 package es.deusto.deustock.resources.socialnetwork;
 
 import es.deusto.deustock.dataminer.features.SentimentExtractor;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -18,7 +17,7 @@ import static org.mockito.Mockito.when;
  * @author Erik B. Terres & Lander San Millan
  */
 @Tag("server-resource")
-class TwitterSentimentTest {
+class RedditSentimentTest {
 	
 	private SentimentExtractor mockExtractor;
 	
@@ -27,17 +26,17 @@ class TwitterSentimentTest {
     	mockExtractor = mock(SentimentExtractor.class);
     }
 
-    public void setMocksToResource(TwitterSentimentResource twitterSentimentResource){
-    	twitterSentimentResource.setSentimentExtractor(mockExtractor);
+    public void setMocksToResource(RedditSentimentResource redditSentimentResource){
+        redditSentimentResource.setSentimentExtractor(mockExtractor);
     }
 
     @Test
-    void testTwitterSentimentReturnsCorrectOutput() throws InterruptedException {
+    void testRedditSentimentReturnsCorrectOutput() throws InterruptedException {
 
         SentimentExtractor extractor = mock(SentimentExtractor.class);
         when(extractor.getSentimentTendency(anyString())).thenReturn(3.0);
 
-        TwitterSentimentResource resource = new TwitterSentimentResource();
+        RedditSentimentResource resource = new RedditSentimentResource();
         resource.setSentimentExtractor(extractor);
         Response response = resource.getSentiment("Test");
         double result = (double) response.getEntity();
@@ -48,15 +47,15 @@ class TwitterSentimentTest {
     @DisplayName("Test get holdings list returns Illegal Argument Exception")
     void testTwitterGetSentimentReturnsInterruptedException() throws InterruptedException{
     	//Given
-    	TwitterSentimentResource twitterSentimentResource = new TwitterSentimentResource();
+        RedditSentimentResource redditSentimentResource = new RedditSentimentResource();
         when(mockExtractor.getSentimentTendency(anyString())).thenThrow(new InterruptedException());
-        setMocksToResource(twitterSentimentResource);
+        setMocksToResource(redditSentimentResource);
 
         //When       
           	
         //Then
         try {
-        	twitterSentimentResource.getSentiment("Test");
+            redditSentimentResource.getSentiment("Test");
 		} catch (Exception e) {
 			assertEquals(InterruptedException.class, e.getClass());
 		}
