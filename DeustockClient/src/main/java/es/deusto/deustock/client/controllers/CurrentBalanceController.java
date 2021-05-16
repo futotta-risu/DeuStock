@@ -57,7 +57,7 @@ public class CurrentBalanceController implements DSGenericController {
         stockList.getChildren().add(refreshButton);
         
     }
-    
+
     public void refreshStocks(){
     	this.stockList.getChildren().remove(0, this.stockList.getChildren().size());
         List<StockHistory> stockHistories = gateway.getHoldings(username);

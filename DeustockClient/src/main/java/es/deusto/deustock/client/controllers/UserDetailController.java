@@ -119,7 +119,7 @@ public class UserDetailController implements DSGenericController{
     	
     }
     
-    public void resetAccountWallet() throws Exception {
+    public void resetAccountWallet() throws RuntimeException {
     	boolean succesfullyReseted = gateway.resetHoldings(this.username);
     	if(!succesfullyReseted) throw new RuntimeException("No se ha podido resetear");
     }

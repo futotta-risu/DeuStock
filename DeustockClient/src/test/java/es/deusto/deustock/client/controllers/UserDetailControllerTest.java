@@ -25,6 +25,7 @@ import java.util.HashMap;
 
 
 import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -169,7 +170,7 @@ public class UserDetailControllerTest{
         Platform.runLater( () -> controller.setParams(params) );
 
         // When & Then
-        assertThrows( Exception.class, () ->  controller.resetAccountWallet() );
+        assertThrows( RuntimeException.class, () ->  controller.resetAccountWallet() );
     }
 
     //TODO Revisar los FXRobot
