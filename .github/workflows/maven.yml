@@ -39,27 +39,6 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
 
-    - name: Create database schema
-      run: |
-        cd DeuStock
-        mvn compile datanucleus:enhance
-          
-    - name: Build with Maven (Server)
-      env:
-        twitter_access_token : ${{secrets.TWITTERACCESSTOKEN}}
-        twitter_access_token_secret : ${{secrets.TWITTERACCESSTOKENSECRET}}
-        twitter_consumer_key : ${{secrets.TWITTERCONSUMERKEY}}
-        twitter_consumer_key_secret : ${{secrets.TWITTERCONSUMERSECRET}}
-        reddit_username_secret : ${{secrets.REDDITUSERNAMESECRET}}
-        reddit_password_secret : ${{secrets.REDDITPASSWORDSECRET}}
-      run: mvn --file DeuStock/pom.xml --batch-mode --update-snapshots verify
-
-    - name: Upload server coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        flags: server
-        directory: ./DeuStock
 
     - name: Build with Maven (Client)
       run: xvfb-run mvn --file DeustockClient/pom.xml --batch-mode --update-snapshots verify
