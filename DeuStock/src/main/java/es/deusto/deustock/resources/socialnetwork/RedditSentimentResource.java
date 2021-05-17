@@ -25,11 +25,9 @@ public class RedditSentimentResource {
         extractor = new SentimentExtractor(REDDIT);
     }
 
-    public RedditSentimentResource(SentimentExtractor extractor){
+    public void setSentimentExtractor(SentimentExtractor extractor) {
         this.extractor = extractor;
     }
-
-    public void setSentimentExtractor(SentimentExtractor extractor) { this.extractor = extractor; }
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)

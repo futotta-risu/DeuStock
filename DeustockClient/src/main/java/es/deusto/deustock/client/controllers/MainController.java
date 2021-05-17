@@ -1,7 +1,6 @@
 package es.deusto.deustock.client.controllers;
 
-import es.deusto.deustock.client.data.User;
-import es.deusto.deustock.client.log.DeuLogger;
+import es.deusto.deustock.client.Main;
 import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -23,6 +23,7 @@ import java.util.HashMap;
  */
 public class MainController {
 
+    private final Logger logger = Logger.getLogger(MainController.class);
     private static MainController instance = null;
 
     private Stage stage;
@@ -63,9 +64,9 @@ public class MainController {
             }
 
         } catch (IOException e) {
-            DeuLogger.logger.error("Could not load " + path + " fxml file.");
+            logger.error("Could not load " + path + " fxml file.");
             e.printStackTrace();
-            DeuLogger.logger.info("Closing system due to error.");
+            logger.info("Closing system due to error.");
         }
         // In case of not loaded VBox, exit application
         if(node != null) return node;

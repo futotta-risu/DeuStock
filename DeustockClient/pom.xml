@@ -203,6 +203,7 @@
             <artifactId>junit-vintage-engine</artifactId>
             <version>5.7.0</version>
         </dependency>
+
         <dependency>
             <groupId>org.testfx</groupId>
             <artifactId>testfx-core</artifactId>
@@ -228,6 +229,16 @@
             <artifactId>assertj-core</artifactId>
             <version>3.13.2</version>
             <scope>test</scope>
+
+        <!-- ###################################################### -->
+        <!--  					  DOCUMENTATION 		            -->
+        <!-- ###################################################### -->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>3.9.1</version>
+            <type>maven-plugin</type>
+
         </dependency>
     </dependencies>
     <properties>

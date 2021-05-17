@@ -6,13 +6,14 @@ import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.data.help.FAQQuestion;
 import es.deusto.deustock.client.data.stocks.StockHistory;
 import es.deusto.deustock.client.gateways.exceptions.ForbiddenException;
-import es.deusto.deustock.client.log.DeuLogger;
 import es.deusto.deustock.client.net.RESTVars;
 
 import es.deusto.deustock.client.simulation.investment.operations.OperationType;
+import org.apache.log4j.Logger;
 import org.apache.maven.surefire.shade.booter.org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 
+import javax.print.attribute.standard.Media;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
@@ -33,6 +34,8 @@ import java.util.*;
  */
 public class DeustockGateway {
 
+    private final Logger logger = Logger.getLogger(DeustockGateway.class);
+
     private WebTarget getHostWebTarget(){
         return ClientBuilder.newClient().target(RESTVars.restUrl);
     }
@@ -40,6 +43,13 @@ public class DeustockGateway {
     public Stock getStock(String acronym, String interval){
         Response  response = getHostWebTarget().path("stock")
                 .path("detail").path(acronym).path(interval).request(MediaType.APPLICATION_JSON).get();
+
+        return response.readEntity(Stock.class);
+    }
+
+    public Stock getSearchedStock(String acronym){
+        Response response = getHostWebTarget().path("stock")
+                .path("search").path(acronym).request(MediaType.APPLICATION_JSON).get();
 
         return response.readEntity(Stock.class);
     }
@@ -112,8 +122,7 @@ public class DeustockGateway {
         try {
             messageDigest = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            DeuLogger.logger.error("Could not encrypt password, algorithm is not available");
+            logger.error("Could not encrypt password, algorithm is not available");
         }
         byte[] data = new byte[0];
         data = pass.getBytes(StandardCharsets.UTF_8);

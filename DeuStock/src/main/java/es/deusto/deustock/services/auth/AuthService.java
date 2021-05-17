@@ -110,7 +110,7 @@ public class AuthService {
             }
             User user = userDAO.create(userDTO);
             if(user == null){
-                return;
+                throw new RegisterException("Error adding user");
             }
             
             userDAO.store(userDAO.create(userDTO));
