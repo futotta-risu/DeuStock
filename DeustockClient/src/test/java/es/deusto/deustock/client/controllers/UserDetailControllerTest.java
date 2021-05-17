@@ -7,7 +7,10 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
-import org.junit.BeforeClass;
+import javafx.scene.control.Label;
+import javafx.scene.text.Text;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Execution;
@@ -15,7 +18,7 @@ import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
-import org.testfx.framework.junit5.Start;
+import org.testfx.framework.junit5.ApplicationTest;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -25,25 +28,31 @@ import java.io.IOException;
 import java.util.HashMap;
 
 
+import static javafx.application.Platform.runLater;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
+import static org.testfx.api.FxToolkit.registerPrimaryStage;
 
 @Execution(ExecutionMode.SAME_THREAD)
 @ExtendWith(ApplicationExtension.class)
-public class UserDetailControllerTest{
+public class UserDetailControllerTest extends ApplicationTest {
 
     private Button editProfileButton;
     private Button resetWalletButton;
     private Button accountDeleteButton;
+
+    private Label usernameLabel;
+    private Text descriptionText;
 
     private UserDetailController controller;
 
     private MainController mockMainController;
     private DeustockGateway mockGateway;
 
-    @BeforeClass
+    @BeforeAll
     public static void setupSpec() throws Exception {
         if (Boolean.getBoolean("headless")) {
             System.setProperty("testfx.robot", "glass");
@@ -52,10 +61,11 @@ public class UserDetailControllerTest{
             System.setProperty("prism.text", "t2k");
             System.setProperty("java.awt.headless", "true");
         }
+        registerPrimaryStage();
     }
 
-    @Start
-    private void start(Stage stage) throws IOException {
+    @Override
+    public void start(Stage stage) throws IOException {
         // set up the scene
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/UserDetailView.fxml"));
         System.out.println(loader);
@@ -66,31 +76,46 @@ public class UserDetailControllerTest{
         editProfileButton = controller.editProfileButton;
         resetWalletButton = controller.resetWalletButton;
         accountDeleteButton = controller.accountDeleteButton;
+
+        usernameLabel = controller.usernameLabel;
+        descriptionText = controller.descriptionLabel;
         stage.setScene(scene);
         stage.show();
 
         this.mockGateway = mock(DeustockGateway.class);
+}
+
+    @BeforeEach
+    void setUp(){
+        this.mockGateway = mock(DeustockGateway.class);
         this.mockMainController = mock(MainController.class);
     }
-
 
     @Test
     void testOpenOnUser() {
         // Given
         User user = new User();
-        user.setUsername("Test2");
+        user.setUsername("Test");
         HashMap<String, Object> params = new HashMap<>();
         params.put("username", "Test");
 
         when(mockGateway.getUser(anyString())).thenReturn(user);
         controller.setDeustockGateway(mockGateway);
 
-        // When & Then
-        assertDoesNotThrow(() -> Platform.runLater(() -> controller.setParams(params)) );
+        // When
+        runLater( () -> {
+            controller.setParams(params);
+            //Then
+            assertEquals(usernameLabel.getText(), "Test");
+            assertEquals(descriptionText.getText(), "");
+        } );
+
+
+
     }
 
     @Test
-    void testOpenOnNonNullUser() {
+    void testOpenOnNullUser() {
         // Given
         HashMap<String, Object> params = new HashMap<>();
         params.put("username", "Test");
@@ -99,7 +124,7 @@ public class UserDetailControllerTest{
         controller.setDeustockGateway(mockGateway);
 
         // When & Then
-        assertDoesNotThrow(() -> Platform.runLater(() -> controller.setParams(params)) );
+        assertDoesNotThrow( () -> controller.setParams(params)) ;
     }
 
     @Test
@@ -117,7 +142,7 @@ public class UserDetailControllerTest{
 
         controller.setMainController(mockMainController);
         controller.setDeustockGateway(mockGateway);
-        Platform.runLater( () -> controller.setParams(params) );
+        runLater( () -> controller.setParams(params));;
 
         // When & Then
         assertDoesNotThrow( () -> controller.deleteUser() );
@@ -139,14 +164,14 @@ public class UserDetailControllerTest{
 
         controller.setMainController(mockMainController);
         controller.setDeustockGateway(mockGateway);
-        Platform.runLater( () -> controller.setParams(params) );
+        runLater( () -> controller.setParams(params));
 
         // When & Then
         assertDoesNotThrow( () -> controller.deleteUser() );
     }
 
     @Test
-    void testResetWalletSuccesfully() throws Exception {
+    void testResetWalletSuccesfully() throws ResetException {
         // Given
         HashMap<String, Object> params = new HashMap<>();
         params.put("username", "Test");
@@ -154,21 +179,21 @@ public class UserDetailControllerTest{
         //Por alguna razon con anyString no funciona
         when(mockGateway.resetHoldings(any())).thenReturn(true);
         controller.setDeustockGateway(mockGateway);
-        Platform.runLater( () -> controller.setParams(params) );
+        controller.setParams(params);
 
         // When & Then
         assertDoesNotThrow( () -> controller.resetAccountWallet() );
     }
 
     @Test
-    void testResetWalletNotSuccesfull() throws Exception {
+    void testResetWalletNotSuccesfull() throws ResetException {
         // Given
         HashMap<String, Object> params = new HashMap<>();
         params.put("username", "Test");
 
         when(mockGateway.resetHoldings(anyString())).thenReturn(false);
         controller.setDeustockGateway(mockGateway);
-        Platform.runLater( () -> controller.setParams(params) );
+        controller.setParams(params);
 
         // When & Then
         assertThrows( ResetException.class, () ->  controller.resetAccountWallet() );
@@ -183,8 +208,8 @@ public class UserDetailControllerTest{
 
         //When & Then
         assertDoesNotThrow( () -> robot.clickOn(editProfileButton) );
-        ;
         //Then
+
     }
 
     @Test
@@ -204,7 +229,7 @@ public class UserDetailControllerTest{
         controller.setDeustockGateway(mockGateway);
 
         //When & Then
-        //assertThrows(Exception.class, () -> robot.clickOn(editProfileButton));
+        //assertThrows(ResetException.class, () -> robot.clickOn(editProfileButton));
     }
 
 }
