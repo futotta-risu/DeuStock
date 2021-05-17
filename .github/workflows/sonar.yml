@@ -46,11 +46,6 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
 
-    - name: Create database schema
-      run: |
-        cd DeuStock
-        mvn compile datanucleus:enhance
-
     - name: Build and analyze 
       env:
         twitter_access_token : ${{secrets.TWITTERACCESSTOKEN}}
