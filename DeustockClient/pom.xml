@@ -229,7 +229,7 @@
             <artifactId>assertj-core</artifactId>
             <version>3.13.2</version>
             <scope>test</scope>
-
+        </dependency>
         <!-- ###################################################### -->
         <!--  					  DOCUMENTATION 		            -->
         <!-- ###################################################### -->
