@@ -2,11 +2,7 @@ package es.deusto.deustock.client.controllers;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 
 import es.deusto.deustock.client.Main;
@@ -15,16 +11,8 @@ import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 
 /**
  * Controller para ChangeUserDetail
@@ -83,8 +71,9 @@ public class ChangeUserDetailController implements DSGenericController{
 	}
 
 	public void setParams(HashMap<String, Object> params) {
-		if(params.containsKey("username"))
+		if(params.containsKey("username")) {
 			this.username = String.valueOf(params.get("username"));
+		}
 		initRoot();
 	}
 
@@ -107,6 +96,7 @@ public class ChangeUserDetailController implements DSGenericController{
 					.setDescription(aboutMe)
 					.setFullName(fullName)
 					.setUsername(username);
+
 			if(gateway.updateUser(user, MainController.getInstance().getToken())) {
 				mainController.loadAndChangePane( ViewPaths.UserDetailViewPath );
 			}else {
@@ -125,23 +115,20 @@ public class ChangeUserDetailController implements DSGenericController{
 	}
 
 	private void initRoot(){
-
-		if(this.username == null) return;
-
+		if(this.username == null){
+			return;
+		}
 		if(this.user == null || !this.user.getUsername().equals(this.username)) {
 			getUser();
 		}
-		this.usernameLabel.setText(user.getUsername());
 
+		this.usernameLabel.setText(user.getUsername());
 		//Comprobar que funciona la lista de countries
-		List<String> countries = new ArrayList<String>();
-		for (Locale locale : Locale.getAvailableLocales())
-		{
-			 countries.add(locale.getDisplayCountry());
-		}
+		String[] countries = Arrays.copyOfRange(Locale.getISOCountries(), 1, 50);
 
 		countryChoice.setValue("Seleciona un pais");
 		countryChoice.setTooltip(new Tooltip("Seleciona un pais"));
+
 		countryChoice.setItems(FXCollections.observableArrayList(countries));
 
 		birthDatePicker.setValue(java.time.LocalDate.now());
@@ -151,11 +138,9 @@ public class ChangeUserDetailController implements DSGenericController{
 						update();
 				}
 		);
-
 		cancelBtn.setOnMouseClicked(
-				MouseEvent -> mainController.getInstance().loadAndChangePane(ViewPaths.UserDetailViewPath)
+				MouseEvent -> mainController.loadAndChangePane(ViewPaths.UserDetailViewPath)
 		);
-
 	}
 
 }   

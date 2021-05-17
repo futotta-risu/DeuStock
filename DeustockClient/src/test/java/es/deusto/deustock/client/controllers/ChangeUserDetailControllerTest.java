@@ -23,6 +23,7 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.ApplicationTest;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -84,7 +85,6 @@ public class ChangeUserDetailControllerTest extends ApplicationTest {
 
         stage.setScene(scene);
         stage.show();
-
     }
 
     @BeforeEach
@@ -105,18 +105,17 @@ public class ChangeUserDetailControllerTest extends ApplicationTest {
         controller.setDeustockGateway(mockGateway);
 
         // When
-        Platform.runLater( () -> {
-            controller.setParams(params);
-            // Then
-            Assertions.assertThat(controller.usernameLabel).hasText("Test");
-            Assertions.assertThat(controller.aboutMeTxt).hasText("");
-        });
+        Platform.runLater(() -> controller.setParams(params) );
 
+        // Then
+        Assertions.assertThat(controller.usernameLabel).hasText("Test");
+        Assertions.assertThat(controller.aboutMeTxt).hasText("");
 
     }
 
     @Test
     void testUpdateUserDetails() {
+
         //Given
         User user = new User();
         user.setUsername("Test");
@@ -131,15 +130,13 @@ public class ChangeUserDetailControllerTest extends ApplicationTest {
 
         clickOn(fullNameTxt);
         type(KeyCode.T,KeyCode.E,KeyCode.S,KeyCode.T );
-
         clickOn(aboutMeTxt);
         type(KeyCode.T,KeyCode.E,KeyCode.S,KeyCode.T );
 
-        Platform.runLater( () -> {
-            controller.setParams(params);
-            // When & Then
-            assertDoesNotThrow(()-> clickOn(changeButton));
-        });
+        Platform.runLater(() -> controller.setParams(params) );
+        // When & Then
+        assertDoesNotThrow(()-> clickOn(changeButton));
+
 
     }
 
@@ -152,15 +149,16 @@ public class ChangeUserDetailControllerTest extends ApplicationTest {
         params.put("username", "Test");
 
         when(mockGateway.getUser(anyString())).thenReturn(user);
-        controller.setDeustockGateway(mockGateway);
         when(mockGateway.updateUser(any(), anyString())).thenReturn(true);
         doNothing().when(mockMainController).loadAndChangePane(anyString());
 
-        Platform.runLater( () -> {
-            controller.setParams(params);
-            // When & Then
-            assertDoesNotThrow(()-> clickOn(changeButton));
-        });
+        controller.setDeustockGateway(mockGateway);
+        controller.setMainController(mockMainController);
+
+        Platform.runLater(() -> controller.setParams(params) );
+
+        // When & Then
+        assertDoesNotThrow(()-> clickOn(changeButton));
 
 
 
