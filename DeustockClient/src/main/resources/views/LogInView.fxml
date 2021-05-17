@@ -51,6 +51,7 @@
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </PasswordField>
+                  <Label fx:id="loginErrorLabel" textFill="#ff2727" />
                   <HBox alignment="TOP_CENTER" fillHeight="false" spacing="10.0" VBox.vgrow="ALWAYS">
                      <children>
                         <Button fx:id="loginButton" mnemonicParsing="false" style="-fx-background-color: #00b2d9;" text="Log In" textFill="WHITE">

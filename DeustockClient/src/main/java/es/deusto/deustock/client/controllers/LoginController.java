@@ -3,16 +3,14 @@ package es.deusto.deustock.client.controllers;
 
 
 
+import es.deusto.deustock.client.controllers.exceptions.EmptyFieldsException;
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.gateways.exceptions.ForbiddenException;
 import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -33,78 +31,70 @@ public class LoginController {
 
 
 	@FXML
-	private VBox p1;
-
-	@FXML
-	private HBox p2;
-
-	@FXML
-    private TextField usernameTxt;
+    public TextField usernameTxt;
 	
 	@FXML
-    private TextField passwordTxt;
+	public TextField passwordTxt;
 
 	@FXML
-	private Button loginButton;
+	public Button loginButton;
 	
 	@FXML
-	private Button registerBtn;
+	public Button registerBtn;
 
 	@FXML
 	private Button pruebaButton;
 
-	public LoginController(){}
+	@FXML
+	public Label loginErrorLabel;
+
+	private MainController mainController;
+
+	private DeustockGateway gateway;
+
+	public LoginController(){
+		mainController = MainController.getInstance();
+		gateway = new DeustockGateway();
+	}
+
+	public void setMainController(MainController mainController){
+		this.mainController = mainController;
+	}
+
+	public void setGateway(DeustockGateway gateway){
+		this.gateway = gateway;
+	}
 
 	@FXML
 	private void initialize(){
-		Dialog<String> dialog = new Dialog<>();
-	    dialog.setTitle("ERROR");
-	    ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
-	    dialog.getDialogPane().getButtonTypes().add(type);
-
-		loginButton.setOnMouseClicked(
-				mouseEvent -> {
-					String token;
-					try{
-						token = login();
-					}catch (ForbiddenException e){
-						dialog.setContentText("DATOS ERRONEOS");
-						dialog.showAndWait();
-						return;
-					}
-
-					MainController.getInstance().initGenericStage(usernameTxt.getText(), token);
-					MainController.getInstance().loadAndChangePane(
-							ViewPaths.HomeViewPath
-					);
-				}
-		);
+		loginButton.setOnMouseClicked( mouseEvent -> login() );
 		
 		registerBtn.setOnMouseClicked(
-				mouseEvent -> MainController.getInstance().loadAndChangeScene(
-							ViewPaths.RegisterViewPath
-					)
-			);
+				mouseEvent -> mainController.loadAndChangeScene(ViewPaths.RegisterViewPath)
+		);
 	}
 
 	
 	@FXML
-	private String login() throws ForbiddenException {
-		Dialog<String> dialog = new Dialog<>();
-	    dialog.setTitle("ERROR");
-	    ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
-	    dialog.getDialogPane().getButtonTypes().add(type);
-	    
+	private void login() {
 		String username = usernameTxt.getText();
 		String password = passwordTxt.getText();
 
-		DeustockGateway dg = new DeustockGateway();
 		if(username.isEmpty() || password.isEmpty()) {
-			dialog.setContentText("CAMPOS NULOS");
-	        dialog.showAndWait();
+			loginErrorLabel.setText("Campos vacios");
+			return;
 		}
-			
-		return dg.login(username, password);
+		String token;
+
+		try{
+			token = gateway.login(username, password);
+		}catch (ForbiddenException e){
+			loginErrorLabel.setText("Datos Incorrectos");
+			return;
+		}
+
+		mainController.initGenericStage(usernameTxt.getText(), token);
+		mainController.loadAndChangePane(ViewPaths.HomeViewPath);
 	}
 
 
