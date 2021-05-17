@@ -1,38 +1,38 @@
 package es.deusto.deustock.client.controllers;
 
-import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.gateways.exceptions.ForbiddenException;
-import es.deusto.deustock.client.visual.ViewPaths;
-import javafx.application.Platform;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import org.junit.BeforeClass;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
-import org.testfx.api.FxAssert;
+
 import org.testfx.api.FxRobot;
 import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationExtension;
-import org.testfx.framework.junit5.Start;
-import org.testfx.matcher.control.LabeledMatchers;
+import org.testfx.framework.junit5.ApplicationTest;
+import org.testfx.util.WaitForAsyncUtils;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.concurrent.TimeoutException;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
+import static org.testfx.api.FxToolkit.registerPrimaryStage;
 
 
 @Execution(ExecutionMode.SAME_THREAD)
 @ExtendWith(ApplicationExtension.class)
-public class LoginControllerTest {
+public class LoginControllerTest extends ApplicationTest {
 
     private LoginController controller;
 
@@ -41,8 +41,8 @@ public class LoginControllerTest {
 
     private Button loginButton;
 
-    @BeforeClass
-    public static void setupSpec() throws Exception {
+    @BeforeAll
+    public static void setupSpec() throws TimeoutException {
         if (Boolean.getBoolean("headless")) {
             System.setProperty("testfx.robot", "glass");
             System.setProperty("testfx.headless", "true");
@@ -50,12 +50,14 @@ public class LoginControllerTest {
             System.setProperty("prism.text", "t2k");
             System.setProperty("java.awt.headless", "true");
         }
+        registerPrimaryStage();
     }
 
-    @Start
-    private void start(Stage stage) throws IOException {
+
+    @Override
+    public void start(Stage stage) throws IOException {
         // set up the scene
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(ViewPaths.LoginViewPath));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/LogInView.fxml"));
 
         Parent root = loader.load();
         controller = loader.getController();
@@ -66,6 +68,11 @@ public class LoginControllerTest {
 
         this.loginButton = controller.loginButton;
 
+
+    }
+
+    @BeforeEach
+    void setUp(){
         this.mockGateway = mock(DeustockGateway.class);
         this.mockMainController = mock(MainController.class);
     }
@@ -78,27 +85,28 @@ public class LoginControllerTest {
         controller.setGateway(mockGateway);
 
         // When
-        robot.clickOn(loginButton);
+        clickOn("#loginButton");
 
         // Then
         Assertions.assertThat(controller.loginErrorLabel).hasText("Campos vacios");
     }
 
     @Test
-    void testLoginButtonShowsInvalidDataOnForbiddenException(FxRobot robot) throws ForbiddenException {
+    void t(FxRobot robot) throws ForbiddenException {
         // Given
-
+        WaitForAsyncUtils.waitForFxEvents();
         when(mockGateway.login(anyString(), anyString())).thenThrow(new ForbiddenException("Exception"));
         controller.setGateway(mockGateway);
-
+        WaitForAsyncUtils.waitForFxEvents();
         controller.passwordTxt.setText("TestPass");
         controller.usernameTxt.setText("TestUsername");
-
+        WaitForAsyncUtils.waitForFxEvents();
         // When
         robot.clickOn(loginButton);
-
+        WaitForAsyncUtils.waitForFxEvents();
         // Then
         Assertions.assertThat(controller.loginErrorLabel).hasText("Datos Incorrectos");
+        WaitForAsyncUtils.waitForFxEvents();
     }
 
     @Test
