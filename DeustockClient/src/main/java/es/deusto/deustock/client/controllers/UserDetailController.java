@@ -6,7 +6,7 @@ import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.text.Text;
+import javafx.scene.control.TextArea;
 
 import java.util.HashMap;
 
@@ -22,13 +22,10 @@ public class UserDetailController implements DSGenericController{
     Label usernameLabel;
 
     @FXML
-    Label birthdayLabel;
+    Label countryLabel;
 
     @FXML
-    Label sexLabel;
-
-    @FXML
-    Text descriptionLabel;
+    TextArea descriptionLabel;
 
     @FXML
     Button accountDeleteButton;
@@ -85,7 +82,7 @@ public class UserDetailController implements DSGenericController{
         }
 
         this.usernameLabel.setText(user.getUsername());
-        //this.sexLabel.setText(String.valueOf(user.isSex()));
+        this.countryLabel.setText(user.getCountry());
         this.descriptionLabel.setText(user.getDescription());
 
         this.accountDeleteButton.setOnMouseClicked( mouseEvent -> deleteUser() );
