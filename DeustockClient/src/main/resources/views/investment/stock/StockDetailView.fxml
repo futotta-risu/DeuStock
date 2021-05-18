@@ -1,44 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="424.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.stocks.StockDetailController">
+<VBox prefHeight="925.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.stocks.StockDetailController">
   <children>
+      <HBox prefHeight="136.0" prefWidth="1920.0" style="-fx-background-color: #00b2d9;">
+         <children>
+            <BorderPane prefHeight="136.0" prefWidth="410.0">
+               <bottom>
+                  <Label prefHeight="0.0" prefWidth="119.0" text="Analyze it!" textFill="WHITE" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Calibri" size="26.0" />
+                     </font>
+                     <BorderPane.margin>
+                        <Insets bottom="10.0" />
+                     </BorderPane.margin>
+                  </Label>
+               </bottom>
+               <center>
+                  <Label fx:id="deustockLabel" prefHeight="71.0" prefWidth="242.0" text="DeuStock" textFill="WHITE" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Calibri Bold" size="61.0" />
+                     </font>
+                     <BorderPane.margin>
+                        <Insets top="20.0" />
+                     </BorderPane.margin>
+                  </Label>
+               </center>
+            </BorderPane>
+            <BorderPane prefHeight="136.0" prefWidth="1557.0">
+               <center>
+                  <Label alignment="CENTER" prefHeight="69.0" prefWidth="1545.0" text="Detalle del Stock" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Calibri Bold" size="60.0" />
+                     </font>
+                     <BorderPane.margin>
+                        <Insets right="410.0" />
+                     </BorderPane.margin>
+                  </Label>
+               </center>
+            </BorderPane>
+         </children>
+      </HBox>
     <AnchorPane fx:id="infoTable" maxHeight="-1.0" maxWidth="-1.0" prefHeight="416.0" prefWidth="640.0" VBox.vgrow="ALWAYS">
          <children>
-            <Label fx:id="acronymLabel" layoutX="26.0" layoutY="28.0" text="STOCK">
+            <Label fx:id="acronymLabel" layoutX="27.0" layoutY="14.0" prefWidth="234.0" text="STOCK">
                <font>
-                  <Font name="System Bold" size="38.0" />
+                  <Font name="System Bold" size="56.0" />
                </font>
             </Label>
-            <Button fx:id="downloadButton" layoutX="463.0" layoutY="517.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="141.0" text="Descargar Reporte" />
-            <Label fx:id="priceLabel" alignment="CENTER_RIGHT" layoutX="650.0" layoutY="33.0" prefHeight="37.0" prefWidth="167.0" text="Precio">
+            <Button fx:id="downloadButton" layoutX="890.0" layoutY="711.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="141.0" text="Descargar Reporte" />
+            <Label fx:id="priceLabel" alignment="CENTER_RIGHT" layoutX="1351.0" layoutY="14.0" prefHeight="83.0" prefWidth="508.0" text="Precio">
                <font>
-                  <Font size="30.0" />
+                  <Font size="56.0" />
                </font>
             </Label>
-            <Label fx:id="mediaLabel" layoutX="36.0" layoutY="100.0" prefHeight="23.0" prefWidth="566.0" text="Media">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="SDLabel" layoutX="36.0" layoutY="132.0" prefHeight="23.0" prefWidth="566.0" text="SD">
+            <Label fx:id="mediaLabel" layoutX="64.0" layoutY="128.0" prefHeight="23.0" prefWidth="566.0" text="Media">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Line endX="680.0" layoutX="136.0" layoutY="75.0" startX="-110.0" />
-            <Button fx:id="backButton" layoutX="249.0" layoutY="517.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="141.0" text="Volver" />
-            <LineChart fx:id="lineChart" layoutX="36.0" layoutY="168.0" prefHeight="337.0" prefWidth="768.0">
+            <Label fx:id="SDLabel" layoutX="64.0" layoutY="165.0" prefHeight="23.0" prefWidth="566.0" text="SD">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Line endX="1721.0" layoutX="137.0" layoutY="100.0" startX="-110.0" />
+            <Button fx:id="backButton" layoutX="532.0" layoutY="711.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="141.0" text="Volver" />
+            <LineChart fx:id="lineChart" layoutX="27.0" layoutY="214.0" prefHeight="447.0" prefWidth="1832.0">
               <xAxis>
                 <CategoryAxis side="BOTTOM" fx:id="xAxis" />
               </xAxis>
@@ -46,7 +86,7 @@
                 <NumberAxis fx:id="yAxis" side="LEFT" />
               </yAxis>
             </LineChart>
-            <Button fx:id="buyButton" layoutX="650.0" layoutY="517.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="141.0" text="Buy" />
+            <Button fx:id="buyButton" layoutX="1281.0" layoutY="711.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="141.0" text="Buy" />
          </children>
     </AnchorPane>
   </children>
