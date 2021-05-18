@@ -21,6 +21,7 @@ import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.ApplicationTest;
+import org.testfx.util.WaitForAsyncUtils;
 
 import java.io.IOException;
 import java.util.Date;
@@ -68,7 +69,7 @@ public class ChangeUserDetailControllerTest extends ApplicationTest {
     public void start(Stage stage) throws IOException {
         // set up the scene
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/ChangeUserDetailView.fxml"));
-        System.out.println(loader);
+
         Parent root = loader.load();
         controller = loader.getController();
         Scene scene = new Scene(root);
@@ -105,11 +106,13 @@ public class ChangeUserDetailControllerTest extends ApplicationTest {
         controller.setDeustockGateway(mockGateway);
 
         // When
-        Platform.runLater(() -> controller.setParams(params) );
-
+        Platform.runLater( () -> {
+            controller.setParams(params);
+            Assertions.assertThat(controller.usernameLabel).hasText("Test");
+            Assertions.assertThat(controller.aboutMeTxt).hasText("");
+        });
         // Then
-        Assertions.assertThat(controller.usernameLabel).hasText("Test");
-        Assertions.assertThat(controller.aboutMeTxt).hasText("");
+
 
     }
 
@@ -128,10 +131,8 @@ public class ChangeUserDetailControllerTest extends ApplicationTest {
         when(mockGateway.updateUser(any(), anyString())).thenReturn(true);
         doNothing().when(mockMainController).loadAndChangePane(anyString());
 
-        clickOn(fullNameTxt);
-        type(KeyCode.T,KeyCode.E,KeyCode.S,KeyCode.T );
-        clickOn(aboutMeTxt);
-        type(KeyCode.T,KeyCode.E,KeyCode.S,KeyCode.T );
+        fullNameTxt.setText("test");
+        fullNameTxt.setText("test");
 
         Platform.runLater(() -> controller.setParams(params) );
         // When & Then
