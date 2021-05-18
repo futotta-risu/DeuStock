@@ -5,10 +5,7 @@ import es.deusto.deustock.client.data.Stock;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.visual.ViewPaths;
 import es.deusto.deustock.client.visual.stocks.list.StockInfoLine;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -17,35 +14,37 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
-import java.text.DecimalFormat;
 import java.util.HashMap;
-import java.util.List;
 
 
 /**
  * StockListView controller
  *
- * @author Erik B. Terres
+ * @author Erik B. Terres & Aritz Zugazaga
  */
 public class StockListViewController {
 
-
+	private DeustockGateway gateway;
+	
     @FXML 
-    private TextField searchStockText;
+    TextField searchStockText;
     
     @FXML
-    private Button searchStockButton;
+    Button searchStockButton;
 
     @FXML
-    private Button refreshButton;
+    Button refreshButton;
     
     @FXML
-    private VBox stockList;
+    VBox stockList;
 
-    private HashMap<String, StockInfoLine> stockLines;
+    HashMap<String, StockInfoLine> stockLines;
 
-    public StockListViewController(){}
+    public StockListViewController(){
+    	this.gateway = new DeustockGateway();
+    }
 
+    public void setDeustockGateway(DeustockGateway gateway){ this.gateway = gateway; }
 
     @FXML
     private void initialize(){
@@ -80,7 +79,6 @@ public class StockListViewController {
     
     public void refreshStocks(){
         emptyStockList();
-        DeustockGateway gateway = new DeustockGateway();
 
         for(Stock stock : gateway.getStockList("big")) {
             if (!stockLines.containsKey(stock.getAcronym())) {
