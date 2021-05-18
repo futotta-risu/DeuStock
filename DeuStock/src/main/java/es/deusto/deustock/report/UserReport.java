@@ -2,28 +2,26 @@ package es.deusto.deustock.report;
 
 import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.dto.stocks.StockHistoryDTO;
-import es.deusto.deustock.resources.investment.wallet.BalanceResource;
-import es.deusto.deustock.resources.investment.wallet.HoldingsListResources;
+import es.deusto.deustock.services.investment.wallet.WalletService;
+import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.util.List;
 
 public class UserReport extends Report {
 
     private final User user;
-    private final DecimalFormat decimalFormat =  new DecimalFormat("#.##");
+    private WalletService walletService;
     private static final Logger logger = LoggerFactory.getLogger(UserReport.class);
 
     public UserReport(User user){
         super();
         this.user = user;
+        this.walletService = new WalletService();
     }
     @Override
     protected void setMetadata() {
@@ -36,54 +34,42 @@ public class UserReport extends Report {
     }
 
     @Override
-    protected void setContent() throws IOException, SQLException {
-        System.out.println("0.0.0");
+    protected void setContent() throws IOException, SQLException, WalletException {
         PDPage page = createPage();
-        System.out.println("0.0.1");
         addActualBalance();
-        System.out.println("0.0.2");
-        addHoldingsList();
-        System.out.println("0.0.3");
+        page = addHoldingsList(page);
         savePage(page);
-        System.out.println("0.0.4");
-
     }
 
-    private void addActualBalance() throws SQLException, IOException {
-        BalanceResource balanceResource = new BalanceResource();
-        Response response = balanceResource.getBalance(user.getUsername());
-
-        String balance = response.getEntity().toString();
-        addSimpleTextLine("Tu balance actual es de " + balance + " €");
-
+    private void addActualBalance() throws IOException, WalletException {
+        addSimpleTextLine("Tu balance actual es de " + walletService.getBalance(user.getUsername()) + " €");
     }
 
-    private void addHoldingsList() throws IOException {
-        System.out.println("0.0.0.0");
-        HoldingsListResources holdingsListResource = new HoldingsListResources();
-        System.out.println("0.0.0.1");
-        Response response = holdingsListResource.getHoldings(user.getUsername());
-        System.out.println("0.0.0.2");
+    private PDPage addHoldingsList(PDPage page) throws IOException, WalletException {
 
-        List<StockHistoryDTO> holdingsList = response.readEntity(new GenericType<>(){});
-        System.out.println("0.0.0.3");
+        PDPage actualPage = page;
+        List<StockHistoryDTO> holdingsList = walletService.getHoldings(user.getUsername());
 
-        System.out.println("Tienes un total de " + holdingsList.size());
         addSimpleTextLine("Tienes un total de " + holdingsList.size() + " inversiones");
+        int counter = 0;
 
         if(!holdingsList.isEmpty()){
-            System.out.println("0.0.0.41");
             for(StockHistoryDTO sh: holdingsList){
-                addSimpleTextLine(sh.getSymbol() + "x" + sh.getAmount() + " / Precio Compra = " + sh.getOpenPrice() + " / Precio Actual = "+ sh.getActualPrice());
+                counter++;
+                if(counter % 25 == 0){
+                    savePage(actualPage);
+                    PDPage newPage = createPage();
+                    actualPage = newPage;
+                }
+                double roi = (sh.getActualPrice() - sh.getOpenPrice()) * sh.getAmount();
+                addSimpleTextLine(sh.getSymbol() + "  x " + sh.getAmount() + "  /  Precio Compra = " + sh.getOpenPrice() + "  /  Precio Actual = "+ sh.getActualPrice()
+                                   + "  /  ROI = " + roi);
             }
-            System.out.println("0.0.0.51");
         }else{
-            System.out.println("Ninguno");
             addSimpleTextLine("No tienes ningun stock en posesion");
-            System.out.println("0.0.0.42");
         }
 
-
+        return actualPage;
     }
 
 }

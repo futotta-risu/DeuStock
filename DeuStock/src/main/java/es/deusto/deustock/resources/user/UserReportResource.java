@@ -3,6 +3,7 @@ package es.deusto.deustock.resources.user;
 import es.deusto.deustock.data.User;
 import es.deusto.deustock.data.dto.UserDTO;
 import es.deusto.deustock.report.UserReport;
+import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
 import es.deusto.deustock.services.user.UserService;
 import es.deusto.deustock.services.user.exceptions.UserException;
 
@@ -20,7 +21,7 @@ public class UserReportResource {
     @GET
     @Produces("application/pdf")
     @Path("/{username}")
-    public Response createUserReport(@PathParam("username") String username) throws IOException, SQLException {
+    public Response createUserReport(@PathParam("username") String username) throws IOException, SQLException, WalletException {
 
         UserDTO user;
         try {
@@ -34,12 +35,9 @@ public class UserReportResource {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
-        System.out.println("1");
         var report = new UserReport(new User(user.getUsername(), user.getPassword()));
-        System.out.println("2");
 
         var reportFile = report.generate();
-        System.out.println("3");
 
         Response.ResponseBuilder response = Response.ok(reportFile);
         response.header("Content-Disposition","attachment; filename=" + username + "_report.pdf");

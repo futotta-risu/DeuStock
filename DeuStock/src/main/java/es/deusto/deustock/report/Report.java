@@ -1,5 +1,6 @@
 package es.deusto.deustock.report;
 
+import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -81,25 +82,19 @@ public abstract class Report {
 	/**
 	 * Function to set the content of the report.
 	 */
-	protected abstract void setContent() throws IOException, SQLException;
+	protected abstract void setContent() throws IOException, SQLException, WalletException;
 
 	/**
 	 * Generates the PDF based on the template fucntions, saves it and returns the File.
 	 *
 	 * @return File linked to the saved report.
 	 */
-	public File generate() throws IOException, SQLException {
-		System.out.println("0.0");
+	public File generate() throws IOException, SQLException, WalletException {
 		initReport();
-		System.out.println("0.1");
 		setMetadata();
-		System.out.println("0.2");
 		setFrontPage();
-		System.out.println("0.3");
 		setTemplateData();
-		System.out.println("0.4");
 		setContent();
-		System.out.println("0.5");
 
 		return save();
 	}
@@ -149,7 +144,6 @@ public abstract class Report {
 	 */
 	protected void addTextAtOfssets( int x, int y, String text) throws IOException {
 		this.contentStream.beginText();
-
 		this.contentStream.newLineAtOffset(x, y);
 		this.contentStream.showText(text);
 		this.contentStream.endText();
