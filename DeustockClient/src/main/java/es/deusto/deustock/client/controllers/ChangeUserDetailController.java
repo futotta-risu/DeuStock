@@ -94,8 +94,8 @@ public class ChangeUserDetailController implements DSGenericController{
 						.setFullName(fullName)
 						.setUsername(username);
 				if(dg.updateUser(user, MainController.getInstance().getToken())) {
-					MainController.getInstance().loadAndChangePane(
-							ViewPaths.UserDetailViewPath
+					MainController.getInstance().loadAndChangePaneWithParams(
+							ViewPaths.UserDetailViewPath, new HashMap<>() {{ put("username", username); }}
 					);
 				}else {
 					dialog.setContentText("NO SE HA POIDO REALIZAR EL CAMBIO");
@@ -120,7 +120,7 @@ public class ChangeUserDetailController implements DSGenericController{
 			if(this.user == null || !this.user.getUsername().equals(this.username)) {
 				getUser();
 			}
-			//this.usernameLabel.setText(user.getUsername());
+			this.usernameLabel.setText(user.getUsername());
 				
 			//Comprobar que funciona la lista de countries
 			List<String> countries = new ArrayList<String>();
@@ -142,9 +142,15 @@ public class ChangeUserDetailController implements DSGenericController{
 			);
 					
 			cancelBtn.setOnMouseClicked(
-					MouseEvent -> MainController.getInstance().loadAndChangePane(ViewPaths.UserDetailViewPath)					
+					mouseEvent -> {
+						MainController.getInstance().loadAndChangePaneWithParams(
+								ViewPaths.UserDetailViewPath, new HashMap<>() {{
+									put("username", username);
+								}}
+						);
+					}
 			);
-				
+
 		}
 
 }   

@@ -4,11 +4,10 @@ import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 /**
  * @author Erik B. Terres
@@ -85,7 +84,22 @@ public class UserDetailController implements DSGenericController{
         this.countryLabel.setText(user.getCountry());
         this.descriptionLabel.setText(user.getDescription());
 
-        this.accountDeleteButton.setOnMouseClicked( mouseEvent -> deleteUser() );
+        this.accountDeleteButton.setOnMouseClicked(
+                mouseEvent -> {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("¿Estas seguro...?");
+                    alert.setHeaderText("Se eliminara tu cuenta y todos los datos relacionados con la misma");
+                    alert.setContentText("¿Estas seguro de que quieres eliminar tu cuenta?");
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (((Optional<?>) result).get() == ButtonType.OK){
+                        deleteUser();
+                    } else {
+                        alert.close();
+                    }
+                }
+        );
+
         this.editProfileButton.setOnMouseClicked(
         		moseEvent ->
                     MainController.getInstance().loadAndChangePaneWithParams(
@@ -95,7 +109,20 @@ public class UserDetailController implements DSGenericController{
         );
 
     	this.resetWalletButton.setOnMouseClicked(
-    			mouseEvent -> resetAccountWallet()
+    			mouseEvent -> {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("¿Estas seguro...?");
+                    alert.setHeaderText("Perderas todas tus inversiones y los historicos relacionados a tu cuenta, " +
+                                        "volveras a empezar de nuevo tu simulacion con 5000€");
+                    alert.setContentText("¿Estas seguro de que quieres reiniciar tu cartera?");
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (((Optional<?>) result).get() == ButtonType.OK){
+                        resetAccountWallet();
+                    } else {
+                        alert.close();
+                    }
+                }
     	);
     	
     }
