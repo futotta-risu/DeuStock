@@ -123,7 +123,7 @@ public class ChangeUserDetailController implements DSGenericController{
 		}
 
 		this.usernameLabel.setText(user.getUsername());
-		//Comprobar que funciona la lista de countries
+
 		String[] countries = Arrays.copyOfRange(Locale.getISOCountries(), 1, 50);
 
 		countryChoice.setValue("Seleciona un pais");
@@ -133,11 +133,7 @@ public class ChangeUserDetailController implements DSGenericController{
 
 		birthDatePicker.setValue(java.time.LocalDate.now());
 
-		changeBtn.setOnMouseClicked(
-				mouseEvent -> {
-						update();
-				}
-		);
+		changeBtn.setOnMouseClicked( mouseEvent -> 	update() );
 		cancelBtn.setOnMouseClicked(
 				MouseEvent -> mainController.loadAndChangePane(ViewPaths.UserDetailViewPath)
 		);

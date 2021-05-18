@@ -92,21 +92,19 @@ public class LoginControllerTest extends ApplicationTest {
     }
 
     @Test
-    void t(FxRobot robot) throws ForbiddenException {
+    void testRegisterWithIncorrectDataSetsIncorrectDataLabel(FxRobot robot) throws ForbiddenException {
         // Given
-        WaitForAsyncUtils.waitForFxEvents();
         when(mockGateway.login(anyString(), anyString())).thenThrow(new ForbiddenException("Exception"));
         controller.setGateway(mockGateway);
-        WaitForAsyncUtils.waitForFxEvents();
+
         controller.passwordTxt.setText("TestPass");
         controller.usernameTxt.setText("TestUsername");
-        WaitForAsyncUtils.waitForFxEvents();
+
         // When
         robot.clickOn(loginButton);
-        WaitForAsyncUtils.waitForFxEvents();
         // Then
         Assertions.assertThat(controller.loginErrorLabel).hasText("Datos Incorrectos");
-        WaitForAsyncUtils.waitForFxEvents();
+
     }
 
     @Test

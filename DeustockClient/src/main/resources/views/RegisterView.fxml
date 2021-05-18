@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.paint.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -15,11 +9,12 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.RegisterController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.RegisterController">
    <children>
       <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
          <children>
@@ -40,17 +35,18 @@
                   <TextArea fx:id="aboutMeTxt" layoutX="31.0" layoutY="183.0" prefHeight="49.0" prefWidth="375.0" promptText="Sobre ti" />
                   <PasswordField fx:id="passwordTxt" layoutX="238.0" layoutY="97.0" prefHeight="25.0" prefWidth="161.0" promptText="Password" />
                   <DatePicker fx:id="birthDatePicker" layoutX="238.0" layoutY="136.0" prefHeight="27.0" prefWidth="161.0" promptText="Fecha nacimiento" />
-                  <ChoiceBox fx:id="countryChoice" layoutX="30.0" layoutY="250.0" prefWidth="150.0" style="-fx-background-color: #00b2d9;" />
-                  <Button fx:id="registerBtn" layoutX="211.0" layoutY="246.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" style="-fx-background-color: #00b2d9;" text="Registrar" textFill="WHITE">
+                  <ChoiceBox fx:id="countryChoice" layoutX="30.0" layoutY="284.0" prefWidth="150.0" style="-fx-background-color: #00b2d9;" />
+                  <Button fx:id="registerBtn" layoutX="220.0" layoutY="280.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" style="-fx-background-color: #00b2d9;" text="Registrar" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="cancelBtn" cancelButton="true" layoutX="351.0" layoutY="246.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" style="-fx-background-color: #00b2d9;" text="Cancelar" textFill="WHITE">
+                  <Button fx:id="cancelBtn" cancelButton="true" layoutX="329.0" layoutY="280.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" style="-fx-background-color: #00b2d9;" text="Cancelar" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="14.0" />
                      </font>
                   </Button>
+                  <Label fx:id="registerErrorLabel" layoutX="30.0" layoutY="246.0" prefHeight="17.0" prefWidth="375.0" textFill="#ff0606" />
                </children>
             </Pane>
          </children>
