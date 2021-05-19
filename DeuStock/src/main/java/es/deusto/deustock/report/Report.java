@@ -1,6 +1,5 @@
 package es.deusto.deustock.report;
 
-import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -8,7 +7,6 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Calendar;
 
 import static org.apache.pdfbox.pdmodel.font.PDType1Font.TIMES_ROMAN;
@@ -82,14 +80,14 @@ public abstract class Report {
 	/**
 	 * Function to set the content of the report.
 	 */
-	protected abstract void setContent() throws IOException, SQLException, WalletException;
+	protected abstract void setContent() throws IOException;
 
 	/**
 	 * Generates the PDF based on the template fucntions, saves it and returns the File.
 	 *
 	 * @return File linked to the saved report.
 	 */
-	public File generate() throws IOException, SQLException, WalletException {
+	public File generate() throws IOException {
 		initReport();
 		setMetadata();
 		setFrontPage();

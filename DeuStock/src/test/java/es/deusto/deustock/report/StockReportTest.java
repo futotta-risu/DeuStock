@@ -2,7 +2,6 @@ package es.deusto.deustock.report;
 
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.dataminer.features.SentimentExtractor;
-import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -11,7 +10,6 @@ import yahoofinance.histquotes.HistoricalQuote;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -26,7 +24,7 @@ class StockReportTest {
 
     @Test
     @DisplayName("Test generating a report.")
-    void testGenerateReport() throws IOException, InterruptedException, SQLException, WalletException {
+    void testGenerateReport() throws IOException, InterruptedException {
         // Given
         DeuStock stock = new DeuStock("BB").setPrice(22.0);
 
@@ -58,7 +56,7 @@ class StockReportTest {
 
     @Test
     @DisplayName("Test generating a report.")
-    void testGenerateReportDoesNotThrowOnInterruptedThread() throws IOException, InterruptedException, SQLException, WalletException {
+    void testGenerateReportDoesNotThrowOnInterruptedThread() throws IOException, InterruptedException {
         // Given
         DeuStock stock = new DeuStock("BB").setPrice(22.0);
 

@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 public class UserReport extends Report {
@@ -34,10 +33,14 @@ public class UserReport extends Report {
     }
 
     @Override
-    protected void setContent() throws IOException, SQLException, WalletException {
+    protected void setContent() throws IOException {
         PDPage page = createPage();
-        addActualBalance();
-        page = addHoldingsList(page);
+        try {
+            addActualBalance();
+            page = addHoldingsList(page);
+        } catch (WalletException e) {
+            e.printStackTrace();
+        }
         savePage(page);
     }
 
