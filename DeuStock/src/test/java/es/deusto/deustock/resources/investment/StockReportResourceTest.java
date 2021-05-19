@@ -4,6 +4,7 @@ import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
 import es.deusto.deustock.dataminer.gateway.stocks.gateways.YahooFinanceGateway;
+import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -40,7 +41,7 @@ class StockReportResourceTest {
     
     @Test
     @DisplayName("Test create a simple pdf with chart returns 200")
-    void testCreateSimplePdfWithChartReturns200() throws IOException, StockNotFoundException, SQLException {
+    void testCreateSimplePdfWithChartReturns200() throws IOException, StockNotFoundException, SQLException, WalletException {
     	//Given
     	DeuStock stock = new DeuStock("Test");
     	List<HistoricalQuote> quotes = new LinkedList<>();
@@ -90,7 +91,7 @@ class StockReportResourceTest {
     
     @Test
     @DisplayName("Test create report returns 401 on non existent stock")
-    void testCreateReportReturns401OnNonExistentStock() throws IOException, StockNotFoundException, SQLException {
+    void testCreateReportReturns401OnNonExistentStock() throws IOException, StockNotFoundException, SQLException, WalletException {
         //Given
         when(mockStockGateway.getStockData(any())).thenReturn(null);
 
