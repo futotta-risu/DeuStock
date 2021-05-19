@@ -13,7 +13,6 @@ import java.net.URI;
 
 /**
  * Main class.
- *
  */
 public class Main {
 

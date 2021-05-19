@@ -6,6 +6,12 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 /**
+ *
+ * Singleton Wallet class DAO. Contains all the methods to handle the
+ * database process for the Wallet class.
+ *
+ * {@link WalletDAO#getInstance()}
+ *
  * @author Erik B. Terres
  */
 public class WalletDAO {

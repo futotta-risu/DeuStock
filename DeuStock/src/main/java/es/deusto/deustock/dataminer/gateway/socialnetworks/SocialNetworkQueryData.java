@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
+ * Query for the {@link es.deusto.deustock.data.SocialNetworkMessage} retrieval
  *
  * @author Erik B. Terres
  */

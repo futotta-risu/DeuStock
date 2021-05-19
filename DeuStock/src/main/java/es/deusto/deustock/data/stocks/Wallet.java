@@ -8,6 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+
+/**
+ * Wallet of a user.
+ * Contains the balance and history of operations of a user.
+ *
+ * @author Erik B. Terres
+ */
 @PersistenceCapable(detachable = "true")
 public class Wallet  implements Serializable {
 

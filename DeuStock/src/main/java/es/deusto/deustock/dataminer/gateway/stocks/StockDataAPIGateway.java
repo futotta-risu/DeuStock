@@ -14,9 +14,10 @@ import java.util.List;
 public interface StockDataAPIGateway {
 
 	/**
-	 * Gets the Stock information from the API, converts it to a DeuStock class and returns it.
+	 * Gets the {@link DeuStock} information from the API, converts it to a DeuStock class and returns it.
 	 *
-	 * @param queryData Search Query Data
+	 * @param queryData {@link StockQueryData} query data
+	 *
 	 * @return Stock queried
 	 *
 	 * @throws StockNotFoundException If the acronym was not found
@@ -29,6 +30,7 @@ public interface StockDataAPIGateway {
 	 * The stocks not found will be skipped
 	 *
 	 * @param stockNames Names of the stocks
+	 *
 	 * @return Stock list queried
 	 */
 	HashMap<String, DeuStock> getStocksData(List<String> stockNames);

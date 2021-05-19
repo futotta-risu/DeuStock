@@ -18,6 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Singleton Reddit {@link SocialNetworkAPIGateway} to get {@link SocialNetworkMessage} from Reddit.
+ *
+ * {@link RedditGateway#getInstance()}
+ *
  * @author landersanmi
  */
 public class RedditGateway  implements SocialNetworkAPIGateway {
@@ -34,9 +38,9 @@ public class RedditGateway  implements SocialNetworkAPIGateway {
         if(instance == null){
             instance = new RedditGateway();
         }
-
         return instance;
     }
+
     private RedditGateway(){
         JSONObject config;
         try {

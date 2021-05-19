@@ -19,7 +19,9 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Twitter gateway.
+ * Singleton Twitter {@link SocialNetworkAPIGateway} to get {@link SocialNetworkMessage} from Twitter.
+ *
+ * {@link TwitterGateway#getInstance()}
  *
  * @author Erik B. Terres
  */

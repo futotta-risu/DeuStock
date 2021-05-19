@@ -1,6 +1,5 @@
 package es.deusto.deustock.dao;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 

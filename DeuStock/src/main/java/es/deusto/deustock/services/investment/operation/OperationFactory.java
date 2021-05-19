@@ -2,6 +2,13 @@ package es.deusto.deustock.services.investment.operation;
 
 import es.deusto.deustock.services.investment.operation.type.*;
 
+/**
+ * Singleton Factory for {@link Operation}.
+ *
+ * {@link OperationFactory#getInstance()}
+ *
+ * @author Erik B. Terres
+ */
 public class OperationFactory {
 
     private static OperationFactory instance;

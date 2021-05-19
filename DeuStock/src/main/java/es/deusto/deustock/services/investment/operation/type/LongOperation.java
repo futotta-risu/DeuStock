@@ -1,5 +1,8 @@
 package es.deusto.deustock.services.investment.operation.type;
 
+/**
+ * @author Erik B. Terres
+ */
 public class LongOperation extends Operation  {
 
 	public LongOperation(double stockOpenPrice, double amount){

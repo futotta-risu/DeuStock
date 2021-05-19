@@ -1,16 +1,13 @@
 package es.deusto.deustock.resources.auth;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
 
 import es.deusto.deustock.data.dto.UserDTO;
 import es.deusto.deustock.services.auth.AuthService;
 import es.deusto.deustock.services.auth.exceptions.AuthException;
 import es.deusto.deustock.services.auth.exceptions.LoginException;
-import org.apache.log4j.Logger;
 import org.apache.log4j.Logger;
 
 
