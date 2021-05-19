@@ -33,10 +33,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.testfx.framework.junit5.ApplicationTest;
 
 @Execution(ExecutionMode.SAME_THREAD)
 @ExtendWith(ApplicationExtension.class)
-public class StockListViewControllerTest {
+public class StockListViewControllerTest extends ApplicationTest {
 
 	private StockListViewController controller;
 	
@@ -59,7 +60,8 @@ public class StockListViewControllerTest {
         }
         registerPrimaryStage();
     }
-    
+
+    @Override
     public void start(Stage stage) throws IOException {
         // set up the scene
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/StockListView.fxml"));
@@ -102,7 +104,27 @@ public class StockListViewControllerTest {
         
         //Then
         
-        Assertions.assertThat(stockList).hasChild("AMZ");
+        Assertions.assertThat(stockList.getChildren().get(1)).hasExactlyChildren(1, null);
+    }
+
+    @Test
+    void testSearchStockNoFound(FxRobot robot) throws ForbiddenException {
+        //Given
+        Stock amz = new Stock();
+        amz.setAcronym("AMZ");
+
+        when(mockGateway.getSearchedStock(anyString())).thenReturn(amz);
+        controller.setDeustockGateway(mockGateway);
+        controller.emptyStockList();
+
+        //When
+
+        searchStockText.setText("BTC");
+        robot.clickOn(searchStockButton);
+
+        //Then
+
+        Assertions.assertThat(stockLines.get(0)).hasExactlyChildren(1, null);
     }
 
 }
