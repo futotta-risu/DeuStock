@@ -11,10 +11,8 @@ import es.deusto.deustock.services.investment.operation.type.OperationType;
 import es.deusto.deustock.services.investment.wallet.exceptions.NotEnoughMoneyException;
 import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
 import es.deusto.deustock.services.investment.wallet.exceptions.WalletNotFoundException;
-
 import org.apache.log4j.Logger;
 
-import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -119,25 +117,15 @@ public class WalletService {
 
 
     public void updateMoney(String username, double amount) throws WalletException {
-        System.out.println("0.0.0.1");
         var wallet = getWallet(username);
-        System.out.println("0.0.0.2");
 
         if(!wallet.hasEnoughMoney(amount)){
-            System.out.println("0.0.0.3");
-
             logger.error("Not enough money on wallet.");
-            System.out.println("0.0.0.4");
-
             throw new NotEnoughMoneyException("Not enough money to open operation");
         }
-        System.out.println("0.0.0.6");
 
         wallet.changeMoney(-amount);
-        System.out.println("0.0.0.7");
-
         updateWallet(wallet);
-        System.out.println("0.0.0.8");
 
     }
 
