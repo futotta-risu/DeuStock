@@ -111,7 +111,7 @@ public class StockListViewController {
         }
     }
 
-    public void emptyStockList(){
+    private void emptyStockList(){
         stockLines.clear();
         stockList.getChildren().removeIf(
                 node -> (

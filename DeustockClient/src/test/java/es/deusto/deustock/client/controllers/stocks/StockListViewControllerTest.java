@@ -103,8 +103,8 @@ public class StockListViewControllerTest extends ApplicationTest {
         robot.clickOn(searchStockButton);
         
         //Then
-        
-        Assertions.assertThat(stockList.getChildren().get(1)).hasExactlyChildren(1, null);
+
+        assertEquals(stockList.getChildren().get(1).toString(),  "AMZ");
     }
 
     @Test
@@ -115,7 +115,6 @@ public class StockListViewControllerTest extends ApplicationTest {
 
         when(mockGateway.getSearchedStock(anyString())).thenReturn(amz);
         controller.setDeustockGateway(mockGateway);
-        controller.emptyStockList();
 
         //When
 
@@ -124,7 +123,24 @@ public class StockListViewControllerTest extends ApplicationTest {
 
         //Then
 
-        Assertions.assertThat(stockLines.get(0)).hasExactlyChildren(1, null);
+        assertEquals(stockList.getChildren().get(1).toString(),  "** NO SE HA ENCONTRADO NINGUN STOCK CON ESE ACRONYM **");
     }
 
+    @Test
+    void testRefreshStocks(FxRobot robot) throws ForbiddenException {
+        //Given
+        Stock amz = new Stock();
+        amz.setAcronym("AMZ");
+
+        when(mockGateway.getStockList("big"));
+        controller.setDeustockGateway(mockGateway);
+
+        //When
+
+        robot.clickOn(refreshButton);
+
+        //Then
+
+        assertEquals(stockList.getChildren().get(1).toString(),  "AMZ");
+    }
 }
