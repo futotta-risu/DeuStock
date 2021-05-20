@@ -6,6 +6,8 @@ import java.util.Objects;
 
 /**
  * Class with crypto functionality
+ *
+ * @author Erik B. Terres
  */
 public class Crypto {
 

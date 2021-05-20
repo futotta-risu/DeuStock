@@ -20,6 +20,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Stock service with all stock methods.
+ *
+ * @author Erik B. Terres
+ */
 public class StockService {
 
     private final List<String> smallList = Arrays.asList("INTC","TSLA") ;

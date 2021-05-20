@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class SocialTextCleaner {
 
-    private static final String CHAR_FILTER      = "[^\\p{L}\\p{M}\\p{N}\\p{P}\\p{Z}\\p{Cf}\\p{Cs}\\s]";
+    private static final String CHAR_FILTER = "[^\\p{L}\\p{M}\\p{N}\\p{P}\\p{Z}\\p{Cf}\\p{Cs}\\s]";
     private static final String URL_FILTER = "(https?://)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)";
     private static final String USERNAME_FILTER = "@[\\S]+";
     private static final String HASHTAG_FILTER = "#";
@@ -44,7 +44,13 @@ public class SocialTextCleaner {
     }
 
     /**
-     * Cleans completely a String so it can be used in NLP tasks
+     * Applies all cleaning functions to a String
+     *
+     * {@link SocialTextCleaner#removeExtraSpaces(String)}
+     * {@link SocialTextCleaner#removeInvalidChars(String)}
+     * {@link SocialTextCleaner#removeURLS(String)}
+     * {@link SocialTextCleaner#removeHashtags(String)}
+     * {@link SocialTextCleaner#removeUsernames(String)}
      */
     public static String clean(String txt) {
         String result = removeInvalidChars(txt);
@@ -55,10 +61,24 @@ public class SocialTextCleaner {
         return result;
     }
 
+    /**
+     * Applies the clean process.
+     *
+     * {@link SocialTextCleaner#clean(String)}
+     * 
+     * @param messages List of Strings to be cleaned
+     */
     public static void clean(List<String> messages) {
         messages.replaceAll(SocialTextCleaner::clean);
     }
 
+    /**
+     * Applies the clean process.
+     *
+     * {@link SocialTextCleaner#clean(String)}
+     *
+     * @param messages List of {@link SocialNetworkMessage} to be cleaned
+     */
     public static void clean(Collection<SocialNetworkMessage> messages) {
         messages.forEach(c -> c.setMessage(clean(c.getMessage())));
     }

@@ -92,7 +92,9 @@ public class SentimentAnalyzer {
     }
 
     /**
-     * Returns the average sentiment of a list of messages
+     * Returns the average sentiment of a list of messages.
+     *
+     * @param messages List of already analyzed messages
      */
     public static double getSentimentTendency(Collection<SocialNetworkMessage> messages){
         return messages.stream().mapToDouble(SocialNetworkMessage::getSentiment).average().orElse(Double.NaN);

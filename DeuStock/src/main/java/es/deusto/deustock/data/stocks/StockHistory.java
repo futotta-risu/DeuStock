@@ -7,6 +7,12 @@ import javax.jdo.annotations.*;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Operation history item.
+ * Contains all the information of a operation such as date, price, price.
+ *
+ * @author Erik B. Terres
+ */
 @PersistenceCapable(detachable = "true")
 public class StockHistory  implements Serializable {
 

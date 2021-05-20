@@ -1,6 +1,8 @@
 package es.deusto.deustock.services.investment.operation.type;
 
 /**
+ * Base class for operations
+ *
  * @author Erik B. Terres
  */
 public abstract class Operation implements StockOperation{

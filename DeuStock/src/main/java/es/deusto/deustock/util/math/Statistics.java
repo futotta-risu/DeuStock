@@ -12,9 +12,7 @@ public class Statistics {
     private Statistics(){}
 
     /**
-     * Returns the mean of a List of Number.
-     *
-     * @param numbers Collection of Number
+     * Returns the mean of a {@link Collection} of {@link Number}.
      */
     public static double mean(Collection<? extends Number> numbers){
         return numbers.stream()
@@ -24,7 +22,7 @@ public class Statistics {
     }
 
     /**
-     * Returns the variance of a List of Number.
+     * Returns the variance of a {@link Collection} of {@link Number}.
      *
      * @param numbers Collection of Number
      */
@@ -38,7 +36,7 @@ public class Statistics {
     }
 
     /**
-     * Returns the std of a List of Number.
+     * Returns the std of a {@link Collection} of {@link Number}.
      *
      * @param numbers Collection of Number
      */

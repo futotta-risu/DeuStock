@@ -17,9 +17,12 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 import es.deusto.deustock.data.DeuStock;
 import yahoofinance.histquotes.HistoricalQuote;
 
+/**
+ * @author landersanmi
+ */
 public class TimeChart {
 	
-private static TimeChart instance;
+	private static TimeChart instance;
 	
 	public static TimeChart getInstance() {
 		if (instance == null) {

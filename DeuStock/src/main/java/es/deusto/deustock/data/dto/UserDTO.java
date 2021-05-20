@@ -3,6 +3,10 @@ package es.deusto.deustock.data.dto;
 import java.io.Serializable;
 
 /**
+ * User DTO Class. This class is sent from the server through the API
+ *
+ * {@link es.deusto.deustock.data.User}
+ *
  * @author Erik B. Terres
  */
 public class UserDTO implements Serializable {

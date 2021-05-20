@@ -18,7 +18,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Service class for wallet the wallet instance.
+ * Service class for wallet instance.
+ *
+ * @author Erik B. Terres
  */
 public class WalletService {
 

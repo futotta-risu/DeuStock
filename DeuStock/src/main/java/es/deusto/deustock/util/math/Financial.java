@@ -11,6 +11,11 @@ public class Financial {
 
     private Financial(){}
 
+    /**
+     * Returns the RSI (Relative Strength Index) of a {@link List} of {@link Comparable} {@link Number}
+     *
+     * @param n Number of elements to check the RSI for. Must be greater then 1 and less than the list size.
+     */
     public static < E extends Number & Comparable<E>> double rsi(List<E> list, int n){
         if(n < 2 || list.size() < n){
             throw new IllegalArgumentException("Invalid parameters. List size: " + list.size() + ", n:" + n
@@ -26,7 +31,6 @@ public class Financial {
                 positive++;
             }
         }
-
         return positive/(n-1);
     }
 

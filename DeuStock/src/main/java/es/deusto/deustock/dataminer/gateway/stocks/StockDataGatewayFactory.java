@@ -6,9 +6,9 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 /**
- * Factory for the SocialNetworkGateway.
+ * Factory for the {@link StockDataAPIGateway}.
  *
- *  @author Erik B. Terres
+ * @author Erik B. Terres
  */
 public class StockDataGatewayFactory {
 
@@ -23,7 +23,6 @@ public class StockDataGatewayFactory {
         return instance;
     }
 
-    @NotNull
     public StockDataAPIGateway create(StockDataGatewayEnum type){
         Objects.requireNonNull(type);
         return switch (type) {
