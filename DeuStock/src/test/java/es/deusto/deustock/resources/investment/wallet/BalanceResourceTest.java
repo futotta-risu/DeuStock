@@ -44,7 +44,7 @@ class BalanceResourceTest {
     
     @Test
     @DisplayName("Test get balance with null user throws 401")
-    void testGetBalanceWithNullUserReturns401() throws SQLException, WalletException {
+    void testGetBalanceWithNullUserReturns401() throws WalletException {
     	//Given
 
         when(walletService.getBalance(anyString())).thenThrow(new WalletException("Exception"));
@@ -66,7 +66,7 @@ class BalanceResourceTest {
     
     @Test
     @DisplayName("Test get balance returns 200")
-    void testGetBalanceWReturns200() throws SQLException, WalletException {
+    void testGetBalanceWReturns200() throws WalletException {
     	//Given
 		User user = new User("Test", "Pass");
 		user.setWallet(new Wallet());
