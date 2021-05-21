@@ -6,18 +6,17 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="925.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.stocks.StockDetailController">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.stocks.StockDetailController">
   <children>
-      <HBox prefHeight="136.0" prefWidth="1920.0" style="-fx-background-color: #00b2d9;">
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #00b2d9;">
          <children>
-            <BorderPane prefHeight="136.0" prefWidth="410.0">
+            <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" HBox.hgrow="ALWAYS">
                <bottom>
                   <Label prefHeight="0.0" prefWidth="119.0" text="Analyze it!" textFill="WHITE" BorderPane.alignment="CENTER">
                      <font>
@@ -28,66 +27,117 @@
                      </BorderPane.margin>
                   </Label>
                </bottom>
-               <center>
-                  <Label fx:id="deustockLabel" prefHeight="71.0" prefWidth="242.0" text="DeuStock" textFill="WHITE" BorderPane.alignment="CENTER">
+               <left>
+                  <Label fx:id="deustockLabel" prefHeight="71.0" prefWidth="242.0" text="DeuStock" textFill="WHITE" BorderPane.alignment="BOTTOM_CENTER">
                      <font>
                         <Font name="Calibri Bold" size="61.0" />
                      </font>
                      <BorderPane.margin>
-                        <Insets top="20.0" />
+                        <Insets left="20.0" right="20.0" top="10.0" />
                      </BorderPane.margin>
                   </Label>
-               </center>
-            </BorderPane>
-            <BorderPane prefHeight="136.0" prefWidth="1557.0">
+               </left>
                <center>
-                  <Label alignment="CENTER" prefHeight="69.0" prefWidth="1545.0" text="Detalle del Stock" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
+                  <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Detalle del Stock" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
                      <font>
                         <Font name="Calibri Bold" size="60.0" />
                      </font>
                      <BorderPane.margin>
-                        <Insets right="410.0" />
+                        <Insets />
                      </BorderPane.margin>
                   </Label>
                </center>
             </BorderPane>
          </children>
       </HBox>
-    <AnchorPane fx:id="infoTable" maxHeight="-1.0" maxWidth="-1.0" prefHeight="416.0" prefWidth="640.0" VBox.vgrow="ALWAYS">
-         <children>
-            <Label fx:id="acronymLabel" layoutX="27.0" layoutY="14.0" prefWidth="234.0" text="STOCK">
-               <font>
-                  <Font name="System Bold" size="56.0" />
-               </font>
-            </Label>
-            <Button fx:id="downloadButton" layoutX="890.0" layoutY="711.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="141.0" text="Descargar Reporte" />
-            <Label fx:id="priceLabel" alignment="CENTER_RIGHT" layoutX="1351.0" layoutY="14.0" prefHeight="83.0" prefWidth="508.0" text="Precio">
-               <font>
-                  <Font size="56.0" />
-               </font>
-            </Label>
-            <Label fx:id="mediaLabel" layoutX="64.0" layoutY="128.0" prefHeight="23.0" prefWidth="566.0" text="Media">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="SDLabel" layoutX="64.0" layoutY="165.0" prefHeight="23.0" prefWidth="566.0" text="SD">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Line endX="1721.0" layoutX="137.0" layoutY="100.0" startX="-110.0" />
-            <Button fx:id="backButton" layoutX="532.0" layoutY="711.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="141.0" text="Volver" />
-            <LineChart fx:id="lineChart" layoutX="27.0" layoutY="214.0" prefHeight="447.0" prefWidth="1832.0">
+      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+         <top>
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
+               <children>
+                  <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+                     <left>
+                        <Label fx:id="acronymLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="STOCK" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="56.0" />
+                           </font>
+                           <BorderPane.margin>
+                              <Insets left="20.0" right="30.0" />
+                           </BorderPane.margin>
+                        </Label>
+                     </left>
+                     <right>
+                        <Label fx:id="priceLabel" alignment="BOTTOM_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="Precio" textAlignment="RIGHT" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font size="56.0" />
+                           </font>
+                           <BorderPane.margin>
+                              <Insets right="20.0" />
+                           </BorderPane.margin>
+                        </Label>
+                     </right>
+                     <center>
+                        <VBox BorderPane.alignment="CENTER">
+                           <children>
+                              <Label fx:id="mediaLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Media">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label fx:id="SDLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="SD">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="20.0" />
+                                 </VBox.margin>
+                                 <padding>
+                                    <Insets bottom="20.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </center>
+                  </BorderPane>
+                  <Line />
+               </children>
+            </VBox>
+         </top>
+         <center>
+            <LineChart fx:id="lineChart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
               <xAxis>
-                <CategoryAxis side="BOTTOM" fx:id="xAxis" />
+                <CategoryAxis maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" side="BOTTOM" fx:id="xAxis" />
               </xAxis>
               <yAxis>
                 <NumberAxis fx:id="yAxis" side="LEFT" />
               </yAxis>
             </LineChart>
-            <Button fx:id="buyButton" layoutX="1281.0" layoutY="711.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="141.0" text="Buy" />
-         </children>
-    </AnchorPane>
+         </center>
+         <bottom>
+            <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="buyButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" text="Buy">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="downloadButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" text="Descargar Reporte">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="backButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" text="Volver" />
+               </children>
+               <opaqueInsets>
+                  <Insets right="10.0" />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </HBox>
+         </bottom>
+      </BorderPane>
   </children>
 </VBox>

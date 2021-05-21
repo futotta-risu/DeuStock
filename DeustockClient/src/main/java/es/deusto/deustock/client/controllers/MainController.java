@@ -46,6 +46,8 @@ public class MainController {
         stage.setTitle("DeuStock Client");
 
         // TODO Look up for real screen size.
+        stage.setWidth(MIN_WIDTH);
+        stage.setHeight(MIN_HEIGHT);
         stage.setMinHeight(MIN_HEIGHT);
         stage.setMinWidth(MIN_WIDTH);
     }
@@ -107,6 +109,7 @@ public class MainController {
     }
     public void loadAndChangeScene(String path) {
         changeScene(new Scene(loadPane(path,null)));
+        setDefaultStageParams();
     }
 
     public void loadAndChangePaneWithParams(String path, HashMap<String,Object> params) {

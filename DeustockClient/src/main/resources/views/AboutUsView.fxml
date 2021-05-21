@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -12,13 +11,23 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="925.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane VBox.vgrow="ALWAYS">
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #00b2d9;">
          <children>
-            <HBox prefHeight="136.0" prefWidth="1920.0" style="-fx-background-color: #00b2d9;">
-               <children>
-                  <BorderPane prefHeight="136.0" prefWidth="410.0">
+            <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+               <center>
+                  <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="Sobre Nosotros" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Calibri Bold" size="60.0" />
+                     </font>
+                     <BorderPane.margin>
+                        <Insets right="410.0" />
+                     </BorderPane.margin>
+                  </Label>
+               </center>
+               <left>
+                  <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
                      <bottom>
                         <Label prefHeight="0.0" prefWidth="119.0" text="Analyze it!" textFill="WHITE" BorderPane.alignment="CENTER">
                            <font>
@@ -30,7 +39,7 @@
                         </Label>
                      </bottom>
                      <center>
-                        <Label fx:id="deustockLabel" prefHeight="71.0" prefWidth="242.0" text="DeuStock" textFill="WHITE" BorderPane.alignment="CENTER">
+                        <Label fx:id="deustockLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="DeuStock" textFill="WHITE" BorderPane.alignment="CENTER">
                            <font>
                               <Font name="Calibri Bold" size="61.0" />
                            </font>
@@ -40,60 +49,56 @@
                         </Label>
                      </center>
                   </BorderPane>
-                  <BorderPane prefHeight="136.0" prefWidth="1557.0">
-                     <center>
-                        <Label alignment="CENTER" prefHeight="69.0" prefWidth="1545.0" text="Sobre Nosotros" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
-                           <font>
-                              <Font name="Calibri Bold" size="60.0" />
-                           </font>
-                           <BorderPane.margin>
-                              <Insets right="410.0" />
-                           </BorderPane.margin>
-                        </Label>
-                     </center>
-                  </BorderPane>
-               </children>
-            </HBox>
-		                  <Pane layoutX="461.0" layoutY="372.0" prefHeight="340.0" prefWidth="999.0">
-		                     <children>
-		                        <ImageView fitHeight="190.0" fitWidth="273.0" layoutX="-8.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-		                           <image>
-		                              <Image url="@img/crypto-icon.png" />
-		                           </image>
-		                        </ImageView>
-		                        <Text layoutX="-78.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Soporte a un gran numero de Criptomonedas" textAlignment="CENTER" wrappingWidth="329.306640625">
-		                           <font>
-		                              <Font name="Calibri Bold" size="28.0" />
-		                           </font>
-		                        </Text>
-		                        <ImageView fitHeight="190.0" fitWidth="216.0" layoutX="422.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-		                           <image>
-		                              <Image url="@img/twitter-icon.png" />
-		                           </image>
-		                        </ImageView>
-		                        <Text layoutX="363.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Analizador de sentimiento de Twitter" textAlignment="CENTER" wrappingWidth="307.306640625">
-		                           <font>
-		                              <Font name="Calibri Bold" size="26.0" />
-		                           </font>
-		                        </Text>
-		                        <Text layoutX="728.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acceso a graficos personalizados" textAlignment="CENTER" wrappingWidth="349.306640625">
-		                           <font>
-		                              <Font name="Calibri Bold" size="26.0" />
-		                           </font>
-		                        </Text>
-      		                        <ImageView fitHeight="190.0" fitWidth="203.0" layoutX="808.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
-      		                           <image>
-      		                              <Image url="@img/grafico-icon.png" />
-      		                           </image>
-      		                        </ImageView>
-		                     </children>
-		                  </Pane>
-		                        <Text layoutX="412.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Somos un grupo de estudiantes de ingenieria informatica, los cuales hemos desarrollado una aplicación para poder simular inversiones en stocks de una forma muy comoda. Estas son las funcionalidades principales:" textAlignment="JUSTIFY" wrappingWidth="1096.0">
-		                           <font>
-		                              <Font name="Calibri" size="31.0" />
-		                           </font>
-		                        </Text>
+               </left>
+            </BorderPane>
          </children>
-      </AnchorPane>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+            		                  <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+            		                     <children>
+            		                        <ImageView fitHeight="190.0" fitWidth="273.0" layoutX="-8.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            		                           <image>
+            		                              <Image url="@img/crypto-icon.png" />
+            		                           </image>
+            		                        </ImageView>
+            		                        <Text layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Soporte a un gran numero de Criptomonedas" textAlignment="CENTER" wrappingWidth="329.306640625">
+            		                           <font>
+            		                              <Font name="Calibri Bold" size="24.0" />
+            		                           </font>
+            		                        </Text>
+            		                        <ImageView fitHeight="190.0" fitWidth="216.0" layoutX="422.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            		                           <image>
+            		                              <Image url="@img/twitter-icon.png" />
+            		                           </image>
+            		                        </ImageView>
+            		                        <Text layoutX="363.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Analizador de sentimiento de Twitter" textAlignment="CENTER" wrappingWidth="307.306640625">
+            		                           <font>
+            		                              <Font name="Calibri Bold" size="24.0" />
+            		                           </font>
+            		                        </Text>
+            		                        <Text layoutX="728.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acceso a graficos personalizados" textAlignment="CENTER" wrappingWidth="349.306640625">
+            		                           <font>
+            		                              <Font name="Calibri Bold" size="24.0" />
+            		                           </font>
+            		                        </Text>
+            		                        <ImageView fitHeight="190.0" fitWidth="203.0" layoutX="808.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+            		                           <image>
+            		                              <Image url="@img/grafico-icon.png" />
+            		                           </image>
+            		                        </ImageView>
+            		                     </children>
+            		                  </Pane>
+            		                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Somos un grupo de estudiantes de ingenieria informatica, los cuales hemos desarrollado una aplicación para poder simular inversiones en stocks de una forma muy comoda. Estas son las funcionalidades principales:" textAlignment="JUSTIFY" wrappingWidth="1096.0">
+            		                           <font>
+            		                              <Font name="Calibri" size="14.0" />
+            		                           </font>
+            		                        </Text>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
    </children>
 </VBox>

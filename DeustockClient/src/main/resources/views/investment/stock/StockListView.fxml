@@ -2,41 +2,18 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" prefHeight="925.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.stocks.StockListViewController">
+<VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.stocks.StockListViewController">
 	<children>
-      <HBox prefHeight="136.0" prefWidth="1920.0" style="-fx-background-color: #00b2d9;">
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #00b2d9;">
          <children>
-            <BorderPane prefHeight="136.0" prefWidth="410.0">
-               <bottom>
-                  <Label prefHeight="0.0" prefWidth="119.0" text="Analyze it!" textFill="WHITE" BorderPane.alignment="CENTER">
-                     <font>
-                        <Font name="Calibri" size="26.0" />
-                     </font>
-                     <BorderPane.margin>
-                        <Insets bottom="10.0" />
-                     </BorderPane.margin>
-                  </Label>
-               </bottom>
+            <BorderPane>
                <center>
-                  <Label fx:id="deustockLabel" prefHeight="71.0" prefWidth="242.0" text="DeuStock" textFill="WHITE" BorderPane.alignment="CENTER">
-                     <font>
-                        <Font name="Calibri Bold" size="61.0" />
-                     </font>
-                     <BorderPane.margin>
-                        <Insets top="20.0" />
-                     </BorderPane.margin>
-                  </Label>
-               </center>
-            </BorderPane>
-            <BorderPane prefHeight="136.0" prefWidth="1557.0">
-               <center>
-                  <Label alignment="CENTER" prefHeight="69.0" prefWidth="1545.0" text="Lista de Stock disponibles" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
+                  <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="Lista de Stock disponibles" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
                      <font>
                         <Font name="Calibri Bold" size="60.0" />
                      </font>
@@ -45,13 +22,40 @@
                      </BorderPane.margin>
                   </Label>
                </center>
+               <left>
+                  <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
+                     <bottom>
+                        <Label prefHeight="0.0" prefWidth="119.0" text="Analyze it!" textFill="WHITE" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font name="Calibri" size="26.0" />
+                           </font>
+                           <BorderPane.margin>
+                              <Insets bottom="10.0" />
+                           </BorderPane.margin>
+                        </Label>
+                     </bottom>
+                     <center>
+                        <Label fx:id="deustockLabel" prefHeight="71.0" prefWidth="242.0" text="DeuStock" textFill="WHITE" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font name="Calibri Bold" size="61.0" />
+                           </font>
+                           <BorderPane.margin>
+                              <Insets top="20.0" />
+                           </BorderPane.margin>
+                        </Label>
+                     </center>
+                  </BorderPane>
+               </left>
             </BorderPane>
          </children>
       </HBox>
-		<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="336.0" prefWidth="616.0" style="-fx-background-color: white;" stylesheets="@StockListView.css" VBox.vgrow="ALWAYS">
-			<children>
-				<VBox fx:id="stockList" layoutX="65.0" layoutY="52.0" prefHeight="684.0" prefWidth="1791.0" style="-fx-background-color: white;" />
-			</children>
-		</AnchorPane>
+				<VBox fx:id="stockList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: white;">
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+         <VBox.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </VBox.margin>
+      </VBox>
 	</children>
 </VBox>
