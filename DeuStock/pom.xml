@@ -144,13 +144,6 @@
 			<version>5.7.0</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.databene/contiperf -->
-		<dependency>
-			<groupId>org.databene</groupId>
-			<artifactId>contiperf</artifactId>
-			<version>2.3.4</version>
-			<scope>test</scope>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
 		<dependency>
 			<groupId>org.mockito</groupId>
@@ -171,10 +164,9 @@
 		</dependency>
 		<!--  PERFORMANCE TESTING -->
 		<dependency>
-			<groupId>org.databene</groupId>
+			<groupId>com.github.javatlacati</groupId>
 			<artifactId>contiperf</artifactId>
-			<version>2.3.4</version>
-			<scope>test</scope>
+			<version>2.4.3</version>
 		</dependency>
 
 		<!-- ###################################################### -->

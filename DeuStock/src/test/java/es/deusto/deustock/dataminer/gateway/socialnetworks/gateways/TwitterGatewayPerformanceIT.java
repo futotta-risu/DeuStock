@@ -1,12 +1,17 @@
 package es.deusto.deustock.dataminer.gateway.socialnetworks.gateways;
 
-import org.databene.contiperf.PerfTest;
-import org.databene.contiperf.Required;
-import org.databene.contiperf.junit.ContiPerfRule;
+import com.github.javatlacati.contiperf.PerfTest;
+import com.github.javatlacati.contiperf.Required;
+import com.github.javatlacati.contiperf.junit.ContiPerfRule;
+import es.deusto.deustock.data.SocialNetworkMessage;
 import org.junit.Rule;
 import org.junit.jupiter.api.Test;
 
 import es.deusto.deustock.dataminer.gateway.socialnetworks.SocialNetworkQueryData;
+
+import java.util.List;
+
+import static org.junit.Assert.assertNotNull;
 
 class TwitterGatewayPerformanceIT {
 
@@ -15,17 +20,19 @@ class TwitterGatewayPerformanceIT {
 
     @Test
     @PerfTest(invocations = 50, threads = 5)
-    @Required(average = 99999, max = 99999, percentile95=99999)
+    @Required(average = 999, max = 999, percentile95=999)
     public void testgetMessageListPerformance(){
         SocialNetworkQueryData queryData = new SocialNetworkQueryData("VIAC");
 
-        TwitterGateway.getInstance().getMessageList(queryData);
+        List<SocialNetworkMessage> msg = TwitterGateway.getInstance().getMessageList(queryData);
+
+        assertNotNull(msg);
     }
     
     @Test
     @PerfTest(invocations = 50, threads = 5)
-    @Required(average = 99999, max = 99999, percentile95=99999)
-    public void testgetMessageListPerformanceAlternative(){
+    @Required(average = 999, max = 999, percentile95=999)
+    public void testGetMessageListPerformanceAlternative(){
         SocialNetworkQueryData queryData = new SocialNetworkQueryData("AMZN");
 
         TwitterGateway.getInstance().getMessageList(queryData);
