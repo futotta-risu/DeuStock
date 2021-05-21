@@ -15,7 +15,7 @@ public class UserReport extends Report {
 
     private final User user;
     private WalletService walletService;
-    private static final Logger logger = LoggerFactory.getLogger(UserReport.class);
+    static final Logger logger = LoggerFactory.getLogger(UserReport.class);
 
     public UserReport(User user){
         super();
@@ -26,6 +26,8 @@ public class UserReport extends Report {
     protected void setMetadata() {
         // TODO Add Metadata
     }
+
+    public void setWalletService(WalletService walletService) { this.walletService = walletService; }
 
     @Override
     protected String getTitle() {
@@ -39,7 +41,7 @@ public class UserReport extends Report {
             addActualBalance();
             page = addHoldingsList(page);
         } catch (WalletException e) {
-            e.printStackTrace();
+            logger.error(String.format("Could not add holdings of %s due to error.", user.getUsername()));
         }
         savePage(page);
     }
@@ -54,7 +56,7 @@ public class UserReport extends Report {
         List<StockHistoryDTO> holdingsList = walletService.getHoldings(user.getUsername());
 
         addSimpleTextLine("Tienes un total de " + holdingsList.size() + " inversiones");
-        int counter = 0;
+        var counter = 0;
 
         if(!holdingsList.isEmpty()){
             for(StockHistoryDTO sh: holdingsList){

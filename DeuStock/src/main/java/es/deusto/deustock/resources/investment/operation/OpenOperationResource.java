@@ -62,9 +62,7 @@ public class OpenOperationResource {
 
         logger.info("Petition to open a operation");
 
-        System.out.println(operationTypeString);
         var operationType = OperationType.valueOf(operationTypeString);
-        System.out.println(operationType);
 
         String username = securityContext.getUserPrincipal().getName();
 

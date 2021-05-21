@@ -21,7 +21,6 @@ public class OperationService {
 
 
     public double getOpenPrice(OperationType operationType, double openPrice, double amount) {
-        System.out.println("Entrando en GETOPENPRICE");
         return operationFactory.create(operationType, openPrice, amount).getOpenPrice();
     }
 

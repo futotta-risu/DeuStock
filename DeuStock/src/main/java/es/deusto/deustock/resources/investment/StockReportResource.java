@@ -9,7 +9,6 @@ import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData.Interval;
 import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
 import es.deusto.deustock.report.StockReport;
-import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -17,7 +16,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
-import java.sql.SQLException;
 
 
 @Path("reports/stock")
@@ -35,7 +33,7 @@ public class StockReportResource {
     @GET
     @Produces("application/pdf")
     @Path("/{stock}/{interval}")
-    public Response createSimplePdfWithChart(@PathParam("stock") String stockAcronym, @PathParam("interval") String interval) throws IOException, SQLException, WalletException {
+    public Response createSimplePdfWithChart(@PathParam("stock") String stockAcronym, @PathParam("interval") String interval) throws IOException {
 
         StockQueryData queryData = new StockQueryData(
                 stockAcronym,
