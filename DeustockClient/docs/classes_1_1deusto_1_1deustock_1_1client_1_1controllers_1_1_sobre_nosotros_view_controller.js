@@ -1,0 +1,4 @@
+var classes_1_1deusto_1_1deustock_1_1client_1_1controllers_1_1_sobre_nosotros_view_controller =
+[
+    [ "SobreNosotrosViewController", "classes_1_1deusto_1_1deustock_1_1client_1_1controllers_1_1_sobre_nosotros_view_controller.html#a99268a7c6c54ff43fea489ff3d46273d", null ]
+];

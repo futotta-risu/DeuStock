@@ -1,0 +1,27 @@
+var classes_1_1deusto_1_1deustock_1_1data_1_1_user =
+[
+    [ "User", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#a42e66a23e2875e26cada57fc46e287c3", null ],
+    [ "checkPassword", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#ace66ff385468c8333960f0415c653eec", null ],
+    [ "getBirthDate", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#a8d91f65a8269bf98e32ea63b461c054d", null ],
+    [ "getCountry", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#a2a95e5b028ad36bac91bad90fa446542", null ],
+    [ "getDescription", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#a30f92b2cdd1bd68e35e1379ecf6f3f79", null ],
+    [ "getFullName", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#af883c5fd85559394316b676459690695", null ],
+    [ "getLastActivity", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#abddc010f5bcd93571d452b1f242779f9", null ],
+    [ "getPassword", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#a87647eadc469858b26a96acc2de0d445", null ],
+    [ "getRegisterDate", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#a16deaadbf4845790da512277dafc0d52", null ],
+    [ "getUsername", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#a0d61703312d96e0b4a5cd9044b71452e", null ],
+    [ "getWallet", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#aa8293054280b3680ac056ca1858e51d9", null ],
+    [ "setBirthDate", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#aeb67879931d4a34ad22afa2a1d7ba3af", null ],
+    [ "setCountry", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#a315772932d9ec36f00060f3ada577bd6", null ],
+    [ "setDescription", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#a1a5f53f547a2d14c2a65f91cfc2bb735", null ],
+    [ "setFullName", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#a4b18ee6cb721182e787e124ecb5f0735", null ],
+    [ "setLastActivity", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#af5f31ef1efe963043f909179a48ed0c9", null ],
+    [ "setLastActivity", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#aff05cc63e2ab75d62f7b3dcdfcb6cc1f", null ],
+    [ "setPassword", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#ae6dd4423afa1684359d54c5476b15332", null ],
+    [ "setRegisterDate", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#aca78e66dd2576279bddbdb1115290b8d", null ],
+    [ "setUsername", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#ad4e27957e8472e55ea67f2cf59203d6e", null ],
+    [ "setWallet", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#ae50a8f4edf8ce6cb18848682b4470487", null ],
+    [ "toString", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#ae32311bc70799e9e028870acc51572d6", null ],
+    [ "updateInfo", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#a40b88d7a6d06757eb4c29b9ea93f80c5", null ],
+    [ "updateInfo", "classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#a23e7b2ca235a6dd08e2f5c71009d850b", null ]
+];

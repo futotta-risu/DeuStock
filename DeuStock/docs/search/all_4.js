@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['auth_42',['auth',['../namespacees_1_1deusto_1_1deustock_1_1data_1_1auth.html',1,'es.deusto.deustock.data.auth'],['../namespacees_1_1deusto_1_1deustock_1_1resources_1_1auth.html',1,'es.deusto.deustock.resources.auth'],['../namespacees_1_1deusto_1_1deustock_1_1services_1_1auth.html',1,'es.deusto.deustock.services.auth']]],
+  ['cleaner_43',['cleaner',['../namespacees_1_1deusto_1_1deustock_1_1dataminer_1_1cleaner.html',1,'es::deusto::deustock::dataminer']]],
+  ['crypto_44',['crypto',['../namespacees_1_1deusto_1_1deustock_1_1util_1_1crypto.html',1,'es::deusto::deustock::util']]],
+  ['dao_45',['dao',['../namespacees_1_1deusto_1_1deustock_1_1dao.html',1,'es::deusto::deustock']]],
+  ['exceptions_46',['exceptions',['../namespacees_1_1deusto_1_1deustock_1_1dataminer_1_1gateway_1_1stocks_1_1exceptions.html',1,'es.deusto.deustock.dataminer.gateway.stocks.exceptions'],['../namespacees_1_1deusto_1_1deustock_1_1services_1_1auth_1_1exceptions.html',1,'es.deusto.deustock.services.auth.exceptions'],['../namespacees_1_1deusto_1_1deustock_1_1services_1_1investment_1_1operation_1_1exceptions.html',1,'es.deusto.deustock.services.investment.operation.exceptions'],['../namespacees_1_1deusto_1_1deustock_1_1services_1_1investment_1_1stock_1_1exceptions.html',1,'es.deusto.deustock.services.investment.stock.exceptions'],['../namespacees_1_1deusto_1_1deustock_1_1services_1_1investment_1_1wallet_1_1exceptions.html',1,'es.deusto.deustock.services.investment.wallet.exceptions'],['../namespacees_1_1deusto_1_1deustock_1_1services_1_1user_1_1exceptions.html',1,'es.deusto.deustock.services.user.exceptions']]],
+  ['features_47',['features',['../namespacees_1_1deusto_1_1deustock_1_1dataminer_1_1features.html',1,'es::deusto::deustock::dataminer']]],
+  ['file_48',['file',['../namespacees_1_1deusto_1_1deustock_1_1util_1_1file.html',1,'es::deusto::deustock::util']]],
+  ['gateways_49',['gateways',['../namespacees_1_1deusto_1_1deustock_1_1dataminer_1_1gateway_1_1socialnetworks_1_1gateways.html',1,'es.deusto.deustock.dataminer.gateway.socialnetworks.gateways'],['../namespacees_1_1deusto_1_1deustock_1_1dataminer_1_1gateway_1_1stocks_1_1gateways.html',1,'es.deusto.deustock.dataminer.gateway.stocks.gateways']]],
+  ['help_50',['help',['../namespacees_1_1deusto_1_1deustock_1_1resources_1_1help.html',1,'es::deusto::deustock::resources']]],
+  ['math_51',['math',['../namespacees_1_1deusto_1_1deustock_1_1util_1_1math.html',1,'es::deusto::deustock::util']]],
+  ['operation_52',['operation',['../namespacees_1_1deusto_1_1deustock_1_1resources_1_1investment_1_1operation.html',1,'es::deusto::deustock::resources::investment']]],
+  ['report_53',['report',['../namespacees_1_1deusto_1_1deustock_1_1report.html',1,'es::deusto::deustock']]],
+  ['socialnetwork_54',['socialnetwork',['../namespacees_1_1deusto_1_1deustock_1_1resources_1_1socialnetwork.html',1,'es::deusto::deustock::resources']]],
+  ['stock_55',['stock',['../namespacees_1_1deusto_1_1deustock_1_1resources_1_1investment_1_1stock.html',1,'es::deusto::deustock::resources::investment']]],
+  ['stocks_56',['stocks',['../namespacees_1_1deusto_1_1deustock_1_1data_1_1dto_1_1stocks.html',1,'es.deusto.deustock.data.dto.stocks'],['../namespacees_1_1deusto_1_1deustock_1_1data_1_1stocks.html',1,'es.deusto.deustock.data.stocks']]],
+  ['type_57',['type',['../namespacees_1_1deusto_1_1deustock_1_1services_1_1investment_1_1operation_1_1type.html',1,'es::deusto::deustock::services::investment::operation']]],
+  ['user_58',['user',['../namespacees_1_1deusto_1_1deustock_1_1resources_1_1user.html',1,'es::deusto::deustock::resources']]],
+  ['visualization_59',['visualization',['../namespacees_1_1deusto_1_1deustock_1_1dataminer_1_1visualization.html',1,'es::deusto::deustock::dataminer']]],
+  ['wallet_60',['wallet',['../namespacees_1_1deusto_1_1deustock_1_1resources_1_1investment_1_1wallet.html',1,'es::deusto::deustock::resources::investment']]]
+];

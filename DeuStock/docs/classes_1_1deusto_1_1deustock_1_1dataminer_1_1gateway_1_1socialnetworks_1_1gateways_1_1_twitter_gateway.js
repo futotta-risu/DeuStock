@@ -1,0 +1,4 @@
+var classes_1_1deusto_1_1deustock_1_1dataminer_1_1gateway_1_1socialnetworks_1_1gateways_1_1_twitter_gateway =
+[
+    [ "getMessageList", "classes_1_1deusto_1_1deustock_1_1dataminer_1_1gateway_1_1socialnetworks_1_1gateways_1_1_twitter_gateway.html#ab73ec429b447fbecc6beae468977db72", null ]
+];

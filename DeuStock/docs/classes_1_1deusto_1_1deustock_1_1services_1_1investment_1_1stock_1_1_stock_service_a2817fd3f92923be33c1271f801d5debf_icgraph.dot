@@ -1,0 +1,16 @@
+digraph "es.deusto.deustock.services.investment.stock.StockService.getStockWithPrice"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="es.deusto.deustock.services.investment.stock.\lStockService.getStockWithPrice",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="es.deusto.deustock.resources.investment.operation.\lCloseOperationResource.closeOperation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1resources_1_1investment_1_1operation_1_1_close_operation_resource.html#a97a5e40fc7a80e301007021f36f79319",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="es.deusto.deustock.resources.investment.wallet.\lHoldingsListResources.getHoldings",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1resources_1_1investment_1_1wallet_1_1_holdings_list_resources.html#a2ef4da272998d4d00c1c1d7b662f0b60",tooltip=" "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="es.deusto.deustock.resources.investment.stock.\lStockSearchResource.getStockFromSearch",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1resources_1_1investment_1_1stock_1_1_stock_search_resource.html#a9905816bf59687ff2dc13d9609711f39",tooltip=" "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="es.deusto.deustock.resources.investment.operation.\lOpenOperationResource.openOperation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1resources_1_1investment_1_1operation_1_1_open_operation_resource.html#a88bee32642d5698a9fc5dcda9c76caa3",tooltip=" "];
+}

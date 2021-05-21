@@ -14,7 +14,7 @@
   		<sonar.organization>futotta-risu</sonar.organization>
   		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
-		<doxygen.config.file>${basedir}/src/main/resources</doxygen.config.file>
+		<doxygen.config.file>${basedir}/src/main/resources/Doxyfile</doxygen.config.file>
 
 		<config.files.dir>${basedir}/resources</config.files.dir>
 		<maven.compiler.source>14</maven.compiler.source>

@@ -1,0 +1,8 @@
+var namespacees_1_1deusto_1_1deustock_1_1services_1_1investment_1_1operation_1_1type =
+[
+    [ "LongOperation", "classes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1operation_1_1type_1_1_long_operation.html", "classes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1operation_1_1type_1_1_long_operation" ],
+    [ "Operation", "classes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1operation_1_1type_1_1_operation.html", "classes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1operation_1_1type_1_1_operation" ],
+    [ "OperationType", "enumes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1operation_1_1type_1_1_operation_type.html", "enumes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1operation_1_1type_1_1_operation_type" ],
+    [ "ShortOperation", "classes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1operation_1_1type_1_1_short_operation.html", "classes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1operation_1_1type_1_1_short_operation" ],
+    [ "StockOperation", "interfacees_1_1deusto_1_1deustock_1_1services_1_1investment_1_1operation_1_1type_1_1_stock_operation.html", "interfacees_1_1deusto_1_1deustock_1_1services_1_1investment_1_1operation_1_1type_1_1_stock_operation" ]
+];

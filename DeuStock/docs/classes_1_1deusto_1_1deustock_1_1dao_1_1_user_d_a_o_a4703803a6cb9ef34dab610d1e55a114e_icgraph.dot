@@ -1,0 +1,38 @@
+digraph "es.deusto.deustock.dao.UserDAO.get"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="es.deusto.deustock.dao.User\lDAO.get",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="es.deusto.deustock.services.user.\lUserService.deleteUser",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1services_1_1user_1_1_user_service.html#a9a960b10d784446947a4548fd4899b41",tooltip=" "];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="es.deusto.deustock.resources.\lUserResource.deleteUser",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1resources_1_1_user_resource.html#a2690eaef44f0c5dede4241d6d54f835c",tooltip=" "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="es.deusto.deustock.services.investment.wallet.\lWalletService.getBalance",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1wallet_1_1_wallet_service.html#ad004f3601e4d6f92f89ce4429001fe76",tooltip=" "];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="es.deusto.deustock.resources.investment.wallet.\lBalanceResource.getBalance",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1resources_1_1investment_1_1wallet_1_1_balance_resource.html#ada9fe42478c28b1572e78d7d42101895",tooltip=" "];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="es.deusto.deustock.services.investment.wallet.\lWalletService.getHoldings",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1wallet_1_1_wallet_service.html#a831f7ed9509f7f94a901a7a6f236b60e",tooltip=" "];
+  Node6 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="es.deusto.deustock.resources.investment.wallet.\lHoldingsListResources.getHoldings",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1resources_1_1investment_1_1wallet_1_1_holdings_list_resources.html#a2ef4da272998d4d00c1c1d7b662f0b60",tooltip=" "];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="es.deusto.deustock.services.user.\lUserService.getUserByUsername",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1services_1_1user_1_1_user_service.html#aedc7c5516b26643d744244f668229f16",tooltip=" "];
+  Node8 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="es.deusto.deustock.resources.user.\lUserReportResource.createUserReport",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1resources_1_1user_1_1_user_report_resource.html#a011c1f91993fc227cc5e548dd457a6f8",tooltip=" "];
+  Node8 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="es.deusto.deustock.resources.\lUserResource.getUser",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1resources_1_1_user_resource.html#a376eca9da75a5293c5ac1977213fa856",tooltip=" "];
+  Node1 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="es.deusto.deustock.services.auth.\lAuthService.login",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1services_1_1auth_1_1_auth_service.html#a4220177ca0caac94511e0b1a68d4298a",tooltip=" "];
+  Node11 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="es.deusto.deustock.resources.auth.\lAuthResource.login",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1resources_1_1auth_1_1_auth_resource.html#a329de8a284fb806f708bd93dc9d9b570",tooltip=" "];
+  Node1 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="es.deusto.deustock.services.investment.wallet.\lWalletService.resetHoldings",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1wallet_1_1_wallet_service.html#a30505009de96a7de133561636ac7a9df",tooltip=" "];
+  Node13 -> Node14 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="es.deusto.deustock.resources.investment.wallet.\lHoldingsListResources.resetHoldings",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1resources_1_1investment_1_1wallet_1_1_holdings_list_resources.html#a7e422acbd40e8901881cb53753765b8e",tooltip=" "];
+  Node1 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="es.deusto.deustock.services.user.\lUserService.updateUser",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1services_1_1user_1_1_user_service.html#abc6ff25603cdb2019c60019999fc33f9",tooltip=" "];
+  Node15 -> Node16 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 [label="es.deusto.deustock.resources.\lUserResource.updateUser",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1resources_1_1_user_resource.html#a6826c7d43a36a2f47b795ce4ef8e69ba",tooltip=" "];
+}

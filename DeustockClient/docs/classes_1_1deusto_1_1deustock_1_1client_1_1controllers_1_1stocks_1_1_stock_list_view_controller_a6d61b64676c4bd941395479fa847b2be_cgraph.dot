@@ -1,0 +1,22 @@
+digraph "es.deusto.deustock.client.controllers.stocks.StockListViewController.refreshStocks"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="es.deusto.deustock.client.controllers.stocks.\lStockListViewController.refreshStocks",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="es.deusto.deustock.client.data.\lStock.getAcronym",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1client_1_1data_1_1_stock.html#a48bca80017abd07ca0f98dd6d4cd103c",tooltip=" "];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="es.deusto.deustock.client.controllers.\lMainController.getInstance",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1client_1_1controllers_1_1_main_controller.html#aa18b963c3e0480e6375a501d122500fd",tooltip=" "];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="es.deusto.deustock.client.gateways.\lDeustockGateway.getStockList",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1client_1_1gateways_1_1_deustock_gateway.html#a3e11e175fc471820f1ebbbb727d77c25",tooltip=" "];
+  Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="es.deusto.deustock.client.controllers.\lMainController.loadAndChangePaneWithParams",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1client_1_1controllers_1_1_main_controller.html#aefb622912131eb5cfbf8a7a48c393583",tooltip=" "];
+  Node5 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="es.deusto.deustock.client.controllers.\lMainController.changePane",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1client_1_1controllers_1_1_main_controller.html#ab3045becea7552e655d0b0e687b2aabc",tooltip=" "];
+  Node5 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="es.deusto.deustock.client.controllers.\lMainController.loadPane",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1client_1_1controllers_1_1_main_controller.html#a960a4694b9a4609af69d14af8e1c9d54",tooltip=" "];
+  Node7 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="es.deusto.deustock.client.controllers.\lDSGenericController.setParams",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interfacees_1_1deusto_1_1deustock_1_1client_1_1controllers_1_1_d_s_generic_controller.html#a124dc47e670dcab461b128d38c49bbe7",tooltip=" "];
+}

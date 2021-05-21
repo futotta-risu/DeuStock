@@ -1,0 +1,4 @@
+var classes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1wallet_1_1exceptions_1_1_wallet_exception =
+[
+    [ "WalletException", "classes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1wallet_1_1exceptions_1_1_wallet_exception.html#a7d4d23bab7ec8e0776c423b33355de1f", null ]
+];
