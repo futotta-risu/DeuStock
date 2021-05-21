@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 class StockReportTest {
 
     @Test
-    @DisplayName("Test generating a report.")
+    @DisplayName("Test generating a Stock report.")
     void testGenerateReport() throws IOException, InterruptedException {
         // Given
         DeuStock stock = new DeuStock("BB").setPrice(22.0);
@@ -55,7 +55,7 @@ class StockReportTest {
     }
 
     @Test
-    @DisplayName("Test generating a report.")
+    @DisplayName("Test generating a Stock report.")
     void testGenerateReportDoesNotThrowOnInterruptedThread() throws IOException, InterruptedException {
         // Given
         DeuStock stock = new DeuStock("BB").setPrice(22.0);

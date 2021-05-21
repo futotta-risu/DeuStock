@@ -1,27 +1,26 @@
 package es.deusto.deustock.resources.investment;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.ws.rs.core.Response;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
-
-import static org.mockito.Mockito.*;
-
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
 import es.deusto.deustock.dataminer.gateway.stocks.gateways.YahooFinanceGateway;
+import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import yahoofinance.histquotes.HistoricalQuote;
+
+import javax.ws.rs.core.Response;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 /**
  * @author landersanmillan
@@ -42,7 +41,7 @@ class StockReportResourceTest {
     
     @Test
     @DisplayName("Test create a simple pdf with chart returns 200")
-    void testCreateSimplePdfWithChartReturns200() throws IOException, StockNotFoundException{
+    void testCreateSimplePdfWithChartReturns200() throws IOException, StockNotFoundException, SQLException, WalletException {
     	//Given
     	DeuStock stock = new DeuStock("Test");
     	List<HistoricalQuote> quotes = new LinkedList<>();
@@ -92,7 +91,7 @@ class StockReportResourceTest {
     
     @Test
     @DisplayName("Test create report returns 401 on non existent stock")
-    void testCreateReportReturns401OnNonExistentStock() throws IOException, StockNotFoundException{
+    void testCreateReportReturns401OnNonExistentStock() throws IOException, StockNotFoundException, SQLException, WalletException {
         //Given
         when(mockStockGateway.getStockData(any())).thenReturn(null);
 

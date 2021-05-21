@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.UserDetailController">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.UserDetailController">
    <children>
       <AnchorPane VBox.vgrow="ALWAYS">
          <children>
@@ -89,7 +89,15 @@
                                  <VBox.margin>
                                     <Insets bottom="10.0" />
                                  </VBox.margin></Button>
-                              <Button fx:id="accountDeleteButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="179.0" style="-fx-background-color: #00b2d9;" text="Eliminar" textFill="WHITE" />
+                              <Button fx:id="accountDeleteButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="179.0" style="-fx-background-color: #00b2d9;" text="Eliminar" textFill="WHITE">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin></Button>
+                              <Button fx:id="reportDownloadButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="179.0" style="-fx-background-color: #00b2d9;" text="Descargar Reporte" textFill="WHITE">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Button>
 				               </children>
 				            </VBox>
 				         </right>

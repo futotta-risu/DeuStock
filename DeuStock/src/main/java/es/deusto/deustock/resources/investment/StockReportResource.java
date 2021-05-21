@@ -1,14 +1,6 @@
 package es.deusto.deustock.resources.investment;
 
 
-import java.io.IOException;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Response;
-
 import es.deusto.deustock.data.DeuStock;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
 import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
@@ -16,11 +8,17 @@ import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData;
 import es.deusto.deustock.dataminer.gateway.stocks.StockQueryData.Interval;
 import es.deusto.deustock.dataminer.gateway.stocks.exceptions.StockNotFoundException;
-
 import es.deusto.deustock.report.StockReport;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
+import java.io.IOException;
 
-@Path("reports")
+
+@Path("reports/stock")
 public class StockReportResource {
 
     private StockDataAPIGateway stockGateway;
