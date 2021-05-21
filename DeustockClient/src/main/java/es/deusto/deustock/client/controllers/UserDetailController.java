@@ -13,10 +13,7 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.HashMap;
 
 /**
@@ -24,7 +21,6 @@ import java.util.HashMap;
  */
 public class UserDetailController implements DSGenericController{
 
-    private static DeustockGateway gateway = new DeustockGateway();
     private String username = null;
     private User user;
     private MainController mainController;
