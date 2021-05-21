@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import net.jcip.annotations.NotThreadSafe;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 import static org.testfx.api.FxToolkit.registerPrimaryStage;
 
+@NotThreadSafe
 @Execution(ExecutionMode.SAME_THREAD)
 @ExtendWith(ApplicationExtension.class)
 public class RegisterControllerTest extends ApplicationTest{

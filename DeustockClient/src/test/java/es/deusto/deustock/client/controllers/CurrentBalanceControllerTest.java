@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import net.jcip.annotations.NotThreadSafe;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.testfx.api.FxToolkit.registerPrimaryStage;
 
+@NotThreadSafe
 @Execution(ExecutionMode.SAME_THREAD)
 @ExtendWith(ApplicationExtension.class)
 public class CurrentBalanceControllerTest extends ApplicationTest {

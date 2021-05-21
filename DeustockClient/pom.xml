@@ -221,6 +221,13 @@
             <version>4.0.16-alpha</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.stephenc.jcip</groupId>
+            <artifactId>jcip-annotations</artifactId>
+            <version>1.0-1</version>
+            <scope>test</scope>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.testfx/openjfx-monocle -->
         <dependency>
             <groupId>org.testfx</groupId>
