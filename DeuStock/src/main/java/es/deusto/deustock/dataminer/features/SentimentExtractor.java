@@ -12,14 +12,12 @@ import java.util.List;
 
 /**
  * Extractor class, used to encapsulate the sentiment extraction process.
+ *
+ * @author Erik B. Terres
  */
 public class SentimentExtractor {
 
-    /**
-     * Gateway for the Extractor
-     */
     private final SocialNetworkAPIGateway gateway;
-
 
     public SentimentExtractor(SocialNetworkGatewayEnum type){
         gateway = SocialNetworkGatewayFactory.getInstance().create(type);

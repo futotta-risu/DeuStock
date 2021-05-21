@@ -10,5 +10,11 @@ import java.util.List;
  * @author Erik B. Terres
  */
 public interface SocialNetworkAPIGateway {
+
+	/**
+	 * Retrieves a list of messages from a Social Network
+	 * @param queryData  {@link SocialNetworkQueryData} for the message retrieval.
+	 * @return  List of {@link SocialNetworkMessage}
+	 */
 	List<SocialNetworkMessage> getMessageList(SocialNetworkQueryData queryData);
 }

@@ -116,7 +116,7 @@ public class StockDetailController implements DSGenericController {
         			Stage s = new Stage();
         	        DirectoryChooser directoryChooser = new DirectoryChooser();
                     File selectedDirectory = directoryChooser.showDialog(s);
-					File f = gateway.getReport(this.acronymLabel.getText(), "DAILY", selectedDirectory.getAbsolutePath());
+					File f = gateway.getStockReport(this.acronymLabel.getText(), "DAILY", selectedDirectory.getAbsolutePath());
 					
 				    try {
 						Desktop.getDesktop().open(f);

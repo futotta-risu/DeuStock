@@ -147,15 +147,6 @@ public class DeustockGateway {
 
         return response.getStatus() == 200;
     }
-    
-    public byte[] getStockReport(String acronym, String interval) throws IOException {
-    	Response data = getHostWebTarget()
-    			.path("reports").path(acronym).path(interval)
-    			.request(MediaType.APPLICATION_OCTET_STREAM).get();
-    	
-    	return data.readEntity(byte[].class);     
-    }
-
 
     public boolean updateUser(User user, String token) {
         Response response = getHostWebTarget().path("tpuser")
@@ -166,14 +157,42 @@ public class DeustockGateway {
         return response.getStatus() == 200;
     }
 
-    public File getReport(String acronym, String interval, String path){
+    public byte[] getStockReport(String acronym, String interval) throws IOException {
+        Response data = getHostWebTarget()
+                .path("reports").path("stock").path(acronym).path(interval)
+                .request(MediaType.APPLICATION_OCTET_STREAM).get();
+
+        return data.readEntity(byte[].class);
+    }
+
+    public File getStockReport(String acronym, String interval, String path){
         Response response = getHostWebTarget()
-                .path("reports").path(acronym).path(interval)
+                .path("reports").path("stock").path(acronym).path(interval)
                 .request("application/pdf")
                 .get();
 
+        return generateFile(acronym, response, path);
+    }
+
+    public byte[] getUserReport(String username) throws IOException {
+        Response data = getHostWebTarget()
+                .path("reports").path("user").path(username)
+                .request(MediaType.APPLICATION_OCTET_STREAM).get();
+
+        return data.readEntity(byte[].class);
+    }
+    public File getUserReport(String username, String path){
+        Response response = getHostWebTarget()
+                .path("reports").path("user").path(username)
+                .request("application/pdf")
+                .get();
+
+        return generateFile(username, response, path);
+    }
+
+    private File generateFile(String name, Response response, String path){
         InputStream is = response.readEntity(InputStream.class);
-        File downloadfile = new File(path + "/" +acronym + "_" + Calendar.getInstance().getTimeInMillis() + ".pdf");
+        File downloadfile = new File(path + "/" + name  + "_" + Calendar.getInstance().getTimeInMillis() + ".pdf");
         byte[] byteArray = new byte[0];
         try {
             byteArray = IOUtils.toByteArray(is);
@@ -185,7 +204,6 @@ public class DeustockGateway {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return downloadfile;
     }
 

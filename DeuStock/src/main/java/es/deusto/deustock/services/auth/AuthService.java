@@ -14,12 +14,15 @@ import es.deusto.deustock.services.auth.exceptions.RegisterException;
 import org.apache.log4j.Logger;
 import es.deusto.deustock.util.crypto.Crypto;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.sql.SQLException;
-import java.util.Random;
 
+/**
+ * Service for the Authorization process.
+ *
+ * @author Erik B. Terres
+ */
 public class AuthService {
 
     private UserDAO userDAO;

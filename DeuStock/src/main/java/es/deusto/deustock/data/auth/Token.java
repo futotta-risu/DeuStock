@@ -1,14 +1,17 @@
 package es.deusto.deustock.data.auth;
 
 import es.deusto.deustock.data.User;
-import org.eclipse.persistence.annotations.CascadeOnDelete;
 
 import javax.jdo.annotations.*;
 import java.io.Serializable;
 
+/**
+ * Token class used for user authentication without sending passwords.
+ *
+ * @author Erik B. Terres
+ */
 @PersistenceCapable(detachable = "true")
 public class Token  implements Serializable {
-
 
     @Persistent(defaultFetchGroup = "true")
     User user;

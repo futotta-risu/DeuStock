@@ -5,9 +5,18 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.jdo.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Clase encarga del acceso a la base de datos y el proceso de las transacciones
+ *
+ * @author Erik B. Terres
+ * @author Amaia Acha
+ * @author landersanmi
+ */
 public class DBManager implements IDBManager{
 
 	private static final String SQL_TYPE = "javax.jdo.query.JDOQL";
@@ -65,7 +74,6 @@ public class DBManager implements IDBManager{
 	 * @return <strong> ArrayList[Object]</strong> -> Lista que contiene todos los objetos
 	 *         almacenados en la BD
 	 */
-	
 	public List<Object> getAll(Class entityClass) {
 		
 			var pm = pmf.getPersistenceManager();
@@ -95,8 +103,22 @@ public class DBManager implements IDBManager{
 			return objects;
 	}
 
+	/**
+	 * Returns a list of objects of a given class from the database.
+	 *
+	 * The condition String should be passed with variables referenced through
+	 *  the params parameter to be able to use {@link java.sql.PreparedStatement}.
+	 *
+	 * @param entityClass  Class of the objects retrieved
+	 * @param conditions  Conditions used in the list retrieving
+	 * @param params  Parameter list to be processed in the conditions.
+	 */
 	@Override
-	public List<Object> getList(Class entityClass, String conditions, HashMap<String, String> params) {
+	public List<Object> getList(
+			@NotNull Class entityClass,
+			@NotBlank String conditions,
+			@NotNull HashMap<String, String> params
+	) {
 		var pm = pmf.getPersistenceManager();
 		pm.getFetchPlan().setMaxFetchDepth(-1);
 		var tx = pm.currentTransaction();

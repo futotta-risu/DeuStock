@@ -10,6 +10,11 @@ import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Unique;
 
+/**
+ * Stock class.
+ *
+ * @author Erik B. Terres
+ */
 @PersistenceCapable(detachable = "true")
 public class DeuStock {
 
@@ -19,7 +24,8 @@ public class DeuStock {
     @Unique
     String acronym;
     String description;
-    //Price per hours last 24h
+
+    /** Stock price history */
     @NotPersistent
     List<HistoricalQuote> history = new ArrayList<>();
 

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Objects;
 
 /**
+ * Query for the {@link es.deusto.deustock.data.DeuStock} retrieval
  *
  * @author Erik B. Terres
  */

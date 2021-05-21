@@ -1,17 +1,15 @@
 package es.deusto.deustock.report;
 
-import static org.apache.pdfbox.pdmodel.font.PDType1Font.TIMES_ROMAN;
-
-import java.io.File;
-import java.io.IOException;
-
-import java.util.Calendar;
-
-
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Calendar;
+
+import static org.apache.pdfbox.pdmodel.font.PDType1Font.TIMES_ROMAN;
 
 
 /**
@@ -89,9 +87,8 @@ public abstract class Report {
 	 *
 	 * @return File linked to the saved report.
 	 */
-	public File generate() throws IOException{
+	public File generate() throws IOException {
 		initReport();
-
 		setMetadata();
 		setFrontPage();
 		setTemplateData();
@@ -145,7 +142,6 @@ public abstract class Report {
 	 */
 	protected void addTextAtOfssets( int x, int y, String text) throws IOException {
 		this.contentStream.beginText();
-
 		this.contentStream.newLineAtOffset(x, y);
 		this.contentStream.showText(text);
 		this.contentStream.endText();
