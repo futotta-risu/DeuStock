@@ -51,8 +51,6 @@ public class ChangeUserDetailControllerTest extends ApplicationTest {
     private DeustockGateway mockGateway;
     private MainController mockMainController;
 
-
-
     @BeforeAll
     public static void setupSpec() throws Exception {
         if (Boolean.getBoolean("headless")) {

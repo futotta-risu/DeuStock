@@ -34,7 +34,8 @@ import yahoofinance.histquotes.HistoricalQuote;
 public class StockDetailController implements DSGenericController {
 	
 
-    private static final DeustockGateway gateway = new DeustockGateway();
+    private DeustockGateway gateway = new DeustockGateway();
+    private MainController mainController;
     private String acronym = null;
     private Stock stock = null;
     
@@ -56,6 +57,14 @@ public class StockDetailController implements DSGenericController {
     CategoryAxis xAxis;   
     @FXML
     NumberAxis yAxis;
+    
+    public StockDetailController() {
+		this.gateway = new DeustockGateway();
+		this.mainController = MainController.getInstance();
+    }
+    
+    public void setDeustockGateway(DeustockGateway gateway){ this.gateway = gateway; }
+    public void setMainController(MainController mainController){ this.mainController = mainController; }
     
 	@Override
 	public void setParams(HashMap<String, Object> params) {
@@ -118,13 +127,13 @@ public class StockDetailController implements DSGenericController {
         );
         
         backButton.setOnMouseClicked(
-                mouseevent -> MainController.getInstance().loadAndChangePane(
+                mouseevent -> mainController.loadAndChangePane(
                         ViewPaths.StockListViewPath
                 )
         );
 
         buyButton.setOnMouseClicked(
-                e -> MainController.getInstance().loadAndChangePaneWithParams(
+                e -> mainController.loadAndChangePaneWithParams(
                         ViewPaths.OperationView,
                         new HashMap<>() {{
                             put("username",MainController.getInstance().getUser());

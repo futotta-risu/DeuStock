@@ -25,6 +25,7 @@ import java.util.HashMap;
 public class StockListViewController {
 
 	private DeustockGateway gateway;
+	private MainController mainController;
 	
     @FXML 
     TextField searchStockText;
@@ -42,9 +43,11 @@ public class StockListViewController {
 
     public StockListViewController(){
     	this.gateway = new DeustockGateway();
+		this.mainController = MainController.getInstance();
     }
 
     public void setDeustockGateway(DeustockGateway gateway){ this.gateway = gateway; }
+    public void setMainController(MainController mainController){ this.mainController = mainController; }
 
     @FXML
     private void initialize(){
@@ -94,7 +97,7 @@ public class StockListViewController {
 
                 Button detailButton = new Button();
                 detailButton.setText("More Info");
-                detailButton.setOnAction(event -> MainController.getInstance().loadAndChangePaneWithParams(
+                detailButton.setOnAction(event -> mainController.loadAndChangePaneWithParams(
                         ViewPaths.StockDetailViewPath,
                         new HashMap<>() {{
                             put("acronym", stock.getAcronym());
