@@ -2,7 +2,6 @@ package es.deusto.deustock.services.investment.operation;
 
 import es.deusto.deustock.services.investment.operation.type.OperationType;
 
-
 /**
  * Class containing all operation services.
  *

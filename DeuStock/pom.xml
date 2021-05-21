@@ -6,13 +6,15 @@
     <groupId>com.futtosarisu</groupId>
     <artifactId>deustock</artifactId>
     <packaging>jar</packaging>
-    <version>2.0</version>
+    <version>3.0</version>
     <name>DeuStock</name>
 
 	<properties>
   		<sonar.projectKey>futotta-risu_DeuStock</sonar.projectKey>
   		<sonar.organization>futotta-risu</sonar.organization>
   		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
+		<doxygen.config.file>${basedir}/src/main/resources</doxygen.config.file>
 
 		<config.files.dir>${basedir}/resources</config.files.dir>
 		<maven.compiler.source>14</maven.compiler.source>
@@ -333,7 +335,7 @@
 			<version>3.9.1</version>
 			<type>maven-plugin</type>
 		</dependency>
-		
+
 	</dependencies>
 
 
@@ -468,7 +470,6 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.2.1</version>
-
 				<configuration>
 					<mainClass>es.deusto.deustock.Main</mainClass>
 					<systemProperties>
@@ -479,6 +480,40 @@
 					</systemProperties>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+				<groupId>com.soebes.maven.plugins</groupId>
+				<artifactId>doxygen-maven-plugin</artifactId>
+				<version>1.1.0</version>
+				<configuration>
+					<configurationFile>${doxygen.config.file}</configurationFile>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<!-- here the phase you need -->
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/docs</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}/target/doxygen/html</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
@@ -487,8 +522,10 @@
 					</descriptors>
 				</configuration>
 			</plugin>
-        </plugins>
+
+		</plugins>
     </build>
+
     <repositories>
 		<repository>
 			<id>DN_M2_Repo</id>

@@ -7,7 +7,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 
+import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashMap;
 
 /**
@@ -15,6 +23,7 @@ import java.util.HashMap;
  */
 public class UserDetailController implements DSGenericController{
 
+    private static DeustockGateway gateway = new DeustockGateway();
     private String username = null;
     private User user;
 
@@ -38,6 +47,9 @@ public class UserDetailController implements DSGenericController{
 
     @FXML
     Button resetWalletButton;
+
+    @FXML
+    Button reportDownloadButton;
 
     public  UserDetailController(){}
 
@@ -100,6 +112,21 @@ public class UserDetailController implements DSGenericController{
     	this.resetWalletButton.setOnMouseClicked(
     			mouseEvent -> resetAccountWallet()
     	);
+
+        this.reportDownloadButton.setOnMouseClicked(
+                MouseEvent -> {
+                    Stage s = new Stage();
+                    DirectoryChooser directoryChooser = new DirectoryChooser();
+                    File selectedDirectory = directoryChooser.showDialog(s);
+                    File f = gateway.getUserReport(this.username, selectedDirectory.getAbsolutePath());
+
+                    try {
+                        Desktop.getDesktop().open(f);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+        );
     	
     }
     
