@@ -11,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,8 +40,6 @@ public class UserReportTest {
 
         // When
         File file = report.generate();
-        Desktop.getDesktop().open(file);
-
 
         // Then
         assertTrue(file.exists());
@@ -70,8 +67,6 @@ public class UserReportTest {
 
         // When
         File file = report.generate();
-        Desktop.getDesktop().open(file);
-
 
         // Then
         assertTrue(file.exists());
@@ -100,7 +95,6 @@ public class UserReportTest {
 
         // When
         File file = report.generate();
-        Desktop.getDesktop().open(file);
         PDDocument document= PDDocument.load(file);
         int pages = document.getNumberOfPages();
 
