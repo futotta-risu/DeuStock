@@ -18,22 +18,32 @@ import java.util.HashMap;
  */
 public class OperationController implements DSGenericController {
 
+	private DeustockGateway gateway = new DeustockGateway();
+    private MainController mainController;
+	
     @FXML
-    private Label stockNameLabel, stockPriceLabel, balanceLabel, costLabel;
+    Label stockNameLabel, stockPriceLabel, balanceLabel, costLabel;
 
     @FXML
-    private TextField amountTextField;
+    TextField amountTextField;
 
     @FXML
-    private ChoiceBox<OperationType> operationSelect;
+    ChoiceBox<OperationType> operationSelect;
 
     @FXML
-    private Button cancelButton, operateButton, calculateCostButton;
+    Button cancelButton, operateButton, calculateCostButton;
 
     private String username;
     private double balance;
     private Stock stock;
 
+    public OperationController(){
+    	this.gateway = new DeustockGateway();
+		this.mainController = MainController.getInstance();
+    }
+    
+    public void setDeustockGateway(DeustockGateway gateway){ this.gateway = gateway; }
+    public void setMainController(MainController mainController){ this.mainController = mainController; }
 
     @Override
     public void setParams(HashMap<String, Object> params) {
@@ -47,8 +57,7 @@ public class OperationController implements DSGenericController {
 
         initRoot();
     }
-    public OperationController(){}
-
+    
     @FXML
     private void initialize() {
         operationSelect.setValue(OperationType.LONG);
@@ -59,17 +68,17 @@ public class OperationController implements DSGenericController {
                 e -> costLabel.setText(String.valueOf(getOpenPrice()))
         );
         cancelButton.setOnMouseClicked(
-                e -> MainController.getInstance().loadAndChangePane(
+                e -> mainController.loadAndChangePane(
                         ViewPaths.StockListViewPath
                 )
         );
 
         // TODO Security on the amount field
         operateButton.setOnMouseClicked(
-                e -> new DeustockGateway().openOperation(
+                e -> gateway.openOperation(
                         operationSelect.getValue(),
                         stock,
-                        MainController.getInstance().getToken(),
+                        mainController.getToken(),
                         // Temporaly solves the case of empty textbox
                         Double.parseDouble("0" + amountTextField.getText()))
         );
@@ -77,7 +86,7 @@ public class OperationController implements DSGenericController {
 
     private void initRoot(){
 
-        balance = new DeustockGateway().getBalance(username);
+        balance =gateway.getBalance(username);
         stockNameLabel.setText(stock.getAcronym());
         stockPriceLabel.setText(String.valueOf(stock.getPrice()));
         balanceLabel.setText(String.valueOf(balance));

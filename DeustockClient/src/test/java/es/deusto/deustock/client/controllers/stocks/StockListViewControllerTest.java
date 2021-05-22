@@ -1,7 +1,6 @@
 package es.deusto.deustock.client.controllers.stocks;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
@@ -21,16 +20,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.testfx.api.FxRobot;
-import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationExtension;
 
 import es.deusto.deustock.client.controllers.MainController;
 import es.deusto.deustock.client.data.Stock;
-import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.gateways.exceptions.ForbiddenException;
 import es.deusto.deustock.client.visual.stocks.list.StockInfoLine;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -38,8 +34,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import net.jcip.annotations.NotThreadSafe;
+
 import org.testfx.framework.junit5.ApplicationTest;
 
+@NotThreadSafe
 @Execution(ExecutionMode.SAME_THREAD)
 @ExtendWith(ApplicationExtension.class)
 public class StockListViewControllerTest extends ApplicationTest {
