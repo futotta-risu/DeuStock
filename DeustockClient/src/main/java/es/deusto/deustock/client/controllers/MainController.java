@@ -152,5 +152,7 @@ public class MainController {
     }
 
 
-
+    public Scene getScene() {
+        return scene;
+    }
 }

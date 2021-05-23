@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.UserDetailController">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.UserDetailController">
    <children>
 				      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
 				         <right>
@@ -71,7 +71,7 @@
          <left>
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
                <children>
-				                  <Button fx:id="editProfileButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" style="-fx-background-color: #00b2d9;" text="Cambiar Detalles" textFill="WHITE">
+				                  <Button id="hoverButton" fx:id="editProfileButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" stylesheets="@../button.css" text="Cambiar Detalles" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="25.0" right="25.0" top="25.0" />
                      </VBox.margin>
@@ -79,7 +79,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="resetWalletButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" style="-fx-background-color: #00b2d9;" text="Reset Wallet" textFill="WHITE">
+                  <Button id="hoverRedButton" fx:id="resetWalletButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" stylesheets="@../button.css" text="Reset Wallet" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="25.0" right="25.0" top="25.0" />
                      </VBox.margin>
@@ -87,7 +87,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="accountDeleteButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" style="-fx-background-color: #00b2d9;" text="Eliminar" textFill="WHITE">
+                  <Button id="hoverRedButton" fx:id="accountDeleteButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" stylesheets="@../button.css" text="Eliminar" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="25.0" right="25.0" top="25.0" />
                      </VBox.margin>

@@ -74,6 +74,7 @@ public class RegisterController {
 		cancelBtn.setOnMouseClicked(			
 				mouseEvent -> MainController.getInstance().loadAndChangeScene(ViewPaths.LoginViewPath)
 		);
+		MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
 	}
 	
 

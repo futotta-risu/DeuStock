@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.stocks.OperationController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.stocks.OperationController">
    <children>
       <FlowPane alignment="CENTER" prefHeight="117.0" prefWidth="600.0">
          <children>
@@ -42,7 +42,7 @@
       </FlowPane>
       <FlowPane alignment="CENTER" prefHeight="54.0" prefWidth="600.0">
          <children>
-            <ChoiceBox fx:id="operationSelect" prefWidth="150.0" />
+            <ChoiceBox fx:id="operationSelect" prefWidth="150.0" style="-fx-background-color: #00b2d9;" />
          </children>
       </FlowPane>
       <FlowPane alignment="CENTER" prefHeight="12.0" prefWidth="600.0">

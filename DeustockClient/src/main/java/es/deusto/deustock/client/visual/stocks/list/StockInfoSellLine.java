@@ -65,6 +65,7 @@ public class StockInfoSellLine extends GridPane{
                         String.valueOf(stockHistory.getId()),
                         MainController.getInstance().getToken())
         );
+        sellButton.setId("hoverRedButton");
         
         add(stockNameLabel,0,0);
         add(stockBuyPriceLabel,1,0);

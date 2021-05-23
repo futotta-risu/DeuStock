@@ -53,6 +53,8 @@ public class ControlButtonController implements DSGenericController{
                         new HashMap<>() {{ put("username", username); }}
                 )
         );
+
+        MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
     }
 
     public String getUsername() {

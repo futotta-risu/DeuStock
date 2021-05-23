@@ -47,8 +47,11 @@ public class StockListViewController {
         refreshStocks();
         Button refreshButton = new Button("Refresh");
         refreshButton.setOnMouseClicked(mouseEvent -> refreshStocks());
+        refreshButton.setId("hoverButton");
 
         stockList.getChildren().add(refreshButton);
+
+        MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
     }
 
     @FXML
@@ -76,6 +79,7 @@ public class StockListViewController {
                 
                 Button detailButton = new Button();
                 detailButton.setText("More Info");
+                detailButton.setId("hoverButton");
                 detailButton.setOnAction(event -> MainController.getInstance().loadAndChangePaneWithParams(
                         ViewPaths.StockDetailViewPath,
                         new HashMap<>() {{

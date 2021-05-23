@@ -55,6 +55,7 @@ public class LoginController {
 
 	@FXML
 	private void initialize(){
+
 		Dialog<String> dialog = new Dialog<>();
 	    dialog.setTitle("ERROR");
 	    ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
@@ -82,10 +83,12 @@ public class LoginController {
 				mouseEvent -> MainController.getInstance().loadAndChangeScene(
 							ViewPaths.RegisterViewPath
 					)
-			);
+		);
 	}
 
-	
+
+
+
 	@FXML
 	private String login() throws ForbiddenException {
 		Dialog<String> dialog = new Dialog<>();

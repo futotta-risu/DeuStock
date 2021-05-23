@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<GridPane minHeight="80.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.ControlButtonController">
+<GridPane minHeight="80.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.ControlButtonController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="16.66" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="16.66" prefWidth="100.0" />
@@ -20,32 +19,32 @@
       <RowConstraints minHeight="10.0" percentHeight="100.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <Button fx:id="homeButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #00b2d9;" text="Home" textFill="WHITE" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <Button id="hoverButton" fx:id="homeButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@button.css" text="Home" textFill="WHITE" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <font>
             <Font size="28.0" />
          </font>
       </Button>
-      <Button id="aboutButton" fx:id="aboutButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #00b2d9;" text="DeuStock" textFill="WHITE" GridPane.columnIndex="3">
+      <Button id="hoverButton" fx:id="aboutButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@button.css" text="DeuStock" textFill="WHITE" GridPane.columnIndex="3">
          <font>
             <Font size="28.0" />
          </font>
       </Button>
-      <Button id="helpButton" fx:id="helpButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #00b2d9;" text="Ayuda" textFill="WHITE" GridPane.columnIndex="2">
+      <Button id="hoverButton" fx:id="helpButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@button.css" text="Ayuda" textFill="WHITE" GridPane.columnIndex="2">
          <font>
             <Font size="28.0" />
          </font>
       </Button>
-      <Button id="stockButton" fx:id="stockListButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #00b2d9;" text="Stock" textFill="WHITE" GridPane.columnIndex="1">
+      <Button id="hoverButton" fx:id="stockListButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@button.css" text="Stock" textFill="WHITE" GridPane.columnIndex="1">
          <font>
             <Font size="28.0" />
          </font>
       </Button>
-      <Button id="profileButton" fx:id="profileButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #00b2d9;" text="Perfil" textFill="WHITE" GridPane.columnIndex="5">
+      <Button id="hoverButton" fx:id="profileButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@button.css" text="Perfil" textFill="WHITE" GridPane.columnIndex="5">
          <font>
             <Font size="28.0" />
          </font>
       </Button>
-      <Button id="myStocksButton" fx:id="myStocksButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #00b2d9;" text="Balance" textFill="WHITE" GridPane.columnIndex="4">
+      <Button id="hoverButton" fx:id="myStocksButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@button.css" text="Balance" textFill="WHITE" GridPane.columnIndex="4">
          <font>
             <Font size="28.0" />
          </font>

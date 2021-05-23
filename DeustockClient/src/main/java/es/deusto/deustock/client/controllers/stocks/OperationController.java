@@ -55,9 +55,12 @@ public class OperationController implements DSGenericController {
         operationSelect.setTooltip(new Tooltip("Select and operation"));
         operationSelect.getItems().setAll(OperationType.values());
 
+        calculateCostButton.setId("hoverButton");
         calculateCostButton.setOnMouseClicked(
                 e -> costLabel.setText(String.valueOf(getOpenPrice()))
         );
+
+        cancelButton.setId("hoverRedButton");
         cancelButton.setOnMouseClicked(
                 e -> MainController.getInstance().loadAndChangePane(
                         ViewPaths.StockListViewPath
@@ -65,6 +68,7 @@ public class OperationController implements DSGenericController {
         );
 
         // TODO Security on the amount field
+        operateButton.setId("hoverButton");
         operateButton.setOnMouseClicked(
                 e -> new DeustockGateway().openOperation(
                         operationSelect.getValue(),
@@ -73,6 +77,7 @@ public class OperationController implements DSGenericController {
                         // Temporaly solves the case of empty textbox
                         Double.parseDouble("0" + amountTextField.getText()))
         );
+        MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
     }
 
     private void initRoot(){

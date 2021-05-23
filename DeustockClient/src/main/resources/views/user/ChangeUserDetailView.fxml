@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.ChangeUserDetailController">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.ChangeUserDetailController">
    <children>
       <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #00b2d9;">
          <children>
@@ -98,7 +98,7 @@
                         <Insets bottom="20.0" right="15.0" />
                      </VBox.margin>
                   </Label>
-                  <Button fx:id="changeBtn" mnemonicParsing="false" prefHeight="56.0" prefWidth="335.0" style="-fx-background-color: #00b2d9;" text="Actualizar perfil" textFill="WHITE">
+                  <Button id="hoverButton" fx:id="changeBtn" mnemonicParsing="false" prefHeight="56.0" prefWidth="335.0" stylesheets="@../button.css" text="Actualizar perfil" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -139,12 +139,12 @@
                         <Insets bottom="30.0" />
                      </VBox.margin>
                   </TextArea>
-                  <ChoiceBox fx:id="countryChoice" prefHeight="32.0" prefWidth="356.0">
+                  <ChoiceBox fx:id="countryChoice" prefHeight="32.0" prefWidth="356.0" style="-fx-background-color: #00b2d9;">
                      <VBox.margin>
                         <Insets bottom="22.0" />
                      </VBox.margin>
                   </ChoiceBox>
-                  <Button fx:id="cancelBtn" mnemonicParsing="false" prefHeight="56.0" prefWidth="335.0" style="-fx-background-color: #ff4d4d;" text="Cancelar" textFill="WHITE">
+                  <Button id="hoverRedButton" fx:id="cancelBtn" mnemonicParsing="false" prefHeight="56.0" prefWidth="335.0" stylesheets="@../button.css" text="Cancelar" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>

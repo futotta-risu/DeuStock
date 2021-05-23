@@ -101,7 +101,7 @@ public class StockDetailController implements DSGenericController {
 		}
       
 
-        
+        downloadButton.setId("hoverButton");
         downloadButton.setOnMouseClicked( 
         		MouseEvent -> {
         			Stage s = new Stage();
@@ -116,13 +116,15 @@ public class StockDetailController implements DSGenericController {
 					}
 				}
         );
-        
+
+        backButton.setId("hoverButton");
         backButton.setOnMouseClicked(
                 mouseevent -> MainController.getInstance().loadAndChangePane(
                         ViewPaths.StockListViewPath
                 )
         );
 
+        buyButton.setId("hoverButton");
         buyButton.setOnMouseClicked(
                 e -> MainController.getInstance().loadAndChangePaneWithParams(
                         ViewPaths.OperationView,
@@ -132,6 +134,8 @@ public class StockDetailController implements DSGenericController {
                         }}
                 )
         );
+
+        MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
     }
 	
 	private void getStock(){

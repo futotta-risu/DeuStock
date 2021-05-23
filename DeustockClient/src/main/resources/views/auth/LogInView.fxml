@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.LoginController">
+<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.LoginController">
    <children>
       <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
          <children>
@@ -53,12 +53,12 @@
                   </PasswordField>
                   <HBox alignment="TOP_CENTER" fillHeight="false" spacing="10.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <Button fx:id="loginButton" mnemonicParsing="false" style="-fx-background-color: #00b2d9;" text="Log In" textFill="WHITE">
+                        <Button id="hoverButton" fx:id="loginButton" mnemonicParsing="false" style="-fx-background-color: #00b2d9;" text="Log In" textFill="WHITE">
                            <font>
                               <Font name="Calibri" size="14.0" />
                            </font>
                         </Button>
-                        <Button fx:id="registerBtn" mnemonicParsing="false" style="-fx-background-color: #00b2d9;" text="Register" textFill="WHITE">
+                        <Button id="hoverButton" fx:id="registerBtn" mnemonicParsing="false" style="-fx-background-color: #00b2d9;" text="Register" textFill="WHITE">
                            <font>
                               <Font name="Calibri" size="14.0" />
                            </font>

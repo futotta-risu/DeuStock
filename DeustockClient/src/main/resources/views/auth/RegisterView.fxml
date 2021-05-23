@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.RegisterController">
+<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.RegisterController">
    <children>
       <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
          <children>
@@ -36,12 +36,12 @@
                   <PasswordField fx:id="passwordTxt" layoutX="238.0" layoutY="97.0" prefHeight="25.0" prefWidth="161.0" promptText="Password" />
                   <DatePicker fx:id="birthDatePicker" layoutX="238.0" layoutY="136.0" prefHeight="27.0" prefWidth="161.0" promptText="Fecha nacimiento" />
                   <ChoiceBox fx:id="countryChoice" layoutX="30.0" layoutY="250.0" prefWidth="150.0" style="-fx-background-color: #00b2d9;" />
-                  <Button fx:id="registerBtn" layoutX="211.0" layoutY="246.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" style="-fx-background-color: #00b2d9;" text="Registrar" textFill="WHITE">
+                  <Button id="hoverButton" fx:id="registerBtn" layoutX="211.0" layoutY="246.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" stylesheets="@../button.css" text="Registrar" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="cancelBtn" cancelButton="true" layoutX="351.0" layoutY="246.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" style="-fx-background-color: #00b2d9;" text="Cancelar" textFill="WHITE">
+                  <Button id="hoverButton" fx:id="cancelBtn" cancelButton="true" layoutX="353.0" layoutY="246.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" stylesheets="@../button.css" text="Cancelar" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="14.0" />
                      </font>

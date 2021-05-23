@@ -69,6 +69,8 @@ public class UserDetailController implements DSGenericController{
     }
 
     private void initRoot(){
+        MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
+
         if(this.username==null){
             return;
         }
@@ -124,7 +126,8 @@ public class UserDetailController implements DSGenericController{
                     }
                 }
     	);
-    	
+
+
     }
     
     public void resetAccountWallet() {
