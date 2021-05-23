@@ -86,7 +86,7 @@ public class OperationController implements DSGenericController {
 
     private void initRoot(){
 
-        balance =gateway.getBalance(username);
+        balance = gateway.getBalance(username);
         stockNameLabel.setText(stock.getAcronym());
         stockPriceLabel.setText(String.valueOf(stock.getPrice()));
         balanceLabel.setText(String.valueOf(balance));

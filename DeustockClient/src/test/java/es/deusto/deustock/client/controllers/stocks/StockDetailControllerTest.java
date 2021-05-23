@@ -28,6 +28,7 @@ import es.deusto.deustock.client.controllers.MainController;
 import es.deusto.deustock.client.data.Stock;
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.gateways.DeustockGateway;
+import es.deusto.deustock.client.gateways.exceptions.ForbiddenException;
 import es.deusto.deustock.client.visual.stocks.list.StockInfoLine;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -109,7 +110,7 @@ class StockDetailControllerTest extends ApplicationTest{
     }
     
     @Test
-    void testOpenOnStock() {
+    void testOpenOnStock() throws ForbiddenException {
         // Given
         Stock stock = new Stock();
         stock.setAcronym("AMZ");
@@ -131,7 +132,7 @@ class StockDetailControllerTest extends ApplicationTest{
     }
     
     @Test
-    void testBackButtonChangesScene(FxRobot robot){
+    void testBackButtonChangesScene(FxRobot robot) throws ForbiddenException {
         // Given
 
         doNothing().when(mockMainController).loadAndChangeScene(anyString());
@@ -146,7 +147,7 @@ class StockDetailControllerTest extends ApplicationTest{
     }
     
     @Test
-    void testBuyButtonChangesScene(FxRobot robot){
+    void testBuyButtonChangesScene(FxRobot robot) throws ForbiddenException {
         // Given
 
         doNothing().when(mockMainController).loadAndChangeScene(anyString());
@@ -161,7 +162,7 @@ class StockDetailControllerTest extends ApplicationTest{
     }
     
     @Test
-    void testDownloadButtonChangesScene(FxRobot robot){
+    void testDownloadButtonChangesScene(FxRobot robot) throws ForbiddenException {
     	// Given
 
         doNothing().when(mockMainController).loadAndChangeScene(anyString());

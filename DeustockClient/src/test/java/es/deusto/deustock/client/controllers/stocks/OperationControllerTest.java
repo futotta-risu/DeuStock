@@ -2,7 +2,10 @@ package es.deusto.deustock.client.controllers.stocks;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.testfx.api.FxToolkit.registerPrimaryStage;
 
@@ -16,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
+import org.testfx.api.FxRobot;
 import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -23,6 +27,7 @@ import org.testfx.framework.junit5.ApplicationTest;
 import es.deusto.deustock.client.controllers.MainController;
 import es.deusto.deustock.client.data.Stock;
 import es.deusto.deustock.client.gateways.DeustockGateway;
+import es.deusto.deustock.client.gateways.exceptions.ForbiddenException;
 import es.deusto.deustock.client.simulation.investment.operations.OperationType;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -96,7 +101,7 @@ class OperationControllerTest extends ApplicationTest {
     }
     
     @Test
-    void testOpenOnStock() {
+    void testOpenOnStock() throws ForbiddenException {
         // Given
         Stock stock = new Stock();
         stock.setPrice(2);
@@ -116,6 +121,38 @@ class OperationControllerTest extends ApplicationTest {
         // Then
 
 
+    }
+    
+    @Test
+    void testCancelButtonChangesScene(FxRobot robot) throws ForbiddenException {
+    	// Given
+
+        doNothing().when(mockMainController).loadAndChangeScene(anyString());
+        controller.setDeustockGateway(mockGateway);
+        controller.setMainController(mockMainController);
+
+        // When
+        robot.clickOn(controller.cancelButton);
+
+        // Then
+        verify(mockMainController, times(1)).loadAndChangeScene(anyString());
+    }
+    
+    @Test
+    void testCalculateButton(FxRobot robot) throws ForbiddenException {
+    	// Given
+
+        doNothing().when(mockMainController).loadAndChangeScene(anyString());
+        controller.setDeustockGateway(mockGateway);
+        controller.setMainController(mockMainController);
+
+        // When
+        controller.operationSelect.setValue(OperationType.SHORT);
+        controller.amountTextField.setText("2");
+        robot.clickOn(controller.calculateCostButton);
+
+        // Then
+        assertEquals(controller.costLabel, controller.getOpenPrice());
     }
 
 }
