@@ -74,8 +74,8 @@ public class StockDAO implements IDAO<DeuStock>{
 	@Override
 	public DeuStock get(Object identity) throws SQLException {
 		var whereCondition = "acronym  == :acronym";
-		HashMap<String,String> params = new HashMap<>();
-		params.put("acronym", (String) identity);
+		HashMap<String,Object> params = new HashMap<>();
+		params.put("acronym", identity);
 		return (DeuStock) dbManager.get(DeuStock.class, whereCondition, params);
 	}
 

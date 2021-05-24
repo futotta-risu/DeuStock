@@ -46,8 +46,8 @@ public class StockHistoryDAO {
 
     public StockHistory get(String id) throws SQLException {
         var whereCondition = "id == :id";
-        HashMap<String,String> params = new HashMap<>();
-        params.put("id", id);
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("id", Long.valueOf(id) );
 
         return (StockHistory) dbManager.get(StockHistory.class, whereCondition , params);
     }

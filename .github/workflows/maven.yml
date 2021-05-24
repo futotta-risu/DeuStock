@@ -10,8 +10,17 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
 
+  cypress-run:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          start: npm i --package-lock-only && npm start
+  build:
     runs-on: ubuntu-latest
     services:
         mysql:
@@ -38,12 +47,12 @@ jobs:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
-
+    
     - name: Create database schema
       run: |
         cd DeuStock
-        mvn compile datanucleus:enhance
-          
+        mvn compile datanucleus:enhance   
+
     - name: Build with Maven (Server)
       env:
         twitter_access_token : ${{secrets.TWITTERACCESSTOKEN}}
@@ -62,7 +71,8 @@ jobs:
         directory: ./DeuStock
 
     - name: Build with Maven (Client)
-      run: mvn --file DeustockClient/pom.xml --batch-mode --update-snapshots verify
+      run: xvfb-run mvn --file DeustockClient/pom.xml --batch-mode --update-snapshots verify
+
       
     - name: Upload client coverage to Codecov
       uses: codecov/codecov-action@v1

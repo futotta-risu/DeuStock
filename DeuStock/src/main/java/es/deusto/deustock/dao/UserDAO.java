@@ -57,8 +57,8 @@ public class UserDAO implements IDAO<User> {
 	@Override
 	public User get(Object identity) throws SQLException {
 		String whereCondition = "username == :username";
-		HashMap<String,String> params = new HashMap<>();
-		params.put("username", (String) identity);
+		HashMap<String,Object> params = new HashMap<>();
+		params.put("username", identity);
 		return (User) dbManager.get(User.class, whereCondition, params);
 	
 	}

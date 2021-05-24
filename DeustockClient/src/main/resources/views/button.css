@@ -1,0 +1,35 @@
+#hoverButton {
+    -fx-border-radius: 4px;
+    -fx-background-color: #00b2d9;
+    -fx-border: none;
+    -fx-text-fill: #FFFFFF;
+    -fx-text-align: center;
+    -fx-transition: all 0.5s;
+    -fx-cursor: pointer;
+    -fx-margin: 5px;
+}
+#hoverRedButton {
+    -fx-border-radius: 4px;
+    -fx-background-color:  #ff4d4d;
+    -fx-border: none;
+    -fx-text-fill: #FFFFFF;
+    -fx-text-align: center;
+    -fx-transition: all 0.5s;
+    -fx-cursor: pointer;
+     -fx-margin: 5px;
+}
+
+#hoverButton:pressed:hover #hoverRedButton:pressed:hover{
+    -fx-scale-y: 0.9;
+    -fx-scale-x: 0.9;
+}
+
+#hoverButton:hover {
+    -fx-background-color: #008cab;
+    -fx-scale-y: 1.1;
+}
+
+#hoverRedButton:hover {
+    -fx-background-color: #ba2c2c;
+    -fx-scale-y: 1.1;
+}

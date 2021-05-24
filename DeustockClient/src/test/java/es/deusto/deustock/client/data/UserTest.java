@@ -109,7 +109,7 @@ class UserTest{
 
     @Test
     public void testToString() {
-        String expected =  "User [username=username, fullName=Full Name, country=SPAIN, description=descriptions]";
+        String expected =  "User{username='username', fullName='Full Name', country='SPAIN', description='descriptions'}";
         assertEquals(expected, user.toString());
     }
 }

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.UserDetailController">
+   <children>
+				      <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" VBox.vgrow="ALWAYS">
+				         <right>
+				            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
+				               <children>
+                  <Label prefHeight="35.0" prefWidth="245.0" text="Nombre de usuario" textFill="#00b2d9">
+                     <font>
+                        <Font name="Calibri Bold" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="usernameLabel" text="username">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+				                  <FlowPane prefHeight="24.0" prefWidth="180.0" />
+                  <Label text="Pais" textFill="#00b2d9">
+                     <font>
+                        <Font name="Calibri Bold" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="25.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="countryLabel" text="pais">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="Sobre tí" textFill="#00b2d9">
+                     <font>
+                        <Font name="Calibri Bold" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="25.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextArea fx:id="descriptionLabel" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </TextArea>
+				               </children>
+               <BorderPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="100.0" />
+               </BorderPane.margin>
+				            </VBox>
+				         </right>
+         <left>
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
+               <children>
+				                  <Button id="hoverButton" fx:id="editProfileButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" stylesheets="@../button.css" text="Cambiar Detalles" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets left="25.0" right="25.0" top="25.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button id="hoverButton" fx:id="reportDownloadButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" stylesheets="@../button.css" text="Descargar Reporte" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets left="25.0" right="25.0" top="25.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button id="hoverRedButton" fx:id="resetWalletButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" stylesheets="@../button.css" text="Reset Wallet" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets left="25.0" right="25.0" top="25.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button id="hoverRedButton" fx:id="accountDeleteButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" stylesheets="@../button.css" text="Eliminar" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets left="25.0" right="25.0" top="25.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+         </left>
+         <center>
+            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="Historial de inversiones realizadas en DeuStock" textAlignment="CENTER" textFill="#00b2d9">
+               <font>
+                  <Font name="Calibri Bold" size="14.0" />
+               </font>
+               <BorderPane.margin>
+                  <Insets left="25.0" right="25.0" top="25.0" />
+               </BorderPane.margin>
+            </Label>
+         </center>
+         <top>
+            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #00b2d9;" BorderPane.alignment="CENTER">
+               <children>
+                  <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                     <center>
+            				                  <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="Tu perfil" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
+            				                     <font>
+            				                        <Font name="Calibri Bold" size="24.0" />
+            				                     </font>
+                           <BorderPane.margin>
+                              <Insets />
+                           </BorderPane.margin>
+            				                  </Label>
+                     </center>
+                     <left>
+                        <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+                           <bottom>
+            				                  <Label maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="Analyze it!" textFill="WHITE" BorderPane.alignment="CENTER">
+            				                     <font>
+            				                        <Font name="Calibri" size="18.0" />
+            				                     </font>
+                                 <BorderPane.margin>
+                                    <Insets bottom="10.0" />
+                                 </BorderPane.margin>
+            				                  </Label>
+                           </bottom>
+                           <center>
+                              <Label fx:id="deustockLabel" text="DeuStock" textFill="WHITE" BorderPane.alignment="CENTER">
+                                 <font>
+                                    <Font name="Calibri Bold" size="48.0" />
+                                 </font>
+                                 <BorderPane.margin>
+                                    <Insets left="20.0" top="20.0" />
+                                 </BorderPane.margin>
+                              </Label>
+                           </center>
+                        </BorderPane>
+                     </left>
+                  </BorderPane>
+               </children>
+            </HBox>
+         </top>
+				      </BorderPane>
+
+   </children>
+</VBox>

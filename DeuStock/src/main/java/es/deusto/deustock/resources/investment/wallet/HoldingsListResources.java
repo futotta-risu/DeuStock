@@ -53,6 +53,7 @@ public class HoldingsListResources {
             for(StockHistoryDTO hist : holdings){
                 DeuStock stock = stockService.getStockWithPrice(hist.getSymbol());
 
+                hist.setActualPrice(stock.getPrice());
                 hist.setOpenValue(
                     operationService.getOpenPrice(
                         hist.getOperation(), hist.getOpenPrice(), hist.getAmount()

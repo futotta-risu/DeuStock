@@ -36,7 +36,8 @@ import yahoofinance.histquotes.HistoricalQuote;
 public class StockDetailController implements DSGenericController {
 	
 
-    private static final DeustockGateway gateway = new DeustockGateway();
+    private DeustockGateway gateway;
+    private MainController mainController;
     private String acronym = null;
     private Stock stock = null;
     
@@ -58,6 +59,15 @@ public class StockDetailController implements DSGenericController {
     CategoryAxis xAxis;   
     @FXML
     NumberAxis yAxis;
+    
+    public StockDetailController() {
+		this.gateway = new DeustockGateway();
+		this.mainController = MainController.getInstance();
+    }
+    
+    public void setDeustockGateway(DeustockGateway gateway){ this.gateway = gateway; }
+    public void setMainController(MainController mainController){ this.mainController = mainController; }
+    
 
     /**
      * Method that sets the parameter acronym of the class
@@ -113,37 +123,42 @@ public class StockDetailController implements DSGenericController {
 		}
       
 
-        
+        downloadButton.setId("hoverButton");
         downloadButton.setOnMouseClicked( 
         		MouseEvent -> {
         			Stage s = new Stage();
-        	        DirectoryChooser directoryChooser = new DirectoryChooser();
+                    DirectoryChooser directoryChooser = new DirectoryChooser();
                     File selectedDirectory = directoryChooser.showDialog(s);
-					File f = gateway.getStockReport(this.acronymLabel.getText(), "DAILY", selectedDirectory.getAbsolutePath());
-					
-				    try {
-						Desktop.getDesktop().open(f);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+                    File f = gateway.getStockReport(this.acronymLabel.getText(), "DAILY", selectedDirectory.getAbsolutePath());
+
+                    try {
+                    	Desktop.getDesktop().open(f);
+                    } catch (IOException e) {
+                    	e.printStackTrace();
+                    }
 				}
         );
-        
+
+        backButton.setId("hoverButton");
         backButton.setOnMouseClicked(
-                mouseevent -> MainController.getInstance().loadAndChangePane(
+                mouseevent -> mainController.loadAndChangePane(
                         ViewPaths.StockListViewPath
                 )
         );
 
+        buyButton.setId("hoverButton");
         buyButton.setOnMouseClicked(
-                e -> MainController.getInstance().loadAndChangePaneWithParams(
+                e -> mainController.loadAndChangePaneWithParams(
                         ViewPaths.OperationView,
                         new HashMap<>() {{
-                            put("username",MainController.getInstance().getUser());
+                            put("username",mainController.getUser());
                             put("stock", stock);
                         }}
                 )
         );
+        try{
+            MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
+        }catch (Exception e){}
     }
 
     /**
@@ -151,7 +166,6 @@ public class StockDetailController implements DSGenericController {
      */
 
 	private void getStock(){
-        DeustockGateway gateway = new DeustockGateway();
         stock = gateway.getStock(acronym, "MONTHLY");
         setStock(stock);
     }
@@ -163,4 +177,5 @@ public class StockDetailController implements DSGenericController {
 	private void setStock(Stock stock) {
 		this.stock = stock;
 	}
+    
 }

@@ -7,6 +7,7 @@ import es.deusto.deustock.client.data.stocks.StockHistory;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.visual.stocks.list.StockInfoSellLine;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -23,18 +24,30 @@ public class CurrentBalanceController implements DSGenericController {
 	
     private String username;
     private double balance;
+    private DeustockGateway gateway;
 
-	@FXML
+    @FXML
 	Label moneyLabel;
+    
 	@FXML
 	Label stockQuantityLabel;
+
 	@FXML
 	VBox stockList;
 
+    @FXML
+    Button refreshButton;
     /**
      * Default no-argument constructor
      */
-    public CurrentBalanceController(){}
+    public CurrentBalanceController(){
+        gateway = new DeustockGateway();
+    }
+
+    
+    public void setDeustockGateway(DeustockGateway deustockGateway){
+        this.gateway = deustockGateway;
+    }
 
 
     /**
@@ -46,8 +59,9 @@ public class CurrentBalanceController implements DSGenericController {
      */
 	@Override
 	public void setParams(HashMap<String, Object> params) {
-        if(params.containsKey("username"))
+        if(params.containsKey("username")) {
             this.username = String.valueOf(params.get("username"));
+        }
 
         initRoot();
 	}
@@ -61,24 +75,26 @@ public class CurrentBalanceController implements DSGenericController {
     private void initRoot(){
         if(this.username==null) return;
 
-        this.balance = new DeustockGateway().getBalance(this.username);
+        this.balance = gateway.getBalance(this.username);
 
         moneyLabel.setText(this.balance  + " €");
 
         refreshStocks();
-        Button refreshButton = new Button("Refresh");
         refreshButton.setOnMouseClicked(mouseEvent -> refreshStocks());
-        stockList.getChildren().add(refreshButton);
-        
+        refreshButton.setId("hoverButton");
+        try{
+            MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
+        }catch (Exception e){}
     }
 
     /**
      * Method that cleans the stock list leaving it empty and charging again the stocks of the user by a gateway
      */
     public void refreshStocks(){
-    	this.stockList.getChildren().remove(0, this.stockList.getChildren().size());
+        this.stockList.getChildren().removeIf(node -> (node instanceof StockInfoSellLine || node instanceof Separator));
+
         List<StockHistory> stockHistories = new DeustockGateway().getHoldings(username);
-        
+
         stockQuantityLabel.setText("You have a total of " + stockHistories.size() + " different stocks");
 
         for(StockHistory sh : stockHistories){

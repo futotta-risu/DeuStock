@@ -93,4 +93,17 @@ public class StockHistory  implements Serializable {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return "StockHistory{" +
+                "id=" + id +
+                ", symbol='" + symbol + '\'' +
+                ", openPrice=" + openPrice +
+                ", actualPrice=" + actualPrice +
+                ", amount=" + amount +
+                ", openValue=" + openValue +
+                ", actualValue=" + actualValue +
+                ", operation=" + operation +
+                '}';
+    }
 }

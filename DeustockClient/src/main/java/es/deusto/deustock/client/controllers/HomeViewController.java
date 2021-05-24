@@ -12,24 +12,32 @@ import javafx.scene.layout.*;
  */
 public class HomeViewController {
 
+    DeustockGateway gateway;
+
     @FXML
-    private VBox stockList;
+    VBox stockList;
 
     /**
      * Default no-argument constructor
      */
-    public HomeViewController(){}
+    public HomeViewController(){
+        gateway = new DeustockGateway();
+    }
+
+    public void setDeustockGateway(DeustockGateway gateway){ this.gateway = gateway; }
 
     /**
      * Method that initializes the VBox instance corresponding in the FXML file charging it with a stockLists
      */
     @FXML
     private void initialize(){
-        DeustockGateway gateway = new DeustockGateway();
-
-        for(Stock stock : gateway.getStockList("small")){
-            stockList.getChildren().add(new StockInfoLine(stock));
-            stockList.getChildren().add(new Separator());
+        try{
+            for(Stock stock : gateway.getStockList("small")){
+                stockList.getChildren().add(new StockInfoLine(stock));
+                stockList.getChildren().add(new Separator());
+            }
+        }catch (Exception e){
+            return;
         }
     }
 }

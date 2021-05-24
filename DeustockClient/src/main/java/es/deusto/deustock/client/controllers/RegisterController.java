@@ -1,21 +1,13 @@
 package es.deusto.deustock.client.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Locale;
 
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 
 /**
  * Controller class that contains functions for the control of the RegisterView.fxml view
@@ -23,35 +15,50 @@ import javafx.scene.control.Tooltip;
  * @author landersanmillan
  */
 public class RegisterController {
+
+	@FXML
+	Label registerErrorLabel;
+
+	@FXML
+    TextField usernameTxt;
 	
 	@FXML
-    private TextField usernameTxt;
+    TextField passwordTxt;
 	
 	@FXML
-    private TextField passwordTxt;
-	
-	@FXML
-    private TextField fullNameTxt;
+    TextField fullNameTxt;
 	
 	@FXML
     private DatePicker birthDatePicker;
 	
 	@FXML
-    private TextArea aboutMeTxt;
+    TextArea aboutMeTxt;
 	
 	@FXML
     private ChoiceBox<String> countryChoice;
 	
 	@FXML
-	private Button registerBtn;
+	Button registerBtn;
 	
 	@FXML
-	private Button cancelBtn;
+	Button cancelBtn;
 
-	/**
-	 * Default no-argument constructor
-	 */
-	public RegisterController(){}
+	private DeustockGateway gateway;
+	private MainController mainController;
+
+	public RegisterController(){
+		mainController = MainController.getInstance();
+		gateway = new DeustockGateway();
+	}
+
+	public void setMainController(MainController mainController){
+		this.mainController = mainController;
+	}
+
+	public void setGateway(DeustockGateway gateway){
+		this.gateway = gateway;
+	}
+
 
 	/**
 	 * Method that initializes the instances corresponding to the elements in the FXML file and the functions of the
@@ -59,10 +66,8 @@ public class RegisterController {
 	 */
 	@FXML
 	private void initialize(){
-		List<String> countries = new ArrayList<>();
-		for (CountryEnum country : CountryEnum.values()) {
-			countries.add(country.name());
-		}
+		String[] countries = Arrays.copyOfRange(Locale.getISOCountries(), 1, 20);
+
 		countryChoice.setValue("Seleciona un pais");
 		countryChoice.setTooltip(new Tooltip("Seleciona un pais"));
 		countryChoice.setItems(FXCollections.observableArrayList(countries));
@@ -72,8 +77,12 @@ public class RegisterController {
 		registerBtn.setOnMouseClicked( e -> register() );
 		
 		cancelBtn.setOnMouseClicked(			
-				mouseEvent -> MainController.getInstance().loadAndChangeScene(ViewPaths.LoginViewPath)
+				mouseEvent -> mainController.loadAndChangeScene(ViewPaths.LoginViewPath)
 		);
+		try{
+			MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
+		}catch (Exception e){}
+
 	}
 
 
@@ -82,30 +91,20 @@ public class RegisterController {
 	 * in case of incorrect login, the function returns a dialog with a warning
 	 */
 	private void register()  {
-	    Dialog<String> dialog = new Dialog<>();
-	    dialog.setTitle("Error");
-	    ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
-	    dialog.getDialogPane().getButtonTypes().add(type);
-		
 	    String username = usernameTxt.getText();
 		String password = passwordTxt.getText();
 		String fullName = fullNameTxt.getText();
 		String aboutMe = aboutMeTxt.getText();
 
-
-		DeustockGateway dg = new DeustockGateway();
-
 		if(username.isBlank() || password.isBlank() || fullName.isBlank()  || aboutMe.isBlank() ) {
-			dialog.setContentText("Null fields detected");
-			dialog.showAndWait();
+			registerErrorLabel.setText("Casillas Vacias detectadas");
 			return;
 		}
 
-		if(dg.register(username, password, fullName,  aboutMe, "Spain")) {
-			MainController.getInstance().loadAndChangeScene(ViewPaths.LoginViewPath);
+		if(gateway.register(username, password, fullName,  aboutMe, "Spain")) {
+			mainController.loadAndChangeScene(ViewPaths.LoginViewPath);
 		}else {
-			dialog.setContentText("Invalid register");
-			dialog.showAndWait();
+			registerErrorLabel.setText("Registro invalido");
 		}
 	}
 

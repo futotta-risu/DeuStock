@@ -12,21 +12,26 @@ import javafx.stage.Stage;
  */
 public class Main extends Application{
 
+    private MainController controller = MainController.getInstance();
+
+    public void setMainController(MainController controller){
+        this.controller = controller;
+    }
+
     public static void main(String[] args){
         Application.launch(args);
     }
 
     @Override
     public void start(Stage stage) {
-        stage.setTitle("DeuStock Client");
-        MainController.getInstance().setStage(stage);
+        controller.setStage(stage);
+        controller.setDefaultStageParams();
 
         initRootLayout();
     }
 
+
     public void initRootLayout() {
-        MainController.getInstance().loadAndChangeScene(
-                ViewPaths.LoginViewPath
-        );
+        controller.loadAndChangeScene(ViewPaths.LoginViewPath);
     }
 }

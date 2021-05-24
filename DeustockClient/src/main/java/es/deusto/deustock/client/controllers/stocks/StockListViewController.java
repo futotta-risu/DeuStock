@@ -5,10 +5,7 @@ import es.deusto.deustock.client.data.Stock;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.visual.ViewPaths;
 import es.deusto.deustock.client.visual.stocks.list.StockInfoLine;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -17,38 +14,43 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
-import java.text.DecimalFormat;
 import java.util.HashMap;
-import java.util.List;
 
 
 /**
  * Controller class that contains functions for the control of the StockListView.fxml view
  *
- * @author Erik B. Terres
+ * @author Erik B. Terres & Aritz Zugazaga
  */
 public class StockListViewController {
 
-
+	private DeustockGateway gateway;
+	private MainController mainController;
+	
     @FXML 
-    private TextField searchStockText;
+    TextField searchStockText;
     
     @FXML
-    private Button searchStockButton;
+    Button searchStockButton;
 
     @FXML
-    private Button refreshButton;
+    Button refreshButton;
     
     @FXML
-    private VBox stockList;
+    VBox stockList;
 
-    private HashMap<String, StockInfoLine> stockLines;
-
+    HashMap<String, StockInfoLine> stockLines;
 
     /**
      * Default no-argument constructor
      */
-    public StockListViewController(){}
+    public StockListViewController(){
+    	this.gateway = new DeustockGateway();
+		this.mainController = MainController.getInstance();
+    }
+
+    public void setDeustockGateway(DeustockGateway gateway){ this.gateway = gateway; }
+    public void setMainController(MainController mainController){ this.mainController = mainController; }
 
     /**
      * Method that initializes the instances corresponding to the elements in the FXML file and the functions of the
@@ -63,7 +65,17 @@ public class StockListViewController {
         refreshButton.setOnMouseClicked(mouseEvent -> refreshStocks());
         searchStockButton.setOnMouseClicked(mouseEvent -> searchStock());
 
-        refreshStocks();
+        try{
+            refreshStocks();
+        }catch (Exception e){
+            return;
+        }
+
+         refreshButton.setId("hoverButton");
+
+
+        MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
+
     }
 
     /**
@@ -77,7 +89,6 @@ public class StockListViewController {
 
         String searchQuery = searchStockText.getText();
         
-        DeustockGateway gateway = new DeustockGateway();
         stockLines = new HashMap<>();
         Stock stock = gateway.getSearchedStock(searchQuery);
 
@@ -100,7 +111,6 @@ public class StockListViewController {
      */
     public void refreshStocks(){
         emptyStockList();
-        DeustockGateway gateway = new DeustockGateway();
 
         for(Stock stock : gateway.getStockList("big")) {
             if (!stockLines.containsKey(stock.getAcronym())) {
@@ -116,7 +126,8 @@ public class StockListViewController {
 
                 Button detailButton = new Button();
                 detailButton.setText("More Info");
-                detailButton.setOnAction(event -> MainController.getInstance().loadAndChangePaneWithParams(
+                detailButton.setId("hoverButton");
+                detailButton.setOnAction(event -> mainController.loadAndChangePaneWithParams(
                         ViewPaths.StockDetailViewPath,
                         new HashMap<>() {{
                             put("acronym", stock.getAcronym());
@@ -136,7 +147,6 @@ public class StockListViewController {
     /**
      * Method that cleans the stock list and leaves it empty
      */
-
     private void emptyStockList(){
         stockLines.clear();
         stockList.getChildren().removeIf(

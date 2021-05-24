@@ -46,7 +46,7 @@ public class WalletDAO {
 
     public Wallet getWallet(String walletID) throws SQLException {
         var whereCondition = "id == :walletID";
-        HashMap<String,String> params = new HashMap<>();
+        HashMap<String,Object> params = new HashMap<>();
         params.put("walletID", walletID);
         return (Wallet) dbManager.get(Wallet.class, whereCondition, params);
     }

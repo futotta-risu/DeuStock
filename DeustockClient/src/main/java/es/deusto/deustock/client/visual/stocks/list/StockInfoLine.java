@@ -6,6 +6,9 @@ import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 
+import java.awt.event.MouseEvent;
+import java.util.HashMap;
+
 /**
  * Line of information of a stock used for insert in a list
  * 
@@ -37,9 +40,14 @@ public class StockInfoLine extends BorderPane {
         setRight(stockPriceLabel);
 
         this.stockNameLabel.setOnMouseClicked(
-                mouseEvent -> MainController.getInstance().loadAndChangePane(
-                        ViewPaths.StockDetailViewPath
-                )
+            MouseEvent -> {
+                MainController.getInstance().loadAndChangePaneWithParams(
+                        ViewPaths.StockDetailViewPath,
+                        new HashMap<>() {{
+                            put("acronym", stock.getAcronym());
+                        }}
+                );
+            }
         );
     }
 

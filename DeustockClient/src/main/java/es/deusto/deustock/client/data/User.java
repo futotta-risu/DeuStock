@@ -1,5 +1,7 @@
 package es.deusto.deustock.client.data;
 
+import java.util.Date;
+
 /**
  * Client object of user 
  * @author aritz
@@ -87,6 +89,7 @@ public class User {
 	public User setDescription(String description) {
 		this.description = description; return this;
 	}
+
 	
 	/**
 	 * Method for updating the information of a user
@@ -97,10 +100,14 @@ public class User {
 		this.country = u.country;
 		this.description = u.description;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "User [username=" + username +  ", fullName=" + fullName +  ", country=" + country + ", description=" + description + "]";
+		return "User{" +
+				"username='" + username + '\'' +
+				", fullName='" + fullName + '\'' +
+				", country='" + country + '\'' +
+				", description='" + description + '\'' +
+				'}';
 	}
-	
 }
