@@ -2,6 +2,7 @@ package es.deusto.deustock.client.controllers.stocks;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -27,6 +28,7 @@ import es.deusto.deustock.client.data.Stock;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.gateways.exceptions.ForbiddenException;
 import es.deusto.deustock.client.visual.stocks.list.StockInfoLine;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -134,24 +136,18 @@ public class StockListViewControllerTest extends ApplicationTest {
     @Test
     void testRefreshStocks(FxRobot robot) throws ForbiddenException {
         //Given
-        Stock amz = new Stock();
-        amz.setAcronym("AMZ");
+        Stock stock = new Stock();
+        stock.setAcronym("Test");
         
         List<Stock> listaStock = new ArrayList<Stock>();
-        listaStock.add(amz);
+        listaStock.add(stock);
 
         when(mockGateway.getStockList("big")).thenReturn(listaStock);
+        doNothing().when(mockMainController).loadAndChangePaneWithParams(anyString(), any());
         controller.setDeustockGateway(mockGateway);
         controller.setMainController(mockMainController);
-        doNothing().when(mockMainController).loadAndChangePane(anyString());
 
-        //When
-
-        //robot.clickOn(refreshButton);
-
-        //Then
-
-        //assertEquals(stockList.getChildren().get(1).toString(),  "AMZ");
-        assertDoesNotThrow(()-> clickOn(refreshButton));
+        // When & Then
+        assertDoesNotThrow( () -> Platform.runLater(() -> robot.clickOn(refreshButton)) );
     }
 }

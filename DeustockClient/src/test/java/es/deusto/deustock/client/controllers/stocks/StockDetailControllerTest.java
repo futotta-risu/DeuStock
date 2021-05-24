@@ -124,7 +124,6 @@ class StockDetailControllerTest extends ApplicationTest{
         // When & Then
         assertDoesNotThrow( () -> Platform.runLater(() -> controller.setParams(params)) );
 
-
     }
 
     @Test

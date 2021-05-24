@@ -102,28 +102,14 @@ class OperationControllerTest extends ApplicationTest {
     }
 
     @Test
-    void testOpenOnUser() throws ForbiddenException {
-        // Given
-        User user = new User();
-        user.setUsername("Test");
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("username", "Test");
+    void testOpenOnStock() throws ForbiddenException {
+    	// Given
+        Stock stock = new Stock();
+        stock.setAcronym("Test");
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("stock", stock);
 
-        when(mockGateway.getUser(anyString())).thenReturn(user);
-        controller.setDeustockGateway(mockGateway);
-
-        // When & Then
-        assertDoesNotThrow( () -> Platform.runLater(() -> controller.setParams(params)) );
-
-
-    }
-
-    @Test
-    void testOpenOnNullStock() throws ForbiddenException {
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("grfhrt", "Tetrhtst");
-
-        when(mockGateway.getStock(anyString(), anyString())).thenReturn(null);
+        when(mockGateway.getStock(anyString(), anyString())).thenReturn(stock);
         controller.setDeustockGateway(mockGateway);
         controller.setMainController(mockMainController);
 
@@ -136,33 +122,58 @@ class OperationControllerTest extends ApplicationTest {
     @Test
     void testCancelButton(FxRobot robot) throws ForbiddenException {
     	// Given
+        Stock stock = new Stock();
+        stock.setAcronym("Test");
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("stock", stock);
 
-        doNothing().when(mockMainController).loadAndChangeScene(anyString());
+        when(mockGateway.getStock(anyString(), anyString())).thenReturn(stock);
         controller.setDeustockGateway(mockGateway);
         controller.setMainController(mockMainController);
 
-        // When
-        robot.clickOn(controller.cancelButton);
+        // When & Then
+        assertDoesNotThrow( () -> robot.clickOn(cancelButton) );
+    }
+    
+    @Test
+    void testGetOpenPrice(FxRobot robot) throws ForbiddenException {
+    	// Given
+        Stock stock = new Stock();
+        stock.setAcronym("Test");
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("stock", stock);
 
-        // Then
-        verify(mockMainController, times(1)).loadAndChangeScene(anyString());
+        when(mockGateway.getStock(anyString(), anyString())).thenReturn(stock);
+        controller.setDeustockGateway(mockGateway);
+        controller.setMainController(mockMainController);
+
+        // When & Then
+        assertDoesNotThrow( () -> robot.clickOn(cancelButton) );
     }
     
     @Test
     void testCalculateButton(FxRobot robot) throws ForbiddenException {
     	// Given
-
-        doNothing().when(mockMainController).loadAndChangeScene(anyString());
+    	Stock stock = new Stock();
+        stock.setAcronym("Test");
+        stock.setPrice(1.00);
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("stock", stock);
+        
+        when(mockGateway.getStock(anyString(), anyString())).thenReturn(stock);
+        when(mockGateway.getBalance(anyString())).thenReturn(9999.00);
         controller.setDeustockGateway(mockGateway);
-        controller.setMainController(mockMainController);
-
-        // When
-        controller.operationSelect.setValue(OperationType.SHORT);
-        controller.amountTextField.setText("2");
-        robot.clickOn(controller.calculateCostButton);
-
-        // Then
-        assertEquals(controller.costLabel, controller.getOpenPrice());
+        
+        //When
+        amountTextField.setText("1");
+        robot.clickOn(calculateCostButton);
+        
+        //Then
+        
+        Platform.runLater( () -> {
+        	controller.setParams(params);
+        	Assertions.assertThat(controller.costLabel).hasText("1");
+        });
     }
 
 }

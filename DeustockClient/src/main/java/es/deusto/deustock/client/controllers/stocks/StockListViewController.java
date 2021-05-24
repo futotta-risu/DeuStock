@@ -75,7 +75,6 @@ public class StockListViewController {
 
         String searchQuery = searchStockText.getText();
         
-        DeustockGateway gateway = new DeustockGateway();
         stockLines = new HashMap<>();
         Stock stock = gateway.getSearchedStock(searchQuery);
 
