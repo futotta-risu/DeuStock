@@ -91,7 +91,6 @@ public class UserDetailController implements DSGenericController{
         }
 
         initRoot();
-
     }
 
     /**
