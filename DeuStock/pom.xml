@@ -479,6 +479,14 @@
 						</systemProperty>
 					</systemProperties>
 				</configuration>
+				<executions>
+					<execution>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			
 			<plugin>
