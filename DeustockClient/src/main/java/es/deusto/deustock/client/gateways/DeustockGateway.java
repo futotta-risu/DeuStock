@@ -29,17 +29,30 @@ import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 /**
- *
  * @author Erik B. Terres
+ *
+ * Class that conects the client with the REST Services
  */
 public class DeustockGateway {
 
     private final Logger logger = Logger.getLogger(DeustockGateway.class);
 
+    /**
+     * Using the ClientBuilder instance gets the connection to the server
+     * @return it returns the WebTarget using the URI of the targeted web resource
+     */
     private WebTarget getHostWebTarget(){
         return ClientBuilder.newClient().target(RESTVars.restUrl);
     }
 
+    /**
+     * Method that gets the stock by searching with the following two parameters
+     * using .path for accessing a specific resource and building a HTTP request invocation with .request - JSON format
+     * Invoking HTTP GET
+     * @param acronym a variable in String
+     * @param interval a variable in String
+     * @return returns the Stock object
+     */
     public Stock getStock(String acronym, String interval){
         Response  response = getHostWebTarget().path("stock")
                 .path("detail").path(acronym).path(interval).request(MediaType.APPLICATION_JSON).get();
@@ -47,12 +60,27 @@ public class DeustockGateway {
         return response.readEntity(Stock.class);
     }
 
+    /**
+     * Method that gets the stock by searching with the following parameter
+     * using .path for accessing a specific resource and building a HTTP request invocation with .request - JSON format
+     * Invoking HTTP GET
+     * @param acronym a variable in String
+     * @return returns the Stock object
+     */
     public Stock getSearchedStock(String acronym){
         Response response = getHostWebTarget().path("stock")
                 .path("search").path(acronym).request(MediaType.APPLICATION_JSON).get();
 
         return response.readEntity(Stock.class);
     }
+
+    /**
+     * Method that gets a list of Stocks by selecting the type of list
+     * using .path for accessing a specific resource and building a HTTP request invocation with .request - JSON format
+     * Invoking HTTP GET
+     * @param listType a variable in String
+     * @return returns a list of Stock
+     */
     public List<Stock> getStockList(String listType){
         Response  response = getHostWebTarget().path("stock")
                 .path("list").path(listType).request(MediaType.APPLICATION_JSON).get();
@@ -61,6 +89,13 @@ public class DeustockGateway {
         });
     }
 
+    /**
+     * Method that gets a double by searching
+     * using .path for accessing a specific resource and building a HTTP request invocation with .request - JSON format
+     * Invoking HTTP GET
+     * @param searchQuery
+     * @return
+     */
     public double getTwitterSentiment(String searchQuery){
         Response response = getHostWebTarget().path("twitter").path("sentiment")
                 .path(searchQuery).request(MediaType.TEXT_PLAIN).get();
