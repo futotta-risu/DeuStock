@@ -5,6 +5,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 
 /**
+ * Include the content of a line in the FAQ list
+ * 
  * @author Erik B. Terres
  */
 public class FAQLine extends BorderPane {
@@ -13,6 +15,11 @@ public class FAQLine extends BorderPane {
     Label questionLabel, answerLabel;
 
 
+    /**
+     * Inserts the question in the FAQ line
+     * 
+     * @param question
+     */
     public FAQLine(FAQQuestion question){
         this.question = question;
         initRoot();

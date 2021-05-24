@@ -84,6 +84,8 @@ public class StockDetailController implements DSGenericController {
 
     /**
      * Method that initializes the instances corresponding to the elements in the FXML file and the functions of the buttons.
+     *
+     * @see #getStock()
      */
 	private void initRoot(){
         if(this.acronym==null) return;        
