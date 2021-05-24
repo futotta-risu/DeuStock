@@ -40,14 +40,6 @@ import static org.testfx.api.FxToolkit.registerPrimaryStage;
 public class ChangeUserDetailControllerTest extends ApplicationTest {
 
     private ChangeUserDetailController controller;
-    private Button changeButton;
-    private Button cancelButton;
-
-    private Label usernameLabel;
-    private TextField fullNameTxt;
-    private DatePicker birthDatePicker;
-    private TextArea aboutMeTxt;
-    private ChoiceBox<String> countryChoice;
     private Dialog<String> dialog;
 
     private DeustockGateway mockGateway;
@@ -74,14 +66,6 @@ public class ChangeUserDetailControllerTest extends ApplicationTest {
         controller = loader.getController();
         Scene scene = new Scene(root);
 
-        changeButton = controller.changeBtn;
-        cancelButton = controller.cancelBtn;
-
-        usernameLabel = controller.usernameLabel;
-        fullNameTxt = controller.fullNameTxt;
-        birthDatePicker = controller.birthDatePicker;
-        aboutMeTxt = controller.aboutMeTxt;
-        countryChoice = controller.countryChoice;
         dialog = controller.getDialog();
 
         stage.setScene(scene);
@@ -102,17 +86,18 @@ public class ChangeUserDetailControllerTest extends ApplicationTest {
         HashMap<String, Object> params = new HashMap<>();
         params.put("username", "Test");
 
+        Label usernameLabel = lookup("#usernameLabel").query();
+        TextArea aboutMeTxt = lookup("#aboutMeTxt").query();
+
         when(mockGateway.getUser(anyString())).thenReturn(user);
         controller.setDeustockGateway(mockGateway);
 
-        // When
+        // When & Then
         Platform.runLater( () -> {
             controller.setParams(params);
-            Assertions.assertThat(controller.usernameLabel).hasText("Test");
-            Assertions.assertThat(controller.aboutMeTxt).hasText("");
+            Assertions.assertThat(usernameLabel).hasText("Test");
+            Assertions.assertThat(aboutMeTxt).hasText("");
         });
-        // Then
-
 
     }
 
@@ -126,18 +111,21 @@ public class ChangeUserDetailControllerTest extends ApplicationTest {
         params.put("username", "Test");
 
         when(mockGateway.getUser(anyString())).thenReturn(user);
-        controller.setDeustockGateway(mockGateway);
-        controller.setMainController(mockMainController);
         when(mockGateway.updateUser(any(), anyString())).thenReturn(true);
+        doNothing().when(mockMainController).initGenericStage(anyString(),anyString());
         doNothing().when(mockMainController).loadAndChangePane(anyString());
 
-        fullNameTxt.setText("test");
+        controller.setDeustockGateway(mockGateway);
+        controller.setMainController(mockMainController);
+
+        TextField fullNameTxt = lookup("#fullNameTxt").query();
+        Button changeButton = lookup("#changeBtn").query();
+
         fullNameTxt.setText("test");
 
         Platform.runLater(() -> controller.setParams(params) );
         // When & Then
         assertDoesNotThrow(()-> clickOn(changeButton));
-
 
     }
 
@@ -152,16 +140,17 @@ public class ChangeUserDetailControllerTest extends ApplicationTest {
         when(mockGateway.getUser(anyString())).thenReturn(user);
         when(mockGateway.updateUser(any(), anyString())).thenReturn(true);
         doNothing().when(mockMainController).loadAndChangePane(anyString());
+        doNothing().when(mockMainController).initGenericStage(anyString(),anyString());
 
         controller.setDeustockGateway(mockGateway);
         controller.setMainController(mockMainController);
+
+        Button changeButton = lookup("#changeBtn").query();
 
         Platform.runLater(() -> controller.setParams(params) );
 
         // When & Then
         assertDoesNotThrow(()-> clickOn(changeButton));
-
-
 
     }
 

@@ -97,7 +97,6 @@ public class ChangeUserDetailController implements DSGenericController{
 		String aboutMe = aboutMeTxt.getText();
 		String country = countryChoice.getValue();
 
-		DeustockGateway dg = new DeustockGateway();
 
 		if(!fullName.equals("")  && !aboutMe.equals("") ) {
 			User user = new User()
@@ -106,7 +105,7 @@ public class ChangeUserDetailController implements DSGenericController{
 					.setFullName(fullName)
 					.setUsername(username);
 
-			if(dg.updateUser(user, MainController.getInstance().getToken())) {
+			if(gateway.updateUser(user, MainController.getInstance().getToken())) {
 				mainController.loadAndChangePane( ViewPaths.UserDetailViewPath );
 			}else {
 				dialog.setContentText("NO SE HA POIDO REALIZAR EL CAMBIO");
@@ -123,7 +122,6 @@ public class ChangeUserDetailController implements DSGenericController{
 	 * Method that devolves the user using a function of gateway with the username as a parameter
 	 */
 	private void getUser(){
-		DeustockGateway gateway = new DeustockGateway();
 		this.user = gateway.getUser(this.username);
 	}
 
@@ -139,7 +137,7 @@ public class ChangeUserDetailController implements DSGenericController{
 		if(this.user == null || !this.user.getUsername().equals(this.username)) {
 			getUser();
 		}
-		//this.usernameLabel.setText(user.getUsername());
+		this.usernameLabel.setText(user.getUsername());
 
 		//Comprobar que funciona la lista de countries
 		List<String> countries = new ArrayList<String>();
