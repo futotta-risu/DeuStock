@@ -136,7 +136,6 @@ public class StockListViewController {
     /**
      * Method that cleans the stock list and leaves it empty
      */
-
     private void emptyStockList(){
         stockLines.clear();
         stockList.getChildren().removeIf(
