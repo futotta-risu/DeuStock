@@ -19,6 +19,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 /**
+ * Controller class that contains functions for the control of the UserDetailView.fxml view
+ *
  * @author Erik B. Terres
  */
 public class UserDetailController implements DSGenericController{
@@ -51,13 +53,28 @@ public class UserDetailController implements DSGenericController{
     @FXML
     Button reportDownloadButton;
 
+    /**
+     * Default no-argument constructor
+     */
     public  UserDetailController(){}
 
+    /**
+     * Method that initializes the controller
+     *
+     * @see #initRoot()
+     */
     @FXML
     public void initialize(){
         initRoot();
     }
 
+    /**
+     * Method that sets the parameter username of the class
+     *
+     * @param params collects all the received objects with their respective key in a HashMap
+     *
+     * @see #initRoot()
+     */
     @Override
     public void setParams(HashMap<String, Object> params) {
         if(params.containsKey("username")) {
@@ -68,11 +85,17 @@ public class UserDetailController implements DSGenericController{
 
     }
 
+    /**
+     * Method that sets the user by searching with a function of gateway with the username
+     */
     private void getUser(){
         DeustockGateway gateway = new DeustockGateway();
         this.user = gateway.getUser(this.username);
     }
 
+    /**
+     * Method that deletes the User
+     */
     private void deleteUser(){
         DeustockGateway gateway = new DeustockGateway();
 
@@ -84,6 +107,12 @@ public class UserDetailController implements DSGenericController{
         }
     }
 
+    /**
+     * Method that initializes the instances corresponding to the elements in the FXML file and the functions of the
+     * editProfile, accountDelete, resetWallet and reportDownload buttons
+     *
+     * @see #getUser()
+     */
     private void initRoot(){
         if(this.username==null){
             return;
@@ -129,7 +158,10 @@ public class UserDetailController implements DSGenericController{
         );
     	
     }
-    
+
+    /**
+     * Method that resets the whole wallet, sets the wallet null
+     */
     public void resetAccountWallet() {
     	DeustockGateway gateway = new DeustockGateway();
     	boolean succesfullyReseted = gateway.resetHoldings(this.user.getUsername());

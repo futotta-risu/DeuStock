@@ -38,9 +38,11 @@ public class CurrentBalanceController implements DSGenericController {
 
 
     /**
-     * Method that sets the parameter username of the class and calls the method initRoot
+     * Method that sets the parameter username of the class
      *
      * @param params collects all the received objects with their respective key in a HashMap
+     *
+     * @see #initRoot()
      */
 	@Override
 	public void setParams(HashMap<String, Object> params) {
@@ -53,6 +55,8 @@ public class CurrentBalanceController implements DSGenericController {
 
     /**
      * Method that initializes the instances corresponding to the elements in the FXML file and the functions of the buttons.
+     *
+     * @see #refreshStocks()
      */
     private void initRoot(){
         if(this.username==null) return;

@@ -14,12 +14,8 @@ import javafx.scene.control.ButtonBar.ButtonData;
 
 
 /**
- * Controller para LoginView 
- * <br><strong>Pattern</strong>
- * <ul>
- *      <li>Controller</li>
- * </ul>
- * 
+ * Controller class that contains functions for the control of the LoginView.fxml view
+ *
  * @author landersanmillan
  */
 public class LoginController {
@@ -46,8 +42,15 @@ public class LoginController {
 	@FXML
 	private Button pruebaButton;
 
+	/**
+	 * Default no-argument constructor
+	 */
 	public LoginController(){}
 
+	/**
+	 * Method that initializes the instances corresponding to the elements in the FXML file and the functions of the
+	 * login and register button.
+	 */
 	@FXML
 	private void initialize(){
 		Dialog<String> dialog = new Dialog<>();
@@ -80,7 +83,12 @@ public class LoginController {
 			);
 	}
 
-	
+	/**
+	 * Login method, uses the text added by the user in the view and by a gateway function checks if the login is correct
+	 * @return if the login is correct, the function returns a token in a String
+	 * in case of incorrect login, the function returns a dialog with a warning
+	 * @throws ForbiddenException in case the server forbids the access to the server
+	 */
 	@FXML
 	private String login() throws ForbiddenException {
 		Dialog<String> dialog = new Dialog<>();
