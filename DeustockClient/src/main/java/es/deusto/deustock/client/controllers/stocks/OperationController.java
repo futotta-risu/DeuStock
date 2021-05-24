@@ -113,7 +113,10 @@ public class OperationController implements DSGenericController {
                         // Temporaly solves the case of empty textbox
                         Double.parseDouble("0" + amountTextField.getText()))
         );
-        MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
+
+        try{
+            MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
+        }catch (Exception e){}
     }
 
     /**

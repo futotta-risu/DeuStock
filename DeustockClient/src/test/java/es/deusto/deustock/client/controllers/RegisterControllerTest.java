@@ -53,7 +53,7 @@ public class RegisterControllerTest extends ApplicationTest{
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/RegisterView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/auth/RegisterView.fxml"));
 
         Parent root = loader.load();
         controller = loader.getController();
@@ -71,11 +71,12 @@ public class RegisterControllerTest extends ApplicationTest{
 
     @Test
     void testInitializeSetsCellsToEmpty(){
-        Label errorLabel = lookup("#registerErrorLabel").query();
-        TextField usernameLabel = lookup("#usernameTxt").query();
-        TextField passwordLabel = lookup("#passwordTxt").query();
-        TextField fullNameTextField = lookup("#fullNameTxt").query();
-        TextArea aboutMeTxt = lookup("#aboutMeTxt").query();
+        Label errorLabel = controller.registerErrorLabel;
+
+        TextField usernameLabel = controller.usernameTxt;
+        TextField passwordLabel = controller.passwordTxt;
+        TextField fullNameTextField = controller.fullNameTxt;
+        TextArea aboutMeTxt = controller.aboutMeTxt;
 
         Assertions.assertThat(errorLabel).hasText("");
         Assertions.assertThat(usernameLabel).hasText("");
@@ -92,7 +93,7 @@ public class RegisterControllerTest extends ApplicationTest{
         controller.setMainController(mockMainController);
 
         // When
-        clickOn("#cancelBtn");
+        clickOn(controller.cancelBtn);
         WaitForAsyncUtils.waitForFxEvents();
         // Then
         verify(mockMainController, times(1)).loadAndChangeScene(anyString());
@@ -108,10 +109,10 @@ public class RegisterControllerTest extends ApplicationTest{
         controller.setGateway(mockGateway);
         controller.setMainController(mockMainController);
 
-        TextField usernameLabel = lookup("#usernameTxt").query();
-        TextField passwordLabel = lookup("#passwordTxt").query();
-        TextField fullNameTextField = lookup("#fullNameTxt").query();
-        TextArea aboutMeTxt = lookup("#aboutMeTxt").query();
+        TextField usernameLabel = controller.usernameTxt;
+        TextField passwordLabel = controller.passwordTxt;
+        TextField fullNameTextField = controller.fullNameTxt;
+        TextArea aboutMeTxt = controller.aboutMeTxt;
 
         passwordLabel.setText("TestPass");
         usernameLabel.setText("TestUsername");
@@ -119,8 +120,8 @@ public class RegisterControllerTest extends ApplicationTest{
         aboutMeTxt.setText("TestAboutMe");
 
         // When
-        clickOn("#registerBtn");
-        WaitForAsyncUtils.waitForFxEvents();
+        clickOn(controller.registerBtn);
+
         // Then
         verify(mockMainController, times(1)).loadAndChangeScene(anyString());
     }
@@ -135,11 +136,10 @@ public class RegisterControllerTest extends ApplicationTest{
         controller.setGateway(mockGateway);
         controller.setMainController(mockMainController);
 
-        Label errorLabel = lookup("#registerErrorLabel").query();
+        Label errorLabel = controller.registerErrorLabel;
 
         // When
-        clickOn("#registerBtn");
-        WaitForAsyncUtils.waitForFxEvents();
+        clickOn(controller.registerBtn);
         // Then
         Assertions.assertThat(errorLabel).hasText("Casillas Vacias detectadas");
     }
@@ -154,21 +154,20 @@ public class RegisterControllerTest extends ApplicationTest{
         controller.setGateway(mockGateway);
         controller.setMainController(mockMainController);
 
-        TextField usernameLabel = lookup("#usernameTxt").query();
-        TextField passwordLabel = lookup("#passwordTxt").query();
-        TextField fullNameTextField = lookup("#fullNameTxt").query();
-        TextArea aboutMeTxt = lookup("#aboutMeTxt").query();
+        TextField usernameLabel = controller.usernameTxt;
+        TextField passwordLabel = controller.passwordTxt;
+        TextField fullNameTextField = controller.fullNameTxt;
+        TextArea aboutMeTxt = controller.aboutMeTxt;
 
         passwordLabel.setText("TestPass");
         usernameLabel.setText("TestUsername");
         fullNameTextField.setText("TestFullName");
         aboutMeTxt.setText("TestAboutMe");
 
-        Label errorLabel = lookup("#registerErrorLabel").query();
+        Label errorLabel = controller.registerErrorLabel;
 
         // When
-        clickOn("#registerBtn");
-        WaitForAsyncUtils.waitForFxEvents();
+        clickOn(controller.registerBtn);
         // Then
         Assertions.assertThat(errorLabel).hasText("Registro invalido");
     }

@@ -156,8 +156,9 @@ public class StockDetailController implements DSGenericController {
                         }}
                 )
         );
-
-        MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
+        try{
+            MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
+        }catch (Exception e){}
     }
 
     /**

@@ -57,7 +57,7 @@ public class CurrentBalanceControllerTest extends ApplicationTest {
     @Override
     public void start(Stage stage) throws IOException {
         // set up the scene
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/CurrentBalanceView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/investment/wallet/CurrentBalanceView.fxml"));
         System.out.println(loader);
         Parent root = loader.load();
         controller = loader.getController();

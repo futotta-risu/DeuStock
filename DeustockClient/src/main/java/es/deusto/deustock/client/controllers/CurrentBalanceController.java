@@ -82,8 +82,9 @@ public class CurrentBalanceController implements DSGenericController {
         refreshStocks();
         refreshButton.setOnMouseClicked(mouseEvent -> refreshStocks());
         refreshButton.setId("hoverButton");
-
-        MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
+        try{
+            MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
+        }catch (Exception e){}
     }
 
     /**

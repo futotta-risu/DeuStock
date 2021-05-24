@@ -53,7 +53,7 @@ class HelpViewControllerTest extends ApplicationTest {
 
     public void start(Stage stage) throws IOException {
         // set up the scene
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/HelpView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/FAQ/HelpView.fxml"));
 
         Parent root = loader.load();
         helpViewController = loader.getController();

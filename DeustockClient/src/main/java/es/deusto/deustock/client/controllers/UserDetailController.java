@@ -121,8 +121,9 @@ public class UserDetailController implements DSGenericController{
      * @see #getUser()
      */
     private void initRoot(){
-        MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
-
+        try {
+            MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
+        }catch (Exception e){}
         if(this.username==null){
             return;
         }

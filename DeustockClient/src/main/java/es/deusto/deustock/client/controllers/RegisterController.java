@@ -17,31 +17,31 @@ import javafx.scene.control.*;
 public class RegisterController {
 
 	@FXML
-	private Label registerErrorLabel;
+	Label registerErrorLabel;
 
 	@FXML
-    private TextField usernameTxt;
+    TextField usernameTxt;
 	
 	@FXML
-    private TextField passwordTxt;
+    TextField passwordTxt;
 	
 	@FXML
-    private TextField fullNameTxt;
+    TextField fullNameTxt;
 	
 	@FXML
     private DatePicker birthDatePicker;
 	
 	@FXML
-    private TextArea aboutMeTxt;
+    TextArea aboutMeTxt;
 	
 	@FXML
     private ChoiceBox<String> countryChoice;
 	
 	@FXML
-	private Button registerBtn;
+	Button registerBtn;
 	
 	@FXML
-	private Button cancelBtn;
+	Button cancelBtn;
 
 	private DeustockGateway gateway;
 	private MainController mainController;
@@ -66,7 +66,7 @@ public class RegisterController {
 	 */
 	@FXML
 	private void initialize(){
-		String[] countries = Arrays.copyOfRange(Locale.getISOCountries(), 1, 50);
+		String[] countries = Arrays.copyOfRange(Locale.getISOCountries(), 1, 20);
 
 		countryChoice.setValue("Seleciona un pais");
 		countryChoice.setTooltip(new Tooltip("Seleciona un pais"));
@@ -79,7 +79,10 @@ public class RegisterController {
 		cancelBtn.setOnMouseClicked(			
 				mouseEvent -> mainController.loadAndChangeScene(ViewPaths.LoginViewPath)
 		);
-		MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
+		try{
+			MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
+		}catch (Exception e){}
+
 	}
 
 

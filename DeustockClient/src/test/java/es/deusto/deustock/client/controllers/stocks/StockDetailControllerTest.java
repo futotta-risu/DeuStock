@@ -82,7 +82,7 @@ class StockDetailControllerTest extends ApplicationTest{
     @Override
     public void start(Stage stage) throws IOException {
         // set up the scene
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/StockDetailView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/investment/stock/StockDetailView.fxml"));
 
         Parent root = loader.load();
         controller = loader.getController();

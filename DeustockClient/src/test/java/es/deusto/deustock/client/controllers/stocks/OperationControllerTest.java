@@ -73,7 +73,7 @@ class OperationControllerTest extends ApplicationTest {
     @Override
     public void start(Stage stage) throws IOException {
         // set up the scene
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/stocks/OperationView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/investment/operation/OperationView.fxml"));
 
         Parent root = loader.load();
         controller = loader.getController();

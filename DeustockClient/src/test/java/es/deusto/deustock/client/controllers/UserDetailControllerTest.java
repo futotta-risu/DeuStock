@@ -71,7 +71,7 @@ public class UserDetailControllerTest extends ApplicationTest {
     @Override
     public void start(Stage stage) throws IOException {
         // set up the scene
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/UserDetailView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/user/UserDetailView.fxml"));
         System.out.println(loader);
         Parent root = loader.load();
         controller = loader.getController();

@@ -58,7 +58,7 @@ public class LoginControllerTest extends ApplicationTest {
     @Override
     public void start(Stage stage) throws IOException {
         // set up the scene
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/LogInView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/auth/LogInView.fxml"));
 
         Parent root = loader.load();
         controller = loader.getController();
@@ -85,7 +85,7 @@ public class LoginControllerTest extends ApplicationTest {
         controller.setGateway(mockGateway);
 
         // When
-        robot.clickOn("#loginButton");
+        robot.clickOn(controller.loginButton);
 
         // Then
         Assertions.assertThat(controller.loginErrorLabel).hasText("Campos vacios");

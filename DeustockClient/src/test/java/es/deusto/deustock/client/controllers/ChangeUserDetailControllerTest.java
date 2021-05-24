@@ -61,7 +61,7 @@ public class ChangeUserDetailControllerTest extends ApplicationTest {
     @Override
     public void start(Stage stage) throws IOException {
         // set up the scene
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/ChangeUserDetailView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/user/ChangeUserDetailView.fxml"));
 
         Parent root = loader.load();
         controller = loader.getController();
@@ -87,8 +87,8 @@ public class ChangeUserDetailControllerTest extends ApplicationTest {
         HashMap<String, Object> params = new HashMap<>();
         params.put("username", "Test");
 
-        Label usernameLabel = lookup("#usernameLabel").query();
-        TextArea aboutMeTxt = lookup("#aboutMeTxt").query();
+        Label usernameLabel = controller.usernameLabel;
+        TextArea aboutMeTxt = controller.aboutMeTxt;
 
         when(mockGateway.getUser(anyString())).thenReturn(user);
         controller.setDeustockGateway(mockGateway);
@@ -119,8 +119,8 @@ public class ChangeUserDetailControllerTest extends ApplicationTest {
         controller.setDeustockGateway(mockGateway);
         controller.setMainController(mockMainController);
 
-        TextField fullNameTxt = lookup("#fullNameTxt").query();
-        Button changeButton = lookup("#changeBtn").query();
+        TextField fullNameTxt = controller.fullNameTxt;
+        Button changeButton = controller.changeBtn;
 
         fullNameTxt.setText("test");
 
@@ -146,7 +146,7 @@ public class ChangeUserDetailControllerTest extends ApplicationTest {
         controller.setDeustockGateway(mockGateway);
         controller.setMainController(mockMainController);
 
-        Button changeButton = lookup("#changeBtn").query();
+        Button changeButton = controller.changeBtn;
 
         Platform.runLater(() -> controller.setParams(params) );
 
