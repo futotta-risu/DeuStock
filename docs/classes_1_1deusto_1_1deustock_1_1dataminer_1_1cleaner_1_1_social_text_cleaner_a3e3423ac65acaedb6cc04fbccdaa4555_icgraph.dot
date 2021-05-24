@@ -1,0 +1,18 @@
+digraph "es.deusto.deustock.dataminer.cleaner.SocialTextCleaner.clean"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="es.deusto.deustock.dataminer.cleaner.\lSocialTextCleaner.clean",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="es.deusto.deustock.dataminer.cleaner.\lSocialTextCleaner.clean",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1dataminer_1_1cleaner_1_1_social_text_cleaner.html#aea06b5d52171627afb48a435cabaa4f2",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="es.deusto.deustock.dataminer.features.\lSentimentExtractor.getSentimentTendency",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1dataminer_1_1features_1_1_sentiment_extractor.html#a595b7b33da6e2203e773f1c42051a4b1",tooltip=" "];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="es.deusto.deustock.resources.socialnetwork.\lRedditSentimentResource.getSentiment",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1resources_1_1socialnetwork_1_1_reddit_sentiment_resource.html#ab7f0b227180148be0c5d8c36e7d33f80",tooltip=" "];
+  Node3 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="es.deusto.deustock.resources.socialnetwork.\lTwitterSentimentResource.getSentiment",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1resources_1_1socialnetwork_1_1_twitter_sentiment_resource.html#ad125eb09ac1c76979cb57105788d1604",tooltip=" "];
+  Node3 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="es.deusto.deustock.dataminer.features.\lSentimentExtractor.getSentimentTendency",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1dataminer_1_1features_1_1_sentiment_extractor.html#a91147e9286290e8bed4916ab0e38ecdf",tooltip=" "];
+}

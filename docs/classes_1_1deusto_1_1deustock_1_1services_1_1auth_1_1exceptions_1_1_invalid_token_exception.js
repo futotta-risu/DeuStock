@@ -1,0 +1,4 @@
+var classes_1_1deusto_1_1deustock_1_1services_1_1auth_1_1exceptions_1_1_invalid_token_exception =
+[
+    [ "InvalidTokenException", "classes_1_1deusto_1_1deustock_1_1services_1_1auth_1_1exceptions_1_1_invalid_token_exception.html#a43548def45f185f02f75d831d456d67f", null ]
+];

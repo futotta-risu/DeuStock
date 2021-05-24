@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Objects;
 
 /**
+ * Query for the {@link es.deusto.deustock.data.DeuStock} retrieval
  *
  * @author Erik B. Terres
  */
@@ -23,9 +24,6 @@ public class StockQueryData {
     private boolean withHistoric = false;
     private int intervalSize = DEFAULT_INTERVAL_SIZE;
 
-
-
-    private StockQueryData() {}
 
     public StockQueryData(String acronym) {
         setAcronym(acronym);

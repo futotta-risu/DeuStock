@@ -14,8 +14,8 @@ import java.util.List;
 import javax.jdo.annotations.*;
 
 /**
- * Clase usuario persistente, el nombre de usuario sera unico y se generara
- *  un ID por cada instancia que se almacene en la BD
+ * Persistent user class, unique username
+ *
  * @author landersanmillan
  */
 @PersistenceCapable(detachable = "true")

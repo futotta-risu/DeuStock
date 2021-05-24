@@ -11,16 +11,16 @@ import es.deusto.deustock.services.investment.operation.type.OperationType;
 import es.deusto.deustock.services.investment.wallet.exceptions.NotEnoughMoneyException;
 import es.deusto.deustock.services.investment.wallet.exceptions.WalletException;
 import es.deusto.deustock.services.investment.wallet.exceptions.WalletNotFoundException;
-
 import org.apache.log4j.Logger;
 
-import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Service class for wallet the wallet instance.
+ * Service class for wallet instance.
+ *
+ * @author Erik B. Terres
  */
 public class WalletService {
 
@@ -127,8 +127,8 @@ public class WalletService {
         }
 
         wallet.changeMoney(-amount);
-
         updateWallet(wallet);
+
     }
 
     public void updateMoneyByWalletID(String walletID, double amount) throws WalletException {

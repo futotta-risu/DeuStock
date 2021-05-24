@@ -1,7 +1,6 @@
 package es.deusto.deustock.client.controllers;
 
-import es.deusto.deustock.client.data.User;
-import es.deusto.deustock.client.log.DeuLogger;
+import es.deusto.deustock.client.Main;
 import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -23,6 +23,7 @@ import java.util.HashMap;
  */
 public class MainController {
 
+    private final Logger logger = Logger.getLogger(MainController.class);
     private static MainController instance = null;
 
     private Stage stage;
@@ -73,9 +74,9 @@ public class MainController {
             }
 
         } catch (IOException e) {
-            DeuLogger.logger.error("Could not load " + path + " fxml file.");
+            logger.error("Could not load " + path + " fxml file.");
             e.printStackTrace();
-            DeuLogger.logger.info("Closing system due to error.");
+            logger.info("Closing system due to error.");
         }
         // In case of not loaded VBox, exit application
         if(node != null) return node;
@@ -107,23 +108,58 @@ public class MainController {
     public void loadAndChangePane(String path) {
         changePane(loadPane(path,null));
     }
+
+    /**
+     * Loads the Scene from a FXML file and then the current center Pane to the new loaded Pane.
+     *
+     * @param path FXML file path
+     *
+     * @see  #loadPane(String, HashMap)
+     * @see  #changeScene(Scene)
+     */
     public void loadAndChangeScene(String path) {
         changeScene(new Scene(loadPane(path,null)));
         setDefaultStageParams();
     }
 
+    /**
+     * Loads the Pane from a FXML file and then the current center Pane to the new loaded Pane.
+     * @param path FXML file path
+     * @param params collects all the received objects with their respective key in a HashMap
+     *
+     * @see #changePane(Pane)
+     * @see #loadPane(String, HashMap)
+     */
     public void loadAndChangePaneWithParams(String path, HashMap<String,Object> params) {
         changePane(loadPane(path,params));
     }
+
+    /**
+     * Loads the Scene from a FXML file and then the current center Pane to the new loaded Pane.
+     * @param path FXML file path
+     * @param params collects all the received objects with their respective key in a HashMap
+     *
+     * @see #changeScene(Scene)
+     * @see #loadPane(String, HashMap)
+     */
     public void loadAndChangeSceneWithParams(String path, HashMap<String,Object> params) {
         changeScene(new Scene(loadPane(path,params)));
     }
 
+    /**
+     * Setter method for the Stage
+     * @param stage receives an Stage and adds it to the variable Stage of the class and shows it.
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
         this.stage.show();
     }
 
+    /**
+     * Method initializes the generic stage setting the scenes and panes
+     * @param user receives the user for setting the username
+     * @param token receives the String parameter token
+     */
     public void initGenericStage(String user, String token){
         setUser(user);
         this.token = token;
@@ -139,14 +175,26 @@ public class MainController {
         this.stage.setMaximized(true);
     }
 
+    /**
+     * Getter method for User
+     * @return returns the User as a String
+     */
     public String getUser() {
         return user;
     }
 
+    /**
+     * Setter method for User
+     * @param user receives the User as a String and sets it
+     */
     public void setUser(String user) {
         this.user = user;
     }
 
+    /**
+     * Getter method for Token
+     * @return returns the Token as a String
+     */
     public String getToken(){
         return token;
     }

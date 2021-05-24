@@ -1,0 +1,6 @@
+var namespacees_1_1deusto_1_1deustock_1_1client_1_1controllers_1_1stocks =
+[
+    [ "OperationController", "classes_1_1deusto_1_1deustock_1_1client_1_1controllers_1_1stocks_1_1_operation_controller.html", "classes_1_1deusto_1_1deustock_1_1client_1_1controllers_1_1stocks_1_1_operation_controller" ],
+    [ "StockDetailController", "classes_1_1deusto_1_1deustock_1_1client_1_1controllers_1_1stocks_1_1_stock_detail_controller.html", "classes_1_1deusto_1_1deustock_1_1client_1_1controllers_1_1stocks_1_1_stock_detail_controller" ],
+    [ "StockListViewController", "classes_1_1deusto_1_1deustock_1_1client_1_1controllers_1_1stocks_1_1_stock_list_view_controller.html", "classes_1_1deusto_1_1deustock_1_1client_1_1controllers_1_1stocks_1_1_stock_list_view_controller" ]
+];

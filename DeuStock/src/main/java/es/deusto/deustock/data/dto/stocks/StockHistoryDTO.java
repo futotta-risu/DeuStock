@@ -3,6 +3,10 @@ package es.deusto.deustock.data.dto.stocks;
 import es.deusto.deustock.services.investment.operation.type.OperationType;
 
 /**
+ * StockHistory DTO Class. This class is sent from the server through the API
+ *
+ * {@link es.deusto.deustock.data.stocks.StockHistory}
+ *
  * @author Erik B. Terres
  */
 public class StockHistoryDTO {

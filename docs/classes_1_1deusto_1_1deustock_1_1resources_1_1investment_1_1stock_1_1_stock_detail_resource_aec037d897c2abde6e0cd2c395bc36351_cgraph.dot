@@ -1,0 +1,26 @@
+digraph "es.deusto.deustock.resources.investment.stock.StockDetailResource.getStock"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="es.deusto.deustock.resources.investment.stock.\lStockDetailResource.getStock",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="es.deusto.deustock.services.investment.stock.\lStockService.getStockDetailData",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1stock_1_1_stock_service.html#a101f7dbdc381c952cb376217958eb709",tooltip=" "];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="es.deusto.deustock.dao.Stock\lDAO.get",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1dao_1_1_stock_d_a_o.html#ab2b50157183912f05cf37bdb0943dc84",tooltip=" "];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="es.deusto.deustock.dao.IDBManager.get",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interfacees_1_1deusto_1_1deustock_1_1dao_1_1_i_d_b_manager.html#ad03b499d4bbeb0e41fabd3b4e0f44714",tooltip=" "];
+  Node2 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="es.deusto.deustock.dataminer.gateway.stocks.\lStockDataAPIGateway.getStockData",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interfacees_1_1deusto_1_1deustock_1_1dataminer_1_1gateway_1_1stocks_1_1_stock_data_a_p_i_gateway.html#a7357782584245f0a57f37e0d0d529ba4",tooltip=" "];
+  Node2 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="es.deusto.deustock.dao.Stock\lDAO.has",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1dao_1_1_stock_d_a_o.html#acea354dba566b7a4d788d8d0f4f8bc17",tooltip=" "];
+  Node2 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="es.deusto.deustock.data.\lDeuStock.setHistory",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1_deu_stock.html#a3e43bc5df2fb5ee21a03f82524a77019",tooltip=" "];
+  Node2 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="es.deusto.deustock.data.\lDeuStock.setPrice",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1_deu_stock.html#ad1c29a79fcbe1d5389023b42c33848f4",tooltip=" "];
+  Node2 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="es.deusto.deustock.dao.Stock\lDAO.store",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1dao_1_1_stock_d_a_o.html#ad103822c492de96490cb5162b42f1883",tooltip=" "];
+  Node9 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="es.deusto.deustock.dao.IDBManager.store",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interfacees_1_1deusto_1_1deustock_1_1dao_1_1_i_d_b_manager.html#a288d2a0985c9a179d966c07b63ed1547",tooltip=" "];
+}

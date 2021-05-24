@@ -1,0 +1,4 @@
+var classes_1_1deusto_1_1deustock_1_1client_1_1visual_1_1stocks_1_1list_1_1_stock_info_sell_line =
+[
+    [ "StockInfoSellLine", "classes_1_1deusto_1_1deustock_1_1client_1_1visual_1_1stocks_1_1list_1_1_stock_info_sell_line.html#a14626e992b2cbf98f184d2c707b790e7", null ]
+];

@@ -1,0 +1,4 @@
+var classes_1_1deusto_1_1deustock_1_1dataminer_1_1gateway_1_1socialnetworks_1_1gateways_1_1_reddit_gateway =
+[
+    [ "getMessageList", "classes_1_1deusto_1_1deustock_1_1dataminer_1_1gateway_1_1socialnetworks_1_1gateways_1_1_reddit_gateway.html#aec8c39b67c246f41be43bbd98f862c97", null ]
+];

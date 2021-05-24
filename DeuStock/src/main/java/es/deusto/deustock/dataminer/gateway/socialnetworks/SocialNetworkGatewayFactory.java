@@ -7,9 +7,11 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 /**
- * Factory for the SocialNetworkGateway.
+ * Singleton Factory for the {@link SocialNetworkAPIGateway}.
  *
- *  @author Erik B. Terres
+ * {@link SocialNetworkGatewayFactory#getInstance()}
+ *
+ * @author Erik B. Terres
  */
 public class SocialNetworkGatewayFactory {
 
@@ -24,13 +26,19 @@ public class SocialNetworkGatewayFactory {
         return instance;
     }
 
-    @NotNull
-    public SocialNetworkAPIGateway create(SocialNetworkGatewayEnum type){
+
+    /**
+     * Returns a {@link SocialNetworkAPIGateway}
+     *
+     * @param type {@link SocialNetworkGatewayEnum} type for the gateway
+     *
+     * @return Newly created {@link SocialNetworkAPIGateway}
+     */
+    public SocialNetworkAPIGateway create(@NotNull SocialNetworkGatewayEnum type){
         return switch (type) {
             case TWITTER -> TwitterGateway.getInstance();
             case REDDIT -> RedditGateway.getInstance();
         };
-
 
     }
 

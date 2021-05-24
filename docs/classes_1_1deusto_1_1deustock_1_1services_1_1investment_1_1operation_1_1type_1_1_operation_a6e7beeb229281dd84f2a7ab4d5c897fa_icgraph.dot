@@ -1,0 +1,12 @@
+digraph "es.deusto.deustock.services.investment.operation.type.Operation.getAmount"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="es.deusto.deustock.services.investment.operation.type.\lOperation.getAmount",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="es.deusto.deustock.services.investment.operation.type.\lLongOperation.getClosePrice",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1operation_1_1type_1_1_long_operation.html#a5d0b9dae63a9b9bdd80e6c1d0bc971ff",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="es.deusto.deustock.services.investment.operation.type.\lLongOperation.getOpenPrice",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1operation_1_1type_1_1_long_operation.html#a3933d7774a9ca6eae86e5e60d97eee92",tooltip=" "];
+}

@@ -30,11 +30,14 @@ import yahoofinance.histquotes.HistoricalQuote;
 
 /**
  * @author landersanmillan
+ *
+ * Controller class that contains functions for the control of the StockDetailView.fxml view
  */
 public class StockDetailController implements DSGenericController {
 	
 
-    private static final DeustockGateway gateway = new DeustockGateway();
+    private DeustockGateway gateway;
+    private MainController mainController;
     private String acronym = null;
     private Stock stock = null;
     
@@ -57,6 +60,20 @@ public class StockDetailController implements DSGenericController {
     @FXML
     NumberAxis yAxis;
     
+    public StockDetailController() {
+		this.gateway = new DeustockGateway();
+		this.mainController = MainController.getInstance();
+    }
+    
+    public void setDeustockGateway(DeustockGateway gateway){ this.gateway = gateway; }
+    public void setMainController(MainController mainController){ this.mainController = mainController; }
+    
+
+    /**
+     * Method that sets the parameter acronym of the class
+     *
+     * @param params collects all the received objects with their respective key in a HashMap
+     */
 	@Override
 	public void setParams(HashMap<String, Object> params) {
         if(params.containsKey("acronym"))
@@ -64,7 +81,12 @@ public class StockDetailController implements DSGenericController {
         
         initRoot();		
 	}
-	
+
+    /**
+     * Method that initializes the instances corresponding to the elements in the FXML file and the functions of the buttons.
+     *
+     * @see #getStock()
+     */
 	private void initRoot(){
         if(this.acronym==null) return;        
         
@@ -105,31 +127,31 @@ public class StockDetailController implements DSGenericController {
         downloadButton.setOnMouseClicked( 
         		MouseEvent -> {
         			Stage s = new Stage();
-        	        DirectoryChooser directoryChooser = new DirectoryChooser();
+                    DirectoryChooser directoryChooser = new DirectoryChooser();
                     File selectedDirectory = directoryChooser.showDialog(s);
-					File f = gateway.getReport(this.acronymLabel.getText(), "DAILY", selectedDirectory.getAbsolutePath());
-					
-				    try {
-						Desktop.getDesktop().open(f);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+                    File f = gateway.getStockReport(this.acronymLabel.getText(), "DAILY", selectedDirectory.getAbsolutePath());
+
+                    try {
+                    	Desktop.getDesktop().open(f);
+                    } catch (IOException e) {
+                    	e.printStackTrace();
+                    }
 				}
         );
 
         backButton.setId("hoverButton");
         backButton.setOnMouseClicked(
-                mouseevent -> MainController.getInstance().loadAndChangePane(
+                mouseevent -> mainController.loadAndChangePane(
                         ViewPaths.StockListViewPath
                 )
         );
 
         buyButton.setId("hoverButton");
         buyButton.setOnMouseClicked(
-                e -> MainController.getInstance().loadAndChangePaneWithParams(
+                e -> mainController.loadAndChangePaneWithParams(
                         ViewPaths.OperationView,
                         new HashMap<>() {{
-                            put("username",MainController.getInstance().getUser());
+                            put("username",mainController.getUser());
                             put("stock", stock);
                         }}
                 )
@@ -137,17 +159,22 @@ public class StockDetailController implements DSGenericController {
 
         MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
     }
-	
+
+    /**
+     * Method that sets the stock using the function of the gateway
+     */
+
 	private void getStock(){
-        DeustockGateway gateway = new DeustockGateway();
         stock = gateway.getStock(acronym, "MONTHLY");
         setStock(stock);
     }
+
+    /**
+     * Setter method
+     * @param stock defines the stock variable from the class with the parameter received in the method, a stock
+     */
 	private void setStock(Stock stock) {
 		this.stock = stock;
 	}
-	
-	
-
-
+    
 }

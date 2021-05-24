@@ -1,0 +1,4 @@
+var namespacees_1_1deusto_1_1deustock_1_1client_1_1gateways_1_1exceptions =
+[
+    [ "ForbiddenException", "classes_1_1deusto_1_1deustock_1_1client_1_1gateways_1_1exceptions_1_1_forbidden_exception.html", "classes_1_1deusto_1_1deustock_1_1client_1_1gateways_1_1exceptions_1_1_forbidden_exception" ]
+];

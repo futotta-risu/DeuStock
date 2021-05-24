@@ -1,0 +1,14 @@
+digraph "es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway.getStocksData"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="es.deusto.deustock.dataminer.gateway.stocks.\lStockDataAPIGateway.getStocksData",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="es.deusto.deustock.services.investment.stock.\lStockService.getStockListData",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1stock_1_1_stock_service.html#a6fc7b1b9308aace115a6a7965ae2495e",tooltip=" "];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="es.deusto.deustock.resources.investment.stock.\lStockListResource.getStock",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1resources_1_1investment_1_1stock_1_1_stock_list_resource.html#ab55a8397d8cb936ec9cf3bcd9786148a",tooltip=" "];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="es.deusto.deustock.services.investment.stock.\lStockService.getStocksWithPrice",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1stock_1_1_stock_service.html#a2730edf4a58f51b6d844f20dce9f49d5",tooltip=" "];
+}

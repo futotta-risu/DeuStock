@@ -1,0 +1,10 @@
+digraph "es.deusto.deustock.client.controllers.CurrentBalanceController.refreshStocks"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="es.deusto.deustock.client.controllers.\lCurrentBalanceController.refreshStocks",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="es.deusto.deustock.client.gateways.\lDeustockGateway.getHoldings",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1client_1_1gateways_1_1_deustock_gateway.html#a811a0a61a981d28db981622a931a21c4",tooltip=" "];
+}

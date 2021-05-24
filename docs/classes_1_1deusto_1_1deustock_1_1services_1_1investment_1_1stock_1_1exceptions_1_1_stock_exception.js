@@ -1,0 +1,4 @@
+var classes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1stock_1_1exceptions_1_1_stock_exception =
+[
+    [ "StockException", "classes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1stock_1_1exceptions_1_1_stock_exception.html#a96a46809b2c98b9662796d31755b9b63", null ]
+];

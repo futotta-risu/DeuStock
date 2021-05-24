@@ -7,6 +7,14 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
+/**
+ * Singleton Token class DAO. Contains all the methods to handle the
+ * database process for the Token class.
+ *
+ * {@link TokenDAO#getInstance()}
+ *
+ * @author Erik B. Terres
+ */
 public class TokenDAO implements IDAO<Token>{
 
     private static final TokenDAO instance = new TokenDAO();

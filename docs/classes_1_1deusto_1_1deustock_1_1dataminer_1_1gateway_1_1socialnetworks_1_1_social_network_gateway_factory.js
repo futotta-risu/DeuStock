@@ -1,0 +1,4 @@
+var classes_1_1deusto_1_1deustock_1_1dataminer_1_1gateway_1_1socialnetworks_1_1_social_network_gateway_factory =
+[
+    [ "create", "classes_1_1deusto_1_1deustock_1_1dataminer_1_1gateway_1_1socialnetworks_1_1_social_network_gateway_factory.html#a1b603ac65a1f113ee2ff86315111c279", null ]
+];

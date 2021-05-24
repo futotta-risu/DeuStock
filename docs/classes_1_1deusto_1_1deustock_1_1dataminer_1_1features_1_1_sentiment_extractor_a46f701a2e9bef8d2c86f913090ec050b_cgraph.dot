@@ -1,0 +1,16 @@
+digraph "es.deusto.deustock.dataminer.features.SentimentExtractor.SentimentExtractor"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="es.deusto.deustock.dataminer.features.\lSentimentExtractor.SentimentExtractor",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="es.deusto.deustock.dataminer.gateway.socialnetworks.\lSocialNetworkGatewayFactory.create",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1dataminer_1_1gateway_1_1socialnetworks_1_1_social_network_gateway_factory.html#a1b603ac65a1f113ee2ff86315111c279",tooltip=" "];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="es.deusto.deustock.dataminer.gateway.socialnetworks.gateways.\lRedditGateway.getInstance",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1dataminer_1_1gateway_1_1socialnetworks_1_1gateways_1_1_reddit_gateway.html#a32f2c6e0721fc252be29861af786f10a",tooltip=" "];
+  Node2 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="es.deusto.deustock.dataminer.gateway.socialnetworks.gateways.\lTwitterGateway.getInstance",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1dataminer_1_1gateway_1_1socialnetworks_1_1gateways_1_1_twitter_gateway.html#a2337d9cda9cb15fde39eaf7ba99f2ff6",tooltip=" "];
+  Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="es.deusto.deustock.dataminer.gateway.socialnetworks.\lSocialNetworkGatewayFactory.getInstance",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1dataminer_1_1gateway_1_1socialnetworks_1_1_social_network_gateway_factory.html#aa50c91972a03d7a368f86d0a5306e613",tooltip=" "];
+}

@@ -114,6 +114,23 @@ class AuthServiceTest {
     }
 
     @Test
+    void testRegisterThrowsErrorOnNullCreatedUser() throws SQLException {
+        UserDTO u = new UserDTO();
+        u.setUsername("TestUsername");
+        u.setPassword("TestPass");
+
+        when(mockUserDAO.create(any())).thenReturn(null);
+        doNothing().when(mockUserDAO).store(any());
+        when(mockUserDAO.has(any())).thenReturn(false);
+
+        AuthService service = new AuthService();
+        service.setUserDAO(mockUserDAO);
+
+        assertThrows(AuthException.class, () -> service.register(u) );
+    }
+
+
+    @Test
     void testRegisterThrowsErrorWithRepeatedUser() throws SQLException {
         UserDTO u = new UserDTO();
         u.setUsername("TestUsername");

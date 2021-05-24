@@ -192,6 +192,29 @@ class WalletServiceTest {
     }
 
     @Test
+    void testUpdateMoneyThrowsWalletExceptionOnSQLException() throws SQLException, WalletException {
+        User u = new User("TestUsername", "TestPass");
+        Wallet wallet = new Wallet();
+        u.setWallet(wallet);
+
+        when(mockUserDAO.get(anyString())).thenReturn(u);
+        doThrow(new SQLException("Exception")).when(mockWalletDAO).update(any());
+
+        WalletService service = new WalletService();
+        service.setWalletDAO(mockWalletDAO);
+        service.setUserDAO(mockUserDAO);
+
+        // When
+
+
+        // Then
+        assertThrows(
+                WalletException.class,
+                () -> service.updateMoney("TestUser", 2000.0)
+        );
+    }
+
+    @Test
     void testUpdateMoneyThrowsExceptionOnSQLException() throws SQLException {
         User u = new User("TestUsername", "TestPass");
         Wallet wallet = new Wallet();

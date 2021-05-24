@@ -2,20 +2,28 @@ package es.deusto.deustock.client.controllers;
 
 import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.gateways.DeustockGateway;
+import es.deusto.deustock.client.gateways.exceptions.ResetException;
 import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Optional;
 
 /**
+ * Controller class that contains functions for the control of the UserDetailView.fxml view
+ *
  * @author Erik B. Terres
  */
 public class UserDetailController implements DSGenericController{
 
     private String username = null;
     private User user;
+    private MainController mainController;
+    private DeustockGateway gateway;
 
     @FXML
     Label usernameLabel;
@@ -35,13 +43,42 @@ public class UserDetailController implements DSGenericController{
     @FXML
     Button resetWalletButton;
 
-    public  UserDetailController(){}
+    @FXML
+    Button reportDownloadButton;
 
+    public  UserDetailController(){
+        gateway = new DeustockGateway();
+        mainController = MainController.getInstance();
+    }
+
+    public void setDeustockGateway(DeustockGateway deustockGateway){
+        this.gateway = deustockGateway;
+    }
+
+    public void setMainController(MainController controller){
+        this.mainController = controller;
+    }
+    
+
+
+
+    /**
+     * Method that initializes the controller
+     *
+     * @see #initRoot()
+     */
     @FXML
     public void initialize(){
         initRoot();
     }
 
+    /**
+     * Method that sets the parameter username of the class
+     *
+     * @param params collects all the received objects with their respective key in a HashMap
+     *
+     * @see #initRoot()
+     */
     @Override
     public void setParams(HashMap<String, Object> params) {
         if(params.containsKey("username")) {
@@ -52,22 +89,32 @@ public class UserDetailController implements DSGenericController{
 
     }
 
+    /**
+     * Method that sets the user by searching with a function of gateway with the username
+     */
     private void getUser(){
-        DeustockGateway gateway = new DeustockGateway();
         this.user = gateway.getUser(this.username);
     }
 
-    private void deleteUser(){
-        DeustockGateway gateway = new DeustockGateway();
+    /**
+     * Method that deletes the User
+     */
+    public void deleteUser(){
+        if(gateway.deleteUser(mainController.getToken())){
+            mainController.setUser(null);
+            mainController.loadAndChangeScene(ViewPaths.LoginViewPath);
 
-        if(gateway.deleteUser(MainController.getInstance().getToken())){
-            MainController.getInstance().setUser(null);
-            MainController.getInstance().loadAndChangeScene(
-                    ViewPaths.LoginViewPath
-            );
+    
+
         }
     }
 
+    /**
+     * Method that initializes the instances corresponding to the elements in the FXML file and the functions of the
+     * editProfile, accountDelete, resetWallet and reportDownload buttons
+     *
+     * @see #getUser()
+     */
     private void initRoot(){
         MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
 
@@ -103,8 +150,9 @@ public class UserDetailController implements DSGenericController{
         );
 
         this.editProfileButton.setOnMouseClicked(
-        		moseEvent ->
-                    MainController.getInstance().loadAndChangePaneWithParams(
+
+        		mouseEvent ->
+        		    mainController.loadAndChangePaneWithParams(
                             ViewPaths.ChangeUserDetailViewPath,
                             new HashMap<>() {{ put("username", username ); }}
                     )
@@ -127,15 +175,28 @@ public class UserDetailController implements DSGenericController{
                 }
     	);
 
+        this.reportDownloadButton.setOnMouseClicked(
+                MouseEvent -> {
+                    Stage s = new Stage();
+                    DirectoryChooser directoryChooser = new DirectoryChooser();
+                    File selectedDirectory = directoryChooser.showDialog(s);
+                    File f = gateway.getUserReport(this.username, selectedDirectory.getAbsolutePath());
 
+                    try {
+                        Desktop.getDesktop().open(f);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+        );
+    	
     }
-    
-    public void resetAccountWallet() {
-    	DeustockGateway gateway = new DeustockGateway();
-    	boolean succesfullyReseted = gateway.resetHoldings(this.user.getUsername());
-    	if(!succesfullyReseted) {
-    	    // TODO handle with exception
-    		System.out.println("No se ha podido resetear");
-    	}
+    /**
+     * Method that resets the whole wallet, sets the wallet null
+     */
+    public void resetAccountWallet() throws ResetException {
+    	boolean succesfullyReseted = gateway.resetHoldings(this.username);
+    	if(!succesfullyReseted) throw new ResetException("No se ha podido resetear");
+
     }
 }

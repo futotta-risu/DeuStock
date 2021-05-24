@@ -7,9 +7,8 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.IOException;
 
-
 /**
- * deustock JSON util class
+ * JSON util class
  *
  * @author Erik B. Terres
  */

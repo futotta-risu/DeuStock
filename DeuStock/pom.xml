@@ -6,13 +6,15 @@
     <groupId>com.futtosarisu</groupId>
     <artifactId>deustock</artifactId>
     <packaging>jar</packaging>
-    <version>2.0</version>
+    <version>3.0</version>
     <name>DeuStock</name>
 
 	<properties>
   		<sonar.projectKey>futotta-risu_DeuStock</sonar.projectKey>
   		<sonar.organization>futotta-risu</sonar.organization>
   		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
+		<doxygen.config.file>${basedir}/src/main/resources/Doxyfile</doxygen.config.file>
 
 		<config.files.dir>${basedir}/resources</config.files.dir>
 		<maven.compiler.source>14</maven.compiler.source>
@@ -142,13 +144,6 @@
 			<version>5.7.0</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.databene/contiperf -->
-		<dependency>
-			<groupId>org.databene</groupId>
-			<artifactId>contiperf</artifactId>
-			<version>2.3.4</version>
-			<scope>test</scope>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
 		<dependency>
 			<groupId>org.mockito</groupId>
@@ -169,10 +164,9 @@
 		</dependency>
 		<!--  PERFORMANCE TESTING -->
 		<dependency>
-			<groupId>org.databene</groupId>
+			<groupId>com.github.javatlacati</groupId>
 			<artifactId>contiperf</artifactId>
-			<version>2.3.4</version>
-			<scope>test</scope>
+			<version>2.4.3</version>
 		</dependency>
 
 		<!-- ###################################################### -->
@@ -332,7 +326,16 @@
 	        <artifactId>xchart</artifactId>
 	        <version>3.6.3</version>
 	    </dependency>
-		
+		<!-- ###################################################### -->
+		<!--  					  DOCUMENTATION 		            -->
+		<!-- ###################################################### -->
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-site-plugin</artifactId>
+			<version>3.9.1</version>
+			<type>maven-plugin</type>
+		</dependency>
+
 	</dependencies>
 
 
@@ -467,7 +470,6 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.2.1</version>
-
 				<configuration>
 					<mainClass>es.deusto.deustock.Main</mainClass>
 					<systemProperties>
@@ -478,6 +480,40 @@
 					</systemProperties>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+				<groupId>com.soebes.maven.plugins</groupId>
+				<artifactId>doxygen-maven-plugin</artifactId>
+				<version>1.1.0</version>
+				<configuration>
+					<configurationFile>${doxygen.config.file}</configurationFile>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<!-- here the phase you need -->
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/docs</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}/target/doxygen/html</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
@@ -486,8 +522,10 @@
 					</descriptors>
 				</configuration>
 			</plugin>
-        </plugins>
+
+		</plugins>
     </build>
+
     <repositories>
 		<repository>
 			<id>DN_M2_Repo</id>

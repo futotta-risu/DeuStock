@@ -14,25 +14,49 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
 
 /**
+ *
+ * Controller class that contains functions for the control of the CurrentBalanceView.fxml view
+ *
  * @author landersanmillan
  */
+
 public class CurrentBalanceController implements DSGenericController {
 	
     private String username;
     private double balance;
+    private DeustockGateway gateway;
 
-	@FXML
+    @FXML
 	Label moneyLabel;
+    
 	@FXML
 	Label stockQuantityLabel;
+
 	@FXML
 	VBox stockList;
 
     @FXML
     Button refreshButton;
+    /**
+     * Default no-argument constructor
+     */
+    public CurrentBalanceController(){
+        gateway = new DeustockGateway();
+    }
 
-    public CurrentBalanceController(){}
     
+    public void setDeustockGateway(DeustockGateway deustockGateway){
+        this.gateway = deustockGateway;
+    }
+
+
+    /**
+     * Method that sets the parameter username of the class
+     *
+     * @param params collects all the received objects with their respective key in a HashMap
+     *
+     * @see #initRoot()
+     */
 	@Override
 	public void setParams(HashMap<String, Object> params) {
         if(params.containsKey("username")) {
@@ -43,10 +67,15 @@ public class CurrentBalanceController implements DSGenericController {
 	}
 
 
+    /**
+     * Method that initializes the instances corresponding to the elements in the FXML file and the functions of the buttons.
+     *
+     * @see #refreshStocks()
+     */
     private void initRoot(){
         if(this.username==null) return;
 
-        this.balance = new DeustockGateway().getBalance(this.username);
+        this.balance = gateway.getBalance(this.username);
 
         moneyLabel.setText(this.balance  + " €");
 
@@ -57,8 +86,9 @@ public class CurrentBalanceController implements DSGenericController {
         MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
     }
 
-
-    
+    /**
+     * Method that cleans the stock list leaving it empty and charging again the stocks of the user by a gateway
+     */
     public void refreshStocks(){
         this.stockList.getChildren().removeIf(node -> (node instanceof StockInfoSellLine || node instanceof Separator));
 

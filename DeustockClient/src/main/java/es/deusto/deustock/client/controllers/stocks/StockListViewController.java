@@ -5,8 +5,6 @@ import es.deusto.deustock.client.data.Stock;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.visual.ViewPaths;
 import es.deusto.deustock.client.visual.stocks.list.StockInfoLine;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,83 +14,149 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
-import java.text.DecimalFormat;
 import java.util.HashMap;
 
 
 /**
- * StockListView controller
+ * Controller class that contains functions for the control of the StockListView.fxml view
  *
- * @author Erik B. Terres
+ * @author Erik B. Terres & Aritz Zugazaga
  */
 public class StockListViewController {
+
+	private DeustockGateway gateway;
+	private MainController mainController;
+	
+    @FXML 
+    TextField searchStockText;
     
     @FXML
-    private Label sentimentLabel;
+    Button searchStockButton;
 
     @FXML
-    private TextField twitterSearchField;
-
+    Button refreshButton;
+    
     @FXML
-    private VBox stockList;
+    VBox stockList;
 
-    private HashMap<String, StockInfoLine> stockLines;
+    HashMap<String, StockInfoLine> stockLines;
 
-    public StockListViewController(){}
+    /**
+     * Default no-argument constructor
+     */
+    public StockListViewController(){
+    	this.gateway = new DeustockGateway();
+		this.mainController = MainController.getInstance();
+    }
 
+    public void setDeustockGateway(DeustockGateway gateway){ this.gateway = gateway; }
+    public void setMainController(MainController mainController){ this.mainController = mainController; }
 
+    /**
+     * Method that initializes the instances corresponding to the elements in the FXML file and the functions of the
+     * refresh and search buttons.
+     *
+     * @see #refreshStocks()
+     */
     @FXML
     private void initialize(){
         stockLines = new HashMap<>();
-        refreshStocks();
-        Button refreshButton = new Button("Refresh");
-        refreshButton.setOnMouseClicked(mouseEvent -> refreshStocks());
-        refreshButton.setId("hoverButton");
 
-        stockList.getChildren().add(refreshButton);
+        refreshButton.setOnMouseClicked(mouseEvent -> refreshStocks());
+        searchStockButton.setOnMouseClicked(mouseEvent -> searchStock());
+
+        try{
+            refreshStocks();
+        }catch (Exception e){
+            return;
+        }
+
+         refreshButton.setId("hoverButton");
+
 
         MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
+
     }
 
-    @FXML
-    private void sentimentSearch(){
-        String searchQuery = twitterSearchField.getText();
-        DeustockGateway gateway = new DeustockGateway();
-        DecimalFormat df = new DecimalFormat("####0.0000");
-        sentimentLabel.setText("Sentiment [Twitter / Reddit] = [ " + df.format(gateway.getTwitterSentiment(searchQuery)) + " / " + df.format(gateway.getRedditSentiment(searchQuery)) + " ]");
+    /**
+     * Method that cleans the stock list and searches the queried stock using gateway
+     * It creates a list and adds the searched stock
+     *
+     * @see #emptyStockList()
+     */
+    private void searchStock(){
+        emptyStockList();
+
+        String searchQuery = searchStockText.getText();
+        
+        stockLines = new HashMap<>();
+        Stock stock = gateway.getSearchedStock(searchQuery);
+
+        if(stock != null) {
+            StockInfoLine stockLine = new StockInfoLine(stock);
+            stockLines.put(stock.getAcronym(), stockLine);
+
+
+            stockList.getChildren().add(stockLine);
+            stockList.getChildren().add(new Separator());
+        }else {
+            stockList.getChildren().add(new Label(" ** NO SE HA ENCONTRADO NINGUN STOCK CON ESE ACRONYM **"));
+        }
     }
 
+    /**
+     * Method that cleans the stock list and charges again all the stocks in that list
+     *
+     * @see #emptyStockList()
+     */
     public void refreshStocks(){
-        DeustockGateway gateway = new DeustockGateway();
+        emptyStockList();
 
-        for(Stock stock : gateway.getStockList("big")){
-            if(!stockLines.containsKey(stock.getAcronym())){
+        for(Stock stock : gateway.getStockList("big")) {
+            if (!stockLines.containsKey(stock.getAcronym())) {
                 StockInfoLine stockLine = new StockInfoLine(stock);
                 stockLines.put(stock.getAcronym(), stockLine);
-                
+
                 Image image1 = new Image("file:src/main/resources/views/img/notfav.png");
                 Image image2 = new Image("file:src/main/resources/views/img/fav.png");
                 Button favButton = new Button();
-                
+
                 favButton.setGraphic(new ImageView(image1));
                 favButton.setOnAction(e -> favButton.setGraphic(new ImageView(image2)));
-                
+
                 Button detailButton = new Button();
                 detailButton.setText("More Info");
                 detailButton.setId("hoverButton");
-                detailButton.setOnAction(event -> MainController.getInstance().loadAndChangePaneWithParams(
+                detailButton.setOnAction(event -> mainController.loadAndChangePaneWithParams(
                         ViewPaths.StockDetailViewPath,
                         new HashMap<>() {{
                             put("acronym", stock.getAcronym());
                         }}
                 ));
-                
+
                 stockList.getChildren().add(stockLine);
                 stockList.getChildren().add(detailButton);
                 stockList.getChildren().add(new Separator());
-            }else
+            } else {
                 stockLines.get(stock.getAcronym()).refreshStock(stock);
+
+            }
         }
+    }
+
+    /**
+     * Method that cleans the stock list and leaves it empty
+     */
+    private void emptyStockList(){
+        stockLines.clear();
+        stockList.getChildren().removeIf(
+                node -> (
+                        node instanceof StockInfoLine ||
+                                node instanceof Label ||
+                                node instanceof Separator ||
+                                node instanceof Button
+                )
+        );
     }
 
 

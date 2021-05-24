@@ -37,7 +37,8 @@ class TwitterSentimentTest {
         SentimentExtractor extractor = mock(SentimentExtractor.class);
         when(extractor.getSentimentTendency(anyString())).thenReturn(3.0);
 
-        TwitterSentimentResource resource = new TwitterSentimentResource(extractor);
+        TwitterSentimentResource resource = new TwitterSentimentResource();
+        resource.setSentimentExtractor(extractor);
         Response response = resource.getSentiment("Test");
         double result = (double) response.getEntity();
         assertEquals(3, result, 0.001);

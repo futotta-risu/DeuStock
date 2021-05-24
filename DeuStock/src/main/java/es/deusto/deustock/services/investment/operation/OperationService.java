@@ -1,22 +1,9 @@
 package es.deusto.deustock.services.investment.operation;
 
-import es.deusto.deustock.dao.StockDAO;
-import es.deusto.deustock.dao.StockHistoryDAO;
-import es.deusto.deustock.dao.UserDAO;
-import es.deusto.deustock.dao.WalletDAO;
-import es.deusto.deustock.data.stocks.Wallet;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataAPIGateway;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayEnum;
-import es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory;
-import es.deusto.deustock.services.investment.operation.exceptions.OperationException;
-import es.deusto.deustock.services.investment.operation.type.Operation;
 import es.deusto.deustock.services.investment.operation.type.OperationType;
 
-import java.sql.SQLException;
-
 /**
- *
- * Service for operations
+ * Class containing all operation services.
  *
  * @author Erik B. Terres
  */

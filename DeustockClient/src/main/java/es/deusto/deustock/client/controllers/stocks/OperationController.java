@@ -14,55 +14,91 @@ import javafx.scene.control.*;
 import java.util.HashMap;
 
 /**
+ * Controller class that contains functions for the control of the OperationView.fxml view
+ *
  * @author Erik B. Terres
  */
 public class OperationController implements DSGenericController {
 
+	private DeustockGateway gateway;
+    private MainController mainController;
+	
     @FXML
-    private Label stockNameLabel, stockPriceLabel, balanceLabel, costLabel;
+    Label stockNameLabel, stockPriceLabel, balanceLabel, costLabel;
 
     @FXML
-    private TextField amountTextField;
+    TextField amountTextField;
 
     @FXML
-    private ChoiceBox<OperationType> operationSelect;
+    ChoiceBox<OperationType> operationSelect;
 
     @FXML
-    private Button cancelButton, operateButton, calculateCostButton;
+    Button cancelButton, operateButton, calculateCostButton;
 
     private String username;
     private double balance;
     private Stock stock;
 
+    /**
+     * Default no-argument constructor
+     */
+    public OperationController(){
+    	this.gateway = new DeustockGateway();
+		this.mainController = MainController.getInstance();
+    }
+    
+    public void setDeustockGateway(DeustockGateway gateway){ this.gateway = gateway; }
+    public void setMainController(MainController mainController){ this.mainController = mainController; }
 
+    /**
+     * Method that sets the parameters of the class, username and stock
+     * @param params collects all the received objects with their respective key in a HashMap
+     */
     @Override
     public void setParams(HashMap<String, Object> params) {
         if(params.containsKey("username")){
-            this.username = (String) params.get("username");
+            this.username = String.valueOf(params.get("username"));
         }
 
         if(params.containsKey("stock")){
+            System.out.println("Poniendo el stock ");
             this.stock = (Stock) params.get("stock");
         }
 
         initRoot();
     }
-    public OperationController(){}
 
+    /**
+     *Method that initializes the instances corresponding to the elements in the FXML file.
+     */
     @FXML
     private void initialize() {
         operationSelect.setValue(OperationType.LONG);
         operationSelect.setTooltip(new Tooltip("Select and operation"));
         operationSelect.getItems().setAll(OperationType.values());
 
-        calculateCostButton.setId("hoverButton");
+
+
+    }
+
+    /**
+     * initRoot methods defines the FXML elements setting the correspondent value to each variable
+     */
+    private void initRoot(){
+
+        balance = gateway.getBalance(username);
+        stockNameLabel.setText(stock.getAcronym());
+        stockPriceLabel.setText(String.valueOf(stock.getPrice()));
+        balanceLabel.setText(String.valueOf(balance));
+        costLabel.setText("0");
+
         calculateCostButton.setOnMouseClicked(
                 e -> costLabel.setText(String.valueOf(getOpenPrice()))
         );
 
         cancelButton.setId("hoverRedButton");
         cancelButton.setOnMouseClicked(
-                e -> MainController.getInstance().loadAndChangePane(
+                e -> mainController.loadAndChangePane(
                         ViewPaths.StockListViewPath
                 )
         );
@@ -70,29 +106,28 @@ public class OperationController implements DSGenericController {
         // TODO Security on the amount field
         operateButton.setId("hoverButton");
         operateButton.setOnMouseClicked(
-                e -> new DeustockGateway().openOperation(
+                e -> gateway.openOperation(
                         operationSelect.getValue(),
                         stock,
-                        MainController.getInstance().getToken(),
+                        mainController.getToken(),
                         // Temporaly solves the case of empty textbox
                         Double.parseDouble("0" + amountTextField.getText()))
         );
         MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
     }
 
-    private void initRoot(){
-
-        balance = new DeustockGateway().getBalance(username);
-        stockNameLabel.setText(stock.getAcronym());
-        stockPriceLabel.setText(String.valueOf(stock.getPrice()));
-        balanceLabel.setText(String.valueOf(balance));
-        costLabel.setText("0");
-    }
-
+    /**
+     * Method that gets the value of the OpenPrice variable and makes sure it is not null
+     *
+     * @return returns the value of the OpenPrice in a double
+     * returns 0 in case it is null
+     */
     public double getOpenPrice(){
         if(operationSelect.getValue() == null){
             return 0;
         }
+        System.out.println("T-1");
+        System.out.println(this.stock);
 
         return switch (operationSelect.getValue()){
             case LONG, SHORT -> (Double.parseDouble(amountTextField.getText()) * this.stock.getPrice());

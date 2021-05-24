@@ -1,0 +1,7 @@
+var namespacees_1_1deusto_1_1deustock_1_1services_1_1auth_1_1exceptions =
+[
+    [ "AuthException", "classes_1_1deusto_1_1deustock_1_1services_1_1auth_1_1exceptions_1_1_auth_exception.html", "classes_1_1deusto_1_1deustock_1_1services_1_1auth_1_1exceptions_1_1_auth_exception" ],
+    [ "InvalidTokenException", "classes_1_1deusto_1_1deustock_1_1services_1_1auth_1_1exceptions_1_1_invalid_token_exception.html", "classes_1_1deusto_1_1deustock_1_1services_1_1auth_1_1exceptions_1_1_invalid_token_exception" ],
+    [ "LoginException", "classes_1_1deusto_1_1deustock_1_1services_1_1auth_1_1exceptions_1_1_login_exception.html", "classes_1_1deusto_1_1deustock_1_1services_1_1auth_1_1exceptions_1_1_login_exception" ],
+    [ "RegisterException", "classes_1_1deusto_1_1deustock_1_1services_1_1auth_1_1exceptions_1_1_register_exception.html", "classes_1_1deusto_1_1deustock_1_1services_1_1auth_1_1exceptions_1_1_register_exception" ]
+];

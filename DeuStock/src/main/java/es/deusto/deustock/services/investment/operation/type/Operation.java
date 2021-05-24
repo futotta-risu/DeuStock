@@ -1,13 +1,14 @@
 package es.deusto.deustock.services.investment.operation.type;
 
 /**
+ * Base class for operations
+ *
  * @author Erik B. Terres
  */
 public abstract class Operation implements StockOperation{
     double stockOpenPrice;
     double amount;
 
-    private Operation(){}
 
     protected Operation(double stockOpenPrice, double amount){
 

@@ -1,0 +1,12 @@
+digraph "es.deusto.deustock.dataminer.gateway.stocks.StockDataGatewayFactory.create"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="es.deusto.deustock.dataminer.gateway.stocks.\lStockDataGatewayFactory.create",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="es.deusto.deustock.resources.investment.\lStockReportResource.StockReportResource",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1resources_1_1investment_1_1_stock_report_resource.html#a4f920e2b4da5cb0d48cb5dc16a551777",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="es.deusto.deustock.services.investment.stock.\lStockService.StockService",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1stock_1_1_stock_service.html#aa46aed1f25571596eeb7874368d409f2",tooltip=" "];
+}
