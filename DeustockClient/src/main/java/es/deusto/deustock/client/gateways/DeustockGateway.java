@@ -426,15 +426,15 @@ public class DeustockGateway {
      * @param token
      */
     public void closeOperation(String stockHistoryID, String token){
-        MultivaluedMap<String, String> formData = new MultivaluedHashMap<>();
-        formData.add("stockHistoryID", stockHistoryID);
+        JSONObject object = new JSONObject();
+        object.put("stockHistoryID",stockHistoryID);
 
         Response response = getHostWebTarget()
                 .path("stock/operation/close")
-                .path(stockHistoryID)
                 .request(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-                .post(Entity.entity(formData, MediaType.APPLICATION_JSON));
+                .post(Entity.entity(stockHistoryID, MediaType.APPLICATION_JSON));
+
     }
 
 

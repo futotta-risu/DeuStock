@@ -6,7 +6,9 @@ import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 
 /**
@@ -19,7 +21,6 @@ public class StockInfoSellLine extends GridPane{
 
     Label stockNameLabel, stockBuyPriceLabel, stockActPriceLabel, priceDifferenceLabel, stockAmountLabel;
     Button sellButton;
-    int indexInWallet;
 
 	public StockInfoSellLine(StockHistory stockHistory) {
 		this.stockHistory = stockHistory;
@@ -27,6 +28,8 @@ public class StockInfoSellLine extends GridPane{
 	}
 	
     private void initPane() {
+
+
         this.stockNameLabel = new Label(stockHistory.getSymbol());
         this.stockNameLabel.getStyleClass().add("stock-line-name");
 
@@ -62,13 +65,20 @@ public class StockInfoSellLine extends GridPane{
                         String.valueOf(stockHistory.getId()),
                         MainController.getInstance().getToken())
         );
+        sellButton.setId("hoverRedButton");
         
-        add(stockNameLabel,1,0);
-        add(stockBuyPriceLabel,2,0);
-        add(stockActPriceLabel,3,0);
-        add(priceDifferenceLabel,4,0);
-        add(stockAmountLabel,5,0);
-        add(sellButton,6,0);
+        add(stockNameLabel,0,0);
+        add(stockBuyPriceLabel,1,0);
+        add(stockActPriceLabel,2,0);
+        add(priceDifferenceLabel,3,0);
+        add(stockAmountLabel,4,0);
+        add(sellButton,5,0);
+        for(int i = 0; i < 6; i++){
+            ColumnConstraints column = new ColumnConstraints();
+            column.setPercentWidth(100.0/6);
+            getColumnConstraints().add(column);
+        }
+
     }
 
 }

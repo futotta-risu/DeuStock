@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.CurrentBalanceController">
+   <children>
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #00b2d9;">
+         <children>
+            <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" HBox.hgrow="ALWAYS">
+               <center>
+                  <Label alignment="CENTER" text="Tu balance actual" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Calibri Bold" size="24.0" />
+                     </font>
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
+                  </Label>
+               </center>
+               <left>
+                  <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
+                     <bottom>
+                        <Label maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="Analyze it!" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font name="Calibri" size="18.0" />
+                           </font>
+                           <BorderPane.margin>
+                              <Insets bottom="10.0" />
+                           </BorderPane.margin>
+                        </Label>
+                     </bottom>
+                     <center>
+                        <Label fx:id="deustockLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="DeuStock" textFill="WHITE" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font name="Calibri Bold" size="48.0" />
+                           </font>
+                           <BorderPane.margin>
+                              <Insets left="20.0" top="20.0" />
+                           </BorderPane.margin>
+                        </Label>
+                     </center>
+                  </BorderPane>
+               </left>
+            </BorderPane>
+         </children>
+      </HBox>
+      <HBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+         <children>
+            <VBox fx:id="generalBox" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+                     <children>
+                        <Label fx:id="moneyLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="105000 €">
+                           <font>
+                              <Font size="39.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="25.0" />
+                           </padding>
+                        </Label>
+                        <Label id="stockCuantityLabel" fx:id="stockQuantityLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="Tienes un total de XX stocks diferentes " textAlignment="CENTER">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Button fx:id="refreshButton" mnemonicParsing="false" text="Refresh">
+                     <VBox.margin>
+                        <Insets bottom="20.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <VBox fx:id="stockList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+                     <children>
+                        <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #ddf;">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="ALWAYS" maxWidth="143.0" minWidth="10.0" percentWidth="16.66" prefWidth="143.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="108.0" minWidth="10.0" percentWidth="16.66" prefWidth="83.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="16.66" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="132.0" minWidth="10.0" percentWidth="16.66" prefWidth="117.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="131.0" minWidth="10.0" percentWidth="16.66" prefWidth="114.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.0" minWidth="10.0" percentWidth="16.66" prefWidth="102.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Nombre">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER_RIGHT" text="Apertura" GridPane.columnIndex="1" />
+                              <Label text="Actual" GridPane.columnIndex="2" />
+                              <Label text="Diferencia" GridPane.columnIndex="3" />
+                              <Label text="Cantidad" GridPane.columnIndex="4" />
+                              <Label alignment="CENTER" text="Acciones" GridPane.columnIndex="5" />
+                           </children>
+                        </GridPane>
+                     </children>
+                  </VBox>
+               </children>
+               <HBox.margin>
+                  <Insets bottom="50.0" left="50.0" right="50.0" />
+               </HBox.margin>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</VBox>

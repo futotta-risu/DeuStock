@@ -64,11 +64,17 @@ public class StockListViewController {
 
         refreshButton.setOnMouseClicked(mouseEvent -> refreshStocks());
         searchStockButton.setOnMouseClicked(mouseEvent -> searchStock());
+
         try{
             refreshStocks();
         }catch (Exception e){
             return;
         }
+
+         refreshButton.setId("hoverButton");
+
+
+        MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
 
     }
 
@@ -120,6 +126,7 @@ public class StockListViewController {
 
                 Button detailButton = new Button();
                 detailButton.setText("More Info");
+                detailButton.setId("hoverButton");
                 detailButton.setOnAction(event -> mainController.loadAndChangePaneWithParams(
                         ViewPaths.StockDetailViewPath,
                         new HashMap<>() {{

@@ -149,7 +149,7 @@ public class DBManager implements IDBManager{
 		return object;
 	}
 
-	public Object get(Class entityClass, String conditions, HashMap<String, String> params) {
+	public Object get(Class entityClass, String conditions, HashMap<String, Object> params) {
 		var pm = pmf.getPersistenceManager();
 		pm.getFetchPlan().setMaxFetchDepth(-1);
 		var tx = pm.currentTransaction();

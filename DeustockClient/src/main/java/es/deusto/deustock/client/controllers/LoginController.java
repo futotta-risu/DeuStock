@@ -43,8 +43,6 @@ public class LoginController {
 	@FXML
 	public Button registerBtn;
 
-	@FXML
-	private Button pruebaButton;
 
 	@FXML
 	public Label loginErrorLabel;

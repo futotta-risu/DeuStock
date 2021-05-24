@@ -5,16 +5,13 @@ import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.gateways.exceptions.ResetException;
 import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.text.Text;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.Stage;
+import javafx.scene.control.*;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Optional;
 
 /**
  * Controller class that contains functions for the control of the UserDetailView.fxml view
@@ -32,13 +29,10 @@ public class UserDetailController implements DSGenericController{
     Label usernameLabel;
 
     @FXML
-    Label birthdayLabel;
+    Label countryLabel;
 
     @FXML
-    Label sexLabel;
-
-    @FXML
-    Text descriptionLabel;
+    TextArea descriptionLabel;
 
     @FXML
     Button accountDeleteButton;
@@ -122,6 +116,8 @@ public class UserDetailController implements DSGenericController{
      * @see #getUser()
      */
     private void initRoot(){
+        MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
+
         if(this.username==null){
             return;
         }
@@ -134,10 +130,25 @@ public class UserDetailController implements DSGenericController{
         }
 
         this.usernameLabel.setText(user.getUsername());
-        //this.sexLabel.setText(String.valueOf(user.isSex()));
+        this.countryLabel.setText(user.getCountry());
         this.descriptionLabel.setText(user.getDescription());
 
-        this.accountDeleteButton.setOnMouseClicked( mouseEvent -> deleteUser() );
+        this.accountDeleteButton.setOnMouseClicked(
+                mouseEvent -> {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("¿Estas seguro...?");
+                    alert.setHeaderText("Se eliminara tu cuenta y todos los datos relacionados con la misma");
+                    alert.setContentText("¿Estas seguro de que quieres eliminar tu cuenta?");
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (((Optional<?>) result).get() == ButtonType.OK){
+                        deleteUser();
+                    } else {
+                        alert.close();
+                    }
+                }
+        );
+
         this.editProfileButton.setOnMouseClicked(
 
         		mouseEvent ->
@@ -148,11 +159,18 @@ public class UserDetailController implements DSGenericController{
         );
 
     	this.resetWalletButton.setOnMouseClicked(
-                mouseEvent -> {
-                    try {
+    			mouseEvent -> {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("¿Estas seguro...?");
+                    alert.setHeaderText("Perderas todas tus inversiones y los historicos relacionados a tu cuenta, " +
+                                        "volveras a empezar de nuevo tu simulacion con 5000€");
+                    alert.setContentText("¿Estas seguro de que quieres reiniciar tu cartera?");
+
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (((Optional<?>) result).get() == ButtonType.OK){
                         resetAccountWallet();
-                    } catch (ResetException re) {
-                        re.printStackTrace();
+                    } else {
+                        alert.close();
                     }
                 }
     	);

@@ -95,12 +95,16 @@ public class OperationController implements DSGenericController {
         calculateCostButton.setOnMouseClicked(
                 e -> costLabel.setText(String.valueOf(getOpenPrice()))
         );
+
+        cancelButton.setId("hoverRedButton");
         cancelButton.setOnMouseClicked(
                 e -> mainController.loadAndChangePane(
                         ViewPaths.StockListViewPath
                 )
         );
 
+        // TODO Security on the amount field
+        operateButton.setId("hoverButton");
         operateButton.setOnMouseClicked(
                 e -> gateway.openOperation(
                         operationSelect.getValue(),
@@ -109,6 +113,7 @@ public class OperationController implements DSGenericController {
                         // Temporaly solves the case of empty textbox
                         Double.parseDouble("0" + amountTextField.getText()))
         );
+        MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
     }
 
     /**

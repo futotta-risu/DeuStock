@@ -1,5 +1,7 @@
 package es.deusto.deustock.client.data;
 
+import java.util.Date;
+
 public class User {
 	
 	String username;
@@ -7,7 +9,6 @@ public class User {
 	String fullName;
 	String country;
 	String description;
-
 
 	public User() {}
 
@@ -33,16 +34,21 @@ public class User {
 	public User setDescription(String description) {
 		this.description = description; return this;
 	}
+
 	
 	public void updateInfo(User u) {
 		this.fullName = u.fullName;
 		this.country = u.country;
 		this.description = u.description;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "User [username=" + username +  ", fullName=" + fullName +  ", country=" + country + ", description=" + description + "]";
+		return "User{" +
+				"username='" + username + '\'' +
+				", fullName='" + fullName + '\'' +
+				", country='" + country + '\'' +
+				", description='" + description + '\'' +
+				'}';
 	}
-	
 }

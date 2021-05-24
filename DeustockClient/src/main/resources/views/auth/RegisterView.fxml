@@ -14,11 +14,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.RegisterController">
+<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.RegisterController">
    <children>
       <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
          <children>
-            <Pane style="-fx-background-color: #FFFFFF; -fx-background-radius: 25px;">
+            <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #FFFFFF; -fx-background-radius: 25px;">
                <children>
                   <Label layoutX="139.0" layoutY="53.0" prefHeight="31.0" prefWidth="161.0" text="Member Register" textAlignment="CENTER" textFill="#00b2d9">
                      <font>
@@ -27,7 +27,7 @@
                   </Label>
                   <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="189.0" layoutY="-16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@img/person-icon.png" />
+                        <Image url="@../img/person-icon.png" />
                      </image>
                   </ImageView>
                   <TextField fx:id="usernameTxt" layoutX="31.0" layoutY="97.0" promptText="Username" />
@@ -35,13 +35,13 @@
                   <TextArea fx:id="aboutMeTxt" layoutX="31.0" layoutY="183.0" prefHeight="49.0" prefWidth="375.0" promptText="Sobre ti" />
                   <PasswordField fx:id="passwordTxt" layoutX="238.0" layoutY="97.0" prefHeight="25.0" prefWidth="161.0" promptText="Password" />
                   <DatePicker fx:id="birthDatePicker" layoutX="238.0" layoutY="136.0" prefHeight="27.0" prefWidth="161.0" promptText="Fecha nacimiento" />
-                  <ChoiceBox fx:id="countryChoice" layoutX="30.0" layoutY="284.0" prefWidth="150.0" style="-fx-background-color: #00b2d9;" />
-                  <Button fx:id="registerBtn" layoutX="220.0" layoutY="280.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" style="-fx-background-color: #00b2d9;" text="Registrar" textFill="WHITE">
+                  <ChoiceBox fx:id="countryChoice" layoutX="30.0" layoutY="250.0" prefWidth="150.0" style="-fx-background-color: #00b2d9;" />
+                  <Button id="hoverButton" fx:id="registerBtn" layoutX="211.0" layoutY="246.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" stylesheets="@../button.css" text="Registrar" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="cancelBtn" cancelButton="true" layoutX="329.0" layoutY="280.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" style="-fx-background-color: #00b2d9;" text="Cancelar" textFill="WHITE">
+                  <Button id="hoverButton" fx:id="cancelBtn" cancelButton="true" layoutX="353.0" layoutY="246.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="77.0" stylesheets="@../button.css" text="Cancelar" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="14.0" />
                      </font>
