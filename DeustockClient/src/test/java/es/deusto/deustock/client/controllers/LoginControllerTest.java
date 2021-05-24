@@ -44,6 +44,7 @@ public class LoginControllerTest extends ApplicationTest {
 
     @BeforeAll
     public static void setupSpec() throws TimeoutException {
+        System.setProperty("testfx.robot", "glass");
         if (Boolean.getBoolean("headless")) {
             System.setProperty("testfx.robot", "glass");
             System.setProperty("testfx.headless", "true");
@@ -94,7 +95,7 @@ public class LoginControllerTest extends ApplicationTest {
         controller.setGateway(mockGateway);
 
         // When
-        clickOn("#loginButton");
+        robot.clickOn("#loginButton");
 
         // Then
         Assertions.assertThat(controller.loginErrorLabel).hasText("Campos vacios");
@@ -110,7 +111,7 @@ public class LoginControllerTest extends ApplicationTest {
         controller.usernameTxt.setText("TestUsername");
 
         // When
-        clickOn(loginButton);
+        robot.clickOn(loginButton);
         WaitForAsyncUtils.waitForFxEvents();
         // Then
         Assertions.assertThat(controller.loginErrorLabel).hasText("Datos Incorrectos");
@@ -131,7 +132,7 @@ public class LoginControllerTest extends ApplicationTest {
         controller.usernameTxt.setText("TestUsername");
 
         // When
-        clickOn(loginButton);
+        robot.clickOn(loginButton);
         WaitForAsyncUtils.waitForFxEvents();
         // Then
         verify(mockMainController, times(1)).loadAndChangePane(anyString());
@@ -146,7 +147,7 @@ public class LoginControllerTest extends ApplicationTest {
         controller.setMainController(mockMainController);
 
         // When
-        clickOn(controller.registerBtn);
+        robot.clickOn(controller.registerBtn);
         WaitForAsyncUtils.waitForFxEvents();
         // Then
         verify(mockMainController, times(1)).loadAndChangeScene(anyString());
