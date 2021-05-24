@@ -70,7 +70,7 @@ jobs:
         reddit_username_secret : ${{secrets.REDDITUSERNAMESECRET}}
         reddit_password_secret : ${{secrets.REDDITPASSWORDSECRET}}
       run: |
-        mvn --file DeuStock/pom.xml --batch-mode --update-snapshots clean compile exec:java --file DeustockClient/pom.xml --batch-mode --update-snapshots verify
+        mvn --file DeuStock/pom.xml --batch-mode --update-snapshots clean compile exec:java mvn --file DeustockClient/pom.xml --batch-mode --update-snapshots verify
       
     - name: Upload client coverage to Codecov
       uses: codecov/codecov-action@v1
