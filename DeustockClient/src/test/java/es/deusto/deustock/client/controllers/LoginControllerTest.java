@@ -52,16 +52,7 @@ public class LoginControllerTest extends ApplicationTest {
             System.setProperty("prism.text", "t2k");
             System.setProperty("java.awt.headless", "true");
         }
-    }
-
-    @Override
-    public void init() throws Exception {
-        FxToolkit.registerStage(Stage::new);
-    }
-
-    @Override
-    public void stop() throws Exception {
-        FxToolkit.hideStage();
+        registerPrimaryStage();
     }
 
     @Override
@@ -75,7 +66,6 @@ public class LoginControllerTest extends ApplicationTest {
 
         stage.setScene(scene);
         stage.show();
-        stage.toFront();
         this.loginButton = controller.loginButton;
 
 
