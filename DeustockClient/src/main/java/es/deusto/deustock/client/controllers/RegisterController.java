@@ -18,12 +18,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 
 /**
- * Controller para RegisterView
- * <br><strong>Pattern</strong>
- * <ul>
- *      <li>Controller</li>
- * </ul>
- * 
+ * Controller class that contains functions for the control of the RegisterView.fxml view
+ *
  * @author landersanmillan
  */
 public class RegisterController {
@@ -51,9 +47,16 @@ public class RegisterController {
 	
 	@FXML
 	private Button cancelBtn;
-	
+
+	/**
+	 * Default no-argument constructor
+	 */
 	public RegisterController(){}
 
+	/**
+	 * Method that initializes the instances corresponding to the elements in the FXML file and the functions of the
+	 * register and cancel button.
+	 */
 	@FXML
 	private void initialize(){
 		List<String> countries = new ArrayList<>();
@@ -72,8 +75,12 @@ public class RegisterController {
 				mouseEvent -> MainController.getInstance().loadAndChangeScene(ViewPaths.LoginViewPath)
 		);
 	}
-	
 
+
+	/**
+	 * Register method, uses the text added by the user in the view and by a gateway function checks if the register is correct
+	 * in case of incorrect login, the function returns a dialog with a warning
+	 */
 	private void register()  {
 	    Dialog<String> dialog = new Dialog<>();
 	    dialog.setTitle("Error");

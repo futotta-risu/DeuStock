@@ -53,8 +53,9 @@ public class StockListViewController {
     /**
      * Method that initializes the instances corresponding to the elements in the FXML file and the functions of the
      * refresh and search buttons.
+     *
+     * @see #refreshStocks()
      */
-
     @FXML
     private void initialize(){
         stockLines = new HashMap<>();
@@ -68,8 +69,9 @@ public class StockListViewController {
     /**
      * Method that cleans the stock list and searches the queried stock using gateway
      * It creates a list and adds the searched stock
+     *
+     * @see #emptyStockList()
      */
-
     private void searchStock(){
         emptyStockList();
 
@@ -93,6 +95,8 @@ public class StockListViewController {
 
     /**
      * Method that cleans the stock list and charges again all the stocks in that list
+     *
+     * @see #emptyStockList()
      */
     public void refreshStocks(){
         emptyStockList();
