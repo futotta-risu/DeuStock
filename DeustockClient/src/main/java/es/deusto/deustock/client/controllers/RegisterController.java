@@ -10,12 +10,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 /**
- * Controller para RegisterView
- * <br><strong>Pattern</strong>
- * <ul>
- *      <li>Controller</li>
- * </ul>
- * 
+ * Controller class that contains functions for the control of the RegisterView.fxml view
+ *
  * @author landersanmillan
  */
 public class RegisterController {
@@ -63,6 +59,11 @@ public class RegisterController {
 		this.gateway = gateway;
 	}
 
+
+	/**
+	 * Method that initializes the instances corresponding to the elements in the FXML file and the functions of the
+	 * register and cancel button.
+	 */
 	@FXML
 	private void initialize(){
 		String[] countries = Arrays.copyOfRange(Locale.getISOCountries(), 1, 50);
@@ -79,8 +80,12 @@ public class RegisterController {
 				mouseEvent -> mainController.loadAndChangeScene(ViewPaths.LoginViewPath)
 		);
 	}
-	
 
+
+	/**
+	 * Register method, uses the text added by the user in the view and by a gateway function checks if the register is correct
+	 * in case of incorrect login, the function returns a dialog with a warning
+	 */
 	private void register()  {
 	    String username = usernameTxt.getText();
 		String password = passwordTxt.getText();

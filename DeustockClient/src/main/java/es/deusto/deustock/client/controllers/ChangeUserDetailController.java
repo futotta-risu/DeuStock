@@ -63,6 +63,8 @@ public class ChangeUserDetailController implements DSGenericController{
 
 	/**
 	 * Method that calls the initRoot method
+	 *
+	 * @see #initRoot()
 	 */
 	@FXML
 	private void initialize() {
@@ -73,6 +75,8 @@ public class ChangeUserDetailController implements DSGenericController{
 	 * Method that sets the parameter username of the class
 	 *
 	 * @param params collects all the received objects with their respective key in a HashMap
+	 *
+	 * @see #initRoot()
 	 */
 	public void setParams(HashMap<String, Object> params) {
 		if(params.containsKey("username")) {
@@ -129,8 +133,9 @@ public class ChangeUserDetailController implements DSGenericController{
 	/**
 	 * Method that initializes the instances corresponding to the elements in the FXML file and the functions of the
      * change and cancel buttons.
+	 *
+	 * @see #getUser()
 	 */
-
 	private void initRoot(){
 
 		if(this.username == null) return;
