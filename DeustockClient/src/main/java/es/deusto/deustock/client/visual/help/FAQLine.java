@@ -16,9 +16,9 @@ public class FAQLine extends BorderPane {
 
 
     /**
-     * Inserts the question in the FAQ line
+     * Constructor for class FAQLine
      * 
-     * @param question
+     * @param question The question object that it's inside the line
      */
     public FAQLine(FAQQuestion question){
         this.question = question;
