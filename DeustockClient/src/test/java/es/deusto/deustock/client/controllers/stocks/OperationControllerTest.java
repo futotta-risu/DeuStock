@@ -43,9 +43,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import net.jcip.annotations.NotThreadSafe;
 
-@Tag("operation")
-@NotThreadSafe
-@Execution(ExecutionMode.SAME_THREAD)
 @ExtendWith(ApplicationExtension.class)
 class OperationControllerTest extends ApplicationTest {
 	

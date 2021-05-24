@@ -40,8 +40,6 @@ import net.jcip.annotations.NotThreadSafe;
 
 import org.testfx.framework.junit5.ApplicationTest;
 
-@NotThreadSafe
-@Execution(ExecutionMode.SAME_THREAD)
 @ExtendWith(ApplicationExtension.class)
 public class StockListViewControllerTest extends ApplicationTest {
 

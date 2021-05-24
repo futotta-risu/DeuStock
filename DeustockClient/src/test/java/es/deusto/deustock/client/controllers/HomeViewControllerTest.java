@@ -29,8 +29,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.testfx.api.FxToolkit.registerPrimaryStage;
 
-@NotThreadSafe
-@Execution(ExecutionMode.SAME_THREAD)
 @ExtendWith(ApplicationExtension.class)
 class HomeViewControllerTest extends ApplicationTest {
 
