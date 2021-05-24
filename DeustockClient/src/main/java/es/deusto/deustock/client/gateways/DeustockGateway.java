@@ -157,16 +157,16 @@ public class DeustockGateway {
      */
     public boolean register(String username, String password, String fullName, String aboutMe, String country){
 
-    	Response response = getHostWebTarget().path("auth").path("register")
-			.request("application/json")
-            .post(Entity.entity(new User()
-                        .setUsername(username)
-                        .setPassword(getEncrypt(password))
-                        .setFullName(fullName)
-                        .setDescription(aboutMe)
-                        .setCountry(country)
-                  , MediaType.APPLICATION_JSON)
-            );
+        Response response = getHostWebTarget().path("auth").path("register")
+                .request("application/json")
+                .post(Entity.entity(new User()
+                                .setUsername(username)
+                                .setPassword(getEncrypt(password))
+                                .setFullName(fullName)
+                                .setDescription(aboutMe)
+                                .setCountry(country)
+                        , MediaType.APPLICATION_JSON)
+                );
 
         return response.getStatus() == 200;
     }
@@ -181,7 +181,7 @@ public class DeustockGateway {
      * @return returns a boolean, true when the login and connection has been successful and false when error
      */
     public String login(String username, String password) throws ForbiddenException {
-    	Response response = getHostWebTarget().path("auth").path("login")
+        Response response = getHostWebTarget().path("auth").path("login")
                 .path(username).path(getEncrypt(password))
                 .request(MediaType.APPLICATION_JSON)
                 .get();
@@ -192,10 +192,11 @@ public class DeustockGateway {
     }
 
 
-    /**TODO
+    /**
+     * Method that encrypts a message with SHA-256
      *
-     * @param pass
-     * @return
+     * @param pass String: the password that will be encrypted
+     * @return returns a String, the password encrypted in SHA-256
      */
     private String getEncrypt(String pass) {
         // TODO Change location
@@ -208,7 +209,7 @@ public class DeustockGateway {
         byte[] data = new byte[0];
         data = pass.getBytes(StandardCharsets.UTF_8);
         byte[] encrypted = messageDigest.digest(data);
-		return Arrays.toString(encrypted);
+        return Arrays.toString(encrypted);
     }
 
     /**
@@ -216,7 +217,7 @@ public class DeustockGateway {
      * using .path for accessing a specific resource and building a HTTP request invocation with .request - JSON format
      * Invoking HTTP GET
      *
-     * @param username String parameter
+     * @param username String: parameter
      * @return returns the User object searching by the username
      */
     public User getUser(String username){
@@ -227,10 +228,13 @@ public class DeustockGateway {
         return data.readEntity(User.class);
     }
 
-    /**TODO
+    /**
+     * Method that deletes a user by his token
+     * using .path for accessing a specific resource and building a HTTP request invocation with .request - JSON format
+     * Invoking HTTP DELETE
      *
-     * @param token
-     * @return
+     * @param token String: token of the user that will be deleted
+     * @return returns a boolean, true when the delete has been successful and false when error
      */
     public boolean deleteUser(String token){
         Response response = getHostWebTarget()
@@ -242,11 +246,13 @@ public class DeustockGateway {
         return response.getStatus() == 200;
     }
 
-    /**TODO
-     *
-     * @param user
-     * @param token
-     * @return
+    /**
+     * Method that updates a user by his token
+     * using .path for accessing a specific resource and building a HTTP request invocation with .request - JSON format
+     * Invoking HTTP PUT
+     * @param user User: User object
+     * @param token String: token of the user that will be updated
+     * @return returns a boolean, true when the update has been successful and false when error
      */
     public boolean updateUser(User user, String token) {
         Response response = getHostWebTarget().path("tpuser")
@@ -258,7 +264,7 @@ public class DeustockGateway {
     }
 
     /**
-     * Method that gets the StockReport
+     * Method that gets the StockReport in byte[] format
      * using .path for accessing a specific resource and building a HTTP request invocation with .request - octect stream format
      * Invoking HTTP GET
      *
@@ -270,17 +276,21 @@ public class DeustockGateway {
     public byte[] getStockReport(String acronym, String interval) throws IOException {
         Response data = getHostWebTarget()
                 .path("reports").path("stock").path(acronym).path(interval)
-                .request(MediaType.APPLICATION_OCTET_STREAM).get();
+                .request(MediaType.APPLICATION_OCTET_STREAM)
+                .get();
 
         return data.readEntity(byte[].class);
     }
 
     /**
-     * TODO
-     * @param acronym
-     * @param interval
-     * @param path
-     * @return
+     * Method that gets the StockReport in File format
+     * using .path for accessing a specific resource and building a HTTP request invocation with .request - pdf
+     * Invoking HTTP GET
+     *
+     * @param acronym String: acronym of the Stock that will be searched
+     * @param interval String: interval of the Stock that will be searched
+     * @param path String: path of destination for the StockReport
+     * @return returns File of the Stock Report
      */
     public File getStockReport(String acronym, String interval, String path){
         Response response = getHostWebTarget()
@@ -292,7 +302,7 @@ public class DeustockGateway {
     }
 
     /**
-     * Method that gets the user by the username
+     * Method that gets the user by the username in byte[] format
      * using .path for accessing a specific resource and building a HTTP request invocation with .request - octet stream format
      * Invoking HTTP GET
      *
@@ -309,10 +319,13 @@ public class DeustockGateway {
     }
 
     /**
-     * TODO
-     * @param username
-     * @param path
-     * @return
+     * Method that gets the UserReport in File format
+     * using .path for accessing a specific resource and building a HTTP request invocation with .request - pdf
+     * Invoking HTTP GET
+     *
+     * @param username String: username of the User that will be searched
+     * @param path String: path of destination for the UserReport
+     * @return returns File of the UserReport
      */
     public File getUserReport(String username, String path){
         Response response = getHostWebTarget()
@@ -324,11 +337,12 @@ public class DeustockGateway {
     }
 
     /**
-     * TODO
-     * @param name
-     * @param response
-     * @param path
-     * @return
+     * Method to generate the generic Report File
+     *
+     * @param name String: name of the stock or the username
+     * @param response Response: response that contains the generated PDF
+     * @param path String: path of destination for the Report
+     * @return return File of the Report
      */
     private File generateFile(String name, Response response, String path){
         InputStream is = response.readEntity(InputStream.class);
@@ -365,21 +379,28 @@ public class DeustockGateway {
     }
 
     /**
-     * TODO
-     * @param username
-     * @return
+     * Method that resets the holdings of a user by his username
+     * using .path for accessing a specific resource and building a HTTP request invocation with .request
+     * Invoking HTTP GET
+     *
+     * @param username String: the username of the User wanted to reset
+     * @return returns a boolean, true when the reset has been successful and false when error
      */
     public boolean resetHoldings(String username) {
-    	Response response = getHostWebTarget()
-    			.path("user").path(username).path("holdings").path("reset")
-    			.request().get();
-    	return response.getStatus() == 200;
+        Response response = getHostWebTarget()
+                .path("user").path(username).path("holdings").path("reset")
+                .request()
+                .get();
+        return response.getStatus() == 200;
     }
 
     /**
-     * TODO
-     * @param username
-     * @return
+     * Method that get the actual balance of a User from his username
+     * using .path for accessing a specific resource and building a HTTP request invocation with .request - text plain
+     * Invoking HTTP GET
+     *
+     * @param username String: the username of the User wanted to search
+     * @return returns a double with the balance of the User
      */
     public double getBalance(String username){
         // TODO Delete username
@@ -392,12 +413,15 @@ public class DeustockGateway {
         return response.readEntity(Double.class);
     }
 
-    /**TODO
+    /**
+     * Method that opens a operation asocciated to a user
+     * using .path for accessing a specific resource and building a HTTP request invocation with .request - JSON Format
+     * Invoking HTTP GET
      *
-     * @param operationType
-     * @param stock
-     * @param token
-     * @param amount
+     * @param operationType OperatyionType: The type of operation
+     * @param stock Stock: The stock that is being purchased
+     * @param token String: token of the user that is purchasing the stock
+     * @param amount double: The cuantity of stocks purchased
      */
     public void openOperation(OperationType operationType, Stock stock, String token, double amount){
         if(operationType == null){
@@ -420,10 +444,13 @@ public class DeustockGateway {
                 .get();
     }
 
-    /**TODO
+    /**
+     * Method that closes a operation
+     * using .path for accessing a specific resource and building a HTTP request invocation with .request - JSON Format
+     * Invoking HTTP POST
      *
-     * @param stockHistoryID
-     * @param token
+     * @param stockHistoryID String: The ID of stock history related
+     * @param token String: token of the user that is purchasing the stock
      */
     public void closeOperation(String stockHistoryID, String token){
         MultivaluedMap<String, String> formData = new MultivaluedHashMap<>();
@@ -439,3 +466,4 @@ public class DeustockGateway {
 
 
 }
+
