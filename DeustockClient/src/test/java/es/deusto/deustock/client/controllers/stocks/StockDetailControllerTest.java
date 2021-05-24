@@ -20,6 +20,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.testfx.api.FxRobot;
+import org.testfx.api.FxToolkit;
 import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -45,6 +46,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import net.jcip.annotations.NotThreadSafe;
 
+@NotThreadSafe
 @ExtendWith(ApplicationExtension.class)
 class StockDetailControllerTest extends ApplicationTest{
 
@@ -72,9 +74,18 @@ class StockDetailControllerTest extends ApplicationTest{
             System.setProperty("prism.text", "t2k");
             System.setProperty("java.awt.headless", "true");
         }
-        registerPrimaryStage();
     }
-    
+
+    @Override
+    public void init() throws Exception {
+        FxToolkit.registerStage(Stage::new);
+    }
+
+    @Override
+    public void stop() throws Exception {
+        FxToolkit.hideStage();
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
         // set up the scene
@@ -152,7 +163,7 @@ class StockDetailControllerTest extends ApplicationTest{
         controller.setMainController(mockMainController);
 
         // When & Then
-        assertDoesNotThrow( () -> robot.clickOn(backButton) );
+        assertDoesNotThrow( () -> clickOn(backButton) );
     }
     
     @Test
@@ -168,7 +179,7 @@ class StockDetailControllerTest extends ApplicationTest{
         controller.setMainController(mockMainController);
 
         // When & Then
-        assertDoesNotThrow( () -> robot.clickOn(buyButton) );
+        assertDoesNotThrow( () -> clickOn(buyButton) );
     }
     
     @Test
@@ -184,7 +195,7 @@ class StockDetailControllerTest extends ApplicationTest{
         controller.setMainController(mockMainController);
 
         // When & Then
-        assertDoesNotThrow( () -> robot.clickOn(downloadButton) );
+        assertDoesNotThrow( () -> clickOn(downloadButton) );
         
     }
 }

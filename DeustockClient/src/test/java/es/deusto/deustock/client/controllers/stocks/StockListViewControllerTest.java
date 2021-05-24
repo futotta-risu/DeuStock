@@ -21,6 +21,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.testfx.api.FxRobot;
+import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationExtension;
 
 import es.deusto.deustock.client.controllers.MainController;
@@ -40,6 +41,7 @@ import net.jcip.annotations.NotThreadSafe;
 
 import org.testfx.framework.junit5.ApplicationTest;
 
+@NotThreadSafe
 @ExtendWith(ApplicationExtension.class)
 public class StockListViewControllerTest extends ApplicationTest {
 
@@ -63,7 +65,16 @@ public class StockListViewControllerTest extends ApplicationTest {
             System.setProperty("prism.text", "t2k");
             System.setProperty("java.awt.headless", "true");
         }
-        registerPrimaryStage();
+    }
+
+    @Override
+    public void init() throws Exception {
+        FxToolkit.registerStage(Stage::new);
+    }
+
+    @Override
+    public void stop() throws Exception {
+        FxToolkit.hideStage();
     }
 
     @Override
@@ -105,7 +116,7 @@ public class StockListViewControllerTest extends ApplicationTest {
         //When
         
         searchStockText.setText("AMZ");
-        robot.clickOn(searchStockButton);
+        clickOn(searchStockButton);
         
         //Then
 
@@ -124,7 +135,7 @@ public class StockListViewControllerTest extends ApplicationTest {
         //When
 
         searchStockText.setText("BTC");
-        robot.clickOn(searchStockButton);
+        clickOn(searchStockButton);
 
         //Then
 
@@ -146,6 +157,6 @@ public class StockListViewControllerTest extends ApplicationTest {
         controller.setMainController(mockMainController);
 
         // When & Then
-        assertDoesNotThrow( () -> Platform.runLater(() -> robot.clickOn(refreshButton)) );
+        assertDoesNotThrow( () -> Platform.runLater(() -> clickOn(refreshButton)) );
     }
 }

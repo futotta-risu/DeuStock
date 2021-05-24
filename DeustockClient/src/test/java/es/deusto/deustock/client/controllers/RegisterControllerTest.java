@@ -15,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.testfx.api.FxRobot;
+import org.testfx.api.FxToolkit;
 import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -27,6 +28,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 import static org.testfx.api.FxToolkit.registerPrimaryStage;
 
+@NotThreadSafe
 @ExtendWith(ApplicationExtension.class)
 public class RegisterControllerTest extends ApplicationTest{
 
@@ -44,9 +46,17 @@ public class RegisterControllerTest extends ApplicationTest{
             System.setProperty("prism.text", "t2k");
             System.setProperty("java.awt.headless", "true");
         }
-        registerPrimaryStage();
     }
 
+    @Override
+    public void init() throws Exception {
+        FxToolkit.registerStage(Stage::new);
+    }
+
+    @Override
+    public void stop() throws Exception {
+        FxToolkit.hideStage();
+    }
 
     @Override
     public void start(Stage stage) throws IOException {

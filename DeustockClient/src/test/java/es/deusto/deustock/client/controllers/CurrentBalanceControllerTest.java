@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
+import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.ApplicationTest;
 
@@ -33,6 +34,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.testfx.api.FxToolkit.registerPrimaryStage;
 
+@NotThreadSafe
 @ExtendWith(ApplicationExtension.class)
 public class CurrentBalanceControllerTest extends ApplicationTest {
 
@@ -49,7 +51,16 @@ public class CurrentBalanceControllerTest extends ApplicationTest {
             System.setProperty("prism.text", "t2k");
             System.setProperty("java.awt.headless", "true");
         }
-        registerPrimaryStage();
+    }
+
+    @Override
+    public void init() throws Exception {
+        FxToolkit.registerStage(Stage::new);
+    }
+
+    @Override
+    public void stop() throws Exception {
+        FxToolkit.hideStage();
     }
 
     @Override
@@ -89,7 +100,7 @@ public class CurrentBalanceControllerTest extends ApplicationTest {
 
         // When & Then
         assertDoesNotThrow( () -> Platform.runLater(() -> controller.setParams(params)) );
-        ;
+
     }
 
     @Test

@@ -18,6 +18,7 @@ import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import org.testfx.api.FxRobot;
+import org.testfx.api.FxToolkit;
 import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -30,6 +31,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.testfx.api.FxToolkit.registerPrimaryStage;
 
+@NotThreadSafe
 @ExtendWith(ApplicationExtension.class)
 public class LoginControllerTest extends ApplicationTest {
 
@@ -49,9 +51,17 @@ public class LoginControllerTest extends ApplicationTest {
             System.setProperty("prism.text", "t2k");
             System.setProperty("java.awt.headless", "true");
         }
-        registerPrimaryStage();
     }
 
+    @Override
+    public void init() throws Exception {
+        FxToolkit.registerStage(Stage::new);
+    }
+
+    @Override
+    public void stop() throws Exception {
+        FxToolkit.hideStage();
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -100,7 +110,7 @@ public class LoginControllerTest extends ApplicationTest {
         controller.usernameTxt.setText("TestUsername");
 
         // When
-        robot.clickOn(loginButton);
+        clickOn(loginButton);
         // Then
         Assertions.assertThat(controller.loginErrorLabel).hasText("Datos Incorrectos");
 
@@ -120,7 +130,7 @@ public class LoginControllerTest extends ApplicationTest {
         controller.usernameTxt.setText("TestUsername");
 
         // When
-        robot.clickOn(loginButton);
+        clickOn(loginButton);
 
         // Then
         verify(mockMainController, times(1)).loadAndChangePane(anyString());
@@ -135,7 +145,7 @@ public class LoginControllerTest extends ApplicationTest {
         controller.setMainController(mockMainController);
 
         // When
-        robot.clickOn(controller.registerBtn);
+        clickOn(controller.registerBtn);
 
         // Then
         verify(mockMainController, times(1)).loadAndChangeScene(anyString());

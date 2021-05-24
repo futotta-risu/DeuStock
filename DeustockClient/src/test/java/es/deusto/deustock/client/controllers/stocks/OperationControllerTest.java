@@ -22,6 +22,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.testfx.api.FxRobot;
+import org.testfx.api.FxToolkit;
 import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -32,7 +33,6 @@ import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.gateways.exceptions.ForbiddenException;
 import es.deusto.deustock.client.simulation.investment.operations.OperationType;
 import javafx.application.Platform;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -43,6 +43,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import net.jcip.annotations.NotThreadSafe;
 
+@NotThreadSafe
 @ExtendWith(ApplicationExtension.class)
 class OperationControllerTest extends ApplicationTest {
 	
@@ -65,9 +66,18 @@ class OperationControllerTest extends ApplicationTest {
             System.setProperty("prism.text", "t2k");
             System.setProperty("java.awt.headless", "true");
         }
-        registerPrimaryStage();
     }
-    
+
+    @Override
+    public void init() throws Exception {
+        FxToolkit.registerStage(Stage::new);
+    }
+
+    @Override
+    public void stop() throws Exception {
+        FxToolkit.hideStage();
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
         // set up the scene
@@ -131,7 +141,7 @@ class OperationControllerTest extends ApplicationTest {
         controller.setMainController(mockMainController);
 
         // When & Then
-        assertDoesNotThrow( () -> robot.clickOn(cancelButton) );
+        assertDoesNotThrow( () -> clickOn(cancelButton) );
     }
     
     @Test
@@ -156,7 +166,7 @@ class OperationControllerTest extends ApplicationTest {
         	controller.setParams(params);
         });
 
-        robot.clickOn(calculateCostButton);
+        clickOn(calculateCostButton);
 
         Assertions.assertThat(controller.costLabel).hasText("1.0");
     }

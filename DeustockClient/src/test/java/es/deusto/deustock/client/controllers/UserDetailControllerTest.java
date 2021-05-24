@@ -18,6 +18,7 @@ import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import org.testfx.api.FxRobot;
+import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.ApplicationTest;
 
@@ -37,6 +38,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.testfx.api.FxToolkit.registerPrimaryStage;
 
+@NotThreadSafe
 @ExtendWith(ApplicationExtension.class)
 public class UserDetailControllerTest extends ApplicationTest {
 
@@ -61,7 +63,17 @@ public class UserDetailControllerTest extends ApplicationTest {
             System.setProperty("prism.text", "t2k");
             System.setProperty("java.awt.headless", "true");
         }
-        registerPrimaryStage();
+    }
+
+    @Override
+    public void init() throws Exception {
+        FxToolkit.registerStage(Stage::new);
+
+    }
+
+    @Override
+    public void stop() throws Exception {
+        FxToolkit.hideStage();
     }
 
     @Override
@@ -207,7 +219,7 @@ public class UserDetailControllerTest extends ApplicationTest {
         doNothing().when(mockMainController).loadAndChangePaneWithParams(any(), any());
 
         //When & Then
-        assertDoesNotThrow( () -> robot.clickOn(editProfileButton) );
+        assertDoesNotThrow( () -> clickOn(editProfileButton) );
         //Then
 
     }
@@ -219,7 +231,7 @@ public class UserDetailControllerTest extends ApplicationTest {
         controller.setDeustockGateway(mockGateway);
 
         //When & Then
-        assertDoesNotThrow( () -> robot.clickOn(editProfileButton) );
+        assertDoesNotThrow( () -> clickOn(editProfileButton) );
     }
 
     @Test
