@@ -379,6 +379,23 @@ public class DeustockGateway {
     }
 
     /**
+     * Method that gets the Stock History list by the username
+     * using .path for accessing a specific resource and building a HTTP request invocation with .request - JSON format
+     * Invoking HTTP GET
+     *
+     * @param username String: the username by which it will be searched
+     * @return returns a list of Stock History
+     */
+    public List<StockHistory> getHistory(String username){
+        Response response = getHostWebTarget()
+                .path("user").path(username).path("history")
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+
+        return response.readEntity(new GenericType<>(){});
+    }
+
+    /**
      * Method that resets the holdings of a user by his username
      * using .path for accessing a specific resource and building a HTTP request invocation with .request
      * Invoking HTTP GET

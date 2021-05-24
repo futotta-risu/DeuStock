@@ -50,28 +50,48 @@ public class HoldingsListResources {
         try {
             holdings = walletService.getHoldings(username);
 
-            for(StockHistoryDTO hist : holdings){
-                DeuStock stock = stockService.getStockWithPrice(hist.getSymbol());
-
-                hist.setActualPrice(stock.getPrice());
-                hist.setOpenValue(
-                    operationService.getOpenPrice(
-                        hist.getOperation(), hist.getOpenPrice(), hist.getAmount()
-                    )
-                );
-                hist.setActualValue(
-                    operationService.getClosePrice(
-                        hist.getOperation(), hist.getOpenPrice(), stock.getPrice(), hist.getAmount()
-                    )
-                );
-            }
+            refreshList(holdings);
         } catch (WalletException | StockException sqlException) {
             throw new WebApplicationException(sqlException.getMessage());
         }
 
         return Response.status(200).entity(holdings).build();
     }
-    
+
+    @Path("history")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getHistory(@PathParam("username") String username) throws WebApplicationException {
+        List<StockHistoryDTO> holdings;
+        try {
+            holdings = walletService.getUserHistory(username);
+
+            refreshList(holdings);
+        } catch (WalletException | StockException sqlException) {
+            throw new WebApplicationException(sqlException.getMessage());
+        }
+
+        return Response.status(200).entity(holdings).build();
+    }
+
+    private void refreshList(List<StockHistoryDTO> holdings) throws StockException {
+        for(StockHistoryDTO hist : holdings){
+            DeuStock stock = stockService.getStockWithPrice(hist.getSymbol());
+
+            hist.setActualPrice(stock.getPrice());
+            hist.setOpenValue(
+                    operationService.getOpenPrice(
+                            hist.getOperation(), hist.getOpenPrice(), hist.getAmount()
+                    )
+            );
+            hist.setActualValue(
+                    operationService.getClosePrice(
+                            hist.getOperation(), hist.getOpenPrice(), stock.getPrice(), hist.getAmount()
+                    )
+            );
+        }
+    }
+
     @GET
 	@Path("/holdings/reset")
 	public Response resetHoldings(@PathParam("username") String username) throws WebApplicationException {

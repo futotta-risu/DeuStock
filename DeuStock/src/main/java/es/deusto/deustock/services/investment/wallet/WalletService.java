@@ -117,6 +117,21 @@ public class WalletService {
         }
     }
 
+    public List<StockHistoryDTO> getUserHistory(String username) throws WalletException {
+        try {
+            var user = userDAO.get(username);
+            return user
+                    .getWallet()
+                    .getHistory()
+                    .stream()
+                    .filter(StockHistory::isClosed)
+                    .map(stockHistoryDAO::getDTO)
+                    .collect(Collectors.toList());
+        }catch (SQLException e){
+            throw new WalletException("Error getting wallet");
+        }
+    }
+
 
     public void updateMoney(String username, double amount) throws WalletException {
         var wallet = getWallet(username);

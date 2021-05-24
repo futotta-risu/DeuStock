@@ -103,16 +103,6 @@
                </children>
             </VBox>
          </left>
-         <center>
-            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="Historial de inversiones realizadas en DeuStock" textAlignment="CENTER" textFill="#00b2d9">
-               <font>
-                  <Font name="Calibri Bold" size="14.0" />
-               </font>
-               <BorderPane.margin>
-                  <Insets left="25.0" right="25.0" top="25.0" />
-               </BorderPane.margin>
-            </Label>
-         </center>
          <top>
             <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #00b2d9;" BorderPane.alignment="CENTER">
                <children>
@@ -155,6 +145,17 @@
                </children>
             </HBox>
          </top>
+         <center>
+            <VBox fx:id="historyList" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="Historial de inversiones realizadas en DeuStock" textAlignment="CENTER" textFill="#00b2d9">
+                     <font>
+                        <Font name="Calibri Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </center>
 				      </BorderPane>
 
    </children>

@@ -4,13 +4,16 @@ import es.deusto.deustock.client.data.User;
 import es.deusto.deustock.client.gateways.DeustockGateway;
 import es.deusto.deustock.client.gateways.exceptions.ResetException;
 import es.deusto.deustock.client.visual.ViewPaths;
+import es.deusto.deustock.client.visual.stocks.list.HistoryInfoLine;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import org.apache.http.HeaderIterator;
 
 import java.awt.*;
 import java.io.File;
@@ -50,6 +53,9 @@ public class UserDetailController implements DSGenericController{
 
     @FXML
     Button reportDownloadButton;
+
+    @FXML
+    VBox historyList;
 
     public  UserDetailController(){
         gateway = new DeustockGateway();
@@ -123,6 +129,7 @@ public class UserDetailController implements DSGenericController{
         try {
             MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
         }catch (Exception e){}
+
         if(this.username==null){
             return;
         }
@@ -198,7 +205,17 @@ public class UserDetailController implements DSGenericController{
                     }
                 }
         );
-    	
+
+
+        try{
+            DeustockGateway gateway = new DeustockGateway();
+            var history = gateway.getHistory(user.getUsername());
+
+            for(var hist : history){
+                historyList.getChildren().add(new HistoryInfoLine(hist));
+                historyList.getChildren().add(new Separator());
+            }
+        }catch (Exception e){}
     }
     /**
      * Method that resets the whole wallet, sets the wallet null
