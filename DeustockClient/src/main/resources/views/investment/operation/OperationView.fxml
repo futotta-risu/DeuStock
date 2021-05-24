@@ -34,7 +34,7 @@
          <children>
             <Label text="StockAmount" />
             <TextField fx:id="amountTextField" />
-            <Button fx:id="calculateCostButton" mnemonicParsing="false" text="Calculate Cost" />
+            <Button id="hoverButton" fx:id="calculateCostButton" mnemonicParsing="false" stylesheets="@../../button.css" text="Calculate Cost" />
          </children>
          <VBox.margin>
             <Insets />
