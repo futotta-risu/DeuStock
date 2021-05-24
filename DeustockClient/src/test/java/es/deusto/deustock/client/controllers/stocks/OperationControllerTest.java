@@ -169,7 +169,7 @@ class OperationControllerTest extends ApplicationTest {
 
         clickOn(calculateCostButton);
 
-        Assertions.assertThat(controller.costLabel).hasText("1");
+        Assertions.assertThat(controller.costLabel).hasText("1.0");
         
     }
 
