@@ -10,7 +10,8 @@ import java.awt.event.MouseEvent;
 import java.util.HashMap;
 
 /**
- *
+ * Line of information of a stock used for insert in a list
+ * 
  * @author Erik B. Terres
  */
 public class StockInfoLine extends BorderPane {
@@ -18,6 +19,11 @@ public class StockInfoLine extends BorderPane {
     Stock stock;
     Label stockNameLabel, stockPriceLabel;
 
+    /**
+     * Constructor for class StockInfoLine
+     * 
+     * @param stock stock used for inserting the information on line labels
+     */
     public StockInfoLine(Stock stock){
         this.stock = stock;
         initPane();
@@ -45,6 +51,11 @@ public class StockInfoLine extends BorderPane {
         );
     }
 
+    /**
+     * Method for refreshing a stock in a line
+     * 
+     * @param stock The stock we want to write in the line
+     */
     public void refreshStock(Stock stock){
         this.stock = stock;
         this.stockPriceLabel.setText(String.valueOf(this.stock.getPrice()));

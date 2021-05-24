@@ -12,6 +12,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 
 /**
+ * Line of information of a stock used for selling it in a list
+ * 
  * @author landersanmillan
  */
 public class StockInfoSellLine extends GridPane{
