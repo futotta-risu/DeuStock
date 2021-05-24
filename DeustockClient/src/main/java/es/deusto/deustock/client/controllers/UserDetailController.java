@@ -6,6 +6,11 @@ import es.deusto.deustock.client.gateways.exceptions.ResetException;
 import es.deusto.deustock.client.visual.ViewPaths;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.File;
@@ -168,7 +173,11 @@ public class UserDetailController implements DSGenericController{
 
                     Optional<ButtonType> result = alert.showAndWait();
                     if (((Optional<?>) result).get() == ButtonType.OK){
-                        resetAccountWallet();
+                        try {
+                            resetAccountWallet();
+                        } catch (ResetException e) {
+                            e.printStackTrace();
+                        }
                     } else {
                         alert.close();
                     }

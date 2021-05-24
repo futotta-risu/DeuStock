@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 import net.jcip.annotations.NotThreadSafe;
 import org.junit.jupiter.api.BeforeAll;
@@ -48,7 +49,7 @@ public class UserDetailControllerTest extends ApplicationTest {
     private Button accountDeleteButton;
 
     private Label usernameLabel;
-    private Text descriptionText;
+    private TextArea descriptionText;
 
     private UserDetailController controller;
 
