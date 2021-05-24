@@ -28,12 +28,16 @@ public class CurrentBalanceController implements DSGenericController {
 	@FXML
 	VBox stockList;
 
+    @FXML
+    Button refreshButton;
+
     public CurrentBalanceController(){}
     
 	@Override
 	public void setParams(HashMap<String, Object> params) {
-        if(params.containsKey("username"))
+        if(params.containsKey("username")) {
             this.username = String.valueOf(params.get("username"));
+        }
 
         initRoot();
 	}
@@ -47,10 +51,8 @@ public class CurrentBalanceController implements DSGenericController {
         moneyLabel.setText(this.balance  + " €");
 
         refreshStocks();
-        Button refreshButton = new Button("Refresh");
         refreshButton.setOnMouseClicked(mouseEvent -> refreshStocks());
         refreshButton.setId("hoverButton");
-        stockList.getChildren().add(refreshButton);
 
         MainController.getInstance().getScene().getStylesheets().add("/views/button.css");
     }
@@ -58,7 +60,7 @@ public class CurrentBalanceController implements DSGenericController {
 
     
     public void refreshStocks(){
-        this.stockList.getChildren().removeIf(node -> node instanceof StockInfoSellLine);
+        this.stockList.getChildren().removeIf(node -> (node instanceof StockInfoSellLine || node instanceof Separator));
 
         List<StockHistory> stockHistories = new DeustockGateway().getHoldings(username);
 

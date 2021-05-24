@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -10,27 +11,27 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.CurrentBalanceController">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.CurrentBalanceController">
    <children>
       <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #00b2d9;">
          <children>
-            <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+            <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" HBox.hgrow="ALWAYS">
                <center>
                   <Label alignment="CENTER" text="Tu balance actual" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
                      <font>
-                        <Font name="Calibri Bold" size="60.0" />
+                        <Font name="Calibri Bold" size="24.0" />
                      </font>
                      <BorderPane.margin>
-                        <Insets right="410.0" />
+                        <Insets />
                      </BorderPane.margin>
                   </Label>
                </center>
                <left>
                   <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
                      <bottom>
-                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="Analyze it!" textFill="WHITE" BorderPane.alignment="CENTER">
+                        <Label maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="Analyze it!" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
                            <font>
-                              <Font name="Calibri" size="26.0" />
+                              <Font name="Calibri" size="18.0" />
                            </font>
                            <BorderPane.margin>
                               <Insets bottom="10.0" />
@@ -40,10 +41,10 @@
                      <center>
                         <Label fx:id="deustockLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="DeuStock" textFill="WHITE" BorderPane.alignment="CENTER">
                            <font>
-                              <Font name="Calibri Bold" size="61.0" />
+                              <Font name="Calibri Bold" size="48.0" />
                            </font>
                            <BorderPane.margin>
-                              <Insets top="20.0" />
+                              <Insets left="20.0" top="20.0" />
                            </BorderPane.margin>
                         </Label>
                      </center>
@@ -73,6 +74,11 @@
                         </Label>
                      </children>
                   </HBox>
+                  <Button fx:id="refreshButton" mnemonicParsing="false" text="Refresh">
+                     <VBox.margin>
+                        <Insets bottom="20.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
                   <VBox fx:id="stockList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
                      <children>
                         <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #ddf;">

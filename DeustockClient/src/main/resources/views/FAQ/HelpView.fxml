@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.HelpViewController">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.deusto.deustock.client.controllers.HelpViewController">
    <children>
       <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #00b2d9;">
          <children>
@@ -16,7 +16,7 @@
                <center>
                   <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="Ayuda" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
                      <font>
-                        <Font name="Calibri Bold" size="60.0" />
+                        <Font name="Calibri Bold" size="24.0" />
                      </font>
                      <BorderPane.margin>
                         <Insets />
@@ -26,9 +26,9 @@
                <left>
                   <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
                      <bottom>
-                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="Analyze it!" textFill="WHITE" BorderPane.alignment="CENTER">
+                        <Label minHeight="-Infinity" minWidth="-Infinity" text="Analyze it!" textFill="WHITE" BorderPane.alignment="CENTER">
                            <font>
-                              <Font name="Calibri" size="26.0" />
+                              <Font name="Calibri" size="18.0" />
                            </font>
                            <BorderPane.margin>
                               <Insets bottom="10.0" />
@@ -38,15 +38,15 @@
                      <center>
                         <Label fx:id="deustockLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="DeuStock" textFill="WHITE" BorderPane.alignment="CENTER">
                            <font>
-                              <Font name="Calibri Bold" size="61.0" />
+                              <Font name="Calibri Bold" size="48.0" />
                            </font>
                            <BorderPane.margin>
-                              <Insets top="20.0" />
+                              <Insets left="20.0" top="20.0" />
                            </BorderPane.margin>
                         </Label>
                      </center>
                      <BorderPane.margin>
-                        <Insets left="20.0" />
+                        <Insets />
                      </BorderPane.margin>
                   </BorderPane>
                </left>

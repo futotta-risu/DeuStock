@@ -48,8 +48,8 @@ public class TokenDAO implements IDAO<Token>{
     @Override
     public Token get(Object identity) throws SQLException {
         var whereCondition = "token == :token";
-        HashMap<String,String> params = new HashMap<>();
-        params.put("token", (String) identity);
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("token", identity);
 
         return (Token) idbManager.get(Token.class,whereCondition, params);
     }
