@@ -136,22 +136,6 @@ class OperationControllerTest extends ApplicationTest {
     }
     
     @Test
-    void testGetOpenPrice(FxRobot robot) throws ForbiddenException {
-    	// Given
-        Stock stock = new Stock();
-        stock.setAcronym("Test");
-        HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put("stock", stock);
-
-        when(mockGateway.getStock(anyString(), anyString())).thenReturn(stock);
-        controller.setDeustockGateway(mockGateway);
-        controller.setMainController(mockMainController);
-
-        // When & Then
-        assertDoesNotThrow( () -> robot.clickOn(cancelButton) );
-    }
-    
-    @Test
     void testCalculateButton(FxRobot robot) throws ForbiddenException {
     	// Given
     	Stock stock = new Stock();
