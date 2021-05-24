@@ -40,6 +40,7 @@ public class RegisterControllerTest extends ApplicationTest{
 
     @BeforeAll
     public static void setupSpec() throws TimeoutException {
+        System.setProperty("testfx.robot", "glass");
         if (Boolean.getBoolean("headless")) {
             System.setProperty("testfx.robot", "glass");
             System.setProperty("testfx.headless", "true");
@@ -86,21 +87,21 @@ public class RegisterControllerTest extends ApplicationTest{
     }
 
     @Test
-    void testCancelButtonChangesScene(){
+    void testCancelButtonChangesScene(FxRobot robot){
         // Given
         doNothing().when(mockMainController).loadAndChangeScene(anyString());
         controller.setGateway(mockGateway);
         controller.setMainController(mockMainController);
 
         // When
-        clickOn(controller.cancelBtn);
+        robot.clickOn(controller.cancelBtn);
         WaitForAsyncUtils.waitForFxEvents();
         // Then
         verify(mockMainController, times(1)).loadAndChangeScene(anyString());
     }
 
     @Test
-    void testRegisterButtonChangesScene() {
+    void testRegisterButtonChangesScene(FxRobot robot) {
         // Given
 
         when(mockGateway.register(anyString(), anyString(),anyString(),anyString(),anyString())).thenReturn(true);
@@ -120,14 +121,14 @@ public class RegisterControllerTest extends ApplicationTest{
         aboutMeTxt.setText("TestAboutMe");
 
         // When
-        clickOn(controller.registerBtn);
+        robot.clickOn(controller.registerBtn);
 
         // Then
         verify(mockMainController, times(1)).loadAndChangeScene(anyString());
     }
 
     @Test
-    void testRegisterShowsErrorLabelOnEmptyData() {
+    void testRegisterShowsErrorLabelOnEmptyData(FxRobot robot) {
         // Given
 
         when(mockGateway.register(anyString(), anyString(),anyString(),anyString(),anyString())).thenReturn(true);
@@ -139,13 +140,13 @@ public class RegisterControllerTest extends ApplicationTest{
         Label errorLabel = controller.registerErrorLabel;
 
         // When
-        clickOn(controller.registerBtn);
+        robot.clickOn(controller.registerBtn);
         // Then
         Assertions.assertThat(errorLabel).hasText("Casillas Vacias detectadas");
     }
 
     @Test
-    void testRegisterShowErrorOnGatewayError(){
+    void testRegisterShowErrorOnGatewayError(FxRobot robot){
         // Given
 
         when(mockGateway.register(anyString(), anyString(),anyString(),anyString(),anyString())).thenReturn(false);
@@ -167,7 +168,7 @@ public class RegisterControllerTest extends ApplicationTest{
         Label errorLabel = controller.registerErrorLabel;
 
         // When
-        clickOn(controller.registerBtn);
+        robot.clickOn(controller.registerBtn);
         // Then
         Assertions.assertThat(errorLabel).hasText("Registro invalido");
     }

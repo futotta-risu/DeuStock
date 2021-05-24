@@ -100,6 +100,7 @@ public class UserDetailControllerTest extends ApplicationTest {
         // Given
         User user = new User();
         user.setUsername("Test");
+        user.setDescription("Test2");
         HashMap<String, Object> params = new HashMap<>();
         params.put("username", "Test");
 
@@ -111,7 +112,7 @@ public class UserDetailControllerTest extends ApplicationTest {
             controller.setParams(params);
             //Then
             assertEquals(usernameLabel.getText(), "Test");
-            assertEquals(descriptionText.getText(), "");
+            assertEquals(descriptionText.getText(), "Test2");
         } );
     }
 
