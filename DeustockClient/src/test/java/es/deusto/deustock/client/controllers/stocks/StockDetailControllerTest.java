@@ -47,6 +47,7 @@ import javafx.stage.Stage;
 import net.jcip.annotations.NotThreadSafe;
 
 @NotThreadSafe
+@Execution(ExecutionMode.SAME_THREAD)
 @ExtendWith(ApplicationExtension.class)
 class StockDetailControllerTest extends ApplicationTest{
 

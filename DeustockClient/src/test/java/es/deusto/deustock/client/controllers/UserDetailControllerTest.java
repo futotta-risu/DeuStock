@@ -39,6 +39,7 @@ import static org.mockito.Mockito.*;
 import static org.testfx.api.FxToolkit.registerPrimaryStage;
 
 @NotThreadSafe
+@Execution(ExecutionMode.SAME_THREAD)
 @ExtendWith(ApplicationExtension.class)
 public class UserDetailControllerTest extends ApplicationTest {
 

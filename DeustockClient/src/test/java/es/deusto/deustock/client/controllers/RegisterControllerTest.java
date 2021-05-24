@@ -19,6 +19,7 @@ import org.testfx.api.FxToolkit;
 import org.testfx.assertions.api.Assertions;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.ApplicationTest;
+import org.testfx.util.WaitForAsyncUtils;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -100,7 +101,7 @@ public class RegisterControllerTest extends ApplicationTest{
 
         // When
         clickOn("#cancelBtn");
-
+        WaitForAsyncUtils.waitForFxEvents();
         // Then
         verify(mockMainController, times(1)).loadAndChangeScene(anyString());
     }
@@ -127,7 +128,7 @@ public class RegisterControllerTest extends ApplicationTest{
 
         // When
         clickOn("#registerBtn");
-
+        WaitForAsyncUtils.waitForFxEvents();
         // Then
         verify(mockMainController, times(1)).loadAndChangeScene(anyString());
     }
@@ -146,7 +147,7 @@ public class RegisterControllerTest extends ApplicationTest{
 
         // When
         clickOn("#registerBtn");
-
+        WaitForAsyncUtils.waitForFxEvents();
         // Then
         Assertions.assertThat(errorLabel).hasText("Casillas Vacias detectadas");
     }
@@ -175,7 +176,7 @@ public class RegisterControllerTest extends ApplicationTest{
 
         // When
         clickOn("#registerBtn");
-
+        WaitForAsyncUtils.waitForFxEvents();
         // Then
         Assertions.assertThat(errorLabel).hasText("Registro invalido");
     }

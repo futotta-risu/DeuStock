@@ -111,6 +111,7 @@ public class LoginControllerTest extends ApplicationTest {
 
         // When
         clickOn(loginButton);
+        WaitForAsyncUtils.waitForFxEvents();
         // Then
         Assertions.assertThat(controller.loginErrorLabel).hasText("Datos Incorrectos");
 
@@ -131,7 +132,7 @@ public class LoginControllerTest extends ApplicationTest {
 
         // When
         clickOn(loginButton);
-
+        WaitForAsyncUtils.waitForFxEvents();
         // Then
         verify(mockMainController, times(1)).loadAndChangePane(anyString());
     }
@@ -146,7 +147,7 @@ public class LoginControllerTest extends ApplicationTest {
 
         // When
         clickOn(controller.registerBtn);
-
+        WaitForAsyncUtils.waitForFxEvents();
         // Then
         verify(mockMainController, times(1)).loadAndChangeScene(anyString());
     }
