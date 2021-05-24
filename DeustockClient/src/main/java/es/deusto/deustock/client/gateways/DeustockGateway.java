@@ -157,16 +157,16 @@ public class DeustockGateway {
      */
     public boolean register(String username, String password, String fullName, String aboutMe, String country){
 
-    	Response response = getHostWebTarget().path("auth").path("register")
-			.request("application/json")
-            .post(Entity.entity(new User()
-                        .setUsername(username)
-                        .setPassword(getEncrypt(password))
-                        .setFullName(fullName)
-                        .setDescription(aboutMe)
-                        .setCountry(country)
-                  , MediaType.APPLICATION_JSON)
-            );
+        Response response = getHostWebTarget().path("auth").path("register")
+                .request("application/json")
+                .post(Entity.entity(new User()
+                                .setUsername(username)
+                                .setPassword(getEncrypt(password))
+                                .setFullName(fullName)
+                                .setDescription(aboutMe)
+                                .setCountry(country)
+                        , MediaType.APPLICATION_JSON)
+                );
 
         return response.getStatus() == 200;
     }
@@ -181,7 +181,7 @@ public class DeustockGateway {
      * @return returns a boolean, true when the login and connection has been successful and false when error
      */
     public String login(String username, String password) throws ForbiddenException {
-    	Response response = getHostWebTarget().path("auth").path("login")
+        Response response = getHostWebTarget().path("auth").path("login")
                 .path(username).path(getEncrypt(password))
                 .request(MediaType.APPLICATION_JSON)
                 .get();
@@ -209,7 +209,7 @@ public class DeustockGateway {
         byte[] data = new byte[0];
         data = pass.getBytes(StandardCharsets.UTF_8);
         byte[] encrypted = messageDigest.digest(data);
-		return Arrays.toString(encrypted);
+        return Arrays.toString(encrypted);
     }
 
     /**
@@ -387,11 +387,13 @@ public class DeustockGateway {
      * @return returns a boolean, true when the reset has been successful and false when error
      */
     public boolean resetHoldings(String username) {
-    	Response response = getHostWebTarget()
-    			.path("user").path(username).path("holdings").path("reset")
-    			.request()
+
+        Response response = getHostWebTarget()
+                .path("user").path(username).path("holdings").path("reset")
+                .request()
                 .get();
-    	return response.getStatus() == 200;
+        return response.getStatus() == 200;
+
     }
 
     /**
@@ -466,3 +468,4 @@ public class DeustockGateway {
 
 
 }
+
