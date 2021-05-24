@@ -19,6 +19,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
+          run: npm i --package-lock-only
           start: npm start
   build:
     runs-on: ubuntu-latest
