@@ -90,7 +90,7 @@ class HelpViewControllerTest extends ApplicationTest {
     }
 
     @Test
-    void testGetStockListIsEmpty(){
+    void testGetListIsEmpty(){
         //Given
         List<FAQQuestion> questionList2 = new ArrayList<>();
 
