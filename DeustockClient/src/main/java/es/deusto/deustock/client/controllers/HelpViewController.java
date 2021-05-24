@@ -12,13 +12,16 @@ import javafx.scene.layout.VBox;
  **/
 public class HelpViewController {
     @FXML
-    private VBox questionList;
+    VBox questionList;
 
+    DeustockGateway gateway;
     /**
      * Default no-argument constructor
      */
     public HelpViewController(){}
 
+
+    public void setDeustockGateway(DeustockGateway gateway){ this.gateway = gateway; }
 
     /**
      * Method that initializes the instance VBox in the FXML file charging it with the questionList
