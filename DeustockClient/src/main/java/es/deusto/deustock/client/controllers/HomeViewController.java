@@ -20,7 +20,9 @@ public class HomeViewController {
     /**
      * Default no-argument constructor
      */
-    public HomeViewController(){}
+    public HomeViewController(){
+        gateway = new DeustockGateway();
+    }
 
     public void setDeustockGateway(DeustockGateway gateway){ this.gateway = gateway; }
 
@@ -29,11 +31,13 @@ public class HomeViewController {
      */
     @FXML
     private void initialize(){
-        gateway = new DeustockGateway();
-
-        for(Stock stock : gateway.getStockList("small")){
-            stockList.getChildren().add(new StockInfoLine(stock));
-            stockList.getChildren().add(new Separator());
+        try{
+            for(Stock stock : gateway.getStockList("small")){
+                stockList.getChildren().add(new StockInfoLine(stock));
+                stockList.getChildren().add(new Separator());
+            }
+        }catch (Exception e){
+            return;
         }
     }
 }

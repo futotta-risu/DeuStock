@@ -75,8 +75,9 @@ public class ChangeUserDetailController implements DSGenericController{
 	 * @param params collects all the received objects with their respective key in a HashMap
 	 */
 	public void setParams(HashMap<String, Object> params) {
-		if(params.containsKey("username"))
+		if(params.containsKey("username")) {
 			this.username = String.valueOf(params.get("username"));
+		}
 		initRoot();
 	}
 
@@ -140,11 +141,7 @@ public class ChangeUserDetailController implements DSGenericController{
 		this.usernameLabel.setText(user.getUsername());
 
 		//Comprobar que funciona la lista de countries
-		List<String> countries = new ArrayList<String>();
-		for (Locale locale : Locale.getAvailableLocales())
-		{
-			 countries.add(locale.getDisplayCountry());
-		}
+		String[] countries = Arrays.copyOfRange(Locale.getISOCountries(), 1, 20);
 
 		countryChoice.setValue("Seleciona un pais");
 		countryChoice.setTooltip(new Tooltip("Seleciona un pais"));

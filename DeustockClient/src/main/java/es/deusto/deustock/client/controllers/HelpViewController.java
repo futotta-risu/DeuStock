@@ -18,10 +18,14 @@ public class HelpViewController {
     /**
      * Default no-argument constructor
      */
-    public HelpViewController(){}
+    public HelpViewController(){
+        gateway = new DeustockGateway();
+    }
 
 
-    public void setDeustockGateway(DeustockGateway gateway){ this.gateway = gateway; }
+    public void setDeustockGateway(DeustockGateway gateway){
+        this.gateway = gateway;
+    }
 
     /**
      * Method that initializes the instance VBox in the FXML file charging it with the questionList
@@ -30,8 +34,11 @@ public class HelpViewController {
 
     @FXML
     private void initialize(){
-        (new DeustockGateway()).getFAQList()
-                .forEach(q-> questionList.getChildren().add(new FAQLine(q)));
+        try{
+            gateway.getFAQList().forEach(q-> questionList.getChildren().add(new FAQLine(q)));
+        }catch (Exception e){
+            return;
+        }
     }
 
 

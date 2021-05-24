@@ -59,11 +59,12 @@ class HelpViewControllerTest extends ApplicationTest {
         Parent root = loader.load();
         helpViewController = loader.getController();
         Scene scene = new Scene(root);
+        
+        stage.setScene(scene);
+        stage.show();
 
         questionList = helpViewController.questionList;
 
-        stage.setScene(scene);
-        stage.show();
 
     }
 

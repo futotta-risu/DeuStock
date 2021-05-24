@@ -62,8 +62,12 @@ public class StockListViewController {
 
         refreshButton.setOnMouseClicked(mouseEvent -> refreshStocks());
         searchStockButton.setOnMouseClicked(mouseEvent -> searchStock());
+        try{
+            refreshStocks();
+        }catch (Exception e){
+            return;
+        }
 
-        refreshStocks();
     }
 
     /**

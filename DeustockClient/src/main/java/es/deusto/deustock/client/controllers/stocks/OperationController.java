@@ -61,6 +61,7 @@ public class OperationController implements DSGenericController {
         }
 
         if(params.containsKey("stock")){
+            System.out.println("Poniendo el stock ");
             this.stock = (Stock) params.get("stock");
         }
 
@@ -76,24 +77,8 @@ public class OperationController implements DSGenericController {
         operationSelect.setTooltip(new Tooltip("Select and operation"));
         operationSelect.getItems().setAll(OperationType.values());
 
-        calculateCostButton.setOnMouseClicked(
-                e -> costLabel.setText(String.valueOf(getOpenPrice()))
-        );
-        cancelButton.setOnMouseClicked(
-                e -> mainController.loadAndChangePane(
-                        ViewPaths.StockListViewPath
-                )
-        );
 
-        // TODO Security on the amount field
-        operateButton.setOnMouseClicked(
-                e -> gateway.openOperation(
-                        operationSelect.getValue(),
-                        stock,
-                        mainController.getToken(),
-                        // Temporaly solves the case of empty textbox
-                        Double.parseDouble("0" + amountTextField.getText()))
-        );
+
     }
 
     /**
@@ -106,6 +91,24 @@ public class OperationController implements DSGenericController {
         stockPriceLabel.setText(String.valueOf(stock.getPrice()));
         balanceLabel.setText(String.valueOf(balance));
         costLabel.setText("0");
+
+        calculateCostButton.setOnMouseClicked(
+                e -> costLabel.setText(String.valueOf(getOpenPrice()))
+        );
+        cancelButton.setOnMouseClicked(
+                e -> mainController.loadAndChangePane(
+                        ViewPaths.StockListViewPath
+                )
+        );
+
+        operateButton.setOnMouseClicked(
+                e -> gateway.openOperation(
+                        operationSelect.getValue(),
+                        stock,
+                        mainController.getToken(),
+                        // Temporaly solves the case of empty textbox
+                        Double.parseDouble("0" + amountTextField.getText()))
+        );
     }
 
     /**
@@ -118,6 +121,8 @@ public class OperationController implements DSGenericController {
         if(operationSelect.getValue() == null){
             return 0;
         }
+        System.out.println("T-1");
+        System.out.println(this.stock);
 
         return switch (operationSelect.getValue()){
             case LONG, SHORT -> (Double.parseDouble(amountTextField.getText()) * this.stock.getPrice());

@@ -16,6 +16,7 @@ import java.util.concurrent.TimeoutException;
 import es.deusto.deustock.client.data.User;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Execution;
@@ -42,6 +43,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import net.jcip.annotations.NotThreadSafe;
 
+@Tag("operation")
 @NotThreadSafe
 @Execution(ExecutionMode.SAME_THREAD)
 @ExtendWith(ApplicationExtension.class)
@@ -150,14 +152,16 @@ class OperationControllerTest extends ApplicationTest {
         
         //When
         amountTextField.setText("1");
-        robot.clickOn(calculateCostButton);
-        
+
         //Then
         
         Platform.runLater( () -> {
         	controller.setParams(params);
-        	Assertions.assertThat(controller.costLabel).hasText("1");
         });
+
+        robot.clickOn(calculateCostButton);
+
+        Assertions.assertThat(controller.costLabel).hasText("1.0");
     }
 
 }
