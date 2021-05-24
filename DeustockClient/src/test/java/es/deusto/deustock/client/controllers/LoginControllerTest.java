@@ -75,7 +75,7 @@ public class LoginControllerTest extends ApplicationTest {
 
         stage.setScene(scene);
         stage.show();
-
+        stage.toFront();
         this.loginButton = controller.loginButton;
 
 
