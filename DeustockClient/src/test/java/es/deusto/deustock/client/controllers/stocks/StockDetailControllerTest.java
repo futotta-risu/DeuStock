@@ -113,67 +113,81 @@ class StockDetailControllerTest extends ApplicationTest{
     void testOpenOnStock() throws ForbiddenException {
         // Given
         Stock stock = new Stock();
-        stock.setAcronym("AMZ");
+        stock.setAcronym("Test2");
         HashMap<String, Object> params = new HashMap<>();
-        params.put("acronym", "AMZ");
+        params.put("acronym", "Test");
 
         when(mockGateway.getStock(anyString(), anyString())).thenReturn(stock);
         controller.setDeustockGateway(mockGateway);
+        controller.setMainController(mockMainController);
 
-        // When
-        Platform.runLater( () -> {
-            controller.setParams(params);
-            Assertions.assertThat(controller.acronymLabel).hasText("AMZ");
-            Assertions.assertThat(controller.priceLabel).hasText("");
-        });
-        // Then
+        // When & Then
+        assertDoesNotThrow( () -> Platform.runLater(() -> controller.setParams(params)) );
+
+
+    }
+
+    @Test
+    void testOpenOnNullStock() throws ForbiddenException {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("grfhrt", "Tetrhtst");
+
+        when(mockGateway.getStock(anyString(), anyString())).thenReturn(null);
+        controller.setDeustockGateway(mockGateway);
+        controller.setMainController(mockMainController);
+
+        // When & Then
+        assertDoesNotThrow( () -> Platform.runLater(() -> controller.setParams(params)) );
 
 
     }
     
     @Test
-    void testBackButtonChangesScene(FxRobot robot) throws ForbiddenException {
+    void testBackButton(FxRobot robot) throws ForbiddenException {
         // Given
+        Stock stock = new Stock();
+        stock.setAcronym("Test2");
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("acronym", "Test");
 
-        doNothing().when(mockMainController).loadAndChangeScene(anyString());
+        when(mockGateway.getStock(anyString(), anyString())).thenReturn(stock);
         controller.setDeustockGateway(mockGateway);
         controller.setMainController(mockMainController);
 
-        // When
-        robot.clickOn(controller.backButton);
-
-        // Then
-        verify(mockMainController, times(1)).loadAndChangeScene(anyString());
+        // When & Then
+        assertDoesNotThrow( () -> robot.clickOn(backButton) );
     }
     
     @Test
-    void testBuyButtonChangesScene(FxRobot robot) throws ForbiddenException {
+    void testBuyButton(FxRobot robot) throws ForbiddenException {
         // Given
+        Stock stock = new Stock();
+        stock.setAcronym("Test2");
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("acronym", "Test");
 
-        doNothing().when(mockMainController).loadAndChangeScene(anyString());
+        when(mockGateway.getStock(anyString(), anyString())).thenReturn(stock);
         controller.setDeustockGateway(mockGateway);
         controller.setMainController(mockMainController);
 
-        // When
-        robot.clickOn(controller.buyButton);
-
-        // Then
-        verify(mockMainController, times(1)).loadAndChangeScene(anyString());
+        // When & Then
+        assertDoesNotThrow( () -> robot.clickOn(buyButton) );
     }
     
     @Test
-    void testDownloadButtonChangesScene(FxRobot robot) throws ForbiddenException {
-    	// Given
+    void testDownloadButton(FxRobot robot) throws ForbiddenException {
+        // Given
+        Stock stock = new Stock();
+        stock.setAcronym("Test2");
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("acronym", "Test");
 
-        doNothing().when(mockMainController).loadAndChangeScene(anyString());
+        when(mockGateway.getStock(anyString(), anyString())).thenReturn(stock);
         controller.setDeustockGateway(mockGateway);
         controller.setMainController(mockMainController);
 
-        // When
-        robot.clickOn(controller.downloadButton);
-
-        // Then
-        
+        // When & Then
+        assertDoesNotThrow( () -> robot.clickOn(downloadButton) );
         
     }
 }

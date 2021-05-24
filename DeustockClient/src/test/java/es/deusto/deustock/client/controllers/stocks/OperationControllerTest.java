@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.TimeoutException;
 
+import es.deusto.deustock.client.data.User;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -99,32 +100,41 @@ class OperationControllerTest extends ApplicationTest {
         this.mockGateway = mock(DeustockGateway.class);
         this.mockMainController = mock(MainController.class);
     }
-    
-    @Test
-    void testOpenOnStock() throws ForbiddenException {
-        // Given
-        Stock stock = new Stock();
-        stock.setPrice(2);
-        stock.setFullName("Test");
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("acronym", "Test");
 
-        when(mockGateway.getStock(anyString(), anyString())).thenReturn(stock);
+    @Test
+    void testOpenOnUser() throws ForbiddenException {
+        // Given
+        User user = new User();
+        user.setUsername("Test");
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("username", "Test");
+
+        when(mockGateway.getUser(anyString())).thenReturn(user);
         controller.setDeustockGateway(mockGateway);
 
-        // When
-        Platform.runLater( () -> {
-            controller.setParams(params);
-            Assertions.assertThat(controller.stockNameLabel).hasText("Test");
-            Assertions.assertThat(controller.stockPriceLabel).hasText("2");
-        });
-        // Then
+        // When & Then
+        assertDoesNotThrow( () -> Platform.runLater(() -> controller.setParams(params)) );
+
+
+    }
+
+    @Test
+    void testOpenOnNullStock() throws ForbiddenException {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("grfhrt", "Tetrhtst");
+
+        when(mockGateway.getStock(anyString(), anyString())).thenReturn(null);
+        controller.setDeustockGateway(mockGateway);
+        controller.setMainController(mockMainController);
+
+        // When & Then
+        assertDoesNotThrow( () -> Platform.runLater(() -> controller.setParams(params)) );
 
 
     }
     
     @Test
-    void testCancelButtonChangesScene(FxRobot robot) throws ForbiddenException {
+    void testCancelButton(FxRobot robot) throws ForbiddenException {
     	// Given
 
         doNothing().when(mockMainController).loadAndChangeScene(anyString());

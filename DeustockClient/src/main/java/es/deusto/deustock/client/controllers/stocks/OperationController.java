@@ -18,7 +18,7 @@ import java.util.HashMap;
  */
 public class OperationController implements DSGenericController {
 
-	private DeustockGateway gateway = new DeustockGateway();
+	private DeustockGateway gateway;
     private MainController mainController;
 	
     @FXML
@@ -48,7 +48,7 @@ public class OperationController implements DSGenericController {
     @Override
     public void setParams(HashMap<String, Object> params) {
         if(params.containsKey("username")){
-            this.username = (String) params.get("username");
+            this.username = String.valueOf(params.get("username"));
         }
 
         if(params.containsKey("stock")){

@@ -34,7 +34,7 @@ import yahoofinance.histquotes.HistoricalQuote;
 public class StockDetailController implements DSGenericController {
 	
 
-    private DeustockGateway gateway = new DeustockGateway();
+    private DeustockGateway gateway;
     private MainController mainController;
     private String acronym = null;
     private Stock stock = null;
@@ -114,15 +114,15 @@ public class StockDetailController implements DSGenericController {
         downloadButton.setOnMouseClicked( 
         		MouseEvent -> {
         			Stage s = new Stage();
-        	        DirectoryChooser directoryChooser = new DirectoryChooser();
+                    DirectoryChooser directoryChooser = new DirectoryChooser();
                     File selectedDirectory = directoryChooser.showDialog(s);
-					File f = gateway.getStockReport(this.acronymLabel.getText(), "DAILY", selectedDirectory.getAbsolutePath());
-					
-				    try {
-						Desktop.getDesktop().open(f);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+                    File f = gateway.getStockReport(this.acronymLabel.getText(), "DAILY", selectedDirectory.getAbsolutePath());
+
+                    try {
+                    	Desktop.getDesktop().open(f);
+                    } catch (IOException e) {
+                    	e.printStackTrace();
+                    }
 				}
         );
         
@@ -144,15 +144,11 @@ public class StockDetailController implements DSGenericController {
     }
 	
 	private void getStock(){
-        DeustockGateway gateway = new DeustockGateway();
         stock = gateway.getStock(acronym, "MONTHLY");
         setStock(stock);
     }
 	private void setStock(Stock stock) {
 		this.stock = stock;
 	}
-	
-	
-
 
 }
