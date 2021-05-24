@@ -64,17 +64,7 @@ public class UserDetailControllerTest extends ApplicationTest {
             System.setProperty("prism.text", "t2k");
             System.setProperty("java.awt.headless", "true");
         }
-    }
-
-    @Override
-    public void init() throws Exception {
-        FxToolkit.registerStage(Stage::new);
-
-    }
-
-    @Override
-    public void stop() throws Exception {
-        FxToolkit.hideStage();
+        registerPrimaryStage();
     }
 
     @Override
@@ -96,7 +86,7 @@ public class UserDetailControllerTest extends ApplicationTest {
         stage.show();
 
         this.mockGateway = mock(DeustockGateway.class);
-}
+    }
 
     @BeforeEach
     void setUp(){
@@ -122,9 +112,6 @@ public class UserDetailControllerTest extends ApplicationTest {
             assertEquals(usernameLabel.getText(), "Test");
             assertEquals(descriptionText.getText(), "");
         } );
-
-
-
     }
 
     @Test

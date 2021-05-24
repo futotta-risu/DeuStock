@@ -54,17 +54,9 @@ public class ChangeUserDetailControllerTest extends ApplicationTest {
             System.setProperty("prism.text", "t2k");
             System.setProperty("java.awt.headless", "true");
         }
+        registerPrimaryStage();
     }
 
-    @Override
-    public void init() throws Exception {
-        FxToolkit.registerStage(Stage::new);
-    }
-
-    @Override
-    public void stop() throws Exception {
-        FxToolkit.hideStage();
-    }
 
     @Override
     public void start(Stage stage) throws IOException {
