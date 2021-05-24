@@ -60,7 +60,7 @@ class StockHistoryDAOTest {
         when(dbManager.get(eq(StockHistory.class), anyString(),any())).thenReturn(stockHistory);
 
         // When
-        final StockHistory result = stockHistoryDAO.get("TestID");
+        final StockHistory result = stockHistoryDAO.get("1");
 
         // Then
         assertNotNull(result);
@@ -73,7 +73,7 @@ class StockHistoryDAOTest {
         when(dbManager.get(eq(StockHistory.class), anyString(),any())).thenReturn(null);
 
         // When
-        final StockHistory result = stockHistoryDAO.get("TestID");
+        final StockHistory result = stockHistoryDAO.get("1");
 
         // Then
         assertNull(result);
