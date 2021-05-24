@@ -1,0 +1,4 @@
+var classes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1wallet_1_1exceptions_1_1_wallet_not_found_exception =
+[
+    [ "WalletNotFoundException", "classes_1_1deusto_1_1deustock_1_1services_1_1investment_1_1wallet_1_1exceptions_1_1_wallet_not_found_exception.html#aa56ca8923f6dd77b750526f00cd9a5c7", null ]
+];

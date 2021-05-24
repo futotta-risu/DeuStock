@@ -1,0 +1,34 @@
+digraph "es.deusto.deustock.resources.UserResource.getUser"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="es.deusto.deustock.resources.\lUserResource.getUser",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="es.deusto.deustock.services.user.\lUserService.getUserByUsername",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1services_1_1user_1_1_user_service.html#aedc7c5516b26643d744244f668229f16",tooltip=" "];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="es.deusto.deustock.dao.User\lDAO.get",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1dao_1_1_user_d_a_o.html#a4703803a6cb9ef34dab610d1e55a114e",tooltip=" "];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="es.deusto.deustock.dao.IDBManager.get",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interfacees_1_1deusto_1_1deustock_1_1dao_1_1_i_d_b_manager.html#ad03b499d4bbeb0e41fabd3b4e0f44714",tooltip=" "];
+  Node2 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="es.deusto.deustock.dao.User\lDAO.getDTO",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1dao_1_1_user_d_a_o.html#a54e5c39d7e39f40106be309a1c90bf87",tooltip=" "];
+  Node5 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="es.deusto.deustock.data.\lUser.getCountry",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#a2a95e5b028ad36bac91bad90fa446542",tooltip=" "];
+  Node5 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="es.deusto.deustock.data.\lUser.getDescription",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#a30f92b2cdd1bd68e35e1379ecf6f3f79",tooltip=" "];
+  Node5 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="es.deusto.deustock.data.\lUser.getFullName",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#af883c5fd85559394316b676459690695",tooltip=" "];
+  Node5 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="es.deusto.deustock.data.\lUser.getUsername",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1_user.html#a0d61703312d96e0b4a5cd9044b71452e",tooltip=" "];
+  Node5 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="es.deusto.deustock.data.dto.\lUserDTO.setCountry",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1dto_1_1_user_d_t_o.html#a8132180d6d376a0368f39a5d2bccfed8",tooltip=" "];
+  Node5 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="es.deusto.deustock.data.dto.\lUserDTO.setDescription",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1dto_1_1_user_d_t_o.html#a972dfa5a2373ceae6da17cafb5874d77",tooltip=" "];
+  Node5 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="es.deusto.deustock.data.dto.\lUserDTO.setFullName",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1dto_1_1_user_d_t_o.html#a851d25dce562d933d5ad3ea12365a7d2",tooltip=" "];
+  Node5 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="es.deusto.deustock.data.dto.\lUserDTO.setPassword",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1dto_1_1_user_d_t_o.html#a5e4b92a6a616fea9de8c78609aa3af28",tooltip=" "];
+  Node5 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="es.deusto.deustock.data.dto.\lUserDTO.setUsername",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1dto_1_1_user_d_t_o.html#aca09a2714cc8bdcad6698693e88f9e6d",tooltip=" "];
+}

@@ -1,0 +1,16 @@
+digraph "es.deusto.deustock.data.dto.UserDTO.setPassword"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="es.deusto.deustock.data.dto.\lUserDTO.setPassword",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="es.deusto.deustock.dao.User\lDAO.getDTO",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1dao_1_1_user_d_a_o.html#a54e5c39d7e39f40106be309a1c90bf87",tooltip=" "];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="es.deusto.deustock.services.user.\lUserService.getUserByUsername",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1services_1_1user_1_1_user_service.html#aedc7c5516b26643d744244f668229f16",tooltip=" "];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="es.deusto.deustock.resources.user.\lUserReportResource.createUserReport",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1resources_1_1user_1_1_user_report_resource.html#a011c1f91993fc227cc5e548dd457a6f8",tooltip=" "];
+  Node3 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="es.deusto.deustock.resources.\lUserResource.getUser",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1resources_1_1_user_resource.html#a376eca9da75a5293c5ac1977213fa856",tooltip=" "];
+}

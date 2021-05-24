@@ -1,0 +1,18 @@
+digraph "es.deusto.deustock.resources.UserResource.deleteUser"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="es.deusto.deustock.resources.\lUserResource.deleteUser",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="es.deusto.deustock.services.user.\lUserService.deleteUser",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1services_1_1user_1_1_user_service.html#a9a960b10d784446947a4548fd4899b41",tooltip=" "];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="es.deusto.deustock.dao.User\lDAO.delete",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1dao_1_1_user_d_a_o.html#a4131d493e00b0cf45964511b925c9228",tooltip=" "];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="es.deusto.deustock.dao.IDBManager.delete",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interfacees_1_1deusto_1_1deustock_1_1dao_1_1_i_d_b_manager.html#a0373b3643aac64ad2a246f63b93698d8",tooltip=" "];
+  Node2 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="es.deusto.deustock.dao.User\lDAO.get",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1dao_1_1_user_d_a_o.html#a4703803a6cb9ef34dab610d1e55a114e",tooltip=" "];
+  Node5 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="es.deusto.deustock.dao.IDBManager.get",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interfacees_1_1deusto_1_1deustock_1_1dao_1_1_i_d_b_manager.html#ad03b499d4bbeb0e41fabd3b4e0f44714",tooltip=" "];
+}

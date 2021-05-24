@@ -13,8 +13,12 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
 
 /**
+ *
+ * Controller class that contains functions for the control of the CurrentBalanceView.fxml view
+ *
  * @author landersanmillan
  */
+
 public class CurrentBalanceController implements DSGenericController {
 	
     private String username;
@@ -28,15 +32,25 @@ public class CurrentBalanceController implements DSGenericController {
 	@FXML
 	VBox stockList;
 
+    /**
+     * Default no-argument constructor
+     */
     public CurrentBalanceController(){
         gateway = new DeustockGateway();
     }
 
+    
     public void setDeustockGateway(DeustockGateway deustockGateway){
         this.gateway = deustockGateway;
     }
 
-    @Override
+
+    /**
+     * Method that sets the parameter username of the class and calls the method initRoot
+     *
+     * @param params collects all the received objects with their respective key in a HashMap
+     */
+	@Override
 	public void setParams(HashMap<String, Object> params) {
         if(params.containsKey("username"))
             this.username = String.valueOf(params.get("username"));
@@ -44,6 +58,10 @@ public class CurrentBalanceController implements DSGenericController {
         initRoot();
 	}
 
+
+    /**
+     * Method that initializes the instances corresponding to the elements in the FXML file and the functions of the buttons.
+     */
     private void initRoot(){
         if(this.username==null) return;
 
@@ -58,6 +76,9 @@ public class CurrentBalanceController implements DSGenericController {
         
     }
 
+    /**
+     * Method that cleans the stock list leaving it empty and charging again the stocks of the user by a gateway
+     */
     public void refreshStocks(){
     	this.stockList.getChildren().remove(0, this.stockList.getChildren().size());
         List<StockHistory> stockHistories = gateway.getHoldings(username);

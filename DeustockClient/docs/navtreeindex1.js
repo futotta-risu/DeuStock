@@ -1,0 +1,19 @@
+var NAVTREEINDEX1 =
+{
+"hierarchy.html":[1,2],
+"index.html":[],
+"interfacees_1_1deusto_1_1deustock_1_1client_1_1controllers_1_1_d_s_generic_controller.html":[1,0,0,0,0,0,0,5],
+"interfacees_1_1deusto_1_1deustock_1_1client_1_1controllers_1_1_d_s_generic_controller.html#a124dc47e670dcab461b128d38c49bbe7":[1,0,0,0,0,0,0,5,0],
+"namespacees_1_1deusto_1_1deustock_1_1client_1_1controllers.html":[0,0,0,0,0,0,0],
+"namespacees_1_1deusto_1_1deustock_1_1client_1_1controllers_1_1stocks.html":[0,0,0,0,0,0,0,0],
+"namespacees_1_1deusto_1_1deustock_1_1client_1_1data_1_1help.html":[0,0,0,0,0,0,1,0],
+"namespacees_1_1deusto_1_1deustock_1_1client_1_1data_1_1stocks.html":[0,0,0,0,0,0,1,1],
+"namespacees_1_1deusto_1_1deustock_1_1client_1_1gateways.html":[0,0,0,0,0,0,2],
+"namespacees_1_1deusto_1_1deustock_1_1client_1_1gateways_1_1exceptions.html":[0,0,0,0,0,0,2,0],
+"namespacees_1_1deusto_1_1deustock_1_1client_1_1net.html":[0,0,0,0,0,0,3],
+"namespacees_1_1deusto_1_1deustock_1_1client_1_1simulation_1_1investment_1_1operations.html":[0,0,0,0,0,0,4,0,0],
+"namespacees_1_1deusto_1_1deustock_1_1client_1_1visual_1_1help.html":[0,0,0,0,0,0,5,0],
+"namespacees_1_1deusto_1_1deustock_1_1client_1_1visual_1_1stocks_1_1list.html":[0,0,0,0,0,0,5,1,0],
+"namespaces.html":[0,0],
+"pages.html":[]
+};

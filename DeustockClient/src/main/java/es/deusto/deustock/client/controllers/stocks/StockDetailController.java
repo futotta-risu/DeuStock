@@ -30,6 +30,8 @@ import yahoofinance.histquotes.HistoricalQuote;
 
 /**
  * @author landersanmillan
+ *
+ * Controller class that contains functions for the control of the StockDetailView.fxml view
  */
 public class StockDetailController implements DSGenericController {
 	
@@ -66,6 +68,12 @@ public class StockDetailController implements DSGenericController {
     public void setDeustockGateway(DeustockGateway gateway){ this.gateway = gateway; }
     public void setMainController(MainController mainController){ this.mainController = mainController; }
     
+
+    /**
+     * Method that sets the parameter acronym of the class
+     *
+     * @param params collects all the received objects with their respective key in a HashMap
+     */
 	@Override
 	public void setParams(HashMap<String, Object> params) {
         if(params.containsKey("acronym"))
@@ -73,7 +81,10 @@ public class StockDetailController implements DSGenericController {
         
         initRoot();		
 	}
-	
+
+    /**
+     * Method that initializes the instances corresponding to the elements in the FXML file and the functions of the buttons.
+     */
 	private void initRoot(){
         if(this.acronym==null) return;        
         
@@ -142,13 +153,22 @@ public class StockDetailController implements DSGenericController {
                 )
         );
     }
-	
+
+    /**
+     * Method that sets the stock using the function of the gateway
+     */
+
 	private void getStock(){
         stock = gateway.getStock(acronym, "MONTHLY");
         setStock(stock);
     }
+
+    /**
+     * Setter method
+     * @param stock defines the stock variable from the class with the parameter received in the method, a stock
+     */
 	private void setStock(Stock stock) {
 		this.stock = stock;
 	}
-
+    
 }

@@ -7,7 +7,10 @@ import javafx.scene.control.Button;
 import java.util.HashMap;
 
 /**
+ * class that contains functions for the control of the ControlButtonView.fxml view
+ *
  * @author Erik B. Terres
+ *
  */
 public class ControlButtonController implements DSGenericController{
 
@@ -16,6 +19,11 @@ public class ControlButtonController implements DSGenericController{
     private Button stockListButton, helpButton, profileButton, aboutButton, homeButton, myStocksButton;
 
     private String username = "";
+
+    /**
+     * Method that initializes the instances corresponding to the elements in the FXML file and the functions of the
+     * stockList, help, profile, about, home and mySocks buttons.
+     */
 
     @FXML
     private void initialize(){
@@ -55,12 +63,21 @@ public class ControlButtonController implements DSGenericController{
         );
     }
 
+    /**
+     * Getter method
+     * @return returns the username from the class as a String
+     */
     public String getUsername() {
         return this.username;
     }
 
 
 
+    /**
+     * Method that sets the parameter username of the class and adds it to the profile button
+     *
+     * @param params collects all the received objects with their respective key in a HashMap
+     */
     @Override
     public void setParams(HashMap<String, Object> params) {
         if(params.containsKey("username")) {

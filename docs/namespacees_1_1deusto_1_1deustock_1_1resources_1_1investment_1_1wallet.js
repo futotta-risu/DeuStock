@@ -1,0 +1,5 @@
+var namespacees_1_1deusto_1_1deustock_1_1resources_1_1investment_1_1wallet =
+[
+    [ "BalanceResource", "classes_1_1deusto_1_1deustock_1_1resources_1_1investment_1_1wallet_1_1_balance_resource.html", "classes_1_1deusto_1_1deustock_1_1resources_1_1investment_1_1wallet_1_1_balance_resource" ],
+    [ "HoldingsListResources", "classes_1_1deusto_1_1deustock_1_1resources_1_1investment_1_1wallet_1_1_holdings_list_resources.html", "classes_1_1deusto_1_1deustock_1_1resources_1_1investment_1_1wallet_1_1_holdings_list_resources" ]
+];

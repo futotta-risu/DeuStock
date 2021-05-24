@@ -15,11 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.ButtonBar.ButtonData;
 
 /**
- * Controller para ChangeUserDetail
- *<br><strong>Pattern</strong>
- *<ul>
- *	<li>Controller</li>
- *</ul>
+ * Controller class that contains functions for the control of the ChangeUserDetailView.fxml view
  * @author amayi
  */
 public class ChangeUserDetailController implements DSGenericController{
@@ -51,6 +47,9 @@ public class ChangeUserDetailController implements DSGenericController{
 	@FXML
 	Button cancelBtn;
 	
+	/**
+	 * Default no-argument constructor
+	 */
 	public ChangeUserDetailController() {
 		this.gateway = new DeustockGateway();
 		this.mainController = MainController.getInstance();
@@ -62,23 +61,32 @@ public class ChangeUserDetailController implements DSGenericController{
 	public void setDialog(Dialog<String> dialog){ this.dialog = dialog; }
 	public Dialog<String> getDialog(){ return this.dialog; }
 
-
-
-
+	/**
+	 * Method that calls the initRoot method
+	 */
 	@FXML
 	private void initialize() {
 		initRoot();
 	}
 
+	/**
+	 * Method that sets the parameter username of the class
+	 *
+	 * @param params collects all the received objects with their respective key in a HashMap
+	 */
 	public void setParams(HashMap<String, Object> params) {
-		if(params.containsKey("username")) {
+		if(params.containsKey("username"))
 			this.username = String.valueOf(params.get("username"));
-		}
 		initRoot();
 	}
 
-	public void update(){
+	/**
+	 * Method that updates all the variables of the user making sure some fields are not empty
+	 */
 
+	private void update(){
+
+		Dialog<String> dialog = new Dialog<String>();
 		dialog.setTitle("ERROR");
 		ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().add(type);
@@ -89,6 +97,7 @@ public class ChangeUserDetailController implements DSGenericController{
 		String aboutMe = aboutMeTxt.getText();
 		String country = countryChoice.getValue();
 
+		DeustockGateway dg = new DeustockGateway();
 
 		if(!fullName.equals("")  && !aboutMe.equals("") ) {
 			User user = new User()
@@ -97,7 +106,7 @@ public class ChangeUserDetailController implements DSGenericController{
 					.setFullName(fullName)
 					.setUsername(username);
 
-			if(gateway.updateUser(user, MainController.getInstance().getToken())) {
+			if(dg.updateUser(user, MainController.getInstance().getToken())) {
 				mainController.loadAndChangePane( ViewPaths.UserDetailViewPath );
 			}else {
 				dialog.setContentText("NO SE HA POIDO REALIZAR EL CAMBIO");
@@ -110,25 +119,37 @@ public class ChangeUserDetailController implements DSGenericController{
 
 	}
 
+	/**
+	 * Method that devolves the user using a function of gateway with the username as a parameter
+	 */
 	private void getUser(){
+		DeustockGateway gateway = new DeustockGateway();
 		this.user = gateway.getUser(this.username);
 	}
 
+	/**
+	 * Method that initializes the instances corresponding to the elements in the FXML file and the functions of the
+     * change and cancel buttons.
+	 */
+
 	private void initRoot(){
-		if(this.username == null){
-			return;
-		}
+
+		if(this.username == null) return;
+
 		if(this.user == null || !this.user.getUsername().equals(this.username)) {
 			getUser();
 		}
+		//this.usernameLabel.setText(user.getUsername());
 
-		this.usernameLabel.setText(user.getUsername());
-
-		String[] countries = Arrays.copyOfRange(Locale.getISOCountries(), 1, 50);
+		//Comprobar que funciona la lista de countries
+		List<String> countries = new ArrayList<String>();
+		for (Locale locale : Locale.getAvailableLocales())
+		{
+			 countries.add(locale.getDisplayCountry());
+		}
 
 		countryChoice.setValue("Seleciona un pais");
 		countryChoice.setTooltip(new Tooltip("Seleciona un pais"));
-
 		countryChoice.setItems(FXCollections.observableArrayList(countries));
 
 		birthDatePicker.setValue(java.time.LocalDate.now());

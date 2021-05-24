@@ -1,0 +1,18 @@
+digraph "es.deusto.deustock.services.investment.wallet.WalletService.closeStockHistory"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="es.deusto.deustock.services.investment.wallet.\lWalletService.closeStockHistory",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="es.deusto.deustock.dao.Stock\lHistoryDAO.get",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1dao_1_1_stock_history_d_a_o.html#a0672ba4b889fa6e64299ee5091deaa1c",tooltip=" "];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="es.deusto.deustock.dao.IDBManager.get",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interfacees_1_1deusto_1_1deustock_1_1dao_1_1_i_d_b_manager.html#ad03b499d4bbeb0e41fabd3b4e0f44714",tooltip=" "];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="es.deusto.deustock.data.stocks.\lStockHistory.setClosed",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1stocks_1_1_stock_history.html#a6c0010a8697ad2d372885c6dabe94b0e",tooltip=" "];
+  Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="es.deusto.deustock.dao.Stock\lHistoryDAO.update",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1dao_1_1_stock_history_d_a_o.html#a39d78fd0c1b7f8950ffea39c24559173",tooltip=" "];
+  Node5 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="es.deusto.deustock.dao.IDBManager.update",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interfacees_1_1deusto_1_1deustock_1_1dao_1_1_i_d_b_manager.html#aa7fe5e6e4e5541e675f01eac61a9a232",tooltip=" "];
+}

@@ -14,6 +14,8 @@ import javafx.scene.control.*;
 import java.util.HashMap;
 
 /**
+ * Controller class that contains functions for the control of the OperationView.fxml view
+ *
  * @author Erik B. Terres
  */
 public class OperationController implements DSGenericController {
@@ -37,6 +39,9 @@ public class OperationController implements DSGenericController {
     private double balance;
     private Stock stock;
 
+    /**
+     * Default no-argument constructor
+     */
     public OperationController(){
     	this.gateway = new DeustockGateway();
 		this.mainController = MainController.getInstance();
@@ -45,6 +50,10 @@ public class OperationController implements DSGenericController {
     public void setDeustockGateway(DeustockGateway gateway){ this.gateway = gateway; }
     public void setMainController(MainController mainController){ this.mainController = mainController; }
 
+    /**
+     * Method that sets the parameters of the class, username and stock
+     * @param params collects all the received objects with their respective key in a HashMap
+     */
     @Override
     public void setParams(HashMap<String, Object> params) {
         if(params.containsKey("username")){
@@ -57,7 +66,10 @@ public class OperationController implements DSGenericController {
 
         initRoot();
     }
-    
+
+    /**
+     *Method that initializes the instances corresponding to the elements in the FXML file.
+     */
     @FXML
     private void initialize() {
         operationSelect.setValue(OperationType.LONG);
@@ -84,6 +96,9 @@ public class OperationController implements DSGenericController {
         );
     }
 
+    /**
+     * initRoot methods defines the FXML elements setting the correspondent value to each variable
+     */
     private void initRoot(){
 
         balance = gateway.getBalance(username);
@@ -93,6 +108,12 @@ public class OperationController implements DSGenericController {
         costLabel.setText("0");
     }
 
+    /**
+     * Method that gets the value of the OpenPrice variable and makes sure it is not null
+     *
+     * @return returns the value of the OpenPrice in a double
+     * returns 0 in case it is null
+     */
     public double getOpenPrice(){
         if(operationSelect.getValue() == null){
             return 0;

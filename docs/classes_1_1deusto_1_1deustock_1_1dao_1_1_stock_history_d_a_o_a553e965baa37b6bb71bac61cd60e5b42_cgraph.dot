@@ -1,0 +1,30 @@
+digraph "es.deusto.deustock.dao.StockHistoryDAO.getDTO"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="es.deusto.deustock.dao.Stock\lHistoryDAO.getDTO",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="es.deusto.deustock.data.\lDeuStock.getAcronym",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1_deu_stock.html#ab84b6752e6c4ff28d7ca0fe1e854c8be",tooltip=" "];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="es.deusto.deustock.data.stocks.\lStockHistory.getAmount",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1stocks_1_1_stock_history.html#a5c0fa026113d475a6d64c4ea0ea45c01",tooltip=" "];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="es.deusto.deustock.data.stocks.\lStockHistory.getId",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1stocks_1_1_stock_history.html#a1f3dd7f52003626141be7aa56ebf4207",tooltip=" "];
+  Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="es.deusto.deustock.data.stocks.\lStockHistory.getOperation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1stocks_1_1_stock_history.html#af86292724dc0bbddec560a611b2fd7c3",tooltip=" "];
+  Node1 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="es.deusto.deustock.data.stocks.\lStockHistory.getPrice",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1stocks_1_1_stock_history.html#a7d86465cc821cc3b1333a8c8e9faa136",tooltip=" "];
+  Node1 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="es.deusto.deustock.data.stocks.\lStockHistory.getStock",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1stocks_1_1_stock_history.html#a6544acf8a60a030458cb0931d05bb124",tooltip=" "];
+  Node1 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="es.deusto.deustock.data.dto.stocks.\lStockHistoryDTO.setAmount",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1dto_1_1stocks_1_1_stock_history_d_t_o.html#a19902339ec1f7c30625dbb1388ac3894",tooltip=" "];
+  Node1 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="es.deusto.deustock.data.dto.stocks.\lStockHistoryDTO.setId",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1dto_1_1stocks_1_1_stock_history_d_t_o.html#a887b149f1d50eede5c1d84e852b50a11",tooltip=" "];
+  Node1 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="es.deusto.deustock.data.dto.stocks.\lStockHistoryDTO.setOpenPrice",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1dto_1_1stocks_1_1_stock_history_d_t_o.html#a59e22e4cd6ab8addad1b58c2aaed3624",tooltip=" "];
+  Node1 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="es.deusto.deustock.data.dto.stocks.\lStockHistoryDTO.setOperation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1dto_1_1stocks_1_1_stock_history_d_t_o.html#a21c2a1e31d2708fbbcbfcf0db23a9ecb",tooltip=" "];
+  Node1 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="es.deusto.deustock.data.dto.stocks.\lStockHistoryDTO.setSymbol",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1data_1_1dto_1_1stocks_1_1_stock_history_d_t_o.html#a662a85188990e318452a5c02180c7551",tooltip=" "];
+}

@@ -18,7 +18,7 @@ import java.util.HashMap;
 
 
 /**
- * StockListView controller
+ * Controller class that contains functions for the control of the StockListView.fxml view
  *
  * @author Erik B. Terres & Aritz Zugazaga
  */
@@ -41,6 +41,9 @@ public class StockListViewController {
 
     HashMap<String, StockInfoLine> stockLines;
 
+    /**
+     * Default no-argument constructor
+     */
     public StockListViewController(){
     	this.gateway = new DeustockGateway();
 		this.mainController = MainController.getInstance();
@@ -49,6 +52,10 @@ public class StockListViewController {
     public void setDeustockGateway(DeustockGateway gateway){ this.gateway = gateway; }
     public void setMainController(MainController mainController){ this.mainController = mainController; }
 
+    /**
+     * Method that initializes the instances corresponding to the elements in the FXML file and the functions of the
+     * refresh and search buttons.
+     */
     @FXML
     private void initialize(){
         stockLines = new HashMap<>();
@@ -59,6 +66,10 @@ public class StockListViewController {
         refreshStocks();
     }
 
+    /**
+     * Method that cleans the stock list and searches the queried stock using gateway
+     * It creates a list and adds the searched stock
+     */
     private void searchStock(){
         emptyStockList();
 
@@ -79,7 +90,10 @@ public class StockListViewController {
             stockList.getChildren().add(new Label(" ** NO SE HA ENCONTRADO NINGUN STOCK CON ESE ACRONYM **"));
         }
     }
-    
+
+    /**
+     * Method that cleans the stock list and charges again all the stocks in that list
+     */
     public void refreshStocks(){
         emptyStockList();
 
@@ -114,6 +128,9 @@ public class StockListViewController {
         }
     }
 
+    /**
+     * Method that cleans the stock list and leaves it empty
+     */
     private void emptyStockList(){
         stockLines.clear();
         stockList.getChildren().removeIf(

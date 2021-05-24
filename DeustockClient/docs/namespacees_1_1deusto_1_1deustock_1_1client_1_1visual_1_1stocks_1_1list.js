@@ -1,0 +1,5 @@
+var namespacees_1_1deusto_1_1deustock_1_1client_1_1visual_1_1stocks_1_1list =
+[
+    [ "StockInfoLine", "classes_1_1deusto_1_1deustock_1_1client_1_1visual_1_1stocks_1_1list_1_1_stock_info_line.html", "classes_1_1deusto_1_1deustock_1_1client_1_1visual_1_1stocks_1_1list_1_1_stock_info_line" ],
+    [ "StockInfoSellLine", "classes_1_1deusto_1_1deustock_1_1client_1_1visual_1_1stocks_1_1list_1_1_stock_info_sell_line.html", "classes_1_1deusto_1_1deustock_1_1client_1_1visual_1_1stocks_1_1list_1_1_stock_info_sell_line" ]
+];

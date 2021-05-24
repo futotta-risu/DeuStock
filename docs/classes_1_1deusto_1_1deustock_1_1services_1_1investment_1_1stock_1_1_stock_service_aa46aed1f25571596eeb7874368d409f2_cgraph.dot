@@ -1,0 +1,16 @@
+digraph "es.deusto.deustock.services.investment.stock.StockService.StockService"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="es.deusto.deustock.services.investment.stock.\lStockService.StockService",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="es.deusto.deustock.dataminer.gateway.stocks.\lStockDataGatewayFactory.create",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1dataminer_1_1gateway_1_1stocks_1_1_stock_data_gateway_factory.html#a431dadad0ab879d975f71bb2e8fae183",tooltip=" "];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="es.deusto.deustock.dataminer.gateway.stocks.gateways.\lYahooFinanceGateway.getInstance",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1dataminer_1_1gateway_1_1stocks_1_1gateways_1_1_yahoo_finance_gateway.html#af0a4a024836d1fb9394c05e0634ba091",tooltip=" "];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="es.deusto.deustock.dao.Stock\lDAO.getInstance",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1dao_1_1_stock_d_a_o.html#af5cec8705aa71284e389c58d814c8efb",tooltip=" "];
+  Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="es.deusto.deustock.dataminer.gateway.stocks.\lStockDataGatewayFactory.getInstance",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classes_1_1deusto_1_1deustock_1_1dataminer_1_1gateway_1_1stocks_1_1_stock_data_gateway_factory.html#a96f2236cc8d4e57368b64e7ae2c7b214",tooltip=" "];
+}

@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <name>DeustockCliente</name>
 
+
     <build>
         <finalName>DeustockCliente</finalName>
         <plugins>
@@ -76,6 +77,39 @@
 				</configuration>
 
 	        </plugin>
+
+            <plugin>
+                <groupId>com.soebes.maven.plugins</groupId>
+                <artifactId>doxygen-maven-plugin</artifactId>
+                <version>1.1.0</version>
+                <configuration>
+                    <configurationFile>${doxygen.config.file}</configurationFile>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <!-- here the phase you need -->
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/docs</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/target/doxygen/html</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 	        
         </plugins>
     </build>
@@ -254,12 +288,12 @@
         </dependency>
     </dependencies>
     <properties>
+        <doxygen.config.file>${basedir}/src/main/resources/Doxyfile</doxygen.config.file>
         <maven.compiler.source>14</maven.compiler.source>
         <maven.compiler.target>14</maven.compiler.target>
         <jersey.version>2.30</jersey.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
 
 
 </project>
