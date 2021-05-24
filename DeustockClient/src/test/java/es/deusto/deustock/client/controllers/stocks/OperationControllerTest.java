@@ -154,11 +154,12 @@ class OperationControllerTest extends ApplicationTest {
         
         Platform.runLater( () -> {
         	controller.setParams(params);
+        	
         });
-
         robot.clickOn(calculateCostButton);
 
-        Assertions.assertThat(controller.costLabel).hasText("1.0");
+        Assertions.assertThat(controller.costLabel).hasText("1");
+        
     }
 
 }
